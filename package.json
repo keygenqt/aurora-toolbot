@@ -15,7 +15,8 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
     "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-opener": "^2"
+    "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-log": "^2"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false PORT=3000 react-scripts start",

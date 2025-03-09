@@ -1,25 +1,21 @@
 [package]
-name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-edition = "2021"
-rust-version = "1.77.2"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+name = "toolbot"
+version = "0.0.1"
+description = "Module js for native application Toolbot."
+authors = ["keygenqt@gmail.com"]
+edition = "2024"
 
 [lib]
-name = "app_lib"
+name = "toolbot"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
-[build-dependencies]
-tauri-build = { version = "2.0.5", features = [] }
-
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-log = "2"
 log = "0.4"
-tauri = { version = "2.3.1", features = [] }
-tauri-plugin-log = "2.0.0-rc"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }

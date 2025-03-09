@@ -1,7 +1,10 @@
+import { invoke } from "@tauri-apps/api/core";
 import './App.css';
 import { Box, Stack, Button, Typography } from '@mui/material';
 
 import icon from './assets/icon.png';
+
+import { debug, error } from '@tauri-apps/plugin-log';
 
 function App() {
   return (
@@ -38,7 +41,18 @@ function App() {
         Добро пожаловать в приложение Aurora Toolbot!
       </Typography>
 
-      <Button variant="contained">Let's Go</Button>
+      <Button
+        variant="contained"
+        onClick={() => {
+          if (window.isTauri) {
+            invoke("greet", { name: 'TEST' })
+              .then((m) => debug(m))
+              .catch((e) => error(e));
+          } else {
+            console.log("I'm web!")
+          }
+        }}
+      >Let's Go</Button>
     </Stack>
   );
 }

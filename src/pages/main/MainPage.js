@@ -72,7 +72,7 @@ export function MainPage(props) {
                 setEmulatorName(model.name)
               }).catch((e) => {
                 Methods.log(e)
-                setApiVersion(e.message)
+                setEmulatorName(e.message)
               });
             }}
           >

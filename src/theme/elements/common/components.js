@@ -3,7 +3,8 @@ export const components = {
         styleOverrides: {
             root: {
                 borderRadius: 50,
-                boxShadow: 'none !important'
+                boxShadow: 'none !important',
+                textTransform: 'none'
             }
         }
     }

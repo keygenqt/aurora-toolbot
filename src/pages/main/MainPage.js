@@ -1,16 +1,25 @@
 import * as React from 'react';
 import {useTranslation} from "react-i18next";
 
-import {Box, Stack, Button, Typography, CircularProgress} from '@mui/material';
+import {Box, Stack, Typography, Button} from '@mui/material';
 
-import {DataImages} from '../../base';
+import {useEffectSingle, DataImages, AppUtils} from '../../base';
 import {Methods} from '../../modules';
 import {BaseLayout} from '../../layouts';
+import {AppConf} from '../../conf/AppConf'
 
 export function MainPage(props) {
     const { t } = useTranslation();
-    const [apiVersion, setApiVersion] = React.useState('no data')
-    const [emulatorName, setEmulatorName] = React.useState('no data')
+    const [version, setVersion] = React.useState(undefined)
+
+    useEffectSingle(() => {
+      Methods.appInfo().then((model) => {
+        setVersion(AppUtils.checkVersion(model))
+      }).catch((e) => {
+        setVersion(false)
+      });
+    });
+
     return (
       <BaseLayout>
         <Stack
@@ -23,11 +32,7 @@ export function MainPage(props) {
           }}
         >
           <Box/>
-          <Box
-            sx={{
-              textAlign: 'center'
-            }}
-          >
+          <Box sx={{textAlign: 'center'}}>
             <img
               style={{width: '100%', maxWidth: '200px', maxHeight: '200px'}}
               src={DataImages.icon}
@@ -43,64 +48,61 @@ export function MainPage(props) {
           >
               {t('main.t_hello')}
           </Typography>
-          <Stack
-            spacing={2}
-          >
-            <Button
-              variant="contained"
-              onClick={() => {
-                setApiVersion(undefined)
-                Methods.appInfo().then((model) => {
-                  console.log(model)
-                  setApiVersion(model.apiVersion)
-                }).catch((e) => {
-                  Methods.log(e)
-                  setApiVersion(e.message)
-                });
-              }}
-            >
-              Get API info
-            </Button>
-            {apiVersion ? (
+          {version ? (
+            <>
               <Typography
-                variant={'caption'}
-                sx={{ textAlign: "center" }}
+                color='success'
+                sx={{textAlign: 'center'}}
               >
-                D-Bus: {apiVersion}
+                {t('main.t_connect_success')}
               </Typography>
-            ) : (
-              <Box sx={{ textAlign: "center" }}>
-                <CircularProgress size="15.9px" />
+
+              <Box sx={{textAlign: 'center'}}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    // @todo
+                    console.log('Open page feature')
+                  }}
+                >
+                  {t('main.t_connect_btn_start')}
+                </Button>
               </Box>
-            )}
-            <Button
-              variant="contained"
-              onClick={() => {
-                setEmulatorName(undefined)
-                Methods.emulatorInfo().then((model) => {
-                  console.log(model)
-                  setEmulatorName(model.name)
-                }).catch((e) => {
-                  Methods.log(e)
-                  setEmulatorName(e.message)
-                });
-              }}
-            >
-              Get emulator info
-            </Button>
-            {emulatorName ? (
-              <Typography
-                variant={'caption'}
-                sx={{ textAlign: "center" }}
+            </>
+          ) : (
+            <>
+                <Typography
+                  color='error'
+                  sx={{textAlign: 'center'}}
+                >
+                  {t('main.t_connect_error')}
+                </Typography>
+
+              <Stack
+                spacing={3}
+                sx={{textAlign: 'center'}}
               >
-                Emulator: {emulatorName}
-              </Typography>
-            ) : (
-              <Box sx={{ textAlign: "center" }}>
-                <CircularProgress size="15.9px" />
-              </Box>
-            )}
-          </Stack>
+                <Typography
+                  variant={'caption'}
+                  sx={{textAlign: 'center'}}
+                >
+                  {t('main.t_connect_error_info')}
+                </Typography>
+
+                <Box>
+                  <Button
+                    variant="contained"
+                    onClick={async () => {
+                      await AppUtils.openUrl(AppConf.docUrl)
+                    }}
+                  >
+                    {t('main.t_connect_btn_doc')}
+                  </Button>
+                </Box>
+              </Stack>
+            </>
+          )}
+          <Box/>
         </Stack>
       </BaseLayout>
     );

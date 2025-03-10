@@ -1,17 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import './assets/css/index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Just start
+function start() {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Start after load telegram lib
+function startWithTelegram(fn) {
+  var head = document.getElementsByTagName('head')[0];
+  var js = document.createElement("script");
+  js.src = "https://telegram.org/js/telegram-web-app.js?56";
+  head.appendChild(js);
+  js.addEventListener("load", () => {
+    window.isMiniApp = window.Telegram.WebApp.initData !== '';
+    fn();
+  });
+}
+
+// Check is run tauri or web
+if (window.isTauri) {
+  start();
+} else {
+  startWithTelegram(start);
+}

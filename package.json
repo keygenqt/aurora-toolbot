@@ -2,6 +2,7 @@
   "name": "toolbot",
   "version": "0.0.1",
   "private": true,
+  "proxy": "http://0.0.0.0:3024",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -18,7 +19,8 @@
     "web-vitals": "^2.1.4",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
-    "@tauri-apps/plugin-log": "^2"
+    "@tauri-apps/plugin-log": "^2",
+    "axios": "^1.8.2"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false PORT=3000 react-scripts start",

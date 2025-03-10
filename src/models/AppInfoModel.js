@@ -7,7 +7,7 @@ export const AppInfoModel = {
     apiVersion: undefined,
     // Parse obj form string
     parse: function(json) {
-        let data = JSON.parse(json);
+        let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'AppInfo') {
             return undefined
         }

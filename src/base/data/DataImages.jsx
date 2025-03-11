@@ -13,4 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+import icon from '../../assets/images/icon.png';
+import icon_beta from '../../assets/images/icon_beta.png';
+
+/**
+ * Load data images
+ */
+export const DataImages = {
+    icon: icon,
+    iconBeta: icon_beta,
+}

@@ -13,4 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+import { createTheme } from '@mui/material/styles';
+import { palette } from "./elements/light/palette";
+import { typography } from "./elements/common/typography";
+import { components } from "./elements/common/components";
+
+export const ThemeLight = createTheme({
+    palette: palette,
+    typography: typography,
+    components: components,
+});

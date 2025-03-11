@@ -13,4 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+export const palette = {
+    mode: 'dark',
+    background: {
+        default: '#2c2c2c',
+    },
+    primary: {
+        main: '#417460',
+        light: '#75be9c',
+    },
+    inherit: {
+        main: '#f7f7f7',
+    },
+}

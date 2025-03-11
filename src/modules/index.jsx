@@ -13,4 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+import { MethodsDbus } from './dbus/methods';
+import { MethodsWeb } from './web/methods';
+
+/**
+ * Methods for different types
+ */
+export let Methods = undefined;
+
+/**
+ * Init
+ */
+if (window.isTauri) {
+    Methods = MethodsDbus
+} else {
+    Methods = MethodsWeb
+}

@@ -13,4 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+import * as React from 'react';
+
+/**
+ * 100% call one for start page
+ */
+export function useEffectSingle(effect) {
+    const wasCalled = React.useRef(false);
+    React.useEffect(() => {
+        if (wasCalled.current) return;
+        wasCalled.current = true;
+        effect();
+    }, [effect]);
+}

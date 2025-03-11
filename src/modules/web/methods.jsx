@@ -13,4 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+import axios from 'axios';
+import { AppInfoModel, EmulatorInfoModel } from '../../models';
+
+/**
+ * Telegram application methods
+ *
+ * auth: https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app
+ */
+export const MethodsWeb = {
+    appInfo: async function () {
+        return AppInfoModel.parse((await axios.get('/api/test/appInfo')).data);
+    },
+    emulatorInfo: async function () {
+        return EmulatorInfoModel.parse((await axios.get('/api/test/emulatorInfo')).data);
+    },
+    log: function (message) {
+        console.log(message)
+    }
+}

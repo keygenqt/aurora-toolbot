@@ -13,4 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+export const typography = {
+    fontSize: 14,
+    subtitle2: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        fontFamily: [
+            'Ubuntu',
+            'sans-serif',
+        ].join(','),
+    },
+}

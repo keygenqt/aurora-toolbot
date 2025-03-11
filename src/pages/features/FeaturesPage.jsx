@@ -13,4 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import 'common';
+import { Typography } from '@mui/material';
+
+export function FeaturesPage(props) {
+    return (
+        <Typography>FeaturesPage</Typography>
+    );
+}
+
+FeaturesPage.propTypes = {};

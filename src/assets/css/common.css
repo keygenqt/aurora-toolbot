@@ -1,56 +1,73 @@
+/**
+ * Copyright 2025 Vitaliy Zarubin
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
-html, body, #root {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Ubuntu', sans-serif;
+html,
+body,
+#root {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 a {
-  outline: none;
-  text-decoration: none;
+    outline: none;
+    text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 img {
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
 }
 
 #root {
-  user-select: none;
-  min-width: 320px;
-  min-height: 560px;
-  cursor: default;
+    user-select: none;
+    min-width: 320px;
+    min-height: 560px;
+    cursor: default;
 }
 
 #root.Tauri {
-  user-select: none;
-  border-radius: 10px;
-  overflow: hidden;
-  box-sizing: border-box;
+    user-select: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 #root.Tauri.light {
-  border: 1px solid #dfdfdf;
+    border: 1px solid #dfdfdf;
 }
 
 #root.Tauri.dark {
-  border: 1px solid #474747;
+    border: 1px solid #474747;
 }
 
 #root.Tauri .WindowFocus .MuiToolbar-root {
-  opacity: 1;
+    opacity: 1;
 }
 
 #root.Tauri .WindowUnfocus .MuiToolbar-root {
-  opacity: 0.6;
-  transition-duration: 300ms;
+    opacity: 0.6;
+    transition-duration: 300ms;
 }

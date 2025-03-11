@@ -756,6 +756,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "darkmode"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "075a9464059e42ad7f7c487897c1ceb65327daf056c2acf58b27ca62a51db2ab"
+dependencies = [
+ "dbus",
+]
+
+[[package]]
 name = "darling"
 version = "0.20.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4396,6 +4405,7 @@ dependencies = [
 name = "toolbot"
 version = "0.0.1"
 dependencies = [
+ "darkmode",
  "dbus",
  "log",
  "serde",

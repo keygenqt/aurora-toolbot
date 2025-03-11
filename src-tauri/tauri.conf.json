@@ -12,11 +12,13 @@
   "app": {
     "windows": [
       {
-        "title": "Toolbot",
         "width": 400,
         "height": 760,
-        "resizable": false,
-        "fullscreen": false
+        "minWidth": 400,
+        "minHeight": 760,
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": true
       }
     ],
     "security": {

@@ -7,6 +7,10 @@
   "permissions": [
     "core:default",
     "log:default",
-    "opener:default"
+    "opener:default",
+    "core:window:default",
+    "core:window:allow-close",
+    "core:window:allow-minimize",
+    "core:window:allow-start-dragging"
   ]
 }

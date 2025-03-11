@@ -1,4 +1,4 @@
-use tools::methods;
+use tools::{methods, theme};
 
 mod tools;
 
@@ -7,7 +7,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_log::Builder::new().build())
-        .invoke_handler(tauri::generate_handler![methods::app_info, methods::emulator_info,])
+        .invoke_handler(tauri::generate_handler![methods::app_info, methods::emulator_info, theme::listen_theme,])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

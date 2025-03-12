@@ -39,12 +39,16 @@ export function MainPage(props) {
     // data
     useEffectSingle(() => {
         (async function () {
-            // Get appInfo
-            const data = appInfo ? appInfo.payload : await Methods.appInfo();
-            dispatch(setData(data));
-            // Update state
-            const model = AppInfoModel.parse(data);
-            setVersion(AppUtils.checkVersion(model));
+            try {
+                // Get appInfo
+                const data = appInfo ? appInfo.payload : await Methods.appInfo();
+                dispatch(setData(data));
+                // Update state
+                const model = AppInfoModel.parse(data);
+                setVersion(AppUtils.checkVersion(model));
+            } catch (e) {
+                setVersion(false);
+            }
         })();
     });
     // Loading

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import * as React from 'react';
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from 'react-redux'
@@ -45,8 +46,11 @@ export function MainPage(props) {
                 dispatch(setData(data));
                 // Update state
                 const model = AppInfoModel.parse(data);
-                setVersion(AppUtils.checkVersion(model));
+                const connect = AppUtils.checkVersion(model);
+                props.onStateConnect(connect);
+                setVersion(connect);
             } catch (e) {
+                props.onStateConnect(false);
                 setVersion(false);
             }
         })();
@@ -169,4 +173,6 @@ export function MainPage(props) {
     );
 }
 
-MainPage.propTypes = {};
+MainPage.propTypes = {
+    onStateConnect: PropTypes.func.isRequired,
+};

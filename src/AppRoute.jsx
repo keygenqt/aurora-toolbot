@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 import React from 'react'
-import { useNavigate, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 
 import { ActionBack, ActionMenu } from './base'
 import { AboutPage, FeaturesPage, MainPage, SettingsPage } from './pages'
 import { AppBarLayout } from './layouts'
 
 export function AppRoute() {
-    const navigate = useNavigate();
+    const [showMenuMain, setShowMenuMain] = React.useState(false);
     return (
         <Routes>
             <Route path="about" element={(
@@ -35,8 +35,8 @@ export function AppRoute() {
                 </AppBarLayout>
             )} />
             <Route path="/" element={(
-                <AppBarLayout actions={<ActionMenu />} >
-                    <MainPage />
+                <AppBarLayout actions={showMenuMain ? <ActionMenu /> : null} >
+                    <MainPage onStateConnect={(connect) => setShowMenuMain(connect)} />
                 </AppBarLayout>
             )} />
             <Route path="settings" element={(

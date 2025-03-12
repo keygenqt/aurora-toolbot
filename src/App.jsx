@@ -35,7 +35,7 @@ function App() {
                 height={1}
                 sx={{
                     backgroundColor: 'background.default',
-                    borderRadius: '13px',
+                    borderRadius: window.isTauri ? '13px' : 0,
                     overflow: 'hidden',
                 }}
             >

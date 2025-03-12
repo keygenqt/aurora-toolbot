@@ -35,7 +35,7 @@ function App() {
                 height={1}
                 sx={{
                     backgroundColor: 'background.default',
-                    borderRadius: '10px',
+                    borderRadius: '13px',
                     overflow: 'hidden',
                 }}
             >

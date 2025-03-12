@@ -54,17 +54,17 @@ img {
 }
 
 #root.Tauri {
-    border-radius: 10px;
+    border-radius: 13px;
     overflow: hidden;
     box-sizing: border-box;
 }
 
 #root.Tauri.light {
-    border: 1px solid #dfdfdf;
+    border: 1.5px solid #dfdfdf;
 }
 
 #root.Tauri.dark {
-    border: 1px solid #474747;
+    border: 1.5px solid #474747;
 }
 
 #root.Tauri .WindowFocus .MuiToolbar-root {

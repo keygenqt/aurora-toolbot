@@ -20,6 +20,7 @@ import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from 'react-redux'
 
 import { Box, Stack, Typography, Button } from '@mui/material';
+import { HomeRepairService, OpenInNew } from '@mui/icons-material';
 
 import { useEffectSingle, DataImages, AppUtils, LottieLoading } from '../../base';
 import { Methods } from '../../modules';
@@ -33,6 +34,7 @@ export function MainPage(props) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     // states
+    const [connect, setConnect] = React.useState(undefined);
     const [version, setVersion] = React.useState(undefined);
     // redux
     const appInfo = useSelector((state) => state.appInfo.value);
@@ -48,15 +50,16 @@ export function MainPage(props) {
                 const model = AppInfoModel.parse(data);
                 const connect = AppUtils.checkVersion(model);
                 props.onStateConnect(connect);
-                setVersion(connect);
+                setConnect(connect);
+                setVersion(window.isTauri ? model.apiVersion : model.appVersion)
             } catch (e) {
                 props.onStateConnect(false);
-                setVersion(false);
+                setConnect(false);
             }
         })();
     });
     // Loading
-    if (version == undefined) {
+    if (connect == undefined) {
         return (
             <Stack
                 height={1}
@@ -96,17 +99,28 @@ export function MainPage(props) {
             >
                 {t('main.t_hello')}
             </Typography>
-            {version ? (
+            {connect ? (
                 <>
-                    <Typography
-                        color='success'
-                        sx={{ textAlign: 'center' }}
-                    >
-                        {t('main.t_connect_success')}
-                    </Typography>
-
+                    <Stack spacing={1}>
+                        <Typography
+                            color='success'
+                            sx={{ textAlign: 'center' }}
+                        >
+                            {t('main.t_connect_success')}
+                        </Typography>
+                        <Typography
+                            variant={'caption'}
+                            color='inherit'
+                            sx={{ textAlign: 'center' }}
+                        >
+                            {window.isTauri ?
+                                t('main.t_connect_success_info_t', { version: version }) :
+                                t('main.t_connect_success_info_w', { version: version })}
+                        </Typography>
+                    </Stack>
                     <Box sx={{ textAlign: 'center' }}>
                         <Button
+                            startIcon={<HomeRepairService color="default" />}
                             variant="contained"
                             onClick={() => AppUtils.openPage(navigate, "/features")}
                         >
@@ -116,52 +130,44 @@ export function MainPage(props) {
                 </>
             ) : (
                 <>
-                    <Typography
-                        color='error'
-                        sx={{ textAlign: 'center' }}
-                    >
-                        {t('main.t_connect_error')}
-                    </Typography>
-                    <Stack
-                        spacing={3}
-                        sx={{ textAlign: 'center' }}
-                    >
+                    <Stack spacing={1}>
+                        <Typography
+                            color='error'
+                            sx={{ textAlign: 'center' }}
+                        >
+                            {t('main.t_connect_error')}
+                        </Typography>
+
                         {window.isTauri ? (
                             <Typography
-                                color={'text.primary'}
                                 variant={'caption'}
-                                sx={{
-                                    textAlign: 'center',
-                                    maxWidth: 300,
-                                    margin: '0 auto !important',
-                                }}
+                                color='inherit'
+                                sx={{ textAlign: 'center' }}
                             >
                                 {t('main.t_connect_error_info_t')}
                             </Typography>
                         ) : (
                             <Typography
-                                color={'text.primary'}
                                 variant={'caption'}
-                                sx={{
-                                    textAlign: 'center',
-                                    maxWidth: 360,
-                                    margin: '0 auto !important',
-                                }}
+                                color='inherit'
+                                sx={{ textAlign: 'center' }}
                             >
                                 {t('main.t_connect_error_info_w')}
                             </Typography>
                         )}
-                        <Box>
-                            <Button
-                                variant="contained"
-                                onClick={async () => {
-                                    await AppUtils.openUrl(AppConf.docUrl)
-                                }}
-                            >
-                                {t('main.t_connect_btn_doc')}
-                            </Button>
-                        </Box>
                     </Stack>
+
+                    <Box sx={{ textAlign: 'center' }}>
+                        <Button
+                            endIcon={<OpenInNew color="default" />}
+                            variant="contained"
+                            onClick={async () => {
+                                await AppUtils.openUrl(AppConf.docUrl)
+                            }}
+                        >
+                            {t('main.t_connect_btn_doc')}
+                        </Button>
+                    </Box>
                 </>
             )}
             <Box />

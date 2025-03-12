@@ -25,9 +25,11 @@ i18n
                     main: {
                         t_hello: 'Добро пожаловать в приложение Aurora Toolbot!',
                         t_connect_success: 'Соединение успешно установлено.',
-                        t_connect_btn_start: 'Приступить к работе',
+                        t_connect_success_info_t: 'D-Bus: v{{version}}',
+                        t_connect_success_info_w: 'Aurora Bot: v{{version}}',
+                        t_connect_btn_start: 'Инструменты',
                         t_connect_error: 'Не удалось установить соединение.',
-                        t_connect_error_info_t: 'Необходимо установить актуальную версию приложения Aurora Bot.',
+                        t_connect_error_info_t: 'Установите актуальную версию приложения Aurora Bot.',
                         t_connect_error_info_w: 'Необходимо установить актуальную версию приложения Aurora Bot и активировать соединение с сервером.',
                         t_connect_btn_doc: 'Документация',
                     },

@@ -25,4 +25,7 @@ export const palette = {
     inherit: {
         main: '#3d3d3d',
     },
+    success: {
+        main: '#417460',
+    },
 }

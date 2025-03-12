@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 import React from 'react'
+import { BrowserRouter, Routes } from "react-router";
 
 import { ThemeProvider, Box } from '@mui/material'
 
+import { AppRoute } from './AppRoute'
 import { ThemeLight } from './theme/ThemeLight'
 import { ThemeDark } from './theme/ThemeDark'
-import { MainPage, ForbiddenPage } from './pages'
+import { ForbiddenPage } from './pages'
 import { useEffectTheme, useEffectFocus } from './base'
-import { BaseLayout, AppBarLayout } from './layouts'
+import { BaseLayout } from './layouts'
 
 function App() {
     const darkMode = useEffectTheme();
@@ -38,9 +40,9 @@ function App() {
                 }}
             >
                 {window.isTauri || window.isMiniApp ? (
-                    <AppBarLayout>
-                        <MainPage />
-                    </AppBarLayout>
+                    <BrowserRouter>
+                        <AppRoute />
+                    </BrowserRouter>
                 ) : (
                     <BaseLayout>
                         <ForbiddenPage />

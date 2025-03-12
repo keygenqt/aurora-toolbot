@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 
 import { Box, Stack, AppBar, Toolbar, Typography, IconButton } from '@mui/material';
-import { MoreVert, Minimize, Close } from '@mui/icons-material';
+import { Minimize, Close } from '@mui/icons-material';
 
 export function AppBarLayout(props) {
     const appWindow = window.isTauri ? getCurrentWindow() : undefined;
@@ -27,28 +27,19 @@ export function AppBarLayout(props) {
             <AppBar
                 position="static"
                 variant="dense"
-                size="small"
-                sx={{
-                    backgroundColor: 'transparent'
-                }}
+                sx={{ backgroundColor: 'transparent' }}
             >
                 <Toolbar data-tauri-drag-region id={"toolbarDrag1"}>
-                    <IconButton
-                        size="small"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <MoreVert />
-                    </IconButton>
+                    {props.actions ?? (
+                        <Box sx={{ width: '28px' }} />
+                    )}
                     <Typography
                         id={"toolbarDrag2"}
                         color='inherit'
                         data-tauri-drag-region
                         variant="subtitle2"
                         component="div"
-                        sx={{ flexGrow: 1, textAlign: 'center' }}
+                        sx={{ flexGrow: 1, textAlign: 'center', paddingLeft: window.isTauri ? 4 : 0.5 }}
                     >
                         Aurora Toolbot
                     </Typography>
@@ -64,7 +55,6 @@ export function AppBarLayout(props) {
                         >
                             <IconButton
                                 color="inherit"
-                                size="small"
                                 onClick={() => {
                                     appWindow.minimize()
                                 }}
@@ -73,7 +63,6 @@ export function AppBarLayout(props) {
                             </IconButton>
                             <IconButton
                                 color="inherit"
-                                size="small"
                                 onClick={() => {
                                     appWindow.close()
                                 }}
@@ -98,5 +87,6 @@ export function AppBarLayout(props) {
 }
 
 AppBarLayout.propTypes = {
+    actions: PropTypes.element,
     children: PropTypes.element.isRequired,
 };

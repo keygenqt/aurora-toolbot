@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Typography } from '@mui/material';
+import { Typography, Stack } from '@mui/material';
 
 export function FeaturesPage(props) {
     return (
-        <Typography>FeaturesPage</Typography>
+        <Stack
+            height={1}
+            sx={{ justifyContent: "center", alignItems: "center" }}
+        >
+            <Typography>FeaturesPage</Typography>
+
+        </Stack>
     );
 }
 

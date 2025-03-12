@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
+// components
+export * from './components/LottieLoading';
 // data
 export * from './data/DataImages';
+export * from './data/DataLottie';
 // hooks
 export * from './hooks/useEffectSingle';
 export * from './hooks/useEffectTheme';

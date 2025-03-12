@@ -15,25 +15,50 @@
  */
 import * as React from 'react';
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from 'react-redux'
 
 import { Box, Stack, Typography, Button } from '@mui/material';
 
-import { useEffectSingle, DataImages, AppUtils } from '../../base';
+import { useEffectSingle, DataImages, AppUtils, LottieLoading } from '../../base';
 import { Methods } from '../../modules';
 import { AppConf } from '../../conf/AppConf'
+import { AppInfoModel } from '../../models';
+
+import { setData } from '../../store/impl/appInfo'
 
 export function MainPage(props) {
+    // components
+    const navigate = useNavigate();
     const { t } = useTranslation();
+    // states
     const [version, setVersion] = React.useState(undefined);
-
+    // redux
+    const appInfo = useSelector((state) => state.appInfo.value);
+    const dispatch = useDispatch();
+    // data
     useEffectSingle(() => {
-        Methods.appInfo().then((model) => {
-            setVersion(AppUtils.checkVersion(model))
-        }).catch((e) => {
-            setVersion(false)
-        });
+        (async function () {
+            // Get appInfo
+            const data = appInfo ? appInfo.payload : await Methods.appInfo();
+            dispatch(setData(data));
+            // Update state
+            const model = AppInfoModel.parse(data);
+            setVersion(AppUtils.checkVersion(model));
+        })();
     });
-
+    // Loading
+    if (version == undefined) {
+        return (
+            <Stack
+                height={1}
+                sx={{ justifyContent: "center", alignItems: "center" }}
+            >
+                <LottieLoading />
+            </Stack>
+        );
+    }
+    // Page
     return (
         <Stack
             direction="column"
@@ -75,9 +100,10 @@ export function MainPage(props) {
                     <Box sx={{ textAlign: 'center' }}>
                         <Button
                             variant="contained"
-                            onClick={async () => {
-                                // @todo
-                                console.log('Open page feature')
+                            onClick={() => {
+                                document.startViewTransition(() => {
+                                    navigate("/features");
+                                });
                             }}
                         >
                             {t('main.t_connect_btn_start')}

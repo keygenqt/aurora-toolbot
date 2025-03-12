@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import axios from 'axios';
+import loading from '../../assets/lottie/loading.json';
 
 /**
- * Telegram application methods
- *
- * auth: https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app
+ * Load data images
  */
-export const MethodsWeb = {
-    appInfo: async function () {
-        return (await axios.get('/api/test/appInfo')).data;
-    },
-    emulatorInfo: async function () {
-        return (await axios.get('/api/test/emulatorInfo')).data;
-    },
-    log: function (message) {
-        console.log(message)
-    }
+export const DataLottie = {
+    loading: loading,
 }

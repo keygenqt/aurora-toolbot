@@ -13,21 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import axios from 'axios';
+import * as React from 'react';
+import Lottie from "lottie-react";
 
-/**
- * Telegram application methods
- *
- * auth: https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app
- */
-export const MethodsWeb = {
-    appInfo: async function () {
-        return (await axios.get('/api/test/appInfo')).data;
-    },
-    emulatorInfo: async function () {
-        return (await axios.get('/api/test/emulatorInfo')).data;
-    },
-    log: function (message) {
-        console.log(message)
-    }
+import { Box } from '@mui/material';
+
+import { DataLottie } from '../../base';
+
+export function LottieLoading() {
+    return (
+        <Box sx={{
+            width: 90,
+            height: 24,
+        }}>
+            <Lottie
+                style={{position: 'relative', top: -33}}
+                loop={true}
+                animationData={DataLottie.loading}
+            />
+        </Box>
+    );
 }
+
+LottieLoading.propTypes = {};

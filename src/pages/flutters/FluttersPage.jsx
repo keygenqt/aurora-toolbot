@@ -15,15 +15,15 @@
  */
 import { Typography, Stack } from '@mui/material';
 
-export function FeaturesPage(props) {
+export function FluttersPage(props) {
     return (
         <Stack
             height={1}
             sx={{ justifyContent: "center", alignItems: "center" }}
         >
-            <Typography color={'text.primary'}>FeaturesPage</Typography>
+            <Typography color={'text.primary'}>FluttersPage</Typography>
         </Stack>
     );
 }
 
-FeaturesPage.propTypes = {};
+FluttersPage.propTypes = {};

@@ -18,7 +18,7 @@ import Lottie from "lottie-react";
 
 import { Box } from '@mui/material';
 
-import { DataLottie } from '../../base';
+import { DataLottie } from '../../../base';
 
 export function LottieLoading() {
     return (

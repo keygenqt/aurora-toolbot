@@ -13,17 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Typography, Stack } from '@mui/material';
+import * as React from 'react';
+import { useNavigate } from "react-router";
 
-export function FeaturesPage(props) {
+import { IconButton } from '@mui/material'
+import { MoreVert } from '@mui/icons-material';
+
+export function ActionMenu() {
+    const navigate = useNavigate();
     return (
-        <Stack
-            height={1}
-            sx={{ justifyContent: "center", alignItems: "center" }}
+        <IconButton
+            color="inherit"
+            onClick={() => {
+                document.startViewTransition(() => {
+                    navigate("/settings");
+                });
+            }}
         >
-            <Typography color={'text.primary'}>FeaturesPage</Typography>
-        </Stack>
+            <MoreVert />
+        </IconButton>
     );
 }
 
-FeaturesPage.propTypes = {};
+ActionMenu.propTypes = {};

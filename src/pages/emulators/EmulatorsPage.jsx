@@ -15,15 +15,15 @@
  */
 import { Typography, Stack } from '@mui/material';
 
-export function FeaturesPage(props) {
+export function EmulatorsPage(props) {
     return (
         <Stack
             height={1}
             sx={{ justifyContent: "center", alignItems: "center" }}
         >
-            <Typography color={'text.primary'}>FeaturesPage</Typography>
+            <Typography color={'text.primary'}>EmulatorsPage</Typography>
         </Stack>
     );
 }
 
-FeaturesPage.propTypes = {};
+EmulatorsPage.propTypes = {};

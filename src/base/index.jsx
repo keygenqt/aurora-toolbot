@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-// components
-export * from './components/LottieLoading';
+// actions
+export * from './components/actions/ActionBack';
+export * from './components/actions/ActionMenu';
+// lottie
+export * from './components/lottie/LottieLoading';
 // data
 export * from './data/DataImages';
 export * from './data/DataLottie';

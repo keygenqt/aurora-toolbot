@@ -16,51 +16,35 @@
 import React from 'react'
 import { useNavigate, Route, Routes } from "react-router";
 
-import { IconButton } from '@mui/material'
-import { MoreVert, ArrowBack } from '@mui/icons-material';
-
-import { MainPage, FeaturesPage } from './pages'
+import { ActionBack, ActionMenu } from './base'
+import { AboutPage, FeaturesPage, MainPage, SettingsPage } from './pages'
 import { AppBarLayout } from './layouts'
 
 export function AppRoute() {
     const navigate = useNavigate();
     return (
         <Routes>
-            <Route path="/" element={(
-                <AppBarLayout
-                    actions={(
-                        <IconButton
-                            color="inherit"
-                            onClick={() => {
-                                // @todo
-                                console.log('Open menu')
-                            }}
-                        >
-                            <MoreVert />
-                        </IconButton>
-                    )}
-                >
-                    <MainPage />
+            <Route path="about" element={(
+                <AppBarLayout actions={<ActionBack />} >
+                    <AboutPage />
                 </AppBarLayout>
             )} />
             <Route path="features" element={(
-                <AppBarLayout
-                    actions={(
-                        <IconButton
-                            color="inherit"
-                            onClick={() => {
-                                document.startViewTransition(() => {
-                                    navigate(-1);
-                                });
-                            }}
-                        >
-                            <ArrowBack />
-                        </IconButton>
-                    )}
-                >
+                <AppBarLayout actions={<ActionBack />} >
                     <FeaturesPage />
                 </AppBarLayout>
             )} />
+            <Route path="/" element={(
+                <AppBarLayout actions={<ActionMenu />} >
+                    <MainPage />
+                </AppBarLayout>
+            )} />
+            <Route path="settings" element={(
+                <AppBarLayout actions={<ActionBack />} >
+                    <SettingsPage />
+                </AppBarLayout>
+            )} />
+
         </Routes>
     );
 }

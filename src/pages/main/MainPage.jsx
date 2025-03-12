@@ -108,11 +108,7 @@ export function MainPage(props) {
                     <Box sx={{ textAlign: 'center' }}>
                         <Button
                             variant="contained"
-                            onClick={() => {
-                                document.startViewTransition(() => {
-                                    navigate("/features");
-                                });
-                            }}
+                            onClick={() => AppUtils.openPage(navigate, "/features")}
                         >
                             {t('main.t_connect_btn_start')}
                         </Button>

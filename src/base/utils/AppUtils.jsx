@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { openUrl } from '@tauri-apps/plugin-opener';
-
+import { flushSync } from 'react-dom';
 import { AppConf } from '../../conf/AppConf'
 
 /**
@@ -37,6 +37,17 @@ export const AppUtils = {
             await openUrl(url);
         } else {
             window.open(url, '_blank', 'noopener,noreferrer')
+        }
+    },
+    openPage: function (navigate, key) {
+        if (window.isMobile) {
+            navigate(key);
+        } else {
+            document.startViewTransition(() => {
+                flushSync(() => {
+                    navigate(key);
+                });
+            });
         }
     }
 }

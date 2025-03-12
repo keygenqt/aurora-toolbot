@@ -36,8 +36,8 @@ export const components = {
         styleOverrides: {
             root: ({ theme }) =>
                 theme.unstable_sx({
-                    height: '24px',
-                    width: '24px',
+                    height: window.isMobile ? '32px' : '24px',
+                    width: window.isMobile ? '32px' : '24px',
                     background: theme.palette.mode === 'dark' ? '#414141' : '#e7e7e7',
                     '&:hover': {
                         background: theme.palette.mode === 'dark' ? '#4a4a4a' : '#dedede',

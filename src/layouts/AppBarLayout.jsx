@@ -33,17 +33,21 @@ export function AppBarLayout(props) {
                     {props.actions ?? (
                         <Box sx={{ width: '28px' }} />
                     )}
-                    <Typography
-                        id={"toolbarDrag2"}
-                        color='inherit'
-                        data-tauri-drag-region
-                        variant="subtitle2"
-                        component="div"
-                        sx={{ flexGrow: 1, textAlign: 'center', paddingLeft: window.isTauri ? 4 : 0.5 }}
-                    >
-                        Aurora Toolbot
-                    </Typography>
-
+                    {window.isTauri && (
+                        <Box sx={{ width: '28px' }} />
+                    )}
+                    {window.isMobile == false && (
+                        <Typography
+                            id={"toolbarDrag2"}
+                            color='inherit'
+                            data-tauri-drag-region
+                            variant="subtitle2"
+                            component="div"
+                            sx={{ flexGrow: 1, textAlign: 'center' }}
+                        >
+                            Aurora Toolbot
+                        </Typography>
+                    )}
                     {appWindow ? (
                         <Stack
                             direction="row"

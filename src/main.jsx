@@ -46,7 +46,9 @@ function startWithTelegram(fn) {
 
 // Check is run tauri or web
 if (window.isTauri) {
+    window.isMobile = false;
     start();
 } else {
+    window.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     startWithTelegram(start);
 }

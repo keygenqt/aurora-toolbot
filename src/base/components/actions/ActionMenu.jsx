@@ -19,16 +19,14 @@ import { useNavigate } from "react-router";
 import { IconButton } from '@mui/material'
 import { MoreVert } from '@mui/icons-material';
 
+import { AppUtils } from '../../../base';
+
 export function ActionMenu() {
     const navigate = useNavigate();
     return (
         <IconButton
             color="inherit"
-            onClick={() => {
-                document.startViewTransition(() => {
-                    navigate("/settings");
-                });
-            }}
+            onClick={() => AppUtils.openPage(navigate, "/settings")}
         >
             <MoreVert />
         </IconButton>

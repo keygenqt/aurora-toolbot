@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import { useNavigate } from "react-router";
+import { useNavigate } from 'react-router';
 
 import { IconButton } from '@mui/material'
 import { ArrowBack } from '@mui/icons-material';
+
+import { AppUtils } from '../../../base';
 
 export function ActionBack() {
     const navigate = useNavigate();
     return (
         <IconButton
             color="inherit"
-            onClick={() => {
-                document.startViewTransition(() => {
-                    navigate(-1);
-                });
-            }}
+            onClick={() => AppUtils.openPage(navigate, -1)}
         >
             <ArrowBack />
         </IconButton>

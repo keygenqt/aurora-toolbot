@@ -93,7 +93,7 @@ export function MainPage(props) {
                     maxWidth: 375,
                     margin: '0 auto !important',
                     fontWeight: 'bold',
-                    color: 'primary.light',
+                    color: 'primary.main',
                     textAlign: "center"
                 }}
             >

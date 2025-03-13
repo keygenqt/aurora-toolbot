@@ -76,7 +76,7 @@ export function ActionMenu() {
                 <DialogContent>
                     <DialogContentText>
                         <Box sx={{ paddingBottom: 2 }}>
-                            <Chip color='warning' label="v0.0.1" />
+                            <Chip color='warning' label={AppConf.version} />
                         </Box>
                         Приложение обеспечивающие лёгкое управление экосистемой ОС Аврора.
                     </DialogContentText>

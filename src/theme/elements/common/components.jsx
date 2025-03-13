@@ -76,5 +76,39 @@ export const components = {
                 textTransform: 'none'
             }
         }
+    },
+    MuiDrawer: {
+        styleOverrides: {
+            root: ({ theme }) =>
+                // Fix Drawer round corners for Tauri
+                window.isTauri ? theme.unstable_sx({
+                    position: 'absolute',
+                    borderRadius: '13px',
+                    overflow: 'hidden',
+                    '& .MuiBackdrop-root': {
+                        position: 'absolute',
+                    },
+                    '& .MuiPaper-root': {
+                        borderRadius: '13px',
+                        position: 'absolute',
+                        transform: 'none !important',
+                        transition: 'none !important',
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none',
+                    },
+                    '& .MuiList-root': {
+                        borderRadius: '13px',
+                        overflow: 'hidden',
+                        opacity: 0,
+                        transition: 'all 280ms !important',
+                        backgroundColor: theme.palette.background.default,
+                    }
+                }) : theme.unstable_sx({
+                    '& .MuiPaper-root': {
+                        borderTopLeftRadius: '13px',
+                        borderTopRightRadius: '13px',
+                    },
+                }),
+        }
     }
 }

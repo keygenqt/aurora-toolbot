@@ -14,22 +14,52 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import { useNavigate } from "react-router";
 
-import { IconButton } from '@mui/material'
+import { IconButton, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { MoreVert } from '@mui/icons-material';
 
-import { AppUtils } from '../../../base';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
 export function ActionMenu() {
-    const navigate = useNavigate();
+    const [state, setState] = React.useState(false);
     return (
-        <IconButton
-            color="inherit"
-            onClick={() => AppUtils.openPage(navigate, "/settings")}
-        >
-            <MoreVert />
-        </IconButton>
+        <>
+            <IconButton
+                color="inherit"
+                onClick={() => {
+                    setState(true);
+                    setTimeout(() => {
+                        document.getElementById("menu-app").style.opacity='1';
+                    }, 10);
+                }}
+            >
+                <MoreVert />
+            </IconButton>
+            <Drawer
+                anchor={'bottom'}
+                variant={'temporary'}
+                transitionDuration={280}
+                open={state}
+                onClose={() => {
+                    setState(false)
+                    document.getElementById("menu-app").style.opacity='0';
+                }}
+            >
+                <List id='menu-app'>
+                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        <ListItem key={text} disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
+        </>
     );
 }
 

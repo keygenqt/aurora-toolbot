@@ -29,6 +29,8 @@ body,
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    border-radius: 13px;
+    overflow: hidden;
 }
 
 a {

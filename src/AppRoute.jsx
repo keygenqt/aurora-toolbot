@@ -34,7 +34,7 @@ import {
     PsdksPage,
     SdkPage,
     SdksPage,
-    SettingsPage
+    SettingsPage,
 } from './pages'
 
 export function AppRoute() {

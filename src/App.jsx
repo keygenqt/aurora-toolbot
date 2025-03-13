@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import React from 'react'
-import { BrowserRouter, Routes } from "react-router";
 
 import { ThemeProvider, Box } from '@mui/material'
 
@@ -40,9 +39,7 @@ function App() {
                 }}
             >
                 {window.isTauri || window.isMiniApp ? (
-                    <BrowserRouter>
-                        <AppRoute />
-                    </BrowserRouter>
+                    <AppRoute />
                 ) : (
                     <BaseLayout>
                         <ForbiddenPage />

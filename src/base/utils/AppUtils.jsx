@@ -49,5 +49,10 @@ export const AppUtils = {
                 });
             });
         }
+    },
+    openPageDelay: function (navigate, key) {
+        setTimeout(() => {
+            AppUtils.openPage(navigate, key)
+        }, 270);
     }
 }

@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import { Stack, Typography } from '@mui/material';
 import { LottieComingSoon } from '../../base';
 
-export function SdkPage(props) {
+export function FaqPage(props) {
     // components
     const { t } = useTranslation();
     // Page
@@ -43,4 +43,4 @@ export function SdkPage(props) {
     );
 }
 
-SdkPage.propTypes = {};
+FaqPage.propTypes = {};

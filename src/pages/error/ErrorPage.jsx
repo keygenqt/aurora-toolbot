@@ -15,9 +15,9 @@
  */
 import { useTranslation } from "react-i18next";
 import { Stack, Typography } from '@mui/material';
-import { LottieComingSoon } from '../../base';
+import { LottieError } from '../../base';
 
-export function SdkPage(props) {
+export function ErrorPage(props) {
     // components
     const { t } = useTranslation();
     // Page
@@ -27,20 +27,20 @@ export function SdkPage(props) {
             sx={{ justifyContent: "center", alignItems: "center" }}
         >
             <Stack
-                spacing={5}
+                spacing={2}
                 sx={{ alignItems: "center" }}
             >
-                <LottieComingSoon />
+                <LottieError />
                 <Typography
                     variant={'body1'}
                     color={'text.primary'}
                     textAlign={'center'}
                 >
-                    {t('common.t_coming_soon')}
+                    {t('error.t_text')}
                 </Typography>
             </Stack>
         </Stack>
     );
 }
 
-SdkPage.propTypes = {};
+ErrorPage.propTypes = {};

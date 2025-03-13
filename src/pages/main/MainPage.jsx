@@ -44,7 +44,7 @@ export function MainPage(props) {
         (async function () {
             try {
                 // Get appInfo
-                const data = appInfo ? appInfo.payload : await Methods.appInfo();
+                const data = appInfo ? appInfo : await Methods.appInfo();
                 dispatch(setData(data));
                 // Update state
                 const model = AppInfoModel.parse(data);
@@ -121,8 +121,8 @@ export function MainPage(props) {
                     <Box sx={{ textAlign: 'center' }}>
                         <Button
                             startIcon={<HomeRepairService color="default" />}
-                            variant="contained"
-                            onClick={() => AppUtils.openPage(navigate, "/features")}
+                            variant="outlined"
+                            onClick={() => AppUtils.openPageDelay(navigate, "/features")}
                         >
                             {t('main.t_connect_btn_start')}
                         </Button>
@@ -160,7 +160,7 @@ export function MainPage(props) {
                     <Box sx={{ textAlign: 'center' }}>
                         <Button
                             endIcon={<OpenInNew color="default" />}
-                            variant="contained"
+                            variant="outlined"
                             onClick={async () => {
                                 await AppUtils.openUrl(AppConf.docUrl)
                             }}

@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 export * from './about/AboutPage';
+export * from './device/DevicePage';
+export * from './devices/DevicesPage';
 export * from './emulator/EmulatorPage';
 export * from './emulators/EmulatorsPage';
+export * from './error/ErrorPage';
+export * from './faq/FaqPage';
 export * from './features/FeaturesPage';
 export * from './flutter/FlutterPage';
 export * from './flutters/FluttersPage';

@@ -18,14 +18,18 @@
 export * from './components/actions/ActionBack';
 export * from './components/actions/ActionMenu';
 // lottie
+export * from './components/lottie/LottieComingSoon';
+export * from './components/lottie/LottieError';
 export * from './components/lottie/LottieLoading';
 // data
 export * from './data/DataImages';
 export * from './data/DataLottie';
 // hooks
+export * from './hooks/useEffectFocus';
+export * from './hooks/useEffectPageScroll';
 export * from './hooks/useEffectSingle';
 export * from './hooks/useEffectTheme';
-export * from './hooks/useEffectFocus';
+export * from './hooks/useEffectWindowResize';
 // locale
 export * from './localization/Localization';
 // utils

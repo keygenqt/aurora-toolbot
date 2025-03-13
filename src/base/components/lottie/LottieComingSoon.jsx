@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import icon from '../../assets/images/icon.png';
-import icon_beta from '../../assets/images/icon_beta.png';
-import icon_flutter from '../../assets/images/icon_flutter.webp';
-import icon_psdk from '../../assets/images/icon_psdk.svg';
-import icon_sdk from '../../assets/images/icon_sdk.svg';
+import * as React from 'react';
+import Lottie from "lottie-react";
 
-/**
- * Load data images
- */
-export const DataImages = {
-    icon: icon,
-    iconBeta: icon_beta,
-    iconFlutter: icon_flutter,
-    iconPsdk: icon_psdk,
-    iconSdk: icon_sdk,
+import { Box } from '@mui/material';
+
+import { DataLottie } from '../../../base';
+
+export function LottieComingSoon() {
+    return (
+        <Box sx={{ width: 280 }}>
+            <Lottie
+                style={{ position: 'relative', left: -18, top: -5 }}
+                loop={true}
+                animationData={DataLottie.comingSoon}
+            />
+        </Box>
+    );
 }
+
+LottieComingSoon.propTypes = {};

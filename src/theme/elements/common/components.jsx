@@ -47,5 +47,34 @@ export const components = {
                     },
                 }),
         }
+    },
+    MuiList: {
+        styleOverrides: {
+            root: {
+                width: '100%',
+                boxSizing: 'border-box',
+            }
+        }
+    },
+    MuiListItem: {
+        styleOverrides: {
+            root: {
+                paddingLeft: '0',
+                paddingRight: '0',
+                '& .MuiPaper-root': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                },
+            }
+        }
+    },
+    MuiCard: {
+        styleOverrides: {
+            root: {
+                width: '100%',
+                borderRadius: 13,
+                boxShadow: 'none !important',
+                textTransform: 'none'
+            }
+        }
     }
 }

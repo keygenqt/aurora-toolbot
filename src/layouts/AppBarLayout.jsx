@@ -16,18 +16,48 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { getCurrentWindow } from '@tauri-apps/api/window';
+import { useLocation } from "react-router";
 
-import { Box, Stack, AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import { useTheme, Box, Stack, AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import { Minimize, Close } from '@mui/icons-material';
 
+import { useEffectPageScroll, useEffectWindowResize } from '../base';
+
 export function AppBarLayout(props) {
+    // components
     const appWindow = window.isTauri ? getCurrentWindow() : undefined;
+    const theme = useTheme();
+    // restoring scroll
+    const scrollTop = useEffectPageScroll();
+    const { pathname } = useLocation();
+    React.useEffect(() => {
+        document.getElementById("page_scroll").scrollTop = scrollTop;
+    }, [pathname]);
+    // scroll padding for telegram web
+    const size = useEffectWindowResize();
+    const [padding, setPadding] = React.useState(22);
+    React.useEffect(() => {
+        if (!window.isTauri && !window.isMobile) {
+            let scroll = document.getElementById("page_scroll");
+            if (scroll.scrollHeight > scroll.clientHeight) {
+                setPadding(18)
+            } else {
+                setPadding(22)
+            }
+        }
+    }, [size]);
+    // Page
     return (
         <>
             <AppBar
                 position="static"
                 variant="dense"
-                sx={{ backgroundColor: 'transparent' }}
+                sx={{
+                    zIndex: 99,
+                    position: 'relative',
+                    backgroundColor: 'transparent',
+                    boxShadow: `0 8px 8px ${theme.palette.background.default}`
+                }}
             >
                 <Toolbar data-tauri-drag-region id={"toolbarDrag1"}>
                     {props.actions ?? (
@@ -80,9 +110,12 @@ export function AppBarLayout(props) {
                 </Toolbar>
             </AppBar>
             <Box
-                boxSizing={'border-box'}
-                height={'calc(100% - 45px)'}
-                sx={{ p: '18px' }}
+                id="page_scroll"
+                className={'AppScroll'}
+                sx={{
+                    paddingLeft: '22px',
+                    paddingRight: `${padding}px`,
+                }}
             >
                 {props.children}
             </Box>
@@ -92,5 +125,6 @@ export function AppBarLayout(props) {
 
 AppBarLayout.propTypes = {
     actions: PropTypes.element,
+    padding: PropTypes.number,
     children: PropTypes.element.isRequired,
 };

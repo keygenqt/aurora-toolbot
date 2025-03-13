@@ -13,34 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useTranslation } from "react-i18next";
-import { Stack, Typography } from '@mui/material';
-import { LottieComingSoon } from '../../base';
+import { useNavigate } from "react-router";
 
-export function SdkPage(props) {
+import { Stack, Button } from '@mui/material';
+
+import { AppUtils } from '../../base';
+
+export function DevicesPage(props) {
     // components
-    const { t } = useTranslation();
+    const navigate = useNavigate();
     // Page
     return (
         <Stack
             height={1}
             sx={{ justifyContent: "center", alignItems: "center" }}
         >
-            <Stack
-                spacing={5}
-                sx={{ alignItems: "center" }}
+            <Button
+                variant="outlined"
+                onClick={() => AppUtils.openPageDelay(navigate, "1")}
             >
-                <LottieComingSoon />
-                <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    textAlign={'center'}
-                >
-                    {t('common.t_coming_soon')}
-                </Typography>
-            </Stack>
+                Open device: 1
+            </Button>
         </Stack>
     );
 }
 
-SdkPage.propTypes = {};
+DevicesPage.propTypes = {};

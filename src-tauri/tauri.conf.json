@@ -13,9 +13,9 @@
     "windows": [
       {
         "width": 400,
-        "height": 760,
+        "height": 800,
         "minWidth": 400,
-        "minHeight": 760,
+        "minHeight": 800,
         "fullscreen": false,
         "decorations": false,
         "transparent": true

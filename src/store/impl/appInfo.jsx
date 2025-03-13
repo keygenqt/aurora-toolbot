@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const appInfoSlice = createSlice({
-  name: 'appInfo',
-  initialState: {
-    value: undefined,
-  },
-  reducers: {
-    setData: (state, model) => {
-        state.value = model
+    name: 'appInfo',
+    initialState: {
+        value: undefined,
     },
-  },
+    reducers: {
+        setData: (state, data) => {
+            state.value = data.payload
+        },
+    },
 })
 
 export const { setData } = appInfoSlice.actions

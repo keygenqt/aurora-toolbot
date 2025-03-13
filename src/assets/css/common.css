@@ -53,6 +53,14 @@ img {
     cursor: default;
 }
 
+#root .AppScroll {
+    height: calc(100% - 45px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 #root.Tauri {
     border-radius: 13px;
     overflow: hidden;

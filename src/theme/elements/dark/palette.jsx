@@ -19,13 +19,18 @@ export const palette = {
         default: '#2c2c2c',
     },
     primary: {
-        main: '#417460',
-        light: '#75be9c',
+        main: '#75be9c',
     },
-    inherit: {
-        main: '#f7f7f7',
+    secondary: {
+        main: '#52c6d1',
+    },
+    info: {
+        main: '#0295c2',
     },
     success: {
         main: '#5c997d',
+    },
+    inherit: {
+        main: '#f7f7f7',
     },
 }

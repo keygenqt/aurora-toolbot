@@ -13,15 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Typography, Stack } from '@mui/material';
+import { useTranslation } from "react-i18next";
+import { Stack, Typography } from '@mui/material';
+import { LottieComingSoon } from '../../base';
 
 export function SdksPage(props) {
+    // components
+    const { t } = useTranslation();
+    // Page
     return (
         <Stack
             height={1}
             sx={{ justifyContent: "center", alignItems: "center" }}
         >
-            <Typography color={'text.primary'}>SdksPage</Typography>
+            <Stack
+                spacing={5}
+                sx={{ alignItems: "center" }}
+            >
+                <LottieComingSoon />
+                <Typography
+                    variant={'body1'}
+                    color={'text.primary'}
+                    textAlign={'center'}
+                >
+                    {t('common.t_coming_soon')}
+                </Typography>
+            </Stack>
         </Stack>
     );
 }

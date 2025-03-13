@@ -20,6 +20,7 @@
     "@tauri-apps/plugin-log": "^2.3.0",
     "@tauri-apps/plugin-opener": "^2.2.6",
     "axios": "^1.8.2",
+    "crypto-js": "^4.2.0",
     "i18next": "^24.2.2",
     "lottie-react": "^2.4.1",
     "react": "^19.0.0",

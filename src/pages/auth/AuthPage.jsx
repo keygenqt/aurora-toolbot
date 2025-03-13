@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import { Stack, Typography } from '@mui/material';
 import { LottieComingSoon } from '../../base';
 
-export function SettingsPage(props) {
+export function AuthPage(props) {
     // components
     const { t } = useTranslation();
     // Page
@@ -43,4 +43,4 @@ export function SettingsPage(props) {
     );
 }
 
-SettingsPage.propTypes = {};
+AuthPage.propTypes = {};

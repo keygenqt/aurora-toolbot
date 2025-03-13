@@ -25,6 +25,7 @@ export * from './components/lottie/LottieLoading';
 export * from './data/DataImages';
 export * from './data/DataLottie';
 // hooks
+export * from './hooks/useEffectCache';
 export * from './hooks/useEffectFocus';
 export * from './hooks/useEffectPageScroll';
 export * from './hooks/useEffectSingle';

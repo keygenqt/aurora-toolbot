@@ -29,8 +29,6 @@ body,
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border-radius: 13px;
-    overflow: hidden;
 }
 
 a {
@@ -70,11 +68,11 @@ img {
 }
 
 #root.Tauri.light {
-    border: 1.5px solid #dfdfdf;
+    border: 1px solid #dbdbdb78;
 }
 
 #root.Tauri.dark {
-    border: 1.5px solid #474747;
+    border: 1px solid #585858;
 }
 
 #root.Tauri .WindowFocus .MuiToolbar-root {

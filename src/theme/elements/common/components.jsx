@@ -38,7 +38,7 @@ export const components = {
                 theme.unstable_sx({
                     height: window.isMobile ? '32px' : '24px',
                     width: window.isMobile ? '32px' : '24px',
-                    background: theme.palette.mode === 'dark' ? '#414141' : '#e7e7e7',
+                    background: '#adadad45 !important',
                     '&:hover': {
                         background: theme.palette.mode === 'dark' ? '#4a4a4a' : '#dedede',
                     },
@@ -62,7 +62,7 @@ export const components = {
                 paddingLeft: '0',
                 paddingRight: '0',
                 '& .MuiPaper-root': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                    backgroundColor: '#ffffff08',
                 },
             }
         }
@@ -87,14 +87,15 @@ export const components = {
                     overflow: 'hidden',
                     '& .MuiBackdrop-root': {
                         position: 'absolute',
+                        backgroundColor: '#000000b3',
                     },
                     '& .MuiPaper-root': {
-                        borderRadius: '13px',
                         position: 'absolute',
+                        backgroundColor: 'transparent !important',
                         transform: 'none !important',
                         transition: 'none !important',
-                        backgroundColor: 'transparent',
                         boxShadow: 'none',
+                        '--Paper-overlay': 'none !important',
                     },
                     '& .MuiList-root': {
                         borderRadius: '13px',
@@ -108,6 +109,31 @@ export const components = {
                         borderTopLeftRadius: '13px',
                         borderTopRightRadius: '13px',
                     },
+                }),
+        }
+    },
+    MuiDialog: {
+        styleOverrides: {
+            root: ({ theme }) =>
+                theme.unstable_sx({
+                    position: 'absolute',
+                    borderRadius: '13px',
+                    overflow: 'hidden',
+                    '& .MuiBackdrop-root': {
+                        position: 'absolute',
+                        backgroundColor: '#000000b3',
+                    },
+                    '& .MuiPaper-root': {
+                        borderRadius: '13px',
+                    },
+                }),
+        }
+    },
+    MuiButtonBase: {
+        styleOverrides: {
+            root: ({ theme }) =>
+                theme.unstable_sx({
+                    backgroundColor: window.isMobile ? 'transparent !important' : null
                 }),
         }
     }

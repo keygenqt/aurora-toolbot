@@ -29,12 +29,13 @@ export function FeaturesPage(props) {
             'title': 'Устройства',
             'desc': 'Управление вашими устройствами и эмуляторами с операционной системой Аврора.',
         },
-        {
-            'title': 'Devices',
-            'desc': 'Работа с эмуляторами ОС Аврора предоставляемыми Аврора SDK.',
-            'color': theme.palette.secondary.main,
-            'route': 'devices',
-        },
+        // @todo
+        // {
+        //     'title': 'Devices',
+        //     'desc': 'Работа с эмуляторами ОС Аврора предоставляемыми Аврора SDK.',
+        //     'color': theme.palette.secondary.main,
+        //     'route': 'devices',
+        // },
         {
             'title': 'Emulators',
             'desc': 'Работа с эмуляторами ОС Аврора предоставляемыми Аврора SDK.',

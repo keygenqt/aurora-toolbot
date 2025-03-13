@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { MD5 } from 'crypto-js';
+
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { flushSync } from 'react-dom';
 import { AppConf } from '../../conf/AppConf'
@@ -31,6 +33,17 @@ export const AppUtils = {
             let mVersion2 = model.appVersion.split('.').slice(0, 2).join("");
             return mVersion1 === mVersion2;
         }
+    },
+    setCache: function (key, value) {
+        localStorage.setItem(key, value);
+        let values = [],
+            keys = Object.keys(localStorage),
+            i = keys.length,
+            el = document.querySelector('#root');
+        while (i--) {
+            values.push(localStorage.getItem(keys[i]));
+        }
+        el.dataset.cache = MD5(values.toString()).toString();
     },
     openUrl: async function (url) {
         if (window.isTauri) {

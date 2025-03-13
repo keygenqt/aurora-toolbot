@@ -56,7 +56,8 @@ export function AppBarLayout(props) {
                     zIndex: 99,
                     position: 'relative',
                     backgroundColor: 'transparent',
-                    boxShadow: `0 8px 8px ${theme.palette.background.default}`
+                    boxShadow: `0 8px 8px ${theme.palette.background.default}`,
+                    transition: 'none !important',
                 }}
             >
                 <Toolbar data-tauri-drag-region id={"toolbarDrag1"}>

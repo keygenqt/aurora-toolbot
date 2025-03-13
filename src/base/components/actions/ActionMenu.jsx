@@ -14,25 +14,82 @@
  * limitations under the License.
  */
 import * as React from 'react';
+import { useNavigate } from 'react-router';
 
-import { IconButton, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import {
+    IconButton,
+    Drawer,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Divider,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions,
+    Button,
+    Chip,
+    Box,
+    Typography,
+    Switch,
+} from '@mui/material'
 import { MoreVert } from '@mui/icons-material';
 
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import { DarkMode, Info, OpenInNew, LockOpen } from '@mui/icons-material';
+
+import { useEffectCache, AppUtils } from '../../../base'
+import { AppConf } from '../../../conf/AppConf'
 
 export function ActionMenu() {
+    // components
+    const navigate = useNavigate();
+    const darkModeCache = useEffectCache('isDark');
+    // states
     const [state, setState] = React.useState(false);
+    const [about, setAbout] = React.useState(false);
+    const [dark, setDark] = React.useState(darkModeCache === 'true');
+    const toggleOpen = function (isOpen) {
+        setState(isOpen);
+        if (window.isTauri) {
+            setTimeout(() => {
+                if (isOpen) {
+                    document.getElementById("menu-app").style.opacity = '1';
+                } else {
+                    document.getElementById("menu-app").style.opacity = '0';
+                }
+            }, 10);
+        }
+    }
+    // Component
     return (
         <>
+            <Dialog
+                open={about}
+                onClose={() => setAbout(false)}
+            >
+                <DialogTitle>
+                    Aurora Toolbot
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <Box sx={{ paddingBottom: 2 }}>
+                            <Chip color='warning' label="v0.0.1" />
+                        </Box>
+                        Приложение обеспечивающие лёгкое управление экосистемой ОС Аврора.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setAbout(false)} autoFocus>
+                        Закрыть
+                    </Button>
+                </DialogActions>
+            </Dialog>
             <IconButton
                 color="inherit"
-                onClick={() => {
-                    setState(true);
-                    setTimeout(() => {
-                        document.getElementById("menu-app").style.opacity='1';
-                    }, 10);
-                }}
+                onClick={() => toggleOpen(true)}
             >
                 <MoreVert />
             </IconButton>
@@ -41,22 +98,90 @@ export function ActionMenu() {
                 variant={'temporary'}
                 transitionDuration={280}
                 open={state}
-                onClose={() => {
-                    setState(false)
-                    document.getElementById("menu-app").style.opacity='0';
-                }}
+                onClose={() => toggleOpen(false)}
             >
                 <List id='menu-app'>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
+                    <Typography
+                        variant="subtitle2"
+                        sx={{ p: 2 }}
+                    >
+                        Настройки
+                    </Typography>
+                    {window.isTauri && (
+                        <ListItem key={'menu-2'} disablePadding>
+                            <ListItemButton
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        toggleOpen(false)
+                                        AppUtils.openPage(navigate, "/auth")
+                                    }, 200);
+                                }}
+                            >
                                 <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                    <LockOpen />
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText primary={'Авторизация'} />
                             </ListItemButton>
                         </ListItem>
-                    ))}
+                    )}
+                    <ListItem key={'menu-1'} disablePadding>
+                        <ListItemButton
+                            onClick={() => {
+                                AppUtils.setCache('isDark', !dark);
+                                setDark(!dark);
+                            }}
+                        >
+                            <ListItemIcon>
+                                <DarkMode />
+                            </ListItemIcon>
+                            <ListItemText primary={'Force Dark Mode'} />
+                            <Switch
+                                checked={dark}
+                                onChange={() => {
+                                    AppUtils.setCache('isDark', !dark);
+                                    setDark(!dark);
+                                }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                    <Box sx={{ paddingTop: 2 }} />
+                    <Divider />
+                    <Typography
+                        variant="subtitle2"
+                        sx={{ p: 2 }}
+                    >
+                        Информация
+                    </Typography>
+                    <ListItem key={'menu-3'} disablePadding>
+                        <ListItemButton
+                            onClick={() => {
+                                setTimeout(async () => {
+                                    toggleOpen(false)
+                                    await AppUtils.openUrl(AppConf.docUrl)
+                                }, 200);
+                            }}
+                        >
+                            <ListItemIcon>
+                                <OpenInNew />
+                            </ListItemIcon>
+                            <ListItemText primary={'Документация'} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem key={'menu-4'} disablePadding>
+                        <ListItemButton
+                            onClick={() => {
+                                setTimeout(() => {
+                                    toggleOpen(false)
+                                    setAbout(true)
+                                }, 200);
+                            }}
+                        >
+                            <ListItemIcon>
+                                <Info />
+                            </ListItemIcon>
+                            <ListItemText primary={'О Toolbot'} />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
         </>

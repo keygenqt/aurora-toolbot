@@ -19,7 +19,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { ActionBack, ActionMenu } from './base'
 import { AppBarLayout } from './layouts'
 import {
-    AboutPage,
+    AuthPage,
     DevicePage,
     DevicesPage,
     EmulatorPage,
@@ -34,7 +34,6 @@ import {
     PsdksPage,
     SdkPage,
     SdksPage,
-    SettingsPage,
 } from './pages'
 
 export function AppRoute() {
@@ -47,9 +46,9 @@ export function AppRoute() {
                         <MainPage onStateConnect={(connect) => setShowMenuMain(connect)} />
                     </AppBarLayout>
                 )} />
-                <Route path="about" element={(
+                <Route path="auth" element={(
                     <AppBarLayout actions={<ActionBack />} >
-                        <AboutPage />
+                        <AuthPage />
                     </AppBarLayout>
                 )} />
                 <Route path="features">
@@ -126,11 +125,6 @@ export function AppRoute() {
                         )} />
                     </Route>
                 </Route>
-                <Route path="settings" padding={0} element={(
-                    <AppBarLayout actions={<ActionBack />} >
-                        <SettingsPage />
-                    </AppBarLayout>
-                )} />
                 <Route path="*" element={(
                     <AppBarLayout actions={<ActionBack />} >
                         <ErrorPage />

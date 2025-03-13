@@ -17,11 +17,34 @@ import * as React from 'react';
 import { listen } from '@tauri-apps/api/event'
 import { invoke } from "@tauri-apps/api/core";
 
+import { useEffectCache } from '../../base'
+
 /**
  * Listen change theme for telegram & tauri
  */
 export function useEffectTheme() {
-    const [themeMode, setThemeMode] = React.useState('light');
+    const darkModeCache = useEffectCache('isDark');
+    const [themeMode, setThemeMode] = React.useState(darkModeCache === 'true' ? 'dark' : 'light');
+
+    React.useEffect(() => {
+        const root = document.querySelector('#root');
+        if (darkModeCache === 'true') {
+            root.classList.remove('light');
+            root.classList.add('dark');
+            setThemeMode('dark');
+        }
+        if (darkModeCache === 'false') {
+            if (window.isTauri) {
+                (async function () {
+                    await invoke('emit_theme', {});
+                })();
+            }
+            if (window.isMiniApp) {
+                setThemeMode(window.Telegram.WebApp.colorScheme);
+            }
+        }
+    }, [darkModeCache]);
+
     const wasCalled = React.useRef(false);
     React.useEffect(() => {
         if (wasCalled.current) return;
@@ -32,6 +55,10 @@ export function useEffectTheme() {
             root.classList.add("Tauri");
             (async function () {
                 await listen('event-theme', (event) => {
+                    const isDark = localStorage.getItem('isDark');
+                    if (isDark === 'true') {
+                        return
+                    }
                     if (event.payload.mode === 'light') {
                         root.classList.add("light");
                         root.classList.remove("dark");
@@ -49,6 +76,10 @@ export function useEffectTheme() {
             root.classList.add("MiniApp");
             setThemeMode(window.Telegram.WebApp.colorScheme);
             function themeChanged() {
+                const isDark = localStorage.getItem('isDark');
+                if (isDark === 'true') {
+                    return
+                }
                 if (window.Telegram.WebApp.colorScheme === 'light') {
                     root.classList.add("light");
                     root.classList.remove("dark");

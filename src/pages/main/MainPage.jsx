@@ -43,6 +43,13 @@ export function MainPage(props) {
     useEffectSingle(() => {
         (async function () {
             try {
+                // @todo demo app
+                if (window.isMiniApp) {
+                    props.onStateConnect(true);
+                    setVersion(AppConf.appVersion);
+                    setConnect(true);
+                    return;
+                }
                 // Get appInfo
                 const data = appInfo ? appInfo : await Methods.appInfo();
                 dispatch(setData(data));

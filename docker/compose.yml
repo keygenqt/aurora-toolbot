@@ -1,0 +1,33 @@
+version: "3"
+name: aurora-bot-app
+
+services:
+  node:
+    image: 'node:22.7.0'
+    container_name: aurora-bot-app-build
+    restart: no
+    build:
+      context: .
+      dockerfile: node/Dockerfile
+    command:
+      - /bin/bash
+      - -c
+      - |
+        npm install
+        npm run build
+    working_dir: /var/www/src
+    volumes:
+      - ../website:/var/www/src
+
+  nginx:
+    image: 'nginx:latest'
+    container_name: aurora-bot-app-nginx
+    depends_on:
+      - node
+    restart: always
+    tty: true
+    ports:
+      - ${PORT_WEBSITE}:3000
+    volumes:
+      - ../:/var/www/src
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf

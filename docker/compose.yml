@@ -17,7 +17,7 @@ services:
         npm run build
     working_dir: /var/www/src
     volumes:
-      - ../website:/var/www/src
+      - ../:/var/www/src
 
   nginx:
     image: 'nginx:latest'

@@ -1,10 +1,11 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "toolbot",
+  "productName": "Aurora Toolbot",
+  "mainBinaryName": "aurora-toolbot",
   "version": "0.0.1",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.keygenqt.aurora-toolbot",
   "build": {
-    "frontendDist": "../build",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:3000",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"

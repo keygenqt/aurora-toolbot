@@ -2,8 +2,8 @@
 
 > Subscribe and like ⭐
 
-[![Releases DEB](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/keygenqt/aurora-toolbot/releases/latest&query=assets[0][download_count]&label=Releases%20DEB&color=BE8731&logo=github&prefix=0.0.5%20(&suffix=))](https://github.com/keygenqt/aurora-toolbot/releases)
-[![Releases RPM](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/keygenqt/aurora-toolbot/releases/latest&query=assets[1][download_count]&label=Releases%20RPM&color=040404&logo=github&prefix=0.0.5%20(&suffix=))](https://github.com/keygenqt/aurora-toolbot/releases)
+[![Releases DEB](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/keygenqt/aurora-toolbot/releases/latest&query=assets[1][download_count]&label=Releases%20DEB&color=BE8731&logo=github&prefix=0.0.1%20(&suffix=))](https://github.com/keygenqt/aurora-toolbot/releases)
+[![Releases RPM](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/keygenqt/aurora-toolbot/releases/latest&query=assets[0][download_count]&label=Releases%20RPM&color=040404&logo=github&prefix=0.0.1%20(&suffix=))](https://github.com/keygenqt/aurora-toolbot/releases)
 
 > The application is under development.
 

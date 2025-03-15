@@ -25,7 +25,7 @@ pub fn run() {
             methods::app_info,
             methods::emulator_info,
             theme::listen_theme,
-            theme::emit_theme,
+            theme::get_theme,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

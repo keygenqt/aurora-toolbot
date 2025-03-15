@@ -16,6 +16,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
+import { invoke } from "@tauri-apps/api/core";
 
 import store from './store/configure.jsx'
 import './assets/css/index.css'
@@ -34,21 +35,45 @@ function start() {
 
 // Start after load telegram lib
 function startWithTelegram(fn) {
+    // Check is mobile
+    window.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // Load js
     var head = document.getElementsByTagName('head')[0];
     var js = document.createElement("script");
     js.src = "https://telegram.org/js/telegram-web-app.js?56";
     head.appendChild(js);
     js.addEventListener("load", () => {
+        // Check is mini app
         window.isMiniApp = window.Telegram.WebApp.initData !== '';
+        // Run app
         fn();
     });
 }
 
+// Start after load get ini data Tauri
+function startWithTauri(fn) {
+    (async function () {
+        // Set is not mobile
+        window.isMobile = false;
+        // Set is not mini app
+        window.isMiniApp = false;
+        // Set theme mode
+        try {
+            let theme = await invoke('get_theme', {});
+            window.colorScheme = theme.mode;
+        } catch (e) {
+            window.colorScheme = 'light'
+        }
+        // Run app
+        fn();
+    })();
+}
+
 // Check is run tauri or web
 if (window.isTauri) {
-    window.isMobile = false;
-    start();
+    // Start with loading data tauri
+    startWithTauri(start);
 } else {
-    window.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // Start with loading data telegram
     startWithTelegram(start);
 }

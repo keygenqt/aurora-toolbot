@@ -15,6 +15,7 @@
  */
 import * as React from 'react';
 import { useNavigate } from 'react-router';
+import { useTranslation } from "react-i18next";
 
 import {
     IconButton,
@@ -45,6 +46,7 @@ import { AppConf } from '../../../conf/AppConf'
 
 export function ActionMenu() {
     // components
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const darkModeCache = useEffectCache('isDark');
     // states
@@ -71,19 +73,19 @@ export function ActionMenu() {
                 onClose={() => setAbout(false)}
             >
                 <DialogTitle>
-                    Aurora Toolbot
+                    {t('common.t_app_name')}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <Box sx={{ paddingBottom: 2 }}>
                             <Chip color='warning' label={AppConf.version} />
                         </Box>
-                        Приложение обеспечивающие лёгкое управление экосистемой ОС Аврора.
+                        {t('main.dialog_info.t_desc')}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setAbout(false)} autoFocus>
-                        Закрыть
+                        {t('common.t_btn_close')}
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -105,7 +107,7 @@ export function ActionMenu() {
                         variant="subtitle2"
                         sx={{ p: 2 }}
                     >
-                        Настройки
+                        {t('main.menu.t_title_settings')}
                     </Typography>
                     {window.isTauri && (
                         <ListItem key={'menu-2'} disablePadding>
@@ -120,7 +122,7 @@ export function ActionMenu() {
                                 <ListItemIcon>
                                     <LockOpen />
                                 </ListItemIcon>
-                                <ListItemText primary={'Авторизация'} />
+                                <ListItemText primary={t('main.menu.t_btn_auth')} />
                             </ListItemButton>
                         </ListItem>
                     )}
@@ -134,7 +136,7 @@ export function ActionMenu() {
                             <ListItemIcon>
                                 <DarkMode />
                             </ListItemIcon>
-                            <ListItemText primary={'Force Dark Mode'} />
+                            <ListItemText primary={t('main.menu.t_btn_force_dark')} />
                             <Switch
                                 checked={dark}
                                 onChange={() => {
@@ -150,7 +152,7 @@ export function ActionMenu() {
                         variant="subtitle2"
                         sx={{ p: 2 }}
                     >
-                        Информация
+                        {t('main.menu.t_title_info')}
                     </Typography>
                     <ListItem key={'menu-3'} disablePadding>
                         <ListItemButton
@@ -164,7 +166,7 @@ export function ActionMenu() {
                             <ListItemIcon>
                                 <OpenInNew />
                             </ListItemIcon>
-                            <ListItemText primary={'Документация'} />
+                            <ListItemText primary={t('main.menu.t_btn_docs')} />
                         </ListItemButton>
                     </ListItem>
                     <ListItem key={'menu-4'} disablePadding>
@@ -179,7 +181,7 @@ export function ActionMenu() {
                             <ListItemIcon>
                                 <Info />
                             </ListItemIcon>
-                            <ListItemText primary={'О Toolbot'} />
+                            <ListItemText primary={t('main.menu.t_btn_about')} />
                         </ListItemButton>
                     </ListItem>
                 </List>

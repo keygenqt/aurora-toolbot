@@ -13,19 +13,24 @@
 // limitations under the License.
 use darkmode::Mode;
 use tauri::Emitter;
+use tauri::Error;
 use tauri::Window;
 
 #[derive(Clone, serde::Serialize)]
-struct Theme {
+pub struct Theme {
     mode: String,
 }
 
+fn data_mode(mode: Mode) -> Theme {
+    match mode {
+        Mode::Default => Theme { mode: "light".into() },
+        Mode::Dark => Theme { mode: "dark".into() },
+        Mode::Light => Theme { mode: "light".into() },
+    }
+}
+
 fn send_event(window: &Window, mode: Mode) {
-    let _ = match mode {
-        Mode::Default => window.emit("event-theme", Theme { mode: "light".into() }),
-        Mode::Dark => window.emit("event-theme", Theme { mode: "dark".into() }),
-        Mode::Light => window.emit("event-theme", Theme { mode: "light".into() }),
-    };
+    let _ = window.emit("event-theme", data_mode(mode));
 }
 
 #[tauri::command]
@@ -38,9 +43,9 @@ pub fn listen_theme(window: Window) {
 }
 
 #[tauri::command]
-pub fn emit_theme(window: Window) {
+pub fn get_theme() -> Result<Theme, Error> {
     match darkmode::detect() {
-        Ok(mode) => send_event(&window, mode),
-        Err(_) => {}
-    };
+        Ok(mode) => Ok(data_mode(mode)),
+        Err(_) => Err(Error::Anyhow(anyhow::Error::msg("error load theme"))),
+    }
 }

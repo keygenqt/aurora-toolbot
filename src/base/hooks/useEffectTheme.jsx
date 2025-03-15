@@ -24,8 +24,10 @@ import { useEffectCache } from '../../base'
  */
 export function useEffectTheme() {
     const darkModeCache = useEffectCache('isDark');
-    const [themeMode, setThemeMode] = React.useState(darkModeCache === 'true' ? 'dark' : 'light');
-
+    const [themeMode, setThemeMode] = React.useState(darkModeCache === 'true' ? 'dark' : (
+        window.isMiniApp ? window.Telegram.WebApp.colorScheme : window.colorScheme
+    ));
+    
     React.useEffect(() => {
         const root = document.querySelector('#root');
         if (darkModeCache === 'true') {
@@ -36,7 +38,12 @@ export function useEffectTheme() {
         if (darkModeCache === 'false') {
             if (window.isTauri) {
                 (async function () {
-                    await invoke('emit_theme', {});
+                    try {
+                        let theme = await invoke('get_theme', {});
+                        setThemeMode(theme.mode);
+                    } catch(e) {
+                        console.error(e)
+                    }
                 })();
             }
             if (window.isMiniApp) {

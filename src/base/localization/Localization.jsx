@@ -32,6 +32,17 @@ i18n
                         t_connect_error_info_t: 'Установите актуальную версию приложения Aurora Bot.',
                         t_connect_error_info_w: 'Необходимо установить актуальную версию приложения Aurora Bot и активировать соединение с сервером.',
                         t_connect_btn_doc: 'Документация',
+                        menu: {
+                            t_title_settings: 'Настройки',
+                            t_title_info: 'Информация',
+                            t_btn_auth: 'Авторизация',
+                            t_btn_force_dark: 'Force Dark Mode',
+                            t_btn_docs: 'Документация',
+                            t_btn_about: 'О Aurora Toolbot',
+                        },
+                        dialog_info: {
+                            t_desc: 'Приложение обеспечивающие лёгкое управление экосистемой ОС Аврора.',
+                        }
                     },
                     forbidden: {
                         t_hello: 'Добро пожаловать в приложение Aurora Toolbot!',
@@ -41,6 +52,8 @@ i18n
                         t_text: 'Хм, такой станицы не существует.'
                     },
                     common: {
+                        t_app_name: 'Aurora Toolbot',
+                        t_btn_close: 'Закрыть',
                         t_coming_soon: 'Этого функционала пока нет, будет реализован позже.'
                     }
                 },

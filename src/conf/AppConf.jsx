@@ -22,5 +22,5 @@ export const AppConf = {
     docUrl: 'https://github.com/keygenqt/aurora-bot',
     version: '0.0.1',
     apiVersion: '0.0.1',
-    appVersion: '0.0.5',
+    appVersion: '0.0.6',
 };

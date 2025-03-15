@@ -27,7 +27,6 @@ export function useEffectTheme() {
     const [themeMode, setThemeMode] = React.useState(darkModeCache === 'true' ? 'dark' : (
         window.isMiniApp ? window.Telegram.WebApp.colorScheme : window.colorScheme
     ));
-    
     React.useEffect(() => {
         const root = document.querySelector('#root');
         if (darkModeCache === 'true') {
@@ -81,7 +80,9 @@ export function useEffectTheme() {
         // Listen mode telegram
         if (window.isMiniApp) {
             root.classList.add("MiniApp");
-            setThemeMode(window.Telegram.WebApp.colorScheme);
+            if (localStorage.getItem('isDark') !== 'true') {
+                setThemeMode(window.Telegram.WebApp.colorScheme);
+            }
             function themeChanged() {
                 const isDark = localStorage.getItem('isDark');
                 if (isDark === 'true') {
@@ -99,5 +100,6 @@ export function useEffectTheme() {
             window.Telegram.WebApp.onEvent("themeChanged", themeChanged);
         }
     }, []);
+
     return themeMode;
 }

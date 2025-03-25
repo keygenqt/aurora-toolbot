@@ -27,6 +27,7 @@ export function useEffectTheme() {
     const [themeMode, setThemeMode] = React.useState(darkModeCache === 'true' ? 'dark' : (
         window.isMiniApp ? window.Telegram.WebApp.colorScheme : window.colorScheme
     ));
+
     React.useEffect(() => {
         const root = document.querySelector('#root');
         if (darkModeCache === 'true') {
@@ -61,18 +62,16 @@ export function useEffectTheme() {
             root.classList.add("Tauri");
             (async function () {
                 await listen('event-theme', (event) => {
-                    const isDark = localStorage.getItem('isDark');
-                    if (isDark === 'true') {
-                        return
+                    if (localStorage.getItem('isDark') !== 'true') {
+                        if (event.payload.mode === 'light') {
+                            root.classList.add("light");
+                            root.classList.remove("dark");
+                        } else {
+                            root.classList.remove("light");
+                            root.classList.add("dark");
+                        }
+                        setThemeMode(event.payload.mode)
                     }
-                    if (event.payload.mode === 'light') {
-                        root.classList.add("light");
-                        root.classList.remove("dark");
-                    } else {
-                        root.classList.remove("light");
-                        root.classList.add("dark");
-                    }
-                    setThemeMode(event.payload.mode)
                 });
                 await invoke('listen_theme', {});
             })();
@@ -84,18 +83,16 @@ export function useEffectTheme() {
                 setThemeMode(window.Telegram.WebApp.colorScheme);
             }
             function themeChanged() {
-                const isDark = localStorage.getItem('isDark');
-                if (isDark === 'true') {
-                    return
+                if (localStorage.getItem('isDark') !== 'true') {
+                    if (window.Telegram.WebApp.colorScheme === 'light') {
+                        root.classList.add("light");
+                        root.classList.remove("dark");
+                    } else {
+                        root.classList.remove("light");
+                        root.classList.add("dark");
+                    }
+                    setThemeMode(window.Telegram.WebApp.colorScheme);
                 }
-                if (window.Telegram.WebApp.colorScheme === 'light') {
-                    root.classList.add("light");
-                    root.classList.remove("dark");
-                } else {
-                    root.classList.remove("light");
-                    root.classList.add("dark");
-                }
-                setThemeMode(window.Telegram.WebApp.colorScheme);
             }
             window.Telegram.WebApp.onEvent("themeChanged", themeChanged);
         }

@@ -28,7 +28,7 @@ export function LottieLoading() {
         }}>
             <Lottie
                 style={{position: 'relative', top: -33}}
-                loop={true}
+                loop={false}
                 animationData={DataLottie.loading}
             />
         </Box>

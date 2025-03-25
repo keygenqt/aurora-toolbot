@@ -13,33 +13,100 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useTranslation } from "react-i18next";
-import { Stack, Typography } from '@mui/material';
-import { LottieComingSoon } from '../../base';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { setData } from '../../store/impl/psdkAvailable';
+
+import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+
+import { useEffectSingle, LottieLoading } from '../../base';
+import { Methods } from '../../modules';
+import { SelectorModel } from '../../models';
 
 export function PsdksPage(props) {
     // components
+    const theme = useTheme();
     const { t } = useTranslation();
+    // data
+    const color = theme.palette.mode === 'dark' ? '#2895a8' : '#00457C';
+    const [psdkAvailableState, setPsdkAvailableState] = React.useState(undefined);
+    // redux
+    const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
+    const dispatch = useDispatch();
+    // data
+    useEffectSingle(() => {
+        (async function () {
+            try {
+                // Get available PSDK
+                const data = psdkAvailable ? psdkAvailable : await Methods.psdkAvailable();
+                dispatch(setData(data));
+                // Update state
+                setPsdkAvailableState(SelectorModel.parse(data));
+            } catch (e) {
+                setPsdkAvailableState(null);
+            }
+        })();
+    });
+    // Loading
+    if (psdkAvailableState === undefined) {
+        return (
+            <Stack
+                height={1}
+                sx={{ justifyContent: "center", alignItems: "center" }}
+            >
+                <LottieLoading />
+            </Stack>
+        );
+    }
+    if (psdkAvailableState === null) {
+        return (
+            <Stack
+                height={1}
+                sx={{ justifyContent: "center", alignItems: "center" }}
+            >
+                <Stack
+                    spacing={5}
+                    sx={{ alignItems: "center" }}
+                >
+                    <Typography
+                        variant={'body1'}
+                        color={'text.primary'}
+                        textAlign={'center'}
+                    >
+                        {t('common.t_not_found')}
+                    </Typography>
+                </Stack>
+            </Stack>
+        );
+    }
     // Page
     return (
-        <Stack
-            height={1}
-            sx={{ justifyContent: "center", alignItems: "center" }}
-        >
-            <Stack
-                spacing={5}
-                sx={{ alignItems: "center" }}
-            >
-                <LottieComingSoon />
-                <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    textAlign={'center'}
-                >
-                    {t('common.t_coming_soon')}
-                </Typography>
-            </Stack>
-        </Stack>
+        <List>
+            {psdkAvailableState.variants.map((e, index) => (
+                <ListItem key={`key-${index}`}>
+                    <Card
+                        sx={{
+                            border: `1px solid ${color}5e`,
+                            background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                        }}
+                    >
+                        <CardActionArea
+                            onClick={() => {
+
+                            }}
+                        >
+                            <CardContent>
+                                <Typography variant="subtitle2">
+                                    {e.name}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </ListItem>
+            ))}
+        </List>
     );
 }
 

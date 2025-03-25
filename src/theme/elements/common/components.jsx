@@ -28,7 +28,8 @@ export const components = {
             root: {
                 borderRadius: 50,
                 boxShadow: 'none !important',
-                textTransform: 'none'
+                textTransform: 'none',
+                fontFamily: "'Ubuntu', sans-serif",
             }
         }
     },

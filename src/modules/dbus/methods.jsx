@@ -26,6 +26,18 @@ export const MethodsDbus = {
     emulatorInfo: async function () {
         return await invoke("emulator_info", {});
     },
+    sdkAvailable: async function () {
+        await new Promise(r => setTimeout(r, 1000)); // @todo
+        return await invoke("sdk_available", {});
+    },
+    psdkAvailable: async function () {
+        await new Promise(r => setTimeout(r, 1000)); // @todo
+        return await invoke("psdk_available", {});
+    },
+    flutterAvailable: async function () {
+        await new Promise(r => setTimeout(r, 1000)); // @todo
+        return await invoke("flutter_available", {});
+    },
     log: function (message) {
         debug(message)
     }

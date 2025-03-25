@@ -17,17 +17,17 @@ import * as React from 'react';
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
-import { useSelector, useDispatch } from 'react-redux'
+
+import { useSelector, useDispatch } from 'react-redux';
+import { setData } from '../../store/impl/appInfo';
 
 import { Box, Stack, Typography, Button } from '@mui/material';
 import { HomeRepairService, OpenInNew } from '@mui/icons-material';
 
 import { useEffectSingle, DataImages, AppUtils, LottieLoading } from '../../base';
 import { Methods } from '../../modules';
-import { AppConf } from '../../conf/AppConf'
+import { AppConf } from '../../conf/AppConf';
 import { AppInfoModel } from '../../models';
-
-import { setData } from '../../store/impl/appInfo'
 
 export function MainPage(props) {
     // components

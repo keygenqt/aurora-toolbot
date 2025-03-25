@@ -24,6 +24,9 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             methods::app_info,
             methods::emulator_info,
+            methods::sdk_available,
+            methods::psdk_available,
+            methods::flutter_available,
             theme::listen_theme,
             theme::get_theme,
         ])

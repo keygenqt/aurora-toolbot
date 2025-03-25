@@ -13,6 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './AppInfoModel';
-export * from './EmulatorInfoModel';
-export * from './SelectorModel';
+
+/**
+ * Selector data model
+ */
+export const SelectorModel = {
+    // Data model
+    key: undefined,
+    variants: undefined,
+    // Parse obj form string
+    parse: function (json) {
+        let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
+        if (data['key'] !== 'Selector') {
+            return undefined
+        }
+        return {
+            key: data['jsonData']['key'],
+            variants: data['jsonData']['variants'],
+        }
+    }
+}

@@ -46,3 +46,48 @@ pub fn emulator_info() -> Result<String, Error> {
     };
     Ok(result)
 }
+
+#[tauri::command]
+pub fn sdk_available() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, 300000 /* 5m */);
+    // Request
+    let method = "SdkAvailable";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command]
+pub fn psdk_available() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, 300000 /* 5m */);
+    // Request
+    let method = "PsdkAvailable";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command]
+pub fn flutter_available() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, 300000 /* 5m */);
+    // Request
+    let method = "FlutterAvailable";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}

@@ -15,6 +15,14 @@
  */
 export const typography = {
     fontSize: 14,
+    h5: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontFamily: [
+            'Ubuntu',
+            'sans-serif',
+        ].join(','),
+    },
     subtitle2: {
         fontSize: 15,
         fontWeight: 'bold',

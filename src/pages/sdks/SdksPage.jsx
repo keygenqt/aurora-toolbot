@@ -19,7 +19,23 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from 'react-redux';
 import { setData } from '../../store/impl/sdkAvailable';
 
-import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+import {
+    useTheme,
+    Typography,
+    ListItem,
+    List,
+    Box,
+    Card,
+    Stack,
+    CardHeader,
+    CardContent,
+    IconButton,
+    CardActions,
+    Tooltip,
+    Chip,
+} from '@mui/material';
+
+import { CloudOff, CloudQueue, Download } from '@mui/icons-material';
 
 import { useEffectSingle, LottieLoading } from '../../base';
 import { Methods } from '../../modules';
@@ -91,25 +107,34 @@ export function SdksPage(props) {
                             background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                         }}
                     >
-                        <CardActionArea
-                            onClick={() => {
-
+                        <CardHeader
+                            title={`Aurora SDK (${e.buildType})`}
+                            subheader={`v${e.versionFull}`}
+                            sx={{
+                                paddingBottom: 0,
+                                '& .MuiCardHeader-title': {
+                                    paddingBottom: 0.5,
+                                }
                             }}
-                        >
-                            <CardContent>
-                                <Stack spacing={1}>
-                                    <Typography variant="subtitle2">
-                                        v{e.versionFull}
-                                    </Typography>
-                                    <Typography variant="text1">
-                                        Build Type: "{e.buildType}"
-                                    </Typography>
-                                    <Typography variant="text1">
-                                        Install Type: "{e.installType}"
-                                    </Typography>
-                                </Stack>
-                            </CardContent>
-                        </CardActionArea>
+                        />
+                        <CardContent>
+                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                {e.buildType === 'MB2' ? t('sdks.t_item_mb2') : t('sdks.t_item_bt')}
+                            </Typography>
+                        </CardContent>
+                        <CardActions sx={{
+                            p: 2,
+                            paddingTop: 0
+                        }}>
+                            <Chip icon={e.installType === 'Online' ? (<CloudQueue color='info' />) : (<CloudOff color='gray' />)} label={e.installType} />
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Tooltip title={t('common.t_download')} placement="left-start">
+                                <IconButton>
+                                    <Download />
+                                </IconButton>
+                            </Tooltip>
+
+                        </CardActions>
                     </Card>
                 </ListItem>
             ))}

@@ -78,6 +78,19 @@ export const components = {
             }
         }
     },
+    MuiChip: {
+        styleOverrides: {
+            root: {
+                borderRadius: 13,
+                paddingLeft: 6,
+                paddingRight: 6,
+                '& .MuiSvgIcon-root': {
+                    fontSize: 16,
+                    paddingRight: 3,
+                }
+            }
+        }
+    },
     MuiDrawer: {
         styleOverrides: {
             root: ({ theme }) =>

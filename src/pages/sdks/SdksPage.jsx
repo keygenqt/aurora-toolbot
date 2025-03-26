@@ -23,7 +23,6 @@ import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent
 
 import { useEffectSingle, LottieLoading } from '../../base';
 import { Methods } from '../../modules';
-import { SelectorModel } from '../../models';
 
 export function SdksPage(props) {
     // components
@@ -43,7 +42,7 @@ export function SdksPage(props) {
                 const data = sdkAvailable ? sdkAvailable : await Methods.sdkAvailable();
                 dispatch(setData(data));
                 // Update state
-                setSdkAvailableState(SelectorModel.parse(data));
+                setSdkAvailableState(data);
             } catch (e) {
                 setSdkAvailableState(null);
             }
@@ -84,7 +83,7 @@ export function SdksPage(props) {
     // Page
     return (
         <List>
-            {sdkAvailableState.variants.map((e, index) => (
+            {sdkAvailableState.map((e, index) => (
                 <ListItem key={`key-${index}`}>
                     <Card
                         sx={{
@@ -98,9 +97,17 @@ export function SdksPage(props) {
                             }}
                         >
                             <CardContent>
-                                <Typography variant="subtitle2">
-                                    {e.name}
-                                </Typography>
+                                <Stack spacing={1}>
+                                    <Typography variant="subtitle2">
+                                        v{e.versionFull}
+                                    </Typography>
+                                    <Typography variant="text1">
+                                        Build Type: "{e.buildType}"
+                                    </Typography>
+                                    <Typography variant="text1">
+                                        Install Type: "{e.installType}"
+                                    </Typography>
+                                </Stack>
                             </CardContent>
                         </CardActionArea>
                     </Card>

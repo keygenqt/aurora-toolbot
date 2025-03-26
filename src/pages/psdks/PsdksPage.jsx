@@ -23,7 +23,6 @@ import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent
 
 import { useEffectSingle, LottieLoading } from '../../base';
 import { Methods } from '../../modules';
-import { SelectorModel } from '../../models';
 
 export function PsdksPage(props) {
     // components
@@ -43,7 +42,7 @@ export function PsdksPage(props) {
                 const data = psdkAvailable ? psdkAvailable : await Methods.psdkAvailable();
                 dispatch(setData(data));
                 // Update state
-                setPsdkAvailableState(SelectorModel.parse(data));
+                setPsdkAvailableState(data);
             } catch (e) {
                 setPsdkAvailableState(null);
             }
@@ -84,7 +83,7 @@ export function PsdksPage(props) {
     // Page
     return (
         <List>
-            {psdkAvailableState.variants.map((e, index) => (
+            {psdkAvailableState.map((e, index) => (
                 <ListItem key={`key-${index}`}>
                     <Card
                         sx={{
@@ -98,9 +97,11 @@ export function PsdksPage(props) {
                             }}
                         >
                             <CardContent>
-                                <Typography variant="subtitle2">
-                                    {e.name}
-                                </Typography>
+                                <Stack spacing={1}>
+                                    <Typography variant="subtitle2">
+                                        v{e.versionFull}
+                                    </Typography>
+                                </Stack>
                             </CardContent>
                         </CardActionArea>
                     </Card>

@@ -15,4 +15,7 @@
  */
 export * from './AppInfoModel';
 export * from './EmulatorInfoModel';
+export * from './FlutterAvailableModel';
+export * from './PsdkAvailableModel';
+export * from './SdkAvailableModel';
 export * from './SelectorModel';

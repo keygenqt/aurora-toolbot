@@ -16,6 +16,8 @@
 import { debug } from '@tauri-apps/plugin-log';
 import { invoke } from "@tauri-apps/api/core";
 
+import { SelectorModel, FlutterAvailableModel, PsdkAvailableModel, SdkAvailableModel } from '../../models';
+
 /**
  * Tauri application methods
  */
@@ -27,16 +29,70 @@ export const MethodsDbus = {
         return await invoke("emulator_info", {});
     },
     sdkAvailable: async function () {
-        await new Promise(r => setTimeout(r, 1000)); // @todo
-        return await invoke("sdk_available", {});
+        let join = []
+        let selector = SelectorModel.parse(await invoke("sdk_available", {}));
+        for (const item of selector.variants) {
+            let id = item['incoming']['id'];
+            join.push(new Promise((resolve, reject) => {
+                (async () => {
+                    try {
+                        let model = SdkAvailableModel.parse(await invoke("sdk_available_by_id", { id: id }));
+                        if (model !== undefined) {
+                            resolve(model);
+                        } else {
+                            reject(new Error(`Failed to get model: ${id}`));
+                        }
+                    } catch (e) {
+                        reject(e);
+                    }
+                })()
+            }));
+        }
+        return await Promise.all(join);
     },
     psdkAvailable: async function () {
-        await new Promise(r => setTimeout(r, 1000)); // @todo
-        return await invoke("psdk_available", {});
+        let join = []
+        let selector = SelectorModel.parse(await invoke("psdk_available", {}));
+        for (const item of selector.variants) {
+            let id = item['incoming']['id'];
+            join.push(new Promise((resolve, reject) => {
+                (async () => {
+                    try {
+                        let model = PsdkAvailableModel.parse(await invoke("psdk_available_by_id", { id: id }));
+                        if (model !== undefined) {
+                            resolve(model);
+                        } else {
+                            reject(new Error(`Failed to get model: ${id}`));
+                        }
+                    } catch (e) {
+                        reject(e);
+                    }
+                })()
+            }));
+        }
+        return await Promise.all(join);
     },
     flutterAvailable: async function () {
-        await new Promise(r => setTimeout(r, 1000)); // @todo
-        return await invoke("flutter_available", {});
+        let join = []
+        let selector = SelectorModel.parse(await invoke("flutter_available", {}));
+        for (const item of selector.variants) {
+            let id = item['incoming']['id'];
+            join.push(new Promise((resolve, reject) => {
+                (async () => {
+                    try {
+                        let model = FlutterAvailableModel.parse(await invoke("flutter_available_by_id", { id: id }));
+                        if (model !== undefined) {
+                            resolve(model);
+                        } else {
+                            reject(new Error(`Failed to get model: ${id}`));
+                        }
+                    } catch (e) {
+                        reject(e);
+                    }
+                })()
+            }));
+        }
+        return await Promise.all(join);
     },
     log: function (message) {
         debug(message)

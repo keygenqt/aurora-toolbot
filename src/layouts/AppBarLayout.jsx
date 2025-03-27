@@ -31,6 +31,7 @@ export function AppBarLayout(props) {
     const scrollTop = useEffectPageScroll();
     const { pathname } = useLocation();
     React.useEffect(() => {
+        console.log(scrollTop)
         document.getElementById("page_scroll").scrollTop = scrollTop;
     }, [pathname]);
     // scroll padding for telegram web

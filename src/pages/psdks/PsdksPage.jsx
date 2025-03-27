@@ -21,7 +21,7 @@ import { setData } from '../../store/impl/psdkAvailable';
 
 import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
 
-import { useEffectSingle, LottieLoading } from '../../base';
+import { useEffectSingle, StateEmpty, StateLoading } from '../../base';
 import { Methods } from '../../modules';
 
 export function PsdksPage(props) {
@@ -29,61 +29,33 @@ export function PsdksPage(props) {
     const theme = useTheme();
     const { t } = useTranslation();
     // data
-    const color = theme.palette.mode === 'dark' ? '#2895a8' : '#00457C';
-    const [psdkAvailableState, setPsdkAvailableState] = React.useState(undefined);
+    const color = theme.palette.primaryPsdk.main;
     // redux
     const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
     const dispatch = useDispatch();
-    // data
+    // init
     useEffectSingle(() => {
-        (async function () {
-            try {
-                // Get available PSDK
-                const data = psdkAvailable ? psdkAvailable : await Methods.psdkAvailable();
-                dispatch(setData(data));
-                // Update state
-                setPsdkAvailableState(data);
-            } catch (e) {
-                setPsdkAvailableState(null);
-            }
-        })();
+        if (!psdkAvailable) {
+            (async function () {
+                try {
+                    dispatch(setData(await Methods.psdkAvailable()));
+                } catch (e) {
+                    dispatch(setData(null));
+                }
+            })();
+        }
     });
-    // Loading
-    if (psdkAvailableState === undefined) {
-        return (
-            <Stack
-                height={1}
-                sx={{ justifyContent: "center", alignItems: "center" }}
-            >
-                <LottieLoading />
-            </Stack>
-        );
+    // States
+    if (psdkAvailable === undefined) {
+        return (<StateLoading/>);
     }
-    if (psdkAvailableState === null) {
-        return (
-            <Stack
-                height={1}
-                sx={{ justifyContent: "center", alignItems: "center" }}
-            >
-                <Stack
-                    spacing={5}
-                    sx={{ alignItems: "center" }}
-                >
-                    <Typography
-                        variant={'body1'}
-                        color={'text.primary'}
-                        textAlign={'center'}
-                    >
-                        {t('common.t_not_found')}
-                    </Typography>
-                </Stack>
-            </Stack>
-        );
+    if (psdkAvailable === null) {
+        return (<StateEmpty/>);
     }
     // Page
     return (
         <List>
-            {psdkAvailableState.map((e, index) => (
+            {psdkAvailable.map((e, index) => (
                 <ListItem key={`key-${index}`}>
                     <Card
                         sx={{

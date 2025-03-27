@@ -14,132 +14,318 @@
  * limitations under the License.
  */
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
-import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+import {
+    useTheme,
+    Typography,
+    ListItem,
+    List,
+    Card,
+    CardActionArea,
+    CardContent,
+    CardActions,
+    IconButton,
+    Tooltip,
+    Stack,
+    Box,
+    Button,
+} from '@mui/material';
+
+import { InstallDesktop, KeyboardArrowRight, NewReleases } from '@mui/icons-material';
 
 import { DataImages, AppUtils } from '../../base'
 
 export function FeaturesPage(props) {
     // components
+    const { t } = useTranslation();
+    // page
+    return (
+        <List>
+            <GroupWidget
+                title={t('features.devices.t_title')}
+                text={t('features.devices.t_text')}
+            />
+            <EmulatorItem />
+            <GroupWidget
+                title={t('features.tools.t_title')}
+                text={t('features.tools.t_text')}
+            />
+            <SdkItem />
+            <PsdkItem />
+            <FlutterItem />
+            <GroupWidget
+                title={t('features.assistant.t_title')}
+                text={t('features.assistant.t_text')}
+            />
+            <FAQItem />
+        </List>
+    );
+}
+
+function GroupWidget(props) {
+    return (
+        <ListItem>
+            <CardContent sx={{ p: '0 !important' }}>
+                <Typography
+                    gutterBottom
+                    variant="subtitle2"
+                    color={'text.primary'}
+                >
+                    {props.title}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {props.text}
+                </Typography>
+            </CardContent>
+        </ListItem>
+    );
+}
+
+function EmulatorItem() {
+    // components
+    const { t } = useTranslation();
     const theme = useTheme();
     const navigate = useNavigate();
     // data
-    const list = [
-        {
-            'title': 'Устройства',
-            'desc': 'Управление вашими устройствами и эмуляторами с операционной системой Аврора.',
-        },
-        // @todo
-        // {
-        //     'title': 'Devices',
-        //     'desc': 'Работа с эмуляторами ОС Аврора предоставляемыми Аврора SDK.',
-        //     'color': theme.palette.secondary.main,
-        //     'route': 'devices',
-        // },
-        {
-            'title': 'Emulators',
-            'desc': 'Работа с эмуляторами ОС Аврора предоставляемыми Аврора SDK.',
-            'color': theme.palette.secondary.main,
-            'route': 'emulators',
-        },
-        {
-            'title': 'Инструменты разработки',
-            'desc': 'В этом разделе вы можете управлять доступными инструментами разработки для ОС Aurora.',
-        },
-        {
-            'icon': DataImages.iconSdk,
-            'title': 'Аврора SDK',
-            'desc': 'Набор инструментов для сборки, разработки, отладки и тестирования прикладного ПО для ОС Аврора.',
-            'color': theme.palette.mode === 'dark' ? '#c19df2' : '#4c0ea1',
-            'route': 'sdk',
-        },
-        {
-            'icon': DataImages.iconPsdk,
-            'title': 'Platform SDK',
-            'desc': 'Набор инструментов для разработки, отладки и тестирования компонентов ОС Аврора предназначенного для CI.',
-            'color': theme.palette.mode === 'dark' ? '#2895a8' : '#00457C',
-            'route': 'psdk',
-        },
-        {
-            'icon': DataImages.iconFlutter,
-            'title': 'Flutter SDK',
-            'desc': 'Фреймворк для создания красивых, изначально скомпилированных, приложений на основе единой кодовой базы с поддержкой ОС Аврора.',
-            'color': theme.palette.mode === 'dark' ? '#379ded' : '#0075d0',
-            'route': 'flutter',
-        },
-        {
-            'title': 'Assistant',
-            'desc': 'Умные инструменты которые помогут вам узнать больше об ОС Аврора.',
-        },
-        {
-            'title': 'FAQ',
-            'desc': 'В этом разделе вы можете задавать вопросы а релевантный поиск найдет ответы на них.',
-            'color': theme.palette.info.main,
-            'route': 'faq',
-        },
-    ];
-    // Page
+    const color = theme.palette.secondary.main
+    // item
     return (
-        <List>
-            {list.map((e, index) => (e.color ? (
-                <ListItem key={`key-${index}`}>
-                    <Card
-                        sx={{
-                            border: `1px solid ${e.color}5e`,
-                            background: `linear-gradient(to right, transparent 0%, ${e.color}1c 100%)`
-                        }}
-                    >
-                        <CardActionArea
-                            onClick={() => {
-                                AppUtils.openPageDelay(navigate, e.route)
-                            }}
-                        >
-                            <CardContent>
-                                <Stack
-                                    direction="row"
-                                    spacing={1}
-                                    sx={{
-                                        paddingBottom: 1,
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    {e.icon && (
-                                        <img
-                                            style={{ width: '16px', height: '16px' }}
-                                            src={e.icon}
-                                            alt='Icon' />
-                                    )}
-                                    <Typography
-                                        variant="subtitle2"
-                                        color={e.color}
-                                    >
-                                        {e.title}
-                                    </Typography>
-                                </Stack>
-                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                    {e.desc}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </ListItem>
-            ) : (
-                <ListItem key={`key-${index}`}>
-                    <CardContent sx={{ p: '0 !important' }}>
-                        <Typography
-                            gutterBottom
-                            variant="subtitle2"
-                            color={'text.primary'}
-                        >
-                            {e.title}
-                        </Typography>
+        <ListItem>
+            <Card
+                sx={{
+                    border: `1px solid ${color}5e`,
+                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                }}
+            >
+                <CardActionArea
+                    onClick={() => {
+                        AppUtils.openPageDelay(navigate, 'emulators')
+                    }}
+                >
+                    <CardContent>
+                        <Box sx={{ paddingBottom: 1 }}>
+                            <Typography variant="subtitle2" color={color} >
+                                {t('features.emulator.t_title')}
+                            </Typography>
+                        </Box>
                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {e.desc}
+                            {t('features.emulator.t_text')}
                         </Typography>
                     </CardContent>
-                </ListItem>
-            )))}
-        </List>
+                </CardActionArea>
+            </Card>
+        </ListItem>
+    );
+}
+
+function SdkItem() {
+    // components
+    const { t } = useTranslation();
+    const theme = useTheme();
+    const navigate = useNavigate();
+    // data
+    const color = theme.palette.primarySdk.main;
+    // item
+    return (
+        <ListItem>
+            <Card
+                sx={{
+                    border: `1px solid ${color}5e`,
+                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                }}
+            >
+                <CardContent sx={{ paddingBottom: 1 }}>
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ paddingBottom: 1, alignItems: "center" }}
+                    >
+                        <img
+                            style={{ width: '16px', height: '16px' }}
+                            src={DataImages.iconSdk}
+                            alt='Icon' />
+                        <Typography variant="subtitle2" color={color} >
+                            {t('features.sdk.t_title')}
+                        </Typography>
+                    </Stack>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {t('features.sdk.t_text')}
+                    </Typography>
+                </CardContent>
+                <CardActions sx={{
+                    p: 2,
+                    paddingTop: 0
+                }}>
+                    <Stack
+                        direction={'row'}
+                        spacing={0.5}
+                    >
+                        <Tooltip title={t('common.t_new_version')} placement="left-start">
+                            <Box sx={{
+                                fontSize: 0,
+                                '& .MuiSvgIcon-root': {
+                                    fontSize: 20, paddingY: '3px'
+                                }
+                            }}>
+                                <NewReleases color={'info'} />
+                            </Box>
+                        </Tooltip>
+
+                    </Stack>
+
+                    <Tooltip title={t('common.t_install')} placement="left-start">
+                        <IconButton
+                            onClick={() => {
+                                AppUtils.openPage(navigate, 'sdk');
+                            }}
+                        >
+                            <InstallDesktop />
+                        </IconButton>
+                    </Tooltip>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Button
+                        size={'small'}
+                        color={'primarySdk'}
+                        endIcon={<KeyboardArrowRight color="default" />}
+                        variant="contained"
+                        sx={{ opacity: 0.8 }}
+                        onClick={() => {
+                            console.log('@todo')
+                        }}
+                    >
+                        {t('common.t_open')}
+                    </Button>
+                </CardActions>
+            </Card>
+        </ListItem>
+    );
+}
+
+function PsdkItem() {
+    // components
+    const { t } = useTranslation();
+    const theme = useTheme();
+    const navigate = useNavigate();
+    // data
+    const color = theme.palette.primaryPsdk.main;
+    // item
+    return (
+        <ListItem>
+            <Card
+                sx={{
+                    border: `1px solid ${color}5e`,
+                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                }}
+            >
+                <CardActionArea
+                    onClick={() => {
+                        AppUtils.openPage(navigate, 'psdk')
+                    }}
+                >
+                    <CardContent>
+                        <Stack
+                            direction="row"
+                            spacing={1}
+                            sx={{ paddingBottom: 1, alignItems: "center" }}
+                        >
+                            <img
+                                style={{ width: '16px', height: '16px' }}
+                                src={DataImages.iconPsdk}
+                                alt='Icon' />
+                            <Typography variant="subtitle2" color={color} >
+                                {t('features.psdk.t_title')}
+                            </Typography>
+                        </Stack>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            {t('features.psdk.t_text')}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        </ListItem>
+    );
+}
+
+function FlutterItem() {
+    // components
+    const { t } = useTranslation();
+    const theme = useTheme();
+    const navigate = useNavigate();
+    // data
+    const color = theme.palette.primaryFlutter.main;
+    // item
+    return (
+        <ListItem>
+            <Card
+                sx={{
+                    border: `1px solid ${color}5e`,
+                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                }}
+            >
+                <CardActionArea
+                    onClick={() => {
+                        AppUtils.openPage(navigate, 'flutter')
+                    }}
+                >
+                    <CardContent>
+                        <Stack
+                            direction="row"
+                            spacing={1}
+                            sx={{ paddingBottom: 1, alignItems: "center" }}
+                        >
+                            <img
+                                style={{ width: '16px', height: '16px' }}
+                                src={DataImages.iconFlutter}
+                                alt='Icon' />
+                            <Typography variant="subtitle2" color={color} >
+                                {t('features.emulator.t_title')}
+                            </Typography>
+                        </Stack>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            {t('features.emulator.t_text')}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        </ListItem>
+    );
+}
+
+function FAQItem() {
+    // components
+    const { t } = useTranslation();
+    const theme = useTheme();
+    const navigate = useNavigate();
+    // data
+    const color = theme.palette.info.main;
+    // item
+    return (
+        <ListItem>
+            <Card
+                sx={{
+                    border: `1px solid ${color}5e`,
+                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                }}
+            >
+                <CardActionArea
+                    onClick={() => {
+                        AppUtils.openPageDelay(navigate, 'faq')
+                    }}
+                >
+                    <CardContent>
+                        <Box sx={{ paddingBottom: 1 }}>
+                            <Typography variant="subtitle2" color={color} >
+                                {t('features.faq.t_title')}
+                            </Typography>
+                        </Box>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            {t('features.faq.t_text')}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        </ListItem>
     );
 }
 

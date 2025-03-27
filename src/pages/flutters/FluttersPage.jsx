@@ -21,7 +21,7 @@ import { setData } from '../../store/impl/flutterAvailable';
 
 import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
 
-import { useEffectSingle, LottieLoading } from '../../base';
+import { useEffectSingle, StateEmpty, StateLoading } from '../../base';
 import { Methods } from '../../modules';
 
 export function FluttersPage(props) {
@@ -29,61 +29,33 @@ export function FluttersPage(props) {
     const theme = useTheme();
     const { t } = useTranslation();
     // data
-    const color = theme.palette.mode === 'dark' ? '#379ded' : '#0075d0';
-    const [flutterAvailableState, setFlutterAvailableState] = React.useState(undefined);
+    const color = theme.palette.primaryFlutter.main;
     // redux
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
     const dispatch = useDispatch();
-    // data
+    // init
     useEffectSingle(() => {
-        (async function () {
-            try {
-                // Get available Flutter
-                const data = flutterAvailable ? flutterAvailable : await Methods.flutterAvailable();
-                dispatch(setData(data));
-                // Update state
-                setFlutterAvailableState(data);
-            } catch (e) {
-                setFlutterAvailableState(null);
-            }
-        })();
+        if (!flutterAvailable) {
+            (async function () {
+                try {
+                    dispatch(setData(await Methods.flutterAvailable()));
+                } catch (e) {
+                    dispatch(setData(null));
+                }
+            })();
+        }
     });
-    // Loading
-    if (flutterAvailableState === undefined) {
-        return (
-            <Stack
-                height={1}
-                sx={{ justifyContent: "center", alignItems: "center" }}
-            >
-                <LottieLoading />
-            </Stack>
-        );
+    // States
+    if (flutterAvailable === undefined) {
+        return (<StateLoading/>);
     }
-    if (flutterAvailableState === null) {
-        return (
-            <Stack
-                height={1}
-                sx={{ justifyContent: "center", alignItems: "center" }}
-            >
-                <Stack
-                    spacing={5}
-                    sx={{ alignItems: "center" }}
-                >
-                    <Typography
-                        variant={'body1'}
-                        color={'text.primary'}
-                        textAlign={'center'}
-                    >
-                        {t('common.t_not_found')}
-                    </Typography>
-                </Stack>
-            </Stack>
-        );
+    if (flutterAvailable === null) {
+        return (<StateEmpty/>);
     }
     // Page
     return (
         <List>
-            {flutterAvailableState.map((e, index) => (
+            {flutterAvailable.map((e, index) => (
                 <ListItem key={`key-${index}`}>
                     <Card
                         sx={{

@@ -147,7 +147,13 @@ export const components = {
         styleOverrides: {
             root: ({ theme }) =>
                 theme.unstable_sx({
-                    backgroundColor: window.isMobile ? 'transparent !important' : null
+                    backgroundColor: window.isMobile ? 'transparent !important' : null,
+                    '&.MuiButton-sizeSmall': {
+                        fontSize: 11,
+                    },
+                    '&.MuiButton-sizeSmall .MuiButton-icon': {
+                        marginLeft: '2px',
+                    }
                 }),
         }
     }

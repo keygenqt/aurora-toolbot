@@ -20,9 +20,23 @@ export const palette = {
     },
     primary: {
         main: '#274c40',
+        contrastText: '#fff',
+    },
+    primarySdk: {
+        main: '#4c0ea1',
+        contrastText: '#fff',
+    },
+    primaryPsdk: {
+        main: '#00457C',
+        contrastText: '#fff',
+    },
+    primaryFlutter: {
+        main: '#0075d0',
+        contrastText: '#fff',
     },
     secondary: {
         main: '#02808D',
+        contrastText: '#fff',
     },
     info: {
         main: '#0295c2',
@@ -35,6 +49,6 @@ export const palette = {
         main: '#417460',
     },
     inherit: {
-        main: '#3d3d3d',
+        main: '#263238',
     },
 }

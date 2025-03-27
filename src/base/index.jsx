@@ -17,10 +17,15 @@
 // actions
 export * from './components/actions/ActionBack';
 export * from './components/actions/ActionMenu';
+// dialogs
+export * from './components/dialogs/AlertDialog';
 // lottie
 export * from './components/lottie/LottieComingSoon';
 export * from './components/lottie/LottieError';
 export * from './components/lottie/LottieLoading';
+// states
+export * from './components/states/StateEmpty';
+export * from './components/states/StateLoading';
 // data
 export * from './data/DataImages';
 export * from './data/DataLottie';

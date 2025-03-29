@@ -38,7 +38,7 @@ import { CloudOff, CloudQueue, InsertLink, OpenInNew, Download, Done } from '@mu
 
 import { AppUtils, AlertDialog, StateEmpty } from '../../base';
 
-export function SdksPage(props) {
+export function SdksAvailablePage(props) {
     // components
     const theme = useTheme();
     const { t } = useTranslation();
@@ -157,4 +157,4 @@ export function SdksPage(props) {
     );
 }
 
-SdksPage.propTypes = {};
+SdksAvailablePage.propTypes = {};

@@ -22,22 +22,22 @@ import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent
 
 import { StateEmpty } from '../../base';
 
-export function PsdksPage(props) {
+export function FluttersAvailablePage(props) {
     // components
     const theme = useTheme();
     const { t } = useTranslation();
     // data
-    const color = theme.palette.primaryPsdk.main;
+    const color = theme.palette.primaryFlutter.main;
     // redux
-    const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
+    const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
     // States
-    if (!psdkAvailable) {
+    if (!flutterAvailable) {
         return (<StateEmpty/>);
     }
     // Page
     return (
         <List>
-            {psdkAvailable.map((e, index) => (
+            {flutterAvailable.map((e, index) => (
                 <ListItem key={`key-${index}`}>
                     <Card
                         sx={{
@@ -53,7 +53,13 @@ export function PsdksPage(props) {
                             <CardContent>
                                 <Stack spacing={1}>
                                     <Typography variant="subtitle2">
-                                        v{e.versionFull}
+                                        v{e.version}
+                                    </Typography>
+                                    <Typography variant="text1">
+                                        Tag: {e.tag}
+                                    </Typography>
+                                    <Typography variant="text1">
+                                        Created at: {e.createdAt}
                                     </Typography>
                                 </Stack>
                             </CardContent>
@@ -65,4 +71,4 @@ export function PsdksPage(props) {
     );
 }
 
-PsdksPage.propTypes = {};
+FluttersAvailablePage.propTypes = {};

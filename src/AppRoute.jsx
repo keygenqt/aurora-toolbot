@@ -28,12 +28,15 @@ import {
     FaqPage,
     FeaturesPage,
     FlutterPage,
-    FluttersPage,
+    FluttersAvailablePage,
+    FluttersInstalledPage,
     MainPage,
     PsdkPage,
-    PsdksPage,
+    PsdksAvailablePage,
+    PsdksInstalledPage,
     SdkPage,
-    SdksPage,
+    SdksAvailablePage,
+    SdksInstalledPage,
 } from './pages'
 
 export function AppRoute() {
@@ -87,11 +90,16 @@ export function AppRoute() {
                             <FaqPage />
                         </AppBarLayout>
                     )} />
+                    <Route path="fluttersAvailable" element={(
+                        <AppBarLayout actions={<ActionBack />} >
+                            <FluttersAvailablePage />
+                        </AppBarLayout>
+                    )} />
                     {/* Not save state */}
-                    <Route path="flutter">
+                    <Route path="fluttersInstalled">
                         <Route index padding={0} element={(
                             <AppBarLayout index actions={<ActionBack />} >
-                                <FluttersPage />
+                                <FluttersInstalledPage />
                             </AppBarLayout>
                         )} />
                         <Route path=":key" element={(
@@ -100,10 +108,15 @@ export function AppRoute() {
                             </AppBarLayout>
                         )} />
                     </Route>
-                    <Route path="psdk">
+                    <Route path="psdksAvailable" element={(
+                        <AppBarLayout actions={<ActionBack />} >
+                            <PsdksAvailablePage />
+                        </AppBarLayout>
+                    )} />
+                    <Route path="psdksInstalled">
                         <Route index padding={0} element={(
                             <AppBarLayout index actions={<ActionBack />} >
-                                <PsdksPage />
+                                <PsdksInstalledPage />
                             </AppBarLayout>
                         )} />
                         <Route path=":key" element={(
@@ -112,10 +125,15 @@ export function AppRoute() {
                             </AppBarLayout>
                         )} />
                     </Route>
-                    <Route path="sdk">
+                    <Route path="sdksAvailable" element={(
+                        <AppBarLayout actions={<ActionBack />} >
+                            <SdksAvailablePage />
+                        </AppBarLayout>
+                    )} />
+                    <Route path="sdksInstalled">
                         <Route index padding={0} element={(
                             <AppBarLayout index actions={<ActionBack />} >
-                                <SdksPage />
+                                <SdksInstalledPage />
                             </AppBarLayout>
                         )} />
                         <Route path=":key" element={(

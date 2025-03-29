@@ -22,10 +22,17 @@ import {
     Typography,
     ListItem,
     Card,
-    CardActionArea,
     CardContent,
     Stack,
+    CardActions,
+    Tooltip,
+    IconButton,
+    CircularProgress,
+    Button,
+    Box,
 } from '@mui/material';
+
+import { Cached, KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
 
 import { DataImages, AppUtils } from '../../../base';
 
@@ -36,6 +43,10 @@ export function FlutterItem(props) {
     const navigate = useNavigate();
     // data
     const color = theme.palette.primaryFlutter.main;
+    const {
+        flutterInstalled,
+        flutterAvailable,
+    } = props
     // item
     return (
         <ListItem>
@@ -45,30 +56,74 @@ export function FlutterItem(props) {
                     background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                 }}
             >
-                <CardActionArea
-                    onClick={() => {
-                        AppUtils.openPage(navigate, 'flutter')
-                    }}
-                >
-                    <CardContent>
-                        <Stack
-                            direction="row"
-                            spacing={1}
-                            sx={{ paddingBottom: 1, alignItems: "center" }}
-                        >
-                            <img
-                                style={{ width: '16px', height: '16px' }}
-                                src={DataImages.iconFlutter}
-                                alt='Icon' />
-                            <Typography variant="subtitle2" color={color} >
-                                {t('features.flutter.t_title')}
-                            </Typography>
-                        </Stack>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {t('features.flutter.t_text')}
+                <CardContent sx={{ paddingBottom: 1 }}>
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ paddingBottom: 1, alignItems: "center" }}
+                    >
+                        <img
+                            style={{ width: '16px', height: '16px' }}
+                            src={DataImages.iconFlutter}
+                            alt='Icon' />
+                        <Typography variant="subtitle2" color={color} >
+                            {t('features.flutter.t_title')}
                         </Typography>
-                    </CardContent>
-                </CardActionArea>
+                    </Stack>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {t('features.flutter.t_text')}
+                    </Typography>
+                </CardContent>
+                <CardActions sx={{
+                    p: 2,
+                    paddingTop: 0
+                }}>
+                    {Array.isArray(flutterInstalled) && (
+                        <Tooltip title={t('common.t_sync')} placement="left-start">
+                            <IconButton
+                                onClick={() => {
+
+                                }}
+                            >
+                                <Cached />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+
+                    {Array.isArray(flutterAvailable) && flutterAvailable.length ? (
+                        <Tooltip title={t('common.t_available')} placement="left-start">
+                            <IconButton
+                                onClick={() => {
+                                    AppUtils.openPage(navigate, 'fluttersAvailable');
+                                }}
+                            >
+                                <FormatListBulleted />
+                            </IconButton>
+                        </Tooltip>
+                    ) : (
+                        <CircularProgress size="20px" color="primaryFlutter" />
+                    )}
+
+                    <Box sx={{ flexGrow: 1 }} />
+
+                    <Button
+                        disabled={!Array.isArray(flutterInstalled)}
+                        size={'small'}
+                        color={'primaryFlutter'}
+                        endIcon={!Array.isArray(flutterInstalled) ? (
+                            <CircularProgress color="default" />
+                        ) : (
+                            <KeyboardArrowRight color="default" />
+                        )}
+                        variant="contained"
+                        sx={{ opacity: 0.8 }}
+                        onClick={() => {
+                            AppUtils.openPage(navigate, 'fluttersInstalled');
+                        }}
+                    >
+                        {t('common.t_open')}
+                    </Button>
+                </CardActions>
             </Card>
         </ListItem>
     );

@@ -32,7 +32,7 @@ import {
     CircularProgress,
 } from '@mui/material';
 
-import { FormatListBulleted, KeyboardArrowRight, NewReleases } from '@mui/icons-material';
+import { FormatListBulleted, KeyboardArrowRight, NewReleases, Cached } from '@mui/icons-material';
 
 import { DataImages, AppUtils } from '../../../base';
 import { SdkAvailableModel } from '../../../models';
@@ -81,7 +81,6 @@ export function SdkItem(props) {
                     p: 2,
                     paddingTop: 0
                 }}>
-
                     {isNew && (
                         <Tooltip title={t('common.t_new_version')} placement="left-start">
                             <Box sx={{
@@ -95,11 +94,23 @@ export function SdkItem(props) {
                         </Tooltip>
                     )}
 
-                    {Array.isArray(sdkAvailable) && sdkAvailable.length ? (
-                        <Tooltip title={t('common.t_install')} placement="left-start">
+                    {Array.isArray(sdkInstalled) && (
+                        <Tooltip title={t('common.t_sync')} placement="left-start">
                             <IconButton
                                 onClick={() => {
-                                    AppUtils.openPage(navigate, 'sdk');
+
+                                }}
+                            >
+                                <Cached />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+
+                    {Array.isArray(sdkAvailable) && sdkAvailable.length ? (
+                        <Tooltip title={t('common.t_available')} placement="left-start">
+                            <IconButton
+                                onClick={() => {
+                                    AppUtils.openPage(navigate, 'sdksAvailable');
                                 }}
                             >
                                 <FormatListBulleted />
@@ -123,7 +134,7 @@ export function SdkItem(props) {
                         variant="contained"
                         sx={{ opacity: 0.8 }}
                         onClick={() => {
-                            console.log('@todo')
+                            AppUtils.openPage(navigate, 'sdksInstalled');
                         }}
                     >
                         {t('common.t_open')}

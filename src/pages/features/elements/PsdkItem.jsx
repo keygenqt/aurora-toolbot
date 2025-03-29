@@ -22,10 +22,17 @@ import {
     Typography,
     ListItem,
     Card,
-    CardActionArea,
     CardContent,
     Stack,
+    CardActions,
+    Tooltip,
+    IconButton,
+    CircularProgress,
+    Button,
+    Box,
 } from '@mui/material';
+
+import { Cached, KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
 
 import { DataImages, AppUtils } from '../../../base';
 
@@ -37,6 +44,10 @@ export function PsdkItem(props) {
     const navigate = useNavigate();
     // data
     const color = theme.palette.primaryPsdk.main;
+    const {
+        psdkInstalled,
+        psdkAvailable,
+    } = props
     // item
     return (
         <ListItem>
@@ -46,30 +57,74 @@ export function PsdkItem(props) {
                     background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                 }}
             >
-                <CardActionArea
-                    onClick={() => {
-                        AppUtils.openPage(navigate, 'psdk')
-                    }}
-                >
-                    <CardContent>
-                        <Stack
-                            direction="row"
-                            spacing={1}
-                            sx={{ paddingBottom: 1, alignItems: "center" }}
-                        >
-                            <img
-                                style={{ width: '16px', height: '16px' }}
-                                src={DataImages.iconPsdk}
-                                alt='Icon' />
-                            <Typography variant="subtitle2" color={color} >
-                                {t('features.psdk.t_title')}
-                            </Typography>
-                        </Stack>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {t('features.psdk.t_text')}
+                <CardContent sx={{ paddingBottom: 1 }}>
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ paddingBottom: 1, alignItems: "center" }}
+                    >
+                        <img
+                            style={{ width: '16px', height: '16px' }}
+                            src={DataImages.iconPsdk}
+                            alt='Icon' />
+                        <Typography variant="subtitle2" color={color} >
+                            {t('features.psdk.t_title')}
                         </Typography>
-                    </CardContent>
-                </CardActionArea>
+                    </Stack>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {t('features.psdk.t_text')}
+                    </Typography>
+                </CardContent>
+                <CardActions sx={{
+                    p: 2,
+                    paddingTop: 0
+                }}>
+                    {Array.isArray(psdkInstalled) && (
+                        <Tooltip title={t('common.t_sync')} placement="left-start">
+                            <IconButton
+                                onClick={() => {
+
+                                }}
+                            >
+                                <Cached />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+
+                    {Array.isArray(psdkAvailable) && psdkAvailable.length ? (
+                        <Tooltip title={t('common.t_available')} placement="left-start">
+                            <IconButton
+                                onClick={() => {
+                                    AppUtils.openPage(navigate, 'psdksAvailable');
+                                }}
+                            >
+                                <FormatListBulleted />
+                            </IconButton>
+                        </Tooltip>
+                    ) : (
+                        <CircularProgress size="20px" color="primaryPsdk" />
+                    )}
+
+                    <Box sx={{ flexGrow: 1 }} />
+
+                    <Button
+                        disabled={!Array.isArray(psdkInstalled)}
+                        size={'small'}
+                        color={'primaryPsdk'}
+                        endIcon={!Array.isArray(psdkInstalled) ? (
+                            <CircularProgress color="default" />
+                        ) : (
+                            <KeyboardArrowRight color="default" />
+                        )}
+                        variant="contained"
+                        sx={{ opacity: 0.8 }}
+                        onClick={() => {
+                            AppUtils.openPage(navigate, 'psdksInstalled');
+                        }}
+                    >
+                        {t('common.t_open')}
+                    </Button>
+                </CardActions>
             </Card>
         </ListItem>
     );

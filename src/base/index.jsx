@@ -34,6 +34,7 @@ export * from './hooks/useEffectCache';
 export * from './hooks/useEffectFocus';
 export * from './hooks/useEffectPageScroll';
 export * from './hooks/useEffectSingle';
+export * from './hooks/useEffectSingleTimeout';
 export * from './hooks/useEffectTheme';
 export * from './hooks/useEffectWindowResize';
 // locale

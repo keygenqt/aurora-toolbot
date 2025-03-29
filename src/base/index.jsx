@@ -17,6 +17,7 @@
 // actions
 export * from './components/actions/ActionBack';
 export * from './components/actions/ActionMenu';
+export * from './components/actions/ActionRefresh';
 // dialogs
 export * from './components/dialogs/AlertDialog';
 // lottie

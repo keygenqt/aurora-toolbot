@@ -16,7 +16,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from "react-router";
 
-import { ActionBack, ActionMenu } from './base'
+import { ActionBack, ActionMenu, ActionRefresh } from './base'
 import { AppBarLayout } from './layouts'
 import {
     AuthPage,
@@ -45,7 +45,7 @@ export function AppRoute() {
         <BrowserRouter>
             <Routes>
                 <Route index element={(
-                    <AppBarLayout actions={showMenuMain ? <ActionMenu /> : null} >
+                    <AppBarLayout actions={showMenuMain ? (<ActionMenu />) : (<ActionRefresh />)} >
                         <MainPage onStateConnect={(connect) => setShowMenuMain(connect)} />
                     </AppBarLayout>
                 )} />

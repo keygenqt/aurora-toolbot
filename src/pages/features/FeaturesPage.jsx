@@ -13,32 +13,96 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 
-import {
-    useTheme,
-    Typography,
-    ListItem,
-    List,
-    Card,
-    CardActionArea,
-    CardContent,
-    CardActions,
-    IconButton,
-    Tooltip,
-    Stack,
-    Box,
-    Button,
-} from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { setData as setEmulators } from '../../store/impl/emulators';
+import { setData as setSdkInstalled } from '../../store/impl/sdkInstalled';
+import { setData as setSdkAvailable } from '../../store/impl/sdkAvailable';
+import { setData as setPsdkInstalled } from '../../store/impl/psdkInstalled';
+import { setData as setPsdkAvailable } from '../../store/impl/psdkAvailable';
+import { setData as setFlutterInstalled } from '../../store/impl/flutterInstalled';
+import { setData as setFlutterAvailable } from '../../store/impl/flutterAvailable';
 
-import { InstallDesktop, KeyboardArrowRight, NewReleases } from '@mui/icons-material';
+import { List } from '@mui/material';
 
-import { DataImages, AppUtils } from '../../base'
+import { useEffectSingle, } from '../../base';
+import { Methods } from '../../modules';
+
+import { EmulatorItem } from './elements/EmulatorItem';
+import { FAQItem } from './elements/FAQItem';
+import { FlutterItem } from './elements/FlutterItem';
+import { GroupWidget } from './elements/GroupWidget';
+import { PsdkItem } from './elements/PsdkItem';
+import { SdkItem } from './elements/SdkItem';
+
 
 export function FeaturesPage(props) {
     // components
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    // redux
+    const emulators = useSelector((state) => state.emulators.value);
+    const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
+    const sdkAvailable = useSelector((state) => state.sdkAvailable.value);
+    const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
+    const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
+    const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
+    const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
+    // init
+    useEffectSingle(() => {
+        (async function () {
+            if (!emulators) {
+                try {
+                    dispatch(setEmulators(await Methods.emulators()));
+                } catch (e) {
+                    dispatch(setEmulators(null));
+                }
+            }
+            if (!sdkInstalled) {
+                try {
+                    dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+                } catch (e) {
+                    dispatch(setSdkInstalled(null));
+                }
+            }
+            if (!sdkAvailable) {
+                try {
+                    dispatch(setSdkAvailable(await Methods.sdkAvailable()));
+                } catch (e) {
+                    dispatch(setSdkAvailable(null));
+                }
+            }
+            if (!psdkInstalled) {
+                try {
+                    dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
+                } catch (e) {
+                    dispatch(setPsdkInstalled(null));
+                }
+            }
+            if (!psdkAvailable) {
+                try {
+                    dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
+                } catch (e) {
+                    dispatch(setPsdkAvailable(null));
+                }
+            }
+            if (!flutterInstalled) {
+                try {
+                    dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
+                } catch (e) {
+                    dispatch(setFlutterInstalled(null));
+                }
+            }
+            if (!flutterAvailable) {
+                try {
+                    dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
+                } catch (e) {
+                    dispatch(setFlutterAvailable(null));
+                }
+            }
+        })();
+    });
     // page
     return (
         <List>
@@ -46,286 +110,31 @@ export function FeaturesPage(props) {
                 title={t('features.devices.t_title')}
                 text={t('features.devices.t_text')}
             />
-            <EmulatorItem />
+            <EmulatorItem
+                emulators={emulators}
+            />
             <GroupWidget
                 title={t('features.tools.t_title')}
                 text={t('features.tools.t_text')}
             />
-            <SdkItem />
-            <PsdkItem />
-            <FlutterItem />
+            <SdkItem
+                sdkInstalled={sdkInstalled}
+                sdkAvailable={sdkAvailable}
+            />
+            <PsdkItem
+                psdkInstalled={psdkInstalled}
+                psdkAvailable={psdkAvailable}
+            />
+            <FlutterItem
+                flutterInstalled={flutterInstalled}
+                flutterAvailable={flutterAvailable}
+            />
             <GroupWidget
                 title={t('features.assistant.t_title')}
                 text={t('features.assistant.t_text')}
             />
             <FAQItem />
         </List>
-    );
-}
-
-function GroupWidget(props) {
-    return (
-        <ListItem>
-            <CardContent sx={{ p: '0 !important' }}>
-                <Typography
-                    gutterBottom
-                    variant="subtitle2"
-                    color={'text.primary'}
-                >
-                    {props.title}
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {props.text}
-                </Typography>
-            </CardContent>
-        </ListItem>
-    );
-}
-
-function EmulatorItem() {
-    // components
-    const { t } = useTranslation();
-    const theme = useTheme();
-    const navigate = useNavigate();
-    // data
-    const color = theme.palette.secondary.main
-    // item
-    return (
-        <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
-                <CardActionArea
-                    onClick={() => {
-                        AppUtils.openPageDelay(navigate, 'emulators')
-                    }}
-                >
-                    <CardContent>
-                        <Box sx={{ paddingBottom: 1 }}>
-                            <Typography variant="subtitle2" color={color} >
-                                {t('features.emulator.t_title')}
-                            </Typography>
-                        </Box>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {t('features.emulator.t_text')}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </ListItem>
-    );
-}
-
-function SdkItem() {
-    // components
-    const { t } = useTranslation();
-    const theme = useTheme();
-    const navigate = useNavigate();
-    // data
-    const color = theme.palette.primarySdk.main;
-    // item
-    return (
-        <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
-                <CardContent sx={{ paddingBottom: 1 }}>
-                    <Stack
-                        direction="row"
-                        spacing={1}
-                        sx={{ paddingBottom: 1, alignItems: "center" }}
-                    >
-                        <img
-                            style={{ width: '16px', height: '16px' }}
-                            src={DataImages.iconSdk}
-                            alt='Icon' />
-                        <Typography variant="subtitle2" color={color} >
-                            {t('features.sdk.t_title')}
-                        </Typography>
-                    </Stack>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {t('features.sdk.t_text')}
-                    </Typography>
-                </CardContent>
-                <CardActions sx={{
-                    p: 2,
-                    paddingTop: 0
-                }}>
-                    <Stack
-                        direction={'row'}
-                        spacing={0.5}
-                    >
-                        <Tooltip title={t('common.t_new_version')} placement="left-start">
-                            <Box sx={{
-                                fontSize: 0,
-                                '& .MuiSvgIcon-root': {
-                                    fontSize: 20, paddingY: '3px'
-                                }
-                            }}>
-                                <NewReleases color={'info'} />
-                            </Box>
-                        </Tooltip>
-
-                    </Stack>
-
-                    <Tooltip title={t('common.t_install')} placement="left-start">
-                        <IconButton
-                            onClick={() => {
-                                AppUtils.openPage(navigate, 'sdk');
-                            }}
-                        >
-                            <InstallDesktop />
-                        </IconButton>
-                    </Tooltip>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Button
-                        size={'small'}
-                        color={'primarySdk'}
-                        endIcon={<KeyboardArrowRight color="default" />}
-                        variant="contained"
-                        sx={{ opacity: 0.8 }}
-                        onClick={() => {
-                            console.log('@todo')
-                        }}
-                    >
-                        {t('common.t_open')}
-                    </Button>
-                </CardActions>
-            </Card>
-        </ListItem>
-    );
-}
-
-function PsdkItem() {
-    // components
-    const { t } = useTranslation();
-    const theme = useTheme();
-    const navigate = useNavigate();
-    // data
-    const color = theme.palette.primaryPsdk.main;
-    // item
-    return (
-        <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
-                <CardActionArea
-                    onClick={() => {
-                        AppUtils.openPage(navigate, 'psdk')
-                    }}
-                >
-                    <CardContent>
-                        <Stack
-                            direction="row"
-                            spacing={1}
-                            sx={{ paddingBottom: 1, alignItems: "center" }}
-                        >
-                            <img
-                                style={{ width: '16px', height: '16px' }}
-                                src={DataImages.iconPsdk}
-                                alt='Icon' />
-                            <Typography variant="subtitle2" color={color} >
-                                {t('features.psdk.t_title')}
-                            </Typography>
-                        </Stack>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {t('features.psdk.t_text')}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </ListItem>
-    );
-}
-
-function FlutterItem() {
-    // components
-    const { t } = useTranslation();
-    const theme = useTheme();
-    const navigate = useNavigate();
-    // data
-    const color = theme.palette.primaryFlutter.main;
-    // item
-    return (
-        <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
-                <CardActionArea
-                    onClick={() => {
-                        AppUtils.openPage(navigate, 'flutter')
-                    }}
-                >
-                    <CardContent>
-                        <Stack
-                            direction="row"
-                            spacing={1}
-                            sx={{ paddingBottom: 1, alignItems: "center" }}
-                        >
-                            <img
-                                style={{ width: '16px', height: '16px' }}
-                                src={DataImages.iconFlutter}
-                                alt='Icon' />
-                            <Typography variant="subtitle2" color={color} >
-                                {t('features.emulator.t_title')}
-                            </Typography>
-                        </Stack>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {t('features.emulator.t_text')}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </ListItem>
-    );
-}
-
-function FAQItem() {
-    // components
-    const { t } = useTranslation();
-    const theme = useTheme();
-    const navigate = useNavigate();
-    // data
-    const color = theme.palette.info.main;
-    // item
-    return (
-        <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
-                <CardActionArea
-                    onClick={() => {
-                        AppUtils.openPageDelay(navigate, 'faq')
-                    }}
-                >
-                    <CardContent>
-                        <Box sx={{ paddingBottom: 1 }}>
-                            <Typography variant="subtitle2" color={color} >
-                                {t('features.faq.t_title')}
-                            </Typography>
-                        </Box>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {t('features.faq.t_text')}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </ListItem>
     );
 }
 

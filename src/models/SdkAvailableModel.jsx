@@ -18,13 +18,6 @@
  * Selector data model
  */
 export const SdkAvailableModel = {
-    // Data model
-    url: undefined,
-    versionMajor: undefined,
-    versionFull: undefined,
-    buildType: undefined,
-    installType: undefined,
-    // Parse obj form string
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'SdkAvailable') {
@@ -37,5 +30,20 @@ export const SdkAvailableModel = {
             buildType: data['jsonData']['model']['build_type'],
             installType: data['jsonData']['model']['install_type'],
         }
+    },
+    hasNew: function (sdkAvailable, sdkInstalled) {
+        if (!Array.isArray(sdkAvailable) || !Array.isArray(sdkInstalled)) {
+            return false
+        }
+        let index = 0;
+        for (const a of sdkAvailable) {
+            for (const i of sdkInstalled) {
+                if (a.versionFull == i.versionFull) {
+                    return index != 0;
+                }
+            }
+            index++;
+        }
+        return false;
     }
 }

@@ -16,13 +16,11 @@
 import * as React from 'react';
 import { useTranslation } from "react-i18next";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setData } from '../../store/impl/psdkAvailable';
+import { useSelector } from 'react-redux';
 
 import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
 
-import { useEffectSingle, StateEmpty, StateLoading } from '../../base';
-import { Methods } from '../../modules';
+import { StateEmpty } from '../../base';
 
 export function PsdksPage(props) {
     // components
@@ -32,24 +30,8 @@ export function PsdksPage(props) {
     const color = theme.palette.primaryPsdk.main;
     // redux
     const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
-    const dispatch = useDispatch();
-    // init
-    useEffectSingle(() => {
-        if (!psdkAvailable) {
-            (async function () {
-                try {
-                    dispatch(setData(await Methods.psdkAvailable()));
-                } catch (e) {
-                    dispatch(setData(null));
-                }
-            })();
-        }
-    });
     // States
-    if (psdkAvailable === undefined) {
-        return (<StateLoading/>);
-    }
-    if (psdkAvailable === null) {
+    if (!psdkAvailable) {
         return (<StateEmpty/>);
     }
     // Page

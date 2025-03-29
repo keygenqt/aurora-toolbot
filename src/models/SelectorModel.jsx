@@ -18,10 +18,6 @@
  * Selector data model
  */
 export const SelectorModel = {
-    // Data model
-    key: undefined,
-    variants: undefined,
-    // Parse obj form string
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'Selector') {

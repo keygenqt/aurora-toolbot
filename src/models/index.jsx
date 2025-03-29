@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 export * from './AppInfoModel';
-export * from './EmulatorInfoModel';
+export * from './EmulatorModel';
 export * from './FlutterAvailableModel';
+export * from './FlutterInstalledModel';
 export * from './PsdkAvailableModel';
+export * from './PsdkInstalledModel';
 export * from './SdkAvailableModel';
+export * from './SdkInstalledModel';
 export * from './SelectorModel';

@@ -16,13 +16,11 @@
 import * as React from 'react';
 import { useTranslation } from "react-i18next";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setData } from '../../store/impl/flutterAvailable';
+import { useSelector } from 'react-redux';
 
 import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
 
-import { useEffectSingle, StateEmpty, StateLoading } from '../../base';
-import { Methods } from '../../modules';
+import { StateEmpty } from '../../base';
 
 export function FluttersPage(props) {
     // components
@@ -32,24 +30,8 @@ export function FluttersPage(props) {
     const color = theme.palette.primaryFlutter.main;
     // redux
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
-    const dispatch = useDispatch();
-    // init
-    useEffectSingle(() => {
-        if (!flutterAvailable) {
-            (async function () {
-                try {
-                    dispatch(setData(await Methods.flutterAvailable()));
-                } catch (e) {
-                    dispatch(setData(null));
-                }
-            })();
-        }
-    });
     // States
-    if (flutterAvailable === undefined) {
-        return (<StateLoading/>);
-    }
-    if (flutterAvailable === null) {
+    if (!flutterAvailable) {
         return (<StateEmpty/>);
     }
     // Page

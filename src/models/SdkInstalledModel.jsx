@@ -17,17 +17,18 @@
 /**
  * Selector data model
  */
-export const PsdkAvailableModel = {
+export const SdkInstalledModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
-        if (data['key'] !== 'PsdkAvailable') {
+        if (data['key'] !== 'SdkInfo') {
             return undefined
         }
         return {
-            url: data['jsonData']['model']['url'],
-            versionMajor: data['jsonData']['model']['version_major'],
-            versionFull: data['jsonData']['model']['version_full'],
-            urls: data['jsonData']['model']['urls'],
+            dir: data['jsonData']['model']['dir'],
+            tools: data['jsonData']['model']['tools'],
+            version: data['jsonData']['model']['version'],
+            versionFull: data['jsonData']['model']['version'].split('-')[0],
+            buildType: data['jsonData']['model']['version'].split('-')[1].toUpperCase(),
         }
     }
 }

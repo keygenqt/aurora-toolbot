@@ -13,29 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const typography = {
-    fontSize: 14,
-    h5: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        fontFamily: [
-            'Ubuntu',
-            'sans-serif',
-        ].join(','),
-    },
-    subtitle2: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        fontFamily: [
-            'Ubuntu',
-            'sans-serif',
-        ].join(','),
-    },
-    body2: {
-        fontSize: 14,
-        fontFamily: [
-            'Ubuntu',
-            'sans-serif',
-        ].join(','),
-    },
+
+/**
+ * EmulatorInfo data model
+ */
+export const EmulatorModel = {
+    parse: function (json) {
+        let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
+        if (data['key'] !== 'EmulatorInfo') {
+            return undefined
+        }
+        return {
+            dir: data['jsonData']['model']['dir'],
+            key: data['jsonData']['model']['key'],
+            uuid: data['jsonData']['model']['uuid'],
+            name: data['jsonData']['model']['name'],
+            isRunning: data['jsonData']['model']['is_running'],
+        }
+    }
 }

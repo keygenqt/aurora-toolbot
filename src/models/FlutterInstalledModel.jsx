@@ -17,17 +17,19 @@
 /**
  * Selector data model
  */
-export const PsdkAvailableModel = {
+export const FlutterInstalledModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
-        if (data['key'] !== 'PsdkAvailable') {
+        if (data['key'] !== 'FlutterInfo') {
             return undefined
         }
         return {
-            url: data['jsonData']['model']['url'],
-            versionMajor: data['jsonData']['model']['version_major'],
-            versionFull: data['jsonData']['model']['version_full'],
-            urls: data['jsonData']['model']['urls'],
+            dir: data['jsonData']['model']['dir'],
+            flutter: data['jsonData']['model']['flutter'],
+            dart: data['jsonData']['model']['dart'],
+            flutterVersion: data['jsonData']['model']['flutter_version'],
+            toolsVersion: data['jsonData']['model']['tools_version'],
+            dartVersion: data['jsonData']['model']['dart_version'],
         }
     }
 }

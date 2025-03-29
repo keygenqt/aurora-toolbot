@@ -148,8 +148,16 @@ export const components = {
             root: ({ theme }) =>
                 theme.unstable_sx({
                     backgroundColor: window.isMobile ? 'transparent !important' : null,
+                    '&.Mui-disabled': {
+                        color: 'black !important',
+                    },
                     '&.MuiButton-sizeSmall': {
                         fontSize: 11,
+                    },
+                    '&.Mui-disabled.MuiButton-sizeSmall .MuiButton-icon .MuiCircularProgress-root': {
+                        marginLeft: '4px',
+                        width: '14px !important',
+                        height: '14px !important',
                     },
                     '&.MuiButton-sizeSmall .MuiButton-icon': {
                         marginLeft: '2px',

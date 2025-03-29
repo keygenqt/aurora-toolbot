@@ -18,14 +18,6 @@
  * Selector data model
  */
 export const FlutterAvailableModel = {
-    // Data model
-    tag: undefined,
-    version: undefined,
-    createdAt: undefined,
-    urlGitlab: undefined,
-    urlZip: undefined,
-    urlTarGz: undefined,
-    // Parse obj form string
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'FlutterAvailable') {

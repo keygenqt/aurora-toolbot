@@ -15,27 +15,20 @@
  */
 
 /**
- * EmulatorInfo data model
+ * Selector data model
  */
-export const EmulatorInfoModel = {
-    // Data model
-    dir: undefined,
-    key: undefined,
-    uuid: undefined,
-    name: undefined,
-    isRunning: undefined,
-    // Parse obj form string
+export const PsdkInstalledModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
-        if (data['key'] !== 'EmulatorInfo') {
+        if (data['key'] !== 'PsdkInfo') {
             return undefined
         }
         return {
             dir: data['jsonData']['model']['dir'],
-            key: data['jsonData']['model']['key'],
-            uuid: data['jsonData']['model']['uuid'],
-            name: data['jsonData']['model']['name'],
-            isRunning: data['jsonData']['model']['is_running'],
+            chroot: data['jsonData']['model']['chroot'],
+            version: data['jsonData']['model']['version'],
+            versionId: data['jsonData']['model']['version_id'],
+            build: data['jsonData']['model']['build'],
         }
     }
 }

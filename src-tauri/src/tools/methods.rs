@@ -82,6 +82,36 @@ pub fn sdk_available_by_id(id: String) -> Result<String, Error> {
 }
 
 #[tauri::command(async)]
+pub fn sdk_info() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "SdkInfo";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn sdk_info_by_id(id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "SdkInfoById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
 pub fn psdk_available() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
@@ -112,6 +142,36 @@ pub fn psdk_available_by_id(id: String) -> Result<String, Error> {
 }
 
 #[tauri::command(async)]
+pub fn psdk_info() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "PsdkInfo";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn psdk_info_by_id(id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "PsdkInfoById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
 pub fn flutter_available() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
@@ -134,6 +194,36 @@ pub fn flutter_available_by_id(id: String) -> Result<String, Error> {
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "FlutterAvailableById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn flutter_info() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "FlutterInfo";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn flutter_info_by_id(id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "FlutterInfoById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,

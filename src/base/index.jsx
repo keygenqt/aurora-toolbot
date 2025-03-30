@@ -26,6 +26,7 @@ export * from './components/lottie/LottieError';
 export * from './components/lottie/LottieLoading';
 // states
 export * from './components/states/StateEmpty';
+export * from './components/states/StateListIcon';
 export * from './components/states/StateLoading';
 // data
 export * from './data/DataImages';

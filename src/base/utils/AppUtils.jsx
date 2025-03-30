@@ -67,5 +67,34 @@ export const AppUtils = {
         setTimeout(() => {
             AppUtils.openPage(navigate, key)
         }, 270);
+    },
+    asyncJoin: async function(...fns) {
+        if (!Array.isArray(fns) && fns.length == 0) {
+            return null;
+        }
+        if (Array.isArray(fns[0])) {
+            fns = fns[0];
+        }
+        let join = [];
+        for (const fn of fns) {
+            if (fn) {
+                join.push(new Promise((resolve, reject) => {
+                    (async () => {
+                        try {
+                            let result = await fn();
+                            console.log(result)
+                            resolve(result);
+                        } catch (e) {
+                            reject(e)
+                        }
+                    })()
+                }));
+            }
+        }
+        try {
+            return await Promise.all(join);
+        } catch (e) {
+            return null
+        }
     }
 }

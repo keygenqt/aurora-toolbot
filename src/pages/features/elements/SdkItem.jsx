@@ -32,9 +32,9 @@ import {
     CircularProgress,
 } from '@mui/material';
 
-import { FormatListBulleted, KeyboardArrowRight, NewReleases, Cached } from '@mui/icons-material';
+import { FormatListBulleted, KeyboardArrowRight, NewReleases, Cached, Error } from '@mui/icons-material';
 
-import { DataImages, AppUtils } from '../../../base';
+import { DataImages, AppUtils, StateListIcon } from '../../../base';
 import { SdkAvailableModel } from '../../../models';
 
 
@@ -82,18 +82,10 @@ export function SdkItem(props) {
                     paddingTop: 0
                 }}>
                     {isNew && (
-                        <Tooltip title={t('common.t_new_version')} placement="left-start">
-                            <Box sx={{
-                                fontSize: 0,
-                                '& .MuiSvgIcon-root': {
-                                    fontSize: 20, paddingY: '3px'
-                                }
-                            }}>
-                                <NewReleases color={'info'} />
-                            </Box>
-                        </Tooltip>
+                        <StateListIcon title={t('common.t_new_version')}>
+                            <NewReleases color={'info'} />
+                        </StateListIcon>
                     )}
-
                     {Array.isArray(sdkInstalled) && (
                         <Tooltip title={t('common.t_sync')} placement="left-start">
                             <IconButton
@@ -116,6 +108,10 @@ export function SdkItem(props) {
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
+                    ) : sdkAvailable === null ? (
+                        <StateListIcon title={t('common.t_error')}>
+                            <Error color={'error'} />
+                        </StateListIcon>
                     ) : (
                         <CircularProgress size="20px" color="primarySdk" />
                     )}

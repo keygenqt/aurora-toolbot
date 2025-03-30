@@ -21,7 +21,7 @@ export const SdkInstalledModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'SdkInfo') {
-            return undefined
+            throw new Error(`Failed key: ${data['key']} != SdkInfo`);
         }
         return {
             dir: data['jsonData']['model']['dir'],

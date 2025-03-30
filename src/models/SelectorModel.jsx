@@ -21,6 +21,7 @@ export const SelectorModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'Selector') {
+            // No exception is needed here.
             return undefined
         }
         return {

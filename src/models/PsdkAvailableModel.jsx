@@ -21,7 +21,7 @@ export const PsdkAvailableModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'PsdkAvailable') {
-            return undefined
+            throw new Error(`Failed key: ${data['key']} != PsdkAvailable`);
         }
         return {
             url: data['jsonData']['model']['url'],

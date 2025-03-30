@@ -21,7 +21,7 @@ export const AppInfoModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'AppInfo') {
-            return undefined
+            throw new Error(`Failed key: ${data['key']} != AppInfo`);
         }
         return {
             appVersion: data['jsonData']['version'],

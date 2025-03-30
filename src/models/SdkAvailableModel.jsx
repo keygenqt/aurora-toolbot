@@ -21,7 +21,7 @@ export const SdkAvailableModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'SdkAvailable') {
-            throw new Error(`Failed key parse: ${data['key']}`);
+            throw new Error(`Failed key: ${data['key']} != SdkAvailable`);
         }
         return {
             url: data['jsonData']['model']['url'],

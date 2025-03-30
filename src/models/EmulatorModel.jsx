@@ -21,7 +21,7 @@ export const EmulatorModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'EmulatorInfo') {
-            return undefined
+            throw new Error(`Failed key: ${data['key']} != EmulatorInfo`);
         }
         return {
             dir: data['jsonData']['model']['dir'],

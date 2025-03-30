@@ -21,7 +21,7 @@ export const FlutterAvailableModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'FlutterAvailable') {
-            return undefined
+            throw new Error(`Failed key: ${data['key']} != FlutterAvailable`);
         }
         return {
             tag: data['jsonData']['model']['tag'],

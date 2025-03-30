@@ -21,7 +21,7 @@ export const FlutterInstalledModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'FlutterInfo') {
-            return undefined
+            throw new Error(`Failed key: ${data['key']} != FlutterInfo`);
         }
         return {
             dir: data['jsonData']['model']['dir'],

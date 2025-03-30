@@ -21,7 +21,7 @@ export const PsdkInstalledModel = {
     parse: function (json) {
         let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
         if (data['key'] !== 'PsdkInfo') {
-            return undefined
+            throw new Error(`Failed key: ${data['key']} != PsdkInfo`);
         }
         return {
             dir: data['jsonData']['model']['dir'],

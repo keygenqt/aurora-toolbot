@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import { useTranslation } from "react-i18next";
+import PropTypes from 'prop-types';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setEmulators } from '../../store/impl/emulators';
@@ -51,7 +52,7 @@ export function FeaturesPage(props) {
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
     // init
     useEffectSingleTimeout(async () => {
-        AppUtils.asyncJoin(
+        await AppUtils.asyncJoin(
             emulators ? null : async () => {
                 dispatch(setEmulators(await Methods.emulators()));
             },
@@ -74,6 +75,8 @@ export function FeaturesPage(props) {
                 dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
             },
         )
+        // Show menu refresh page
+        props.onStateRefresh(true)
     });
     // page
     return (
@@ -110,4 +113,6 @@ export function FeaturesPage(props) {
     );
 }
 
-FeaturesPage.propTypes = {};
+FeaturesPage.propTypes = {
+    onStateRefresh: PropTypes.func.isRequired,
+};

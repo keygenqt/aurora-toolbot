@@ -17,7 +17,7 @@ import * as React from 'react';
 
 import { IconButton } from '@mui/material'
 
-import { Cached } from '@mui/icons-material';
+import { Refresh } from '@mui/icons-material';
 
 export function ActionRefresh() {
     return (
@@ -27,7 +27,7 @@ export function ActionRefresh() {
                 // @todo
             }}
         >
-            <Cached />
+            <Refresh />
         </IconButton>
     );
 }

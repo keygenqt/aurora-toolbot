@@ -61,12 +61,10 @@ export function AppBarLayout(props) {
                 }}
             >
                 <Toolbar data-tauri-drag-region id={"toolbarDrag1"}>
-                    {props.actions ?? (
-                        <Box sx={{ width: '28px' }} />
-                    )}
-                    {window.isTauri && (
-                        <Box sx={{ width: '28px' }} />
-                    )}
+                    <Box sx={{ minWidth: 56 }}>
+                        {props.actions}
+                    </Box>
+                    <Box sx={{ flexGrow: 1 }} />
                     {window.isMobile == false && (
                         <Typography
                             id={"toolbarDrag2"}
@@ -74,40 +72,40 @@ export function AppBarLayout(props) {
                             data-tauri-drag-region
                             variant="subtitle2"
                             component="div"
-                            sx={{ flexGrow: 1, textAlign: 'center' }}
                         >
                             Aurora Toolbot
                         </Typography>
                     )}
-                    {appWindow ? (
-                        <Stack
-                            direction="row"
-                            spacing={1}
-                            sx={{
-                                justifyContent: "flex-end",
-                                alignItems: "center",
-                            }}
-                        >
-                            <IconButton
-                                color="inherit"
-                                onClick={() => {
-                                    appWindow.minimize()
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ minWidth: 56 }}>
+                        {appWindow && (
+                            <Stack
+                                direction="row"
+                                spacing={1}
+                                sx={{
+                                    justifyContent: "flex-end",
+                                    alignItems: "center",
                                 }}
                             >
-                                <Minimize />
-                            </IconButton>
-                            <IconButton
-                                color="inherit"
-                                onClick={() => {
-                                    appWindow.close()
-                                }}
-                            >
-                                <Close />
-                            </IconButton>
-                        </Stack>
-                    ) : (
-                        <Box sx={{ width: '28px' }} />
-                    )}
+                                <IconButton
+                                    color="inherit"
+                                    onClick={() => {
+                                        appWindow.minimize()
+                                    }}
+                                >
+                                    <Minimize />
+                                </IconButton>
+                                <IconButton
+                                    color="inherit"
+                                    onClick={() => {
+                                        appWindow.close()
+                                    }}
+                                >
+                                    <Close />
+                                </IconButton>
+                            </Stack>
+                        )}
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Box

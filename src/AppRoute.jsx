@@ -38,15 +38,17 @@ import {
     SdksAvailablePage,
     SdksInstalledPage,
 } from './pages'
+import { Stack } from '@mui/material';
 
 export function AppRoute() {
     const [showMenuMain, setShowMenuMain] = React.useState(false);
+    const [featuresRefresh, setFeaturesRefresh] = React.useState(false);
     return (
         <BrowserRouter>
             <Routes>
                 <Route index element={(
                     <AppBarLayout actions={showMenuMain ? (<ActionMenu />) : (<ActionRefresh />)} >
-                        <MainPage onStateConnect={(connect) => setShowMenuMain(connect)} />
+                        <MainPage onStateConnect={(state) => setShowMenuMain(state)} />
                     </AppBarLayout>
                 )} />
                 <Route path="auth" element={(
@@ -56,8 +58,17 @@ export function AppRoute() {
                 )} />
                 <Route path="features">
                     <Route index padding={0} element={(
-                        <AppBarLayout actions={<ActionBack />} >
-                            <FeaturesPage />
+                        <AppBarLayout actions={featuresRefresh ? (
+                            <Stack direction={'row'} spacing={1}>
+                                <ActionBack />
+                                <ActionRefresh />
+                            </Stack>
+                        ) : (
+                            <ActionBack />
+                        )} >
+                            <FeaturesPage
+                                onStateRefresh={(state) => setFeaturesRefresh(state)}
+                            />
                         </AppBarLayout>
                     )} />
                     <Route path="devices">

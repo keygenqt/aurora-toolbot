@@ -51,54 +51,93 @@ export function FeaturesPage(props) {
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
     // init
     useEffectSingleTimeout(async () => {
+        let join = [];
         if (!emulators) {
-            try {
-                dispatch(setEmulators(await Methods.emulators()));
-            } catch (e) {
-                dispatch(setEmulators(null));
-            }
+            join.push(new Promise((resolve) => {
+                (async () => {
+                    try {
+                        dispatch(setEmulators(await Methods.emulators()));
+                    } catch (e) {
+                        dispatch(setEmulators(null));
+                    }
+                    resolve(true);
+                })()
+            }));
         }
         if (!sdkInstalled) {
-            try {
-                dispatch(setSdkInstalled(await Methods.sdkInstalled()));
-            } catch (e) {
-                dispatch(setSdkInstalled(null));
-            }
+            join.push(new Promise((resolve) => {
+                (async () => {
+                    try {
+                        dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+                    } catch (e) {
+                        dispatch(setSdkInstalled(null));
+                    }
+                    resolve(true);
+                })()
+            }));
         }
         if (!sdkAvailable) {
-            try {
-                dispatch(setSdkAvailable(await Methods.sdkAvailable()));
-            } catch (e) {
-                dispatch(setSdkAvailable(null));
-            }
+            join.push(new Promise((resolve) => {
+                (async () => {
+                    try {
+                        dispatch(setSdkAvailable(await Methods.sdkAvailable()));
+                    } catch (e) {
+                        dispatch(setSdkAvailable(null));
+                    }
+                    resolve(true);
+                })()
+            }));
         }
         if (!psdkInstalled) {
-            try {
-                dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
-            } catch (e) {
-                dispatch(setPsdkInstalled(null));
-            }
+            join.push(new Promise((resolve) => {
+                (async () => {
+                    try {
+                        dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
+                    } catch (e) {
+                        dispatch(setPsdkInstalled(null));
+                    }
+                    resolve(true);
+                })()
+            }));
         }
         if (!psdkAvailable) {
-            try {
-                dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
-            } catch (e) {
-                dispatch(setPsdkAvailable(null));
-            }
+            join.push(new Promise((resolve) => {
+                (async () => {
+                    try {
+                        dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
+                    } catch (e) {
+                        dispatch(setPsdkAvailable(null));
+                    }
+                    resolve(true);
+                })()
+            }));
         }
         if (!flutterInstalled) {
-            try {
-                dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
-            } catch (e) {
-                dispatch(setFlutterInstalled(null));
-            }
+            join.push(new Promise((resolve) => {
+                (async () => {
+                    try {
+                        dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
+                    } catch (e) {
+                        dispatch(setFlutterInstalled(null));
+                    }
+                    resolve(true);
+                })()
+            }));
         }
         if (!flutterAvailable) {
-            try {
-                dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
-            } catch (e) {
-                dispatch(setFlutterAvailable(null));
-            }
+            join.push(new Promise((resolve) => {
+                (async () => {
+                    try {
+                        dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
+                    } catch (e) {
+                        dispatch(setFlutterAvailable(null));
+                    }
+                    resolve(true);
+                })()
+            }));
+        }
+        if (join.length != 0) {
+            await Promise.all(join);
         }
     });
     // page

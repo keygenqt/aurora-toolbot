@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 import * as React from 'react';
+import { useNavigate } from 'react-router';
 
 import { IconButton } from '@mui/material'
 
 import { Refresh } from '@mui/icons-material';
 
+import { AppUtils } from '../../../base'
+
 export function ActionRefresh() {
+    const navigate = useNavigate();
     return (
         <IconButton
             color="inherit"
-            onClick={() => {
-                // @todo
-            }}
+            onClick={() => AppUtils.refreshPageDelay(navigate)}
         >
             <Refresh />
         </IconButton>

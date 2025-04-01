@@ -41,13 +41,20 @@ import {
 import { Stack } from '@mui/material';
 
 export function AppRoute() {
-    const [showMenuMain, setShowMenuMain] = React.useState(false);
-    const [featuresRefresh, setFeaturesRefresh] = React.useState(false);
+    const [showMenuMain, setShowMenuMain] = React.useState(undefined);
+    const [featuresRefresh, setFeaturesRefresh] = React.useState(undefined);
     return (
         <BrowserRouter>
             <Routes>
                 <Route index element={(
-                    <AppBarLayout actions={showMenuMain ? (<ActionMenu />) : (<ActionRefresh />)} >
+                    <AppBarLayout actions={showMenuMain === undefined ? null : showMenuMain ? (
+                        <Stack direction={'row'} spacing={1}>
+                            <ActionMenu />
+                            <ActionRefresh />
+                        </Stack>
+                    ) : (
+                        <ActionRefresh />
+                    )} >
                         <MainPage onStateConnect={(state) => setShowMenuMain(state)} />
                     </AppBarLayout>
                 )} />
@@ -60,11 +67,11 @@ export function AppRoute() {
                     <Route index padding={0} element={(
                         <AppBarLayout actions={featuresRefresh ? (
                             <Stack direction={'row'} spacing={1}>
-                                <ActionBack />
+                                <ActionMenu />
                                 <ActionRefresh />
                             </Stack>
                         ) : (
-                            <ActionBack />
+                            <ActionMenu />
                         )} >
                             <FeaturesPage
                                 onStateRefresh={(state) => setFeaturesRefresh(state)}

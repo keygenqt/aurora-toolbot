@@ -13,24 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { debug } from '@tauri-apps/plugin-log';
+import { invoke } from "@tauri-apps/api/core";
 
-import { app } from './impl/app';
-import { emulator } from './impl/emulator';
-import { flutter } from './impl/flutter';
-import { psdk } from './impl/psdk';
-import { sdk } from './impl/sdk';
-
-/**
- * Tauri application methods
- */
-export const MethodsDbus = {
-    ...app,
-    ...emulator,
-    ...flutter,
-    ...psdk,
-    ...sdk,
-    log: function (message) {
-        debug(message)
-    }
+export const app = {
+    appInfo: async function () {
+        return await invoke("app_info", {});
+    },
 }

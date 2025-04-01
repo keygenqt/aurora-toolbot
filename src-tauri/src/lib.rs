@@ -22,20 +22,30 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_log::Builder::new().build())
         .invoke_handler(tauri::generate_handler![
-            methods::app_info,
-            methods::emulator_info,
-            methods::sdk_available,
-            methods::sdk_available_by_id,
-            methods::sdk_info,
-            methods::sdk_info_by_id,
-            methods::psdk_available,
-            methods::psdk_available_by_id,
-            methods::psdk_info,
-            methods::psdk_info_by_id,
-            methods::flutter_available,
-            methods::flutter_available_by_id,
-            methods::flutter_info,
-            methods::flutter_info_by_id,
+            // app
+            methods::app::app_info,
+            // emulator
+            methods::emulator::emulator_info,
+            methods::emulator::emulator_sync,
+            // flutter
+            methods::flutter::flutter_available,
+            methods::flutter::flutter_available_by_id,
+            methods::flutter::flutter_info,
+            methods::flutter::flutter_info_by_id,
+            methods::flutter::flutter_sync,
+            // psdk
+            methods::psdk::psdk_available,
+            methods::psdk::psdk_available_by_id,
+            methods::psdk::psdk_info,
+            methods::psdk::psdk_info_by_id,
+            methods::psdk::psdk_sync,
+            // sdk
+            methods::sdk::sdk_available,
+            methods::sdk::sdk_available_by_id,
+            methods::sdk::sdk_info,
+            methods::sdk::sdk_info_by_id,
+            methods::sdk::sdk_sync,
+            // other
             theme::listen_theme,
             theme::get_theme,
         ])

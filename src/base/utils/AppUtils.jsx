@@ -68,6 +68,22 @@ export const AppUtils = {
             AppUtils.openPage(navigate, key)
         }, 270);
     },
+    refreshPage: function (navigate) {
+        if (window.isMobile) {
+            navigate(0);
+        } else {
+            document.startViewTransition(() => {
+                flushSync(() => {
+                    navigate(0);
+                });
+            });
+        }
+    },
+    refreshPageDelay: function (navigate) {
+        setTimeout(() => {
+            AppUtils.refreshPage(navigate)
+        }, 270);
+    },
     asyncJoin: async function(...fns) {
         if (!Array.isArray(fns) && fns.length == 0) {
             return null;
@@ -81,9 +97,7 @@ export const AppUtils = {
                 join.push(new Promise((resolve, reject) => {
                     (async () => {
                         try {
-                            let result = await fn();
-                            console.log(result)
-                            resolve(result);
+                            resolve(await fn());
                         } catch (e) {
                             reject(e)
                         }

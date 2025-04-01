@@ -24,7 +24,7 @@ import { setData } from '../../store/impl/appInfo';
 import { Box, Stack, Typography, Button } from '@mui/material';
 import { HomeRepairService, OpenInNew } from '@mui/icons-material';
 
-import { useEffectSingle, DataImages, AppUtils, LottieLoading } from '../../base';
+import { useEffectSingle, DataImages, AppUtils, StateLoading } from '../../base';
 import { Methods } from '../../modules';
 import { AppConf } from '../../conf/AppConf';
 import { AppInfoModel } from '../../models';
@@ -50,6 +50,10 @@ export function MainPage(props) {
                     setConnect(true);
                     return;
                 }
+                // Start delay animation
+                if (!appInfo) {
+                    await new Promise(r => setTimeout(r, 800));
+                }
                 // Get appInfo
                 const data = appInfo ? appInfo : await Methods.appInfo();
                 dispatch(setData(data));
@@ -65,18 +69,11 @@ export function MainPage(props) {
             }
         })();
     });
-    // Loading
+    // loading
     if (connect == undefined) {
-        return (
-            <Stack
-                height={1}
-                sx={{ justifyContent: "center", alignItems: "center" }}
-            >
-                <LottieLoading />
-            </Stack>
-        );
+        return (<StateLoading />);
     }
-    // Page
+    // page
     return (
         <Stack
             direction="column"

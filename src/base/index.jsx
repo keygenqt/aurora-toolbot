@@ -28,6 +28,8 @@ export * from './components/lottie/LottieLoading';
 export * from './components/states/StateEmpty';
 export * from './components/states/StateListIcon';
 export * from './components/states/StateLoading';
+// other
+export * from './components/other/IconButtonSync';
 // data
 export * from './data/DataImages';
 export * from './data/DataLottie';

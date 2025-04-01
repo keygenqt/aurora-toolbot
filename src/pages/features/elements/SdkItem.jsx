@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
@@ -32,10 +33,11 @@ import {
     CircularProgress,
 } from '@mui/material';
 
-import { FormatListBulleted, KeyboardArrowRight, NewReleases, Cached, Error } from '@mui/icons-material';
+import { FormatListBulleted, KeyboardArrowRight, NewReleases, Error } from '@mui/icons-material';
 
-import { DataImages, AppUtils, StateListIcon } from '../../../base';
+import { Methods } from '../../../modules';
 import { SdkAvailableModel } from '../../../models';
+import { DataImages, AppUtils, StateListIcon, IconButtonSync } from '../../../base';
 
 
 export function SdkItem(props) {
@@ -50,6 +52,7 @@ export function SdkItem(props) {
         sdkAvailable,
     } = props
     const isNew = SdkAvailableModel.hasNew(sdkAvailable, sdkInstalled);
+    const [isSync, setIsSync] = React.useState(false);
     // item
     return (
         <ListItem>
@@ -87,15 +90,11 @@ export function SdkItem(props) {
                         </StateListIcon>
                     )}
                     {Array.isArray(sdkInstalled) && (
-                        <Tooltip title={t('common.t_sync')} placement="left-start">
-                            <IconButton
-                                onClick={() => {
-
-                                }}
-                            >
-                                <Cached />
-                            </IconButton>
-                        </Tooltip>
+                        <IconButtonSync onClick={async () => {
+                            setIsSync(true)
+                            await Methods.sdkSync();
+                            setIsSync(false)
+                        }}/>
                     )}
 
                     {Array.isArray(sdkAvailable) && sdkAvailable.length ? (
@@ -119,10 +118,10 @@ export function SdkItem(props) {
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={!Array.isArray(sdkInstalled)}
+                        disabled={(!Array.isArray(sdkInstalled) || isSync)}
                         size={'small'}
                         color={'primarySdk'}
-                        endIcon={!Array.isArray(sdkInstalled) ? (
+                        endIcon={(!Array.isArray(sdkInstalled) || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
@@ -32,9 +33,10 @@ import {
     Box,
 } from '@mui/material';
 
-import { Cached, KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
+import { KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
 
-import { DataImages, AppUtils } from '../../../base';
+import { Methods } from '../../../modules';
+import { DataImages, AppUtils, IconButtonSync } from '../../../base';
 
 export function FlutterItem(props) {
     // components
@@ -47,6 +49,7 @@ export function FlutterItem(props) {
         flutterInstalled,
         flutterAvailable,
     } = props
+    const [isSync, setIsSync] = React.useState(false);
     // item
     return (
         <ListItem>
@@ -79,15 +82,11 @@ export function FlutterItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(flutterInstalled) && (
-                        <Tooltip title={t('common.t_sync')} placement="left-start">
-                            <IconButton
-                                onClick={() => {
-
-                                }}
-                            >
-                                <Cached />
-                            </IconButton>
-                        </Tooltip>
+                        <IconButtonSync onClick={async () => {
+                            setIsSync(true)
+                            await Methods.flutterSync();
+                            setIsSync(false)
+                        }}/>
                     )}
 
                     {Array.isArray(flutterAvailable) && flutterAvailable.length ? (
@@ -107,10 +106,10 @@ export function FlutterItem(props) {
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={!Array.isArray(flutterInstalled)}
+                        disabled={(!Array.isArray(flutterInstalled) || isSync)}
                         size={'small'}
                         color={'primaryFlutter'}
-                        endIcon={!Array.isArray(flutterInstalled) ? (
+                        endIcon={(!Array.isArray(flutterInstalled) || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

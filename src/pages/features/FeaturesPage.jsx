@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
@@ -27,7 +28,7 @@ import { setData as setFlutterAvailable } from '../../store/impl/flutterAvailabl
 
 import { List } from '@mui/material';
 
-import { useEffectSingleTimeout, AppUtils } from '../../base';
+import { useEffectSingleTimeout, AppUtils, StateLoading } from '../../base';
 import { Methods } from '../../modules';
 
 import { EmulatorItem } from './elements/EmulatorItem';
@@ -42,6 +43,8 @@ export function FeaturesPage(props) {
     // components
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    // data
+    const [isOpen, setIsOpen] = React.useState(true);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
@@ -52,9 +55,14 @@ export function FeaturesPage(props) {
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
     // init
     useEffectSingleTimeout(async () => {
+        // Start delay animation
+        if (!emulators) {
+            await new Promise(r => setTimeout(r, 800));
+            setIsOpen(false)
+        }
         await AppUtils.asyncJoin(
             emulators ? null : async () => {
-                dispatch(setEmulators(await Methods.emulators()));
+                dispatch(setEmulators(await Methods.emulatorInfo()));
             },
             sdkInstalled ? null : async () => {
                 dispatch(setSdkInstalled(await Methods.sdkInstalled()));
@@ -78,6 +86,9 @@ export function FeaturesPage(props) {
         // Show menu refresh page
         props.onStateRefresh(true)
     });
+    if (isOpen) {
+        return (<StateLoading />);
+    }
     // page
     return (
         <List>

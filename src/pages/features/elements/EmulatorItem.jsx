@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
@@ -25,15 +26,14 @@ import {
     CardContent,
     Box,
     CardActions,
-    Tooltip,
-    IconButton,
     CircularProgress,
     Button,
 } from '@mui/material';
 
-import { Cached, KeyboardArrowRight } from '@mui/icons-material';
+import { KeyboardArrowRight } from '@mui/icons-material';
 
-import { AppUtils } from '../../../base';
+import { Methods } from '../../../modules';
+import { AppUtils, IconButtonSync } from '../../../base';
 
 export function EmulatorItem(props) {
     // components
@@ -45,6 +45,7 @@ export function EmulatorItem(props) {
     const {
         emulators
     } = props
+    const [isSync, setIsSync] = React.useState(false);
     // item
     return (
         <ListItem>
@@ -73,24 +74,20 @@ export function EmulatorItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(emulators) && (
-                        <Tooltip title={t('common.t_sync')} placement="left-start">
-                            <IconButton
-                                onClick={() => {
-
-                                }}
-                            >
-                                <Cached />
-                            </IconButton>
-                        </Tooltip>
+                        <IconButtonSync onClick={async () => {
+                            setIsSync(true);
+                            await Methods.emulatorSync();
+                            setIsSync(false);
+                        }}/>
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={!Array.isArray(emulators)}
+                        disabled={(!Array.isArray(emulators) || isSync)}
                         size={'small'}
                         color={'secondary'}
-                        endIcon={!Array.isArray(emulators) ? (
+                        endIcon={(!Array.isArray(emulators) || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

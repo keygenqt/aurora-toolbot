@@ -75,7 +75,7 @@ export function SdksAvailablePage(props) {
                 open={isOpenDownloadDialogAlert}
                 onClose={() => setIsOpenDownloadDialogAlert(false)}
                 agree={() => {
-                    console.log('agree')
+                    console.log('@todo')
                 }}
             />
             <List>

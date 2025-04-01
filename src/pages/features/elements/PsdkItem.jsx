@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
@@ -32,9 +33,10 @@ import {
     Box,
 } from '@mui/material';
 
-import { Cached, KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
+import { KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
 
-import { DataImages, AppUtils } from '../../../base';
+import { Methods } from '../../../modules';
+import { DataImages, AppUtils, IconButtonSync } from '../../../base';
 
 
 export function PsdkItem(props) {
@@ -48,6 +50,7 @@ export function PsdkItem(props) {
         psdkInstalled,
         psdkAvailable,
     } = props
+    const [isSync, setIsSync] = React.useState(false);
     // item
     return (
         <ListItem>
@@ -80,15 +83,11 @@ export function PsdkItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(psdkInstalled) && (
-                        <Tooltip title={t('common.t_sync')} placement="left-start">
-                            <IconButton
-                                onClick={() => {
-
-                                }}
-                            >
-                                <Cached />
-                            </IconButton>
-                        </Tooltip>
+                        <IconButtonSync onClick={async () => {
+                            setIsSync(true)
+                            await Methods.psdkSync();
+                            setIsSync(false)
+                        }}/>
                     )}
 
                     {Array.isArray(psdkAvailable) && psdkAvailable.length ? (
@@ -108,10 +107,10 @@ export function PsdkItem(props) {
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={!Array.isArray(psdkInstalled)}
+                        disabled={(!Array.isArray(psdkInstalled) || isSync)}
                         size={'small'}
                         color={'primaryPsdk'}
-                        endIcon={!Array.isArray(psdkInstalled) ? (
+                        endIcon={(!Array.isArray(psdkInstalled) || isSync )? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

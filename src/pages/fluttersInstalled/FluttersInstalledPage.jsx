@@ -19,9 +19,27 @@ import { useTranslation } from "react-i18next";
 
 import { useSelector } from 'react-redux';
 
-import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+import {
+    useTheme,
+    Typography,
+    ListItem,
+    List,
+    Card,
+    CardContent,
+    Stack,
+    CardActions,
+    IconButton,
+    Box,
+    Button,
+} from '@mui/material';
 
-import { AppUtils, StateEmpty } from '../../base';
+import {
+    FolderOpen,
+    KeyboardArrowRight,
+    Terminal
+} from '@mui/icons-material';
+
+import { AppUtils, StateEmpty, DataImages } from '../../base';
 
 export function FluttersInstalledPage(props) {
     // components
@@ -34,7 +52,7 @@ export function FluttersInstalledPage(props) {
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     // States
     if (!flutterInstalled) {
-        return (<StateEmpty/>);
+        return (<StateEmpty />);
     }
     // Page
     return (
@@ -47,25 +65,58 @@ export function FluttersInstalledPage(props) {
                             background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                         }}
                     >
-                        <CardActionArea
-                            onClick={() => {
-                                AppUtils.openPage(navigate, 'flutter', { state: { model: e } });
-                            }}
-                        >
-                            <CardContent>
-                                <Stack spacing={1}>
-                                    <Typography variant="subtitle2">
-                                        Flutter: v{e.flutterVersion}
-                                    </Typography>
-                                    <Typography variant="text1">
-                                        Tool: v{e.toolsVersion}
-                                    </Typography>
-                                    <Typography variant="text1">
-                                        Dart: v{e.dartVersion}
-                                    </Typography>
-                                </Stack>
-                            </CardContent>
-                        </CardActionArea>
+                        <CardContent sx={{ paddingBottom: 1 }}>
+                            <Stack
+                                direction="row"
+                                spacing={1}
+                                sx={{ paddingBottom: 1, alignItems: "center" }}
+                            >
+                                <img
+                                    style={{ width: '16px', height: '16px' }}
+                                    src={DataImages.iconFlutter}
+                                    alt='Icon' />
+                                <Typography variant="subtitle2" color={color} >
+                                    Flutter v{e.flutterVersion}
+                                </Typography>
+                            </Stack>
+                        </CardContent>
+
+                        <CardActions sx={{
+                            p: 2,
+                            paddingTop: 0
+                        }}>
+                            <IconButton
+                                onClick={() => {
+                                    // @todo
+                                }}
+                            >
+                                <FolderOpen />
+                            </IconButton>
+
+                            <IconButton
+
+                                onClick={() => {
+                                    // @todo
+                                }}
+                            >
+                                <Terminal />
+                            </IconButton>
+
+                            <Box sx={{ flexGrow: 1 }} />
+
+                            <Button
+                                size={'small'}
+                                color={'primaryFlutter'}
+                                endIcon={<KeyboardArrowRight color="default" />}
+                                variant="contained"
+                                sx={{ opacity: 0.8 }}
+                                onClick={() => {
+                                    AppUtils.openPage(navigate, 'flutter', { state: { model: e } });
+                                }}
+                            >
+                                {t('common.t_open')}
+                            </Button>
+                        </CardActions>
                     </Card>
                 </ListItem>
             ))}

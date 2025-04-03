@@ -19,9 +19,27 @@ import { useTranslation } from "react-i18next";
 
 import { useSelector } from 'react-redux';
 
-import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+import {
+    useTheme,
+    Typography,
+    ListItem,
+    List,
+    Card,
+    CardContent,
+    Stack,
+    CardActions,
+    IconButton,
+    Box,
+    Button,
+} from '@mui/material';
 
-import { AppUtils, StateEmpty } from '../../base';
+import {
+    FolderOpen,
+    KeyboardArrowRight,
+    Handyman,
+} from '@mui/icons-material';
+
+import { AppUtils, StateEmpty, DataImages } from '../../base';
 
 export function SdksInstalledPage(props) {
     // components
@@ -29,12 +47,12 @@ export function SdksInstalledPage(props) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     // data
-    const color = theme.palette.primaryFlutter.main;
+    let color = theme.palette.primarySdk.main;
     // redux
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
     // States
     if (!sdkInstalled) {
-        return (<StateEmpty/>);
+        return (<StateEmpty />);
     }
     // Page
     return (
@@ -47,22 +65,57 @@ export function SdksInstalledPage(props) {
                             background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                         }}
                     >
-                        <CardActionArea
-                            onClick={() => {
-                                AppUtils.openPage(navigate, 'sdk', { state: { model: e } });
-                            }}
-                        >
-                            <CardContent>
-                                <Stack spacing={1}>
-                                    <Typography variant="subtitle2">
-                                        SDK: v{e.versionFull}
-                                    </Typography>
-                                    <Typography variant="text1">
-                                        {e.dir}
-                                    </Typography>
-                                </Stack>
-                            </CardContent>
-                        </CardActionArea>
+                        <CardContent sx={{ paddingBottom: 1 }}>
+                            <Stack
+                                direction="row"
+                                spacing={1}
+                                sx={{ paddingBottom: 1, alignItems: "center" }}
+                            >
+                                <img
+                                    style={{ width: '16px', height: '16px' }}
+                                    src={DataImages.iconSdk}
+                                    alt='Icon' />
+                                <Typography variant="subtitle2" color={color} >
+                                    Аврора SDK v{e.versionFull}
+                                </Typography>
+                            </Stack>
+                        </CardContent>
+
+                        <CardActions sx={{
+                            p: 2,
+                            paddingTop: 0
+                        }}>
+                            <IconButton
+                                onClick={() => {
+                                    // @todo
+                                }}
+                            >
+                                <FolderOpen />
+                            </IconButton>
+
+                            <IconButton
+                                onClick={() => {
+                                    // @todo
+                                }}
+                            >
+                                <Handyman />
+                            </IconButton>
+
+                            <Box sx={{ flexGrow: 1 }} />
+
+                            <Button
+                                size={'small'}
+                                color={'primarySdk'}
+                                endIcon={<KeyboardArrowRight color="default" />}
+                                variant="contained"
+                                sx={{ opacity: 0.8 }}
+                                onClick={() => {
+                                    AppUtils.openPage(navigate, 'sdk', { state: { model: e } });
+                                }}
+                            >
+                                {t('common.t_open')}
+                            </Button>
+                        </CardActions>
                     </Card>
                 </ListItem>
             ))}

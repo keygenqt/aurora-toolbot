@@ -19,9 +19,27 @@ import { useTranslation } from "react-i18next";
 
 import { useSelector } from 'react-redux';
 
-import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+import {
+    useTheme,
+    Typography,
+    ListItem,
+    List,
+    Card,
+    CardContent,
+    Stack,
+    CardActions,
+    IconButton,
+    Box,
+    Button,
+} from '@mui/material';
 
-import { AppUtils, StateEmpty } from '../../base';
+import {
+    FolderOpen,
+    KeyboardArrowRight,
+    Terminal
+} from '@mui/icons-material';
+
+import { AppUtils, StateEmpty, DataImages } from '../../base';
 
 export function PsdksInstalledPage(props) {
     // components
@@ -29,12 +47,12 @@ export function PsdksInstalledPage(props) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     // data
-    const color = theme.palette.primaryFlutter.main;
+    const color = theme.palette.primaryPsdk.main;
     // redux
     const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     // States
     if (!psdkInstalled) {
-        return (<StateEmpty/>);
+        return (<StateEmpty />);
     }
     // Page
     return (
@@ -47,22 +65,58 @@ export function PsdksInstalledPage(props) {
                             background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                         }}
                     >
-                        <CardActionArea
-                            onClick={() => {
-                                AppUtils.openPage(navigate, 'psdk', { state: { model: e } });
-                            }}
-                        >
-                            <CardContent>
-                                <Stack spacing={1}>
-                                    <Typography variant="subtitle2">
-                                        PSDK: v{e.versionId}
-                                    </Typography>
-                                    <Typography variant="text1">
-                                        {e.dir}
-                                    </Typography>
-                                </Stack>
-                            </CardContent>
-                        </CardActionArea>
+                        <CardContent sx={{ paddingBottom: 1 }}>
+                            <Stack
+                                direction="row"
+                                spacing={1}
+                                sx={{ paddingBottom: 1, alignItems: "center" }}
+                            >
+                                <img
+                                    style={{ width: '16px', height: '16px' }}
+                                    src={DataImages.iconPsdk}
+                                    alt='Icon' />
+                                <Typography variant="subtitle2" color={color} >
+                                    {e.version}
+                                </Typography>
+                            </Stack>
+                        </CardContent>
+
+                        <CardActions sx={{
+                            p: 2,
+                            paddingTop: 0
+                        }}>
+                            <IconButton
+                                onClick={() => {
+                                    // @todo
+                                }}
+                            >
+                                <FolderOpen />
+                            </IconButton>
+
+                            <IconButton
+
+                                onClick={() => {
+                                    // @todo
+                                }}
+                            >
+                                <Terminal />
+                            </IconButton>
+
+                            <Box sx={{ flexGrow: 1 }} />
+
+                            <Button
+                                size={'small'}
+                                color={'primaryPsdk'}
+                                endIcon={<KeyboardArrowRight color="default" />}
+                                variant="contained"
+                                sx={{ opacity: 0.8 }}
+                                onClick={() => {
+                                    AppUtils.openPage(navigate, 'psdk', { state: { model: e } });
+                                }}
+                            >
+                                {t('common.t_open')}
+                            </Button>
+                        </CardActions>
                     </Card>
                 </ListItem>
             ))}

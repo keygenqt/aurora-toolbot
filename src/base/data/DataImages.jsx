@@ -18,6 +18,7 @@ import icon_beta from '../../assets/images/icon_beta.png';
 import icon_flutter from '../../assets/images/icon_flutter.webp';
 import icon_psdk from '../../assets/images/icon_psdk.svg';
 import icon_sdk from '../../assets/images/icon_sdk.svg';
+import icon_vb from '../../assets/images/icon_vb.png';
 
 /**
  * Load data images
@@ -28,4 +29,5 @@ export const DataImages = {
     iconFlutter: icon_flutter,
     iconPsdk: icon_psdk,
     iconSdk: icon_sdk,
+    iconVb: icon_vb,
 }

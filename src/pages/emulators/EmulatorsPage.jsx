@@ -19,9 +19,28 @@ import { useTranslation } from "react-i18next";
 
 import { useSelector } from 'react-redux';
 
-import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+import {
+    useTheme,
+    Typography,
+    ListItem,
+    List,
+    Card,
+    CardContent,
+    Stack,
+    CardActions,
+    IconButton,
+    Box,
+    Button,
+} from '@mui/material';
 
-import { AppUtils, StateEmpty } from '../../base';
+import {
+    FolderOpen,
+    KeyboardArrowRight,
+    PlayArrow,
+    Terminal
+} from '@mui/icons-material';
+
+import { AppUtils, DataImages, StateEmpty } from '../../base';
 
 export function EmulatorsPage(props) {
     // components
@@ -29,7 +48,7 @@ export function EmulatorsPage(props) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     // data
-    const color = theme.palette.primaryFlutter.main;
+    const color = theme.palette.secondary.main
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     // States
@@ -47,22 +66,68 @@ export function EmulatorsPage(props) {
                             background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                         }}
                     >
-                        <CardActionArea
-                            onClick={() => {
-                                AppUtils.openPage(navigate, 'emulator', { state: { model: e } });
-                            }}
-                        >
-                            <CardContent>
-                                <Stack spacing={1}>
-                                    <Typography variant="subtitle2">
-                                        {e.name}
-                                    </Typography>
-                                    <Typography variant="text1">
-                                        Uuid: {e.uuid}
-                                    </Typography>
-                                </Stack>
-                            </CardContent>
-                        </CardActionArea>
+                        <CardContent sx={{ paddingBottom: 1 }}>
+                            <Stack
+                                direction="row"
+                                spacing={1}
+                                sx={{ paddingBottom: 1, alignItems: "center" }}
+                            >
+                                <img
+                                    style={{ width: '16px', height: '16px' }}
+                                    src={DataImages.iconVb}
+                                    alt='Icon' />
+                                <Typography variant="subtitle2" color={color} >
+                                    {e.name}
+                                </Typography>
+                            </Stack>
+                        </CardContent>
+
+                        <CardActions sx={{
+                            p: 2,
+                            paddingTop: 0
+                        }}>
+                            <IconButton
+                                onClick={() => {
+                                    // @todo
+                                }}
+                            >
+                                <FolderOpen />
+                            </IconButton>
+
+                            {e.isRunning ? (
+                                <IconButton
+
+                                    onClick={() => {
+                                        // @todo
+                                    }}
+                                >
+                                    <Terminal />
+                                </IconButton>
+                            ) : (
+                                <IconButton
+                                    onClick={() => {
+                                        // @todo
+                                    }}
+                                >
+                                    <PlayArrow />
+                                </IconButton>
+                            )}
+
+                            <Box sx={{ flexGrow: 1 }} />
+
+                            <Button
+                                size={'small'}
+                                color={'secondary'}
+                                endIcon={<KeyboardArrowRight color="default" />}
+                                variant="contained"
+                                sx={{ opacity: 0.8 }}
+                                onClick={() => {
+                                    AppUtils.openPage(navigate, 'emulator', { state: { model: e } });
+                                }}
+                            >
+                                {t('common.t_open')}
+                            </Button>
+                        </CardActions>
                     </Card>
                 </ListItem>
             ))}

@@ -25,24 +25,32 @@ import { AppUtils } from '../../../base';
 
 export const sdk = {
     sdkAvailable: async function () {
-        let data = await invoke("sdk_available", {});
-        let selector = SelectorModel.parse(data);
-        if (selector !== undefined) {
-            return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
-                return SdkAvailableModel.parse(await invoke("sdk_available_by_id", { id: e['incoming']['id'] }));
-            }));
+        try {
+            let data = await invoke("sdk_available", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return SdkAvailableModel.parse(await invoke("sdk_available_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [SdkAvailableModel.parse(data)];
+        } catch (e) {
+            return [];
         }
-        return [SdkAvailableModel.parse(data)];
     },
     sdkInstalled: async function () {
-        let data = await invoke("sdk_info", {});
-        let selector = SelectorModel.parse(data);
-        if (selector !== undefined) {
-            return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
-                return SdkInstalledModel.parse(await invoke("sdk_info_by_id", { id: e['incoming']['id'] }));
-            }));
+        try {
+            let data = await invoke("sdk_info", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return SdkInstalledModel.parse(await invoke("sdk_info_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [SdkInstalledModel.parse(data)];
+        } catch (e) {
+            return [];
         }
-        return [SdkInstalledModel.parse(data)];
     },
     sdkSync: async function () {
         return await invoke("sdk_sync", {});

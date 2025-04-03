@@ -8,8 +8,8 @@ import psdkAvailableReducer from './impl/psdkAvailable'
 import psdkInstalledReducer from './impl/psdkInstalled'
 import flutterAvailableReducer from './impl/flutterAvailable'
 import flutterInstalledReducer from './impl/flutterInstalled'
-
 import pageScrollReducer from './impl/pageScroll'
+import stateBoolReducer from './impl/stateBool'
 
 export default configureStore({
   reducer: {
@@ -22,5 +22,6 @@ export default configureStore({
     flutterAvailable: flutterAvailableReducer,
     flutterInstalled: flutterInstalledReducer,
     pageScroll: pageScrollReducer,
+    stateBool: stateBoolReducer,
   },
 })

@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
+
 import { Stack, Typography } from '@mui/material';
+
 import { LottieComingSoon } from '../../base';
 
 export function FlutterPage(props) {
     // components
     const { t } = useTranslation();
-    // Page
+    // data
+    let { state } = useLocation()
+    // page
     return (
         <Stack
             height={1}
@@ -37,6 +42,13 @@ export function FlutterPage(props) {
                     textAlign={'center'}
                 >
                     {t('common.t_coming_soon')}
+                </Typography>
+                <Typography
+                    variant={'body1'}
+                    color={'text.primary'}
+                    textAlign={'center'}
+                >
+                    ({state.model.flutterVersion})
                 </Typography>
             </Stack>
         </Stack>

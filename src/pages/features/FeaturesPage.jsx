@@ -15,7 +15,6 @@
  */
 import * as React from 'react';
 import { useTranslation } from "react-i18next";
-import PropTypes from 'prop-types';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setEmulators } from '../../store/impl/emulators';
@@ -26,9 +25,10 @@ import { setData as setPsdkAvailable } from '../../store/impl/psdkAvailable';
 import { setData as setFlutterInstalled } from '../../store/impl/flutterInstalled';
 import { setData as setFlutterAvailable } from '../../store/impl/flutterAvailable';
 
-import { List } from '@mui/material';
+import { List, Stack } from '@mui/material';
 
-import { useEffectSingleTimeout, AppUtils, StateLoading } from '../../base';
+import { useEffectSingleTimeout, AppUtils, ActionMenu, ActionRefreshState } from '../../base';
+import { AppBarLayout } from '../../layouts'
 import { Methods } from '../../modules';
 
 import { EmulatorItem } from './elements/EmulatorItem';
@@ -44,7 +44,7 @@ export function FeaturesPage(props) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     // data
-    const [isOpen, setIsOpen] = React.useState(true);
+    const [showRefresh, setShowRefresh] = React.useState(false);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
@@ -53,77 +53,96 @@ export function FeaturesPage(props) {
     const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
-    // init
-    useEffectSingleTimeout(async () => {
-        // Start delay animation
-        if (!emulators) {
-            await new Promise(r => setTimeout(r, 800));
-            setIsOpen(false)
-        }
+    // fun
+    const clearStates = () => {
+        dispatch(setEmulators(undefined));
+        dispatch(setSdkInstalled(undefined));
+        dispatch(setSdkAvailable(undefined));
+        dispatch(setPsdkInstalled(undefined));
+        dispatch(setPsdkAvailable(undefined));
+        dispatch(setFlutterInstalled(undefined));
+        dispatch(setFlutterAvailable(undefined));
+    };
+    const updateStates = async (refresh) => {
         await AppUtils.asyncJoin(
-            emulators ? null : async () => {
+            emulators && !refresh ? null : async () => {
                 dispatch(setEmulators(await Methods.emulatorInfo()));
             },
-            sdkInstalled ? null : async () => {
+            sdkInstalled && !refresh ? null : async () => {
                 dispatch(setSdkInstalled(await Methods.sdkInstalled()));
             },
-            sdkAvailable ? null : async () => {
+            sdkAvailable && !refresh ? null : async () => {
                 dispatch(setSdkAvailable(await Methods.sdkAvailable()));
             },
-            psdkInstalled ? null : async () => {
+            psdkInstalled && !refresh ? null : async () => {
                 dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
             },
-            psdkAvailable ? null : async () => {
+            psdkAvailable && !refresh ? null : async () => {
                 dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
             },
-            flutterInstalled ? null : async () => {
+            flutterInstalled && !refresh ? null : async () => {
                 dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
             },
-            flutterAvailable ? null : async () => {
+            flutterAvailable && !refresh ? null : async () => {
                 dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
             },
         )
         // Show menu refresh page
-        props.onStateRefresh(true)
+        setShowRefresh(true)
+    };
+    // init
+    useEffectSingleTimeout(async () => {
+        await updateStates(false);
     });
-    if (isOpen) {
-        return (<StateLoading />);
-    }
     // page
     return (
-        <List>
-            <GroupWidget
-                title={t('features.devices.t_title')}
-                text={t('features.devices.t_text')}
-            />
-            <EmulatorItem
-                emulators={emulators}
-            />
-            <GroupWidget
-                title={t('features.tools.t_title')}
-                text={t('features.tools.t_text')}
-            />
-            <SdkItem
-                sdkInstalled={sdkInstalled}
-                sdkAvailable={sdkAvailable}
-            />
-            <PsdkItem
-                psdkInstalled={psdkInstalled}
-                psdkAvailable={psdkAvailable}
-            />
-            <FlutterItem
-                flutterInstalled={flutterInstalled}
-                flutterAvailable={flutterAvailable}
-            />
-            <GroupWidget
-                title={t('features.assistant.t_title')}
-                text={t('features.assistant.t_text')}
-            />
-            <FAQItem />
-        </List>
+        <AppBarLayout actions={showRefresh ? (
+            <Stack direction={'row'} spacing={1}>
+                <ActionMenu />
+                <ActionRefreshState
+                    onClick={async () => {
+                        setShowRefresh(false);
+                        clearStates();
+                        await updateStates(true);
+                        setShowRefresh(true);
+                    }}
+                />
+            </Stack>
+        ) : (
+            <ActionMenu />
+        )} >
+            <List>
+                <GroupWidget
+                    title={t('features.devices.t_title')}
+                    text={t('features.devices.t_text')}
+                />
+                <EmulatorItem
+                    emulators={emulators}
+                />
+                <GroupWidget
+                    title={t('features.tools.t_title')}
+                    text={t('features.tools.t_text')}
+                />
+                <SdkItem
+                    sdkInstalled={sdkInstalled}
+                    sdkAvailable={sdkAvailable}
+                />
+                <PsdkItem
+                    psdkInstalled={psdkInstalled}
+                    psdkAvailable={psdkAvailable}
+                />
+                <FlutterItem
+                    flutterInstalled={flutterInstalled}
+                    flutterAvailable={flutterAvailable}
+                />
+                <GroupWidget
+                    title={t('features.assistant.t_title')}
+                    text={t('features.assistant.t_text')}
+                />
+                <FAQItem />
+            </List>
+        </AppBarLayout>
     );
 }
 
-FeaturesPage.propTypes = {
-    onStateRefresh: PropTypes.func.isRequired,
-};
+FeaturesPage.propTypes = {};

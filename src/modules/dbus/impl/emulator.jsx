@@ -24,14 +24,18 @@ import { AppUtils } from '../../../base';
 
 export const emulator = {
     emulatorInfo: async function () {
-        let data = await invoke("emulator_info", {});
-        let selector = SelectorModel.parse(data);
-        if (selector !== undefined) {
-            return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
-                return EmulatorModel.parse(await invoke("emulator_info_by_id", { id: e['incoming']['id'] }));
-            }));
+        try {
+            let data = await invoke("emulator_info", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return EmulatorModel.parse(await invoke("emulator_info_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [EmulatorModel.parse(data)];
+        } catch (e) {
+            return [];
         }
-        return [EmulatorModel.parse(data)];
     },
     emulatorSync: async function () {
         return await invoke("emulator_sync", {});

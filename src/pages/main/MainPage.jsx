@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
@@ -45,7 +44,6 @@ export function MainPage(props) {
             try {
                 // @todo demo app
                 if (window.isMiniApp) {
-                    props.onStateConnect(true);
                     setVersion(AppConf.appVersion);
                     setConnect(true);
                     return;
@@ -60,11 +58,9 @@ export function MainPage(props) {
                 // Update state
                 const model = AppInfoModel.parse(data);
                 const connect = AppUtils.checkVersion(model);
-                props.onStateConnect(connect);
                 setConnect(connect);
                 setVersion(window.isTauri ? model.apiVersion : model.appVersion)
             } catch (e) {
-                props.onStateConnect(false);
                 setConnect(false);
             }
         })();
@@ -179,6 +175,4 @@ export function MainPage(props) {
     );
 }
 
-MainPage.propTypes = {
-    onStateConnect: PropTypes.func.isRequired,
-};
+MainPage.propTypes = {};

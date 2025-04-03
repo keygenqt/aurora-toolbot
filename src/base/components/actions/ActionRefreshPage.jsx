@@ -20,9 +20,9 @@ import { IconButton } from '@mui/material'
 
 import { Refresh } from '@mui/icons-material';
 
-import { AppUtils } from '../../../base'
+import { AppUtils } from '../..'
 
-export function ActionRefresh() {
+export function ActionRefreshPage() {
     const navigate = useNavigate();
     return (
         <IconButton
@@ -34,4 +34,4 @@ export function ActionRefresh() {
     );
 }
 
-ActionRefresh.propTypes = {};
+ActionRefreshPage.propTypes = {};

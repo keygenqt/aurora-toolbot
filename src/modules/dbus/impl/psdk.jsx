@@ -25,24 +25,32 @@ import { AppUtils } from '../../../base';
 
 export const psdk = {
     psdkAvailable: async function () {
-        let data = await invoke("psdk_available", {});
-        let selector = SelectorModel.parse(data);
-        if (selector !== undefined) {
-            return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
-                return PsdkAvailableModel.parse(await invoke("psdk_available_by_id", { id: e['incoming']['id'] }));
-            }));
+        try {
+            let data = await invoke("psdk_available", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return PsdkAvailableModel.parse(await invoke("psdk_available_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [PsdkAvailableModel.parse(data)];
+        } catch (e) {
+            return [];
         }
-        return [PsdkAvailableModel.parse(data)];
     },
     psdkInstalled: async function () {
-        let data = await invoke("psdk_info", {});
-        let selector = SelectorModel.parse(data);
-        if (selector !== undefined) {
-            return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
-                return PsdkInstalledModel.parse(await invoke("psdk_info_by_id", { id: e['incoming']['id'] }));
-            }));
+        try {
+            let data = await invoke("psdk_info", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return PsdkInstalledModel.parse(await invoke("psdk_info_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [PsdkInstalledModel.parse(data)];
+        } catch (e) {
+            return [];
         }
-        return [PsdkInstalledModel.parse(data)];
     },
     psdkSync: async function () {
         return await invoke("psdk_sync", {});

@@ -14,30 +14,23 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
-import { IconButton, Tooltip } from '@mui/material'
+import { IconButton } from '@mui/material'
 
-import { Cached } from '@mui/icons-material';
+import { Refresh } from '@mui/icons-material';
 
-export function IconButtonSync(props) {
-    // components
-    const { t } = useTranslation();
-    // page
+export function ActionRefreshState(props) {
     return (
-        <Tooltip title={t('common.t_sync')} placement="left-start">
-            <IconButton
-                disabled={props.isLoading}
-                onClick={props.onClick}
-            >
-                <Cached className={props.isLoading ? 'spin' : ''} />
-            </IconButton>
-        </Tooltip>
+        <IconButton
+            color="inherit"
+            onClick={props.onClick}
+        >
+            <Refresh />
+        </IconButton>
     );
 }
 
-IconButtonSync.propTypes = {
-    isLoading: PropTypes.func.isRequired,
+ActionRefreshState.propTypes = {
     onClick: PropTypes.func.isRequired,
 };

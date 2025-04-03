@@ -25,24 +25,32 @@ import { AppUtils } from '../../../base';
 
 export const flutter = {
     flutterAvailable: async function () {
-        let data = await invoke("flutter_available", {});
-        let selector = SelectorModel.parse(data);
-        if (selector !== undefined) {
-            return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
-                return FlutterAvailableModel.parse(await invoke("flutter_available_by_id", { id: e['incoming']['id'] }));
-            }));
+        try {
+            let data = await invoke("flutter_available", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return FlutterAvailableModel.parse(await invoke("flutter_available_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [FlutterAvailableModel.parse(data)];
+        } catch (e) {
+            return [];
         }
-        return [FlutterAvailableModel.parse(data)];
     },
     flutterInstalled: async function () {
-        let data = await invoke("flutter_info", {});
-        let selector = SelectorModel.parse(data);
-        if (selector !== undefined) {
-            return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
-                return FlutterInstalledModel.parse(await invoke("flutter_info_by_id", { id: e['incoming']['id'] }));
-            }));
+        try {
+            let data = await invoke("flutter_info", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return FlutterInstalledModel.parse(await invoke("flutter_info_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [FlutterInstalledModel.parse(data)];
+        } catch (e) {
+            return [];
         }
-        return [FlutterInstalledModel.parse(data)];
     },
     flutterSync: async function () {
         return await invoke("flutter_sync", {});

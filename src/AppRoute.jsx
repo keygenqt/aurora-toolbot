@@ -16,7 +16,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from "react-router";
 
-import { ActionBack, ActionMenu, ActionRefresh } from './base'
+import { ActionBack, ActionRefreshPage } from './base'
 import { AppBarLayout } from './layouts'
 import {
     AuthPage,
@@ -38,24 +38,14 @@ import {
     SdksAvailablePage,
     SdksInstalledPage,
 } from './pages'
-import { Stack } from '@mui/material';
 
 export function AppRoute() {
-    const [showMenuMain, setShowMenuMain] = React.useState(undefined);
-    const [featuresRefresh, setFeaturesRefresh] = React.useState(undefined);
     return (
         <BrowserRouter>
             <Routes>
                 <Route index element={(
-                    <AppBarLayout actions={showMenuMain === undefined ? null : showMenuMain ? (
-                        <Stack direction={'row'} spacing={1}>
-                            <ActionMenu />
-                            <ActionRefresh />
-                        </Stack>
-                    ) : (
-                        <ActionRefresh />
-                    )} >
-                        <MainPage onStateConnect={(state) => setShowMenuMain(state)} />
+                    <AppBarLayout actions={<ActionRefreshPage />} >
+                        <MainPage />
                     </AppBarLayout>
                 )} />
                 <Route path="auth" element={(
@@ -64,22 +54,11 @@ export function AppRoute() {
                     </AppBarLayout>
                 )} />
                 <Route path="features">
-                    <Route index padding={0} element={(
-                        <AppBarLayout actions={featuresRefresh ? (
-                            <Stack direction={'row'} spacing={1}>
-                                <ActionMenu />
-                                <ActionRefresh />
-                            </Stack>
-                        ) : (
-                            <ActionMenu />
-                        )} >
-                            <FeaturesPage
-                                onStateRefresh={(state) => setFeaturesRefresh(state)}
-                            />
-                        </AppBarLayout>
+                    <Route index element={(
+                        <FeaturesPage />
                     )} />
                     <Route path="devices">
-                        <Route index padding={0} element={(
+                        <Route index element={(
                             <AppBarLayout index actions={<ActionBack />} >
                                 <DevicesPage />
                             </AppBarLayout>
@@ -91,7 +70,7 @@ export function AppRoute() {
                         )} />
                     </Route>
                     <Route path="emulators">
-                        <Route index padding={0} element={(
+                        <Route index element={(
                             <AppBarLayout index actions={<ActionBack />} >
                                 <EmulatorsPage />
                             </AppBarLayout>

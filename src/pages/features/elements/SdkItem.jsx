@@ -18,6 +18,9 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setData as setStateBool } from '../../../store/impl/stateBool';
+
 import {
     useTheme,
     Typography,
@@ -45,6 +48,7 @@ export function SdkItem(props) {
     const { t } = useTranslation();
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     // data
     const color = theme.palette.primarySdk.main;
     const {
@@ -52,7 +56,9 @@ export function SdkItem(props) {
         sdkAvailable,
     } = props
     const isNew = SdkAvailableModel.hasNew(sdkAvailable, sdkInstalled);
-    const [isSync, setIsSync] = React.useState(false);
+    // redux
+    const stateBool = useSelector((state) => state.stateBool.data);
+    const isSync = stateBool.hasOwnProperty("SdkItem") ? stateBool["SdkItem"] : false;
     // item
     return (
         <ListItem>
@@ -90,11 +96,14 @@ export function SdkItem(props) {
                         </StateListIcon>
                     )}
                     {Array.isArray(sdkInstalled) && (
-                        <IconButtonSync onClick={async () => {
-                            setIsSync(true)
-                            await Methods.sdkSync();
-                            setIsSync(false)
-                        }}/>
+                        <IconButtonSync
+                            isLoading={isSync}
+                            onClick={async () => {
+                                dispatch(setStateBool({ key: "SdkItem", value: true }));
+                                await Methods.sdkSync();
+                                dispatch(setStateBool({ key: "SdkItem", value: false }));
+                            }}
+                        />
                     )}
 
                     {Array.isArray(sdkAvailable) && sdkAvailable.length ? (
@@ -107,7 +116,7 @@ export function SdkItem(props) {
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
-                    ) : sdkAvailable === null ? (
+                    ) : sdkAvailable === null || Array.isArray(sdkAvailable) && sdkInstalled.length == 0 ? (
                         <StateListIcon title={t('common.t_error')}>
                             <Error color={'error'} />
                         </StateListIcon>
@@ -118,7 +127,7 @@ export function SdkItem(props) {
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={(!Array.isArray(sdkInstalled) || isSync)}
+                        disabled={(!Array.isArray(sdkInstalled) || sdkInstalled.length == 0 || isSync)}
                         size={'small'}
                         color={'primarySdk'}
                         endIcon={(!Array.isArray(sdkInstalled) || isSync) ? (

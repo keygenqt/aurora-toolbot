@@ -18,6 +18,9 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setData as setStateBool } from '../../../store/impl/stateBool';
+
 import {
     useTheme,
     Typography,
@@ -33,10 +36,10 @@ import {
     Box,
 } from '@mui/material';
 
-import { KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
+import { KeyboardArrowRight, FormatListBulleted, Error } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { DataImages, AppUtils, IconButtonSync } from '../../../base';
+import { DataImages, AppUtils, StateListIcon, IconButtonSync } from '../../../base';
 
 
 export function PsdkItem(props) {
@@ -44,13 +47,16 @@ export function PsdkItem(props) {
     const { t } = useTranslation();
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     // data
     const color = theme.palette.primaryPsdk.main;
     const {
         psdkInstalled,
         psdkAvailable,
     } = props
-    const [isSync, setIsSync] = React.useState(false);
+    // redux
+    const stateBool = useSelector((state) => state.stateBool.data);
+    const isSync = stateBool.hasOwnProperty("PsdkItem") ? stateBool["PsdkItem"] : false;
     // item
     return (
         <ListItem>
@@ -83,11 +89,14 @@ export function PsdkItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(psdkInstalled) && (
-                        <IconButtonSync onClick={async () => {
-                            setIsSync(true)
-                            await Methods.psdkSync();
-                            setIsSync(false)
-                        }}/>
+                        <IconButtonSync
+                            isLoading={isSync}
+                            onClick={async () => {
+                                dispatch(setStateBool({ key: "PsdkItem", value: true }));
+                                await Methods.psdkSync();
+                                dispatch(setStateBool({ key: "PsdkItem", value: false }));
+                            }}
+                        />
                     )}
 
                     {Array.isArray(psdkAvailable) && psdkAvailable.length ? (
@@ -100,17 +109,21 @@ export function PsdkItem(props) {
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
+                    ) : psdkAvailable === null || Array.isArray(psdkAvailable) && psdkAvailable.length == 0 ? (
+                        <StateListIcon title={t('common.t_error')}>
+                            <Error color={'error'} />
+                        </StateListIcon>
                     ) : (
-                        <CircularProgress size="20px" color="primaryPsdk" />
+                        <CircularProgress size="20px" color="primarySdk" />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={(!Array.isArray(psdkInstalled) || isSync)}
+                        disabled={(!Array.isArray(psdkInstalled) || psdkInstalled.length == 0 || isSync)}
                         size={'small'}
                         color={'primaryPsdk'}
-                        endIcon={(!Array.isArray(psdkInstalled) || isSync )? (
+                        endIcon={(!Array.isArray(psdkInstalled) || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

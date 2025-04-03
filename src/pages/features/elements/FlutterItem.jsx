@@ -18,6 +18,9 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setData as setStateBool } from '../../../store/impl/stateBool';
+
 import {
     useTheme,
     Typography,
@@ -33,23 +36,26 @@ import {
     Box,
 } from '@mui/material';
 
-import { KeyboardArrowRight, FormatListBulleted } from '@mui/icons-material';
+import { KeyboardArrowRight, FormatListBulleted, Error } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { DataImages, AppUtils, IconButtonSync } from '../../../base';
+import { DataImages, AppUtils, StateListIcon, IconButtonSync } from '../../../base';
 
 export function FlutterItem(props) {
     // components
     const { t } = useTranslation();
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     // data
     const color = theme.palette.primaryFlutter.main;
     const {
         flutterInstalled,
         flutterAvailable,
     } = props
-    const [isSync, setIsSync] = React.useState(false);
+    // redux
+    const stateBool = useSelector((state) => state.stateBool.data);
+    const isSync = stateBool.hasOwnProperty("FlutterItem") ? stateBool["FlutterItem"] : false;
     // item
     return (
         <ListItem>
@@ -82,31 +88,38 @@ export function FlutterItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(flutterInstalled) && (
-                        <IconButtonSync onClick={async () => {
-                            setIsSync(true)
-                            await Methods.flutterSync();
-                            setIsSync(false)
-                        }}/>
+                        <IconButtonSync
+                            isLoading={isSync}
+                            onClick={async () => {
+                                dispatch(setStateBool({ key: "FlutterItem", value: true }));
+                                await Methods.flutterSync();
+                                dispatch(setStateBool({ key: "FlutterItem", value: false }));
+                            }}
+                        />
                     )}
 
                     {Array.isArray(flutterAvailable) && flutterAvailable.length ? (
                         <Tooltip title={t('common.t_available')} placement="left-start">
                             <IconButton
                                 onClick={() => {
-                                    AppUtils.openPage(navigate, 'fluttersAvailable');
+                                    AppUtils.openPage(navigate, 'psdksAvailable');
                                 }}
                             >
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
+                    ) : flutterAvailable === null || Array.isArray(flutterAvailable) && flutterAvailable.length == 0 ? (
+                        <StateListIcon title={t('common.t_error')}>
+                            <Error color={'error'} />
+                        </StateListIcon>
                     ) : (
-                        <CircularProgress size="20px" color="primaryFlutter" />
+                        <CircularProgress size="20px" color="primarySdk" />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={(!Array.isArray(flutterInstalled) || isSync)}
+                        disabled={(!Array.isArray(flutterInstalled) || flutterInstalled.length == 0 || isSync)}
                         size={'small'}
                         color={'primaryFlutter'}
                         endIcon={(!Array.isArray(flutterInstalled) || isSync) ? (

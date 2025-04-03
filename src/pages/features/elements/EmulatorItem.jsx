@@ -18,6 +18,9 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setData as setStateBool } from '../../../store/impl/stateBool';
+
 import {
     useTheme,
     Typography,
@@ -40,12 +43,13 @@ export function EmulatorItem(props) {
     const { t } = useTranslation();
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     // data
     const color = theme.palette.secondary.main
-    const {
-        emulators
-    } = props
-    const [isSync, setIsSync] = React.useState(false);
+    const { emulators } = props
+    // redux
+    const stateBool = useSelector((state) => state.stateBool.data);
+    const isSync = stateBool.hasOwnProperty("EmulatorItem") ? stateBool["EmulatorItem"] : false;
     // item
     return (
         <ListItem>
@@ -74,17 +78,20 @@ export function EmulatorItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(emulators) && (
-                        <IconButtonSync onClick={async () => {
-                            setIsSync(true);
-                            await Methods.emulatorSync();
-                            setIsSync(false);
-                        }}/>
+                        <IconButtonSync
+                            isLoading={isSync}
+                            onClick={async () => {
+                                dispatch(setStateBool({ key: "EmulatorItem", value: true }));
+                                await Methods.emulatorSync();
+                                dispatch(setStateBool({ key: "EmulatorItem", value: false }));
+                            }}
+                        />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={(!Array.isArray(emulators) || isSync)}
+                        disabled={(!Array.isArray(emulators) || emulators.length == 0 || isSync)}
                         size={'small'}
                         color={'secondary'}
                         endIcon={(!Array.isArray(emulators) || isSync) ? (
@@ -93,7 +100,7 @@ export function EmulatorItem(props) {
                             <KeyboardArrowRight color="default" />
                         )}
                         variant="contained"
-                        sx={{ opacity: 0.8 }}
+                        sx={{ opacity: 0.9 }}
                         onClick={() => {
                             AppUtils.openPage(navigate, 'emulators');
                         }}

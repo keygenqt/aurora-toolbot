@@ -52,20 +52,20 @@ export const AppUtils = {
             window.open(url, '_blank', 'noopener,noreferrer')
         }
     },
-    openPage: function (navigate, key) {
+    openPage: function (navigate, key, arg = {}) {
         if (window.isMobile) {
-            navigate(key);
+            navigate(key, arg);
         } else {
             document.startViewTransition(() => {
                 flushSync(() => {
-                    navigate(key);
+                    navigate(key, arg);
                 });
             });
         }
     },
-    openPageDelay: function (navigate, key) {
+    openPageDelay: function (navigate, key, arg = {}) {
         setTimeout(() => {
-            AppUtils.openPage(navigate, key)
+            AppUtils.openPage(navigate, key, arg)
         }, 270);
     },
     refreshPage: function (navigate) {

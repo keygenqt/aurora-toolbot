@@ -94,7 +94,6 @@ export function FluttersInstalledPage(props) {
                             </IconButton>
 
                             <IconButton
-
                                 onClick={() => {
                                     // @todo
                                 }}

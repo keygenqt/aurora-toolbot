@@ -94,7 +94,6 @@ export function PsdksInstalledPage(props) {
                             </IconButton>
 
                             <IconButton
-
                                 onClick={() => {
                                     // @todo
                                 }}

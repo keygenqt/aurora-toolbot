@@ -23,6 +23,9 @@ import {
 import { AppUtils } from '../../../base';
 
 export const emulator = {
+    emulatorSync: async function () {
+        return await invoke("emulator_sync", {});
+    },
     emulatorInfo: async function () {
         try {
             let data = await invoke("emulator_info", {});
@@ -37,7 +40,25 @@ export const emulator = {
             return [];
         }
     },
-    emulatorSync: async function () {
-        return await invoke("emulator_sync", {});
+    emulatorOpenById: async function (id) {
+        AppUtils.checkResponse(await invoke("emulator_open_by_id", { id: id }));
+    },
+    emulatorCloseById: async function (id) {
+        AppUtils.checkResponse(await invoke("emulator_close_by_id", { id: id }));
+    },
+    emulatorRecordStartById: async function (id) {
+        AppUtils.checkResponse(await invoke("emulator_record_start_by_id", { id: id }));
+    },
+    emulatorRecordStopById: async function (id) {
+        AppUtils.checkResponse(await invoke("emulator_record_stop_by_id", { id: id }));
+    },
+    emulatorScreenshotById: async function (id) {
+        AppUtils.checkResponse(await invoke("emulator_screenshot_by_id", { id: id }));
+    },
+    emulatorTerminalById: async function (id, isRoot) {
+        AppUtils.checkResponse(await invoke("emulator_terminal_by_id", { id: id, isRoot: isRoot }));
+    },
+    emulatorUploadByPathId: async function (id, path) {
+        AppUtils.checkResponse(await invoke("emulator_upload_by_id", { id: id, path: path }));
     },
 }

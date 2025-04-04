@@ -24,9 +24,18 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             // app
             methods::app::app_info,
+            methods::app::app_open_dir,
             // emulator
-            methods::emulator::emulator_info,
             methods::emulator::emulator_sync,
+            methods::emulator::emulator_info,
+            methods::emulator::emulator_info_by_id,
+            methods::emulator::emulator_open_by_id,
+            methods::emulator::emulator_close_by_id,
+            methods::emulator::emulator_record_start_by_id,
+            methods::emulator::emulator_record_stop_by_id,
+            methods::emulator::emulator_screenshot_by_id,
+            methods::emulator::emulator_terminal_by_id,
+            methods::emulator::emulator_upload_path_by_id,
             // flutter
             methods::flutter::flutter_available,
             methods::flutter::flutter_available_by_id,

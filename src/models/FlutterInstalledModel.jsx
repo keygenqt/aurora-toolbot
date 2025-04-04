@@ -24,6 +24,7 @@ export const FlutterInstalledModel = {
             throw new Error(`Failed key: ${data['key']} != FlutterInfo`);
         }
         return {
+            id: data['jsonData']['model']['id'],
             dir: data['jsonData']['model']['dir'],
             flutter: data['jsonData']['model']['flutter'],
             dart: data['jsonData']['model']['dart'],

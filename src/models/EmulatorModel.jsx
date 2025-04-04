@@ -24,7 +24,9 @@ export const EmulatorModel = {
             throw new Error(`Failed key: ${data['key']} != EmulatorInfo`);
         }
         return {
+            id: data['jsonData']['model']['id'],
             dir: data['jsonData']['model']['dir'],
+            dirEmulator: `${data['jsonData']['model']['dir']}/emulator/${data['jsonData']['model']['name']}`,
             key: data['jsonData']['model']['key'],
             uuid: data['jsonData']['model']['uuid'],
             name: data['jsonData']['model']['name'],

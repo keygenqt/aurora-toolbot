@@ -110,5 +110,11 @@ export const AppUtils = {
         } catch (e) {
             return null
         }
+    },
+    checkResponse: function(result) {
+        let data = typeof result === 'string' || result instanceof String ? JSON.parse(result) : result
+        if (data['key'] === 'StateMessage' && data['jsonData']['state'] === 'Error') {
+            throw Error(data['jsonData']['message'])
+        }
     }
 }

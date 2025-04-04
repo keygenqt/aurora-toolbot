@@ -24,6 +24,7 @@ export const SdkInstalledModel = {
             throw new Error(`Failed key: ${data['key']} != SdkInfo`);
         }
         return {
+            id: data['jsonData']['model']['id'],
             dir: data['jsonData']['model']['dir'],
             tools: data['jsonData']['model']['tools'],
             version: data['jsonData']['model']['version'],

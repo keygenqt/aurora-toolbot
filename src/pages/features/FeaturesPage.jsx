@@ -53,6 +53,7 @@ export function FeaturesPage(props) {
     const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
+
     // fun
     const clearStates = () => {
         dispatch(setEmulators(undefined));

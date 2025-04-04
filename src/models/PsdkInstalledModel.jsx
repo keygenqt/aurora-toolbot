@@ -24,6 +24,7 @@ export const PsdkInstalledModel = {
             throw new Error(`Failed key: ${data['key']} != PsdkInfo`);
         }
         return {
+            id: data['jsonData']['model']['id'],
             dir: data['jsonData']['model']['dir'],
             chroot: data['jsonData']['model']['chroot'],
             version: data['jsonData']['model']['version'],

@@ -113,7 +113,7 @@ export function FlutterItem(props) {
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (
-                        <CircularProgress size="20px" color="primarySdk" />
+                        <IconButtonSync isLoading={true} />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />

@@ -39,5 +39,5 @@ export function IconButtonSync(props) {
 
 IconButtonSync.propTypes = {
     isLoading: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
 };

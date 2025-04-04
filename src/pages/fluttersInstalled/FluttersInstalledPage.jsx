@@ -40,6 +40,7 @@ import {
 } from '@mui/icons-material';
 
 import { AppUtils, StateEmpty, DataImages } from '../../base';
+import { Methods } from '../../modules';
 
 export function FluttersInstalledPage(props) {
     // components
@@ -86,16 +87,24 @@ export function FluttersInstalledPage(props) {
                             paddingTop: 0
                         }}>
                             <IconButton
-                                onClick={() => {
-                                    // @todo
+                                onClick={async () => {
+                                    try {
+                                        await Methods.appOpenDir(e.dir);
+                                    } catch (e) {
+                                        console.log(e)
+                                    }
                                 }}
                             >
                                 <FolderOpen />
                             </IconButton>
 
                             <IconButton
-                                onClick={() => {
-                                    // @todo
+                                onClick={async () => {
+                                    try {
+                                        await Methods.flutterTerminalById(e.id);
+                                    } catch (e) {
+                                        console.log(e)
+                                    }
                                 }}
                             >
                                 <Terminal />

@@ -39,7 +39,7 @@ import {
 import { KeyboardArrowRight, FormatListBulleted, Error } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { DataImages, AppUtils, StateListIcon, IconButtonSync } from '../../../base';
+import { DataImages, AppUtils, StateListIcon, IconButtonLoading } from '../../../base';
 
 export function FlutterItem(props) {
     // components
@@ -88,14 +88,17 @@ export function FlutterItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(flutterInstalled) && (
-                        <IconButtonSync
-                            isLoading={isSync}
-                            onClick={async () => {
-                                dispatch(setStateBool({ key: "FlutterItem", value: true }));
-                                await Methods.flutterSync();
-                                dispatch(setStateBool({ key: "FlutterItem", value: false }));
-                            }}
-                        />
+                        <Tooltip title={t('common.t_sync')} placement="left-start">
+                            <IconButtonLoading
+                                isLoading={isSync}
+                                onClick={async () => {
+                                    dispatch(setStateBool({ key: "FlutterItem", value: true }));
+                                    await Methods.flutterSync();
+                                    dispatch(setStateBool({ key: "FlutterItem", value: false }));
+                                }}
+                            />
+                        </Tooltip>
+
                     )}
 
                     {Array.isArray(flutterAvailable) && flutterAvailable.length ? (
@@ -113,7 +116,7 @@ export function FlutterItem(props) {
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (
-                        <IconButtonSync isLoading={true} />
+                        <IconButtonLoading isLoading={true} />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />

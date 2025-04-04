@@ -24,6 +24,9 @@ import {
 import { AppUtils } from '../../../base';
 
 export const flutter = {
+    flutterSync: async function () {
+        return AppUtils.checkResponse(await invoke("flutter_sync", {}));
+    },
     flutterAvailable: async function () {
         try {
             let data = await invoke("flutter_available", {});
@@ -52,7 +55,7 @@ export const flutter = {
             return [];
         }
     },
-    flutterSync: async function () {
-        return await invoke("flutter_sync", {});
+    flutterTerminalById: async function (id) {
+        AppUtils.checkResponse(await invoke("flutter_terminal_by_id", { id: id }));
     },
 }

@@ -39,7 +39,7 @@ import {
 import { KeyboardArrowRight, FormatListBulleted, Error } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { DataImages, AppUtils, StateListIcon, IconButtonSync } from '../../../base';
+import { DataImages, AppUtils, StateListIcon, IconButtonLoading } from '../../../base';
 
 
 export function PsdkItem(props) {
@@ -89,14 +89,17 @@ export function PsdkItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(psdkInstalled) && (
-                        <IconButtonSync
-                            isLoading={isSync}
-                            onClick={async () => {
-                                dispatch(setStateBool({ key: "PsdkItem", value: true }));
-                                await Methods.psdkSync();
-                                dispatch(setStateBool({ key: "PsdkItem", value: false }));
-                            }}
-                        />
+                        <Tooltip title={t('common.t_sync')} placement="left-start">
+                            <IconButtonLoading
+                                isLoading={isSync}
+                                onClick={async () => {
+                                    dispatch(setStateBool({ key: "PsdkItem", value: true }));
+                                    await Methods.psdkSync();
+                                    dispatch(setStateBool({ key: "PsdkItem", value: false }));
+                                }}
+                            />
+                        </Tooltip>
+
                     )}
 
                     {Array.isArray(psdkAvailable) && psdkAvailable.length ? (
@@ -114,7 +117,7 @@ export function PsdkItem(props) {
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (
-                        <IconButtonSync isLoading={true} />
+                        <IconButtonLoading isLoading={true} />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />

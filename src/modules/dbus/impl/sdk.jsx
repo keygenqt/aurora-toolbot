@@ -24,6 +24,9 @@ import {
 import { AppUtils } from '../../../base';
 
 export const sdk = {
+    sdkSync: async function () {
+        return AppUtils.checkResponse(await invoke("sdk_sync", {}));
+    },
     sdkAvailable: async function () {
         try {
             let data = await invoke("sdk_available", {});
@@ -52,7 +55,7 @@ export const sdk = {
             return [];
         }
     },
-    sdkSync: async function () {
-        return await invoke("sdk_sync", {});
+    sdkToolsById: async function (id) {
+        AppUtils.checkResponse(await invoke("sdk_tools_by_id", { id: id }));
     },
 }

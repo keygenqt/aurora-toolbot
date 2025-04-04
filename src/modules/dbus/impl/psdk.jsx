@@ -24,6 +24,9 @@ import {
 import { AppUtils } from '../../../base';
 
 export const psdk = {
+    psdkSync: async function () {
+        return AppUtils.checkResponse(await invoke("psdk_sync", {}));
+    },
     psdkAvailable: async function () {
         try {
             let data = await invoke("psdk_available", {});
@@ -52,7 +55,7 @@ export const psdk = {
             return [];
         }
     },
-    psdkSync: async function () {
-        return await invoke("psdk_sync", {});
+    psdkTerminalById: async function (id) {
+        AppUtils.checkResponse(await invoke("psdk_terminal_by_id", { id: id }));
     },
 }

@@ -40,7 +40,7 @@ import { FormatListBulleted, KeyboardArrowRight, NewReleases, Error } from '@mui
 
 import { Methods } from '../../../modules';
 import { SdkAvailableModel } from '../../../models';
-import { DataImages, AppUtils, StateListIcon, IconButtonSync } from '../../../base';
+import { DataImages, AppUtils, StateListIcon, IconButtonLoading } from '../../../base';
 
 
 export function SdkItem(props) {
@@ -96,14 +96,17 @@ export function SdkItem(props) {
                         </StateListIcon>
                     )}
                     {Array.isArray(sdkInstalled) && (
-                        <IconButtonSync
-                            isLoading={isSync}
-                            onClick={async () => {
-                                dispatch(setStateBool({ key: "SdkItem", value: true }));
-                                await Methods.sdkSync();
-                                dispatch(setStateBool({ key: "SdkItem", value: false }));
-                            }}
-                        />
+                        <Tooltip title={t('common.t_sync')} placement="left-start">
+                            <IconButtonLoading
+                                isLoading={isSync}
+                                onClick={async () => {
+                                    dispatch(setStateBool({ key: "SdkItem", value: true }));
+                                    await Methods.sdkSync();
+                                    dispatch(setStateBool({ key: "SdkItem", value: false }));
+                                }}
+                            />
+                        </Tooltip>
+
                     )}
 
                     {Array.isArray(sdkAvailable) && sdkAvailable.length ? (
@@ -121,7 +124,7 @@ export function SdkItem(props) {
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (
-                        <IconButtonSync isLoading={true} />
+                        <IconButtonLoading isLoading={true} />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />

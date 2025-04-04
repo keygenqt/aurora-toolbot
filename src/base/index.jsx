@@ -30,7 +30,7 @@ export * from './components/states/StateEmpty';
 export * from './components/states/StateListIcon';
 export * from './components/states/StateLoading';
 // other
-export * from './components/other/IconButtonSync';
+export * from './components/other/IconButtonLoading';
 // data
 export * from './data/DataImages';
 export * from './data/DataLottie';

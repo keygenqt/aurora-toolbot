@@ -71,9 +71,7 @@ export function AppRoute() {
                     </Route>
                     <Route path="emulators">
                         <Route index element={(
-                            <AppBarLayout index actions={<ActionBack />} >
-                                <EmulatorsPage />
-                            </AppBarLayout>
+                            <EmulatorsPage />
                         )} />
                         <Route path=":key" element={(
                             <AppBarLayout actions={<ActionBack />} >

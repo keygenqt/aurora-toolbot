@@ -36,7 +36,7 @@ import {
 import { KeyboardArrowRight } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { AppUtils, IconButtonSync } from '../../../base';
+import { AppUtils, IconButtonLoading } from '../../../base';
 
 export function EmulatorItem(props) {
     // components
@@ -78,7 +78,7 @@ export function EmulatorItem(props) {
                     paddingTop: 0
                 }}>
                     {Array.isArray(emulators) && (
-                        <IconButtonSync
+                        <IconButtonLoading
                             isLoading={isSync}
                             onClick={async () => {
                                 dispatch(setStateBool({ key: "EmulatorItem", value: true }));

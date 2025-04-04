@@ -7,7 +7,6 @@ export const stateBoolSlice = createSlice({
     },
     reducers: {
         setData: (state, data) => {
-            console.log(data)
             state.data[data.payload.key] = data.payload.value
         },
     },

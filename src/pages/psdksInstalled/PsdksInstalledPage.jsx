@@ -16,6 +16,7 @@
 import * as React from 'react';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector } from 'react-redux';
 
@@ -31,6 +32,7 @@ import {
     IconButton,
     Box,
     Button,
+    Link,
 } from '@mui/material';
 
 import {
@@ -70,21 +72,56 @@ export function PsdksInstalledPage(props) {
                             <Stack
                                 direction="row"
                                 spacing={1}
-                                sx={{ paddingBottom: 1, alignItems: "center" }}
+                                sx={{ paddingBottom: 1.7, alignItems: "center" }}
                             >
                                 <img
                                     style={{ width: '16px', height: '16px' }}
                                     src={DataImages.iconPsdk}
                                     alt='Icon' />
                                 <Typography variant="subtitle2" color={color} >
-                                    {e.version}
+                                    Platform SDK v{e.versionId}
                                 </Typography>
                             </Stack>
+                            <Box
+                                sx={{
+                                    background: `${theme.palette.background.default}bd`,
+                                    borderRadius: 2,
+                                    padding: 1.5,
+                                }}
+                            >
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    <Stack spacing={1} >
+                                        <Stack
+                                            direction={'row'}
+                                            spacing={1}
+                                            alignItems={'center'}
+                                        >
+                                            <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-signature" /></Box>
+                                            <Box>{e.versionName}</Box>
+                                        </Stack>
+                                        <Stack
+                                            direction={'row'}
+                                            spacing={1}
+                                            alignItems={'center'}
+                                        >
+                                            <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-house" /></Box>
+                                            <Link
+                                                href={'#'}
+                                                onClick={async () => {
+                                                    await AppUtils.openUrl(e.homeUrl)
+                                                }}
+                                            >
+                                                {e.homeUrl}
+                                            </Link>
+                                        </Stack>
+                                    </Stack>
+                                </Typography>
+                            </Box>
                         </CardContent>
 
                         <CardActions sx={{
                             p: 2,
-                            paddingTop: 0
+                            paddingTop: 1
                         }}>
                             <IconButton
                                 onClick={async () => {

@@ -16,6 +16,7 @@
 import * as React from 'react';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setEmulators } from '../../store/impl/emulators';
@@ -103,7 +104,7 @@ export function EmulatorsPage(props) {
                                     <Stack
                                         direction="row"
                                         spacing={1}
-                                        sx={{ paddingBottom: 1, alignItems: "center" }}
+                                        sx={{ paddingBottom: 1.7, alignItems: "center" }}
                                     >
                                         <img
                                             style={{ width: '16px', height: '16px' }}
@@ -113,11 +114,47 @@ export function EmulatorsPage(props) {
                                             {e.name}
                                         </Typography>
                                     </Stack>
+                                    <Box
+                                        sx={{
+                                            background: `${theme.palette.background.default}bd`,
+                                            borderRadius: 2,
+                                            padding: 1.5,
+                                        }}
+                                    >
+                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                            <Stack spacing={1} >
+                                                <Stack
+                                                    direction={'row'}
+                                                    spacing={1}
+                                                    alignItems={'center'}
+                                                >
+                                                    <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-certificate" /></Box>
+                                                    <Box className={'select'} >{e.uuid}</Box>
+                                                </Stack>
+                                                <Stack
+                                                    direction={'row'}
+                                                    spacing={1}
+                                                    alignItems={'center'}
+                                                >
+                                                    <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-maximize" /></Box>
+                                                    <Box>{e.dimensions}</Box>
+                                                </Stack>
+                                                <Stack
+                                                    direction={'row'}
+                                                    spacing={1}
+                                                    alignItems={'center'}
+                                                >
+                                                    <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-microchip" /></Box>
+                                                    <Box>{e.arch}</Box>
+                                                </Stack>
+                                            </Stack>
+                                        </Typography>
+                                    </Box>
                                 </CardContent>
 
                                 <CardActions sx={{
                                     p: 2,
-                                    paddingTop: 0
+                                    paddingTop: 1
                                 }}>
                                     {isLoading ? (
                                         <IconButtonLoading isLoading={true} />

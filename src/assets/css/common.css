@@ -34,6 +34,17 @@ body,
     user-select: none;
 }
 
+html .select,
+body .select,
+#root .select {
+    -webkit-touch-callout: text;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
 a {
     outline: none;
     text-decoration: none;

@@ -54,6 +54,24 @@ export function FeaturesPage(props) {
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
 
+    // if (emulators) {
+    //     console.log("> emulators")
+    //     console.log(emulators[0])
+    // }
+    // if (sdkInstalled) {
+    //     console.log("> sdkInstalled")
+    //     console.log(sdkInstalled[0])
+    // }
+    // if (psdkInstalled) {
+    //     console.log("> psdkInstalled")
+    //     console.log(psdkInstalled[0])
+    // }
+    // if (flutterInstalled) {
+    //     console.log("> flutterInstalled")
+    //     console.log(flutterInstalled[0])
+    // }
+
+
     // fun
     const clearStates = () => {
         dispatch(setEmulators(undefined));

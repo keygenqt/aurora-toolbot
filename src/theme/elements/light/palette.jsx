@@ -51,4 +51,7 @@ export const palette = {
     inherit: {
         main: '#263238',
     },
+    text: {
+        secondary: '#535353'
+    }
 }

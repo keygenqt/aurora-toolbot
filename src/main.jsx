@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { invoke } from "@tauri-apps/api/core";
 
-import store from './store/configure.jsx'
-import './assets/css/index.css'
-import App from './App.jsx'
+import store from './store/configure.jsx';
+import './assets/css/index.css';
+import App from './App.jsx';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+library.add(fas);
 
 // Just start
 function start() {

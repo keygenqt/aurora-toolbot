@@ -23,7 +23,6 @@ export const EmulatorModel = {
         if (data['key'] !== 'EmulatorInfo') {
             throw new Error(`Failed key: ${data['key']} != EmulatorInfo`);
         }
-        console.log(data['jsonData']['model'])
         return {
             id: data['jsonData']['model']['id'],
             dir: data['jsonData']['model']['dir'],

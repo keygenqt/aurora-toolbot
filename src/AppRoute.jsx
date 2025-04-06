@@ -93,9 +93,7 @@ export function AppRoute() {
                     {/* Not save state */}
                     <Route path="fluttersInstalled">
                         <Route index padding={0} element={(
-                            <AppBarLayout index actions={<ActionBack />} >
-                                <FluttersInstalledPage />
-                            </AppBarLayout>
+                            <FluttersInstalledPage />
                         )} />
                         <Route path=":key" element={(
                             <AppBarLayout actions={<ActionBack />} >
@@ -110,9 +108,7 @@ export function AppRoute() {
                     )} />
                     <Route path="psdksInstalled">
                         <Route index padding={0} element={(
-                            <AppBarLayout index actions={<ActionBack />} >
-                                <PsdksInstalledPage />
-                            </AppBarLayout>
+                            <PsdksInstalledPage />
                         )} />
                         <Route path=":key" element={(
                             <AppBarLayout actions={<ActionBack />} >
@@ -127,9 +123,7 @@ export function AppRoute() {
                     )} />
                     <Route path="sdksInstalled">
                         <Route index padding={0} element={(
-                            <AppBarLayout index actions={<ActionBack />} >
-                                <SdksInstalledPage />
-                            </AppBarLayout>
+                            <SdksInstalledPage />
                         )} />
                         <Route path=":key" element={(
                             <AppBarLayout actions={<ActionBack />} >

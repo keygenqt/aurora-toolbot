@@ -18,8 +18,8 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setData as setStateBool } from '../../../store/impl/stateBool';
+import { useDispatch } from 'react-redux';
+import { keysStateBool } from '../../../store/impl/stateBool';
 
 import {
     useTheme,
@@ -39,7 +39,14 @@ import {
 import { KeyboardArrowRight, FormatListBulleted, Error } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { DataImages, AppUtils, StateListIcon, IconButtonLoading } from '../../../base';
+import {
+    useEffectStateBool,
+    setEffectStateBool,
+    DataImages,
+    AppUtils,
+    StateListIcon,
+    IconButtonLoading,
+} from '../../../base';
 
 export function FlutterItem(props) {
     // components
@@ -49,13 +56,8 @@ export function FlutterItem(props) {
     const dispatch = useDispatch();
     // data
     const color = theme.palette.primaryFlutter.main;
-    const {
-        flutterInstalled,
-        flutterAvailable,
-    } = props
-    // redux
-    const stateBool = useSelector((state) => state.stateBool.data);
-    const isSync = stateBool.hasOwnProperty("FlutterItem") ? stateBool["FlutterItem"] : false;
+    const { flutterInstalled, flutterAvailable } = props;
+    const isSync = useEffectStateBool(keysStateBool.fluttersSync);
     // item
     return (
         <ListItem>
@@ -92,9 +94,9 @@ export function FlutterItem(props) {
                             <IconButtonLoading
                                 isLoading={isSync}
                                 onClick={async () => {
-                                    dispatch(setStateBool({ key: "FlutterItem", value: true }));
+                                    setEffectStateBool(dispatch, keysStateBool.fluttersSync, true);
                                     await Methods.flutterSync();
-                                    dispatch(setStateBool({ key: "FlutterItem", value: false }));
+                                    setEffectStateBool(dispatch, keysStateBool.fluttersSync, false);
                                 }}
                             />
                         </Tooltip>

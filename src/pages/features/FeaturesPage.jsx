@@ -71,7 +71,6 @@ export function FeaturesPage(props) {
     //     console.log(flutterInstalled[0])
     // }
 
-
     // fun
     const clearStates = () => {
         dispatch(setEmulators(undefined));

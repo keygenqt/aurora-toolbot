@@ -100,7 +100,7 @@ img {
 
 /** spin **/
 .spin {
-    animation: spin 1000ms linear infinite;
+    animation: spin 700ms linear infinite;
 }
 
 @keyframes spin {

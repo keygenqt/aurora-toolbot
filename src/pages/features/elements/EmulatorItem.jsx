@@ -18,8 +18,8 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setData as setStateBool } from '../../../store/impl/stateBool';
+import { useDispatch } from 'react-redux';
+import { keysStateBool } from '../../../store/impl/stateBool';
 
 import {
     useTheme,
@@ -36,7 +36,12 @@ import {
 import { KeyboardArrowRight } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { AppUtils, IconButtonLoading } from '../../../base';
+import {
+    useEffectStateBool,
+    setEffectStateBool,
+    AppUtils,
+    IconButtonLoading,
+} from '../../../base';
 
 export function EmulatorItem(props) {
     // components
@@ -45,11 +50,9 @@ export function EmulatorItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // data
-    const color = theme.palette.secondary.main
-    const { emulators } = props
-    // redux
-    const stateBool = useSelector((state) => state.stateBool.data);
-    const isSync = stateBool.hasOwnProperty("EmulatorItem") ? stateBool["EmulatorItem"] : false;
+    const color = theme.palette.secondary.main;
+    const { emulators } = props;
+    const isSync = useEffectStateBool(keysStateBool.emulatorsSync);
     // item
     return (
         <ListItem>
@@ -81,9 +84,9 @@ export function EmulatorItem(props) {
                         <IconButtonLoading
                             isLoading={isSync}
                             onClick={async () => {
-                                dispatch(setStateBool({ key: "EmulatorItem", value: true }));
+                                setEffectStateBool(dispatch, keysStateBool.emulatorsSync, true);
                                 await Methods.emulatorSync();
-                                dispatch(setStateBool({ key: "EmulatorItem", value: false }));
+                                setEffectStateBool(dispatch, keysStateBool.emulatorsSync, false);
                             }}
                         />
                     )}

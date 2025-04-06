@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setEmulators } from '../../store/impl/emulators';
-import { setData as setStateBool } from '../../store/impl/stateBool';
+import { keysStateBool } from '../../store/impl/stateBool';
 
 import {
     useTheme,
@@ -46,16 +46,18 @@ import {
 } from '@mui/icons-material';
 
 import {
+    useEffectStateBool,
+    setEffectStateBool,
     AppUtils,
     DataImages,
     StateEmpty,
     IconButtonLoading,
     ActionBack,
-    ActionRefreshState
+    ActionRefreshState,
 } from '../../base';
 
 import { Methods } from '../../modules';
-import { AppBarLayout } from '../../layouts'
+import { AppBarLayout } from '../../layouts';
 
 export function EmulatorsPage(props) {
     // components
@@ -64,13 +66,16 @@ export function EmulatorsPage(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // data
-    const color = theme.palette.secondary.main
+    const color = theme.palette.secondary.main;
+    const isUpdate = useEffectStateBool(keysStateBool.emulatorsUpdate);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
-    const stateBool = useSelector((state) => state.stateBool.data);
     // fun
     const updateStates = async () => {
+        setEffectStateBool(dispatch, keysStateBool.emulatorsUpdate, true);
         dispatch(setEmulators(await Methods.emulatorInfo()));
+        await new Promise(r => setTimeout(r, 400)); // animation delay
+        setEffectStateBool(dispatch, keysStateBool.emulatorsUpdate, false);
     };
     // states
     if (!emulators) {
@@ -90,10 +95,10 @@ export function EmulatorsPage(props) {
         )} >
             <List>
                 {emulators.map((e, index) => {
-                    const key = `EmulatorsPage-${index}`
-                    const isLoading = stateBool.hasOwnProperty(key) ? stateBool[key] : false;
+                    const itemKey = `${keysStateBool.emulatorLoading}-${index}`;
+                    const isLoading = useEffectStateBool(itemKey);
                     return (
-                        <ListItem key={`key-${index}`}>
+                        <ListItem key={itemKey}>
                             <Card
                                 sx={{
                                     border: `1px solid ${color}5e`,
@@ -121,14 +126,16 @@ export function EmulatorsPage(props) {
                                             padding: 1.5,
                                         }}
                                     >
-                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                        <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
                                             <Stack spacing={1} >
                                                 <Stack
                                                     direction={'row'}
                                                     spacing={1}
                                                     alignItems={'center'}
                                                 >
-                                                    <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-certificate" /></Box>
+                                                    <Box width={16} textAlign={'center'}>
+                                                        <FontAwesomeIcon icon="fa-solid fa-certificate" />
+                                                    </Box>
                                                     <Box className={'select'} >{e.uuid}</Box>
                                                 </Stack>
                                                 <Stack
@@ -136,7 +143,9 @@ export function EmulatorsPage(props) {
                                                     spacing={1}
                                                     alignItems={'center'}
                                                 >
-                                                    <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-maximize" /></Box>
+                                                    <Box width={16} textAlign={'center'}>
+                                                        <FontAwesomeIcon icon="fa-solid fa-maximize" />
+                                                    </Box>
                                                     <Box>{e.dimensions}</Box>
                                                 </Stack>
                                                 <Stack
@@ -144,7 +153,9 @@ export function EmulatorsPage(props) {
                                                     spacing={1}
                                                     alignItems={'center'}
                                                 >
-                                                    <Box width={16} textAlign={'center'}><FontAwesomeIcon icon="fa-solid fa-microchip" /></Box>
+                                                    <Box width={16} textAlign={'center'}>
+                                                        <FontAwesomeIcon icon="fa-solid fa-microchip" />
+                                                    </Box>
                                                     <Box>{e.arch}</Box>
                                                 </Stack>
                                             </Stack>
@@ -156,7 +167,7 @@ export function EmulatorsPage(props) {
                                     p: 2,
                                     paddingTop: 1
                                 }}>
-                                    {isLoading ? (
+                                    {isLoading || isUpdate ? (
                                         <IconButtonLoading isLoading={true} />
                                     ) : (
                                         <Stack
@@ -204,13 +215,13 @@ export function EmulatorsPage(props) {
                                             {e.isRunning ? (
                                                 <IconButton
                                                     onClick={async () => {
-                                                        dispatch(setStateBool({ key: key, value: true }));
+                                                        setEffectStateBool(dispatch, itemKey, true);
                                                         try {
                                                             await Methods.emulatorCloseById(e.id);
                                                             await new Promise(r => setTimeout(r, 1000));
                                                         } catch (e) { }
                                                         await updateStates();
-                                                        dispatch(setStateBool({ key: key, value: false }));
+                                                        setEffectStateBool(dispatch, itemKey, false);
                                                     }}
                                                 >
                                                     <Stop />
@@ -218,12 +229,12 @@ export function EmulatorsPage(props) {
                                             ) : (
                                                 <IconButton
                                                     onClick={async () => {
-                                                        dispatch(setStateBool({ key: key, value: true }));
+                                                        setEffectStateBool(dispatch, itemKey, true);
                                                         try {
                                                             await Methods.emulatorOpenById(e.id);
                                                         } catch (e) { }
                                                         await updateStates();
-                                                        dispatch(setStateBool({ key: key, value: false }));
+                                                        setEffectStateBool(dispatch, itemKey, false);
                                                     }}
                                                 >
                                                     <PlayArrow />
@@ -235,10 +246,10 @@ export function EmulatorsPage(props) {
                                     <Box sx={{ flexGrow: 1 }} />
 
                                     <Button
-                                        disabled={isLoading}
+                                        disabled={isLoading || isUpdate}
                                         size={'small'}
                                         color={'secondary'}
-                                        endIcon={isLoading ? (
+                                        endIcon={isLoading || isUpdate ? (
                                             <CircularProgress color="default" />
                                         ) : (
                                             <KeyboardArrowRight color="default" />

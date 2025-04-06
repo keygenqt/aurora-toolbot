@@ -18,8 +18,8 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setData as setStateBool } from '../../../store/impl/stateBool';
+import { useDispatch } from 'react-redux';
+import { keysStateBool } from '../../../store/impl/stateBool';
 
 import {
     useTheme,
@@ -40,7 +40,14 @@ import { FormatListBulleted, KeyboardArrowRight, NewReleases, Error } from '@mui
 
 import { Methods } from '../../../modules';
 import { SdkAvailableModel } from '../../../models';
-import { DataImages, AppUtils, StateListIcon, IconButtonLoading } from '../../../base';
+import {
+    useEffectStateBool,
+    setEffectStateBool,
+    DataImages,
+    AppUtils,
+    StateListIcon,
+    IconButtonLoading,
+} from '../../../base';
 
 
 export function SdkItem(props) {
@@ -51,14 +58,9 @@ export function SdkItem(props) {
     const dispatch = useDispatch();
     // data
     const color = theme.palette.primarySdk.main;
-    const {
-        sdkInstalled,
-        sdkAvailable,
-    } = props
+    const { sdkInstalled, sdkAvailable } = props;
     const isNew = SdkAvailableModel.hasNew(sdkAvailable, sdkInstalled);
-    // redux
-    const stateBool = useSelector((state) => state.stateBool.data);
-    const isSync = stateBool.hasOwnProperty("SdkItem") ? stateBool["SdkItem"] : false;
+    const isSync = useEffectStateBool(keysStateBool.sdksSync);
     // item
     return (
         <ListItem>
@@ -100,13 +102,12 @@ export function SdkItem(props) {
                             <IconButtonLoading
                                 isLoading={isSync}
                                 onClick={async () => {
-                                    dispatch(setStateBool({ key: "SdkItem", value: true }));
+                                    setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
                                     await Methods.sdkSync();
-                                    dispatch(setStateBool({ key: "SdkItem", value: false }));
+                                    setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
                                 }}
                             />
                         </Tooltip>
-
                     )}
 
                     {Array.isArray(sdkAvailable) && sdkAvailable.length ? (

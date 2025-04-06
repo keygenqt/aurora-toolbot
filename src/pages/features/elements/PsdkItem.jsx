@@ -18,8 +18,8 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setData as setStateBool } from '../../../store/impl/stateBool';
+import { useDispatch } from 'react-redux';
+import { keysStateBool } from '../../../store/impl/stateBool';
 
 import {
     useTheme,
@@ -39,7 +39,14 @@ import {
 import { KeyboardArrowRight, FormatListBulleted, Error } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { DataImages, AppUtils, StateListIcon, IconButtonLoading } from '../../../base';
+import {
+    useEffectStateBool,
+    setEffectStateBool,
+    DataImages,
+    AppUtils,
+    StateListIcon,
+    IconButtonLoading,
+} from '../../../base';
 
 
 export function PsdkItem(props) {
@@ -50,13 +57,8 @@ export function PsdkItem(props) {
     const dispatch = useDispatch();
     // data
     const color = theme.palette.primaryPsdk.main;
-    const {
-        psdkInstalled,
-        psdkAvailable,
-    } = props
-    // redux
-    const stateBool = useSelector((state) => state.stateBool.data);
-    const isSync = stateBool.hasOwnProperty("PsdkItem") ? stateBool["PsdkItem"] : false;
+    const { psdkInstalled, psdkAvailable } = props;
+    const isSync = useEffectStateBool(keysStateBool.psdksSync);
     // item
     return (
         <ListItem>
@@ -93,9 +95,9 @@ export function PsdkItem(props) {
                             <IconButtonLoading
                                 isLoading={isSync}
                                 onClick={async () => {
-                                    dispatch(setStateBool({ key: "PsdkItem", value: true }));
+                                    setEffectStateBool(dispatch, keysStateBool.psdksSync, true);
                                     await Methods.psdkSync();
-                                    dispatch(setStateBool({ key: "PsdkItem", value: false }));
+                                    setEffectStateBool(dispatch, keysStateBool.psdksSync, false);
                                 }}
                             />
                         </Tooltip>

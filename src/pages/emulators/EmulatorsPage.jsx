@@ -35,6 +35,7 @@ import {
     Box,
     Button,
     CircularProgress,
+    Tooltip,
 } from '@mui/material';
 
 import {
@@ -174,71 +175,81 @@ export function EmulatorsPage(props) {
                                             direction={'row'}
                                             spacing={1}
                                         >
-                                            <IconButton
-                                                onClick={async () => {
-                                                    try {
-                                                        await Methods.appOpenDir(e.dirEmulator);
-                                                    } catch (e) { }
-                                                }}
-                                            >
-                                                <FolderOpen />
-                                            </IconButton>
-
-                                            {e.isRunning && (
+                                            <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
                                                 <IconButton
                                                     onClick={async () => {
                                                         try {
-                                                            await Methods.emulatorTerminalById(e.id, false);
-                                                        } catch (e) {
-                                                            await updateStates();
-                                                        }
+                                                            await Methods.appOpenDir(e.dirEmulator);
+                                                        } catch (e) { }
                                                     }}
                                                 >
-                                                    <Terminal />
+                                                    <FolderOpen />
                                                 </IconButton>
-                                            )}
-
+                                            </Tooltip>
                                             {e.isRunning && (
-                                                <IconButton
-                                                    onClick={async () => {
-                                                        try {
-                                                            await Methods.emulatorTerminalById(e.id, true);
-                                                        } catch (e) {
-                                                            await updateStates();
-                                                        }
-                                                    }}
-                                                >
-                                                    <Terminal color={'error'} />
-                                                </IconButton>
-                                            )}
+                                                <Tooltip title={t('emulators.t_btn_terminal_user')} placement="left-start">
+                                                    <IconButton
+                                                        onClick={async () => {
+                                                            try {
+                                                                await Methods.emulatorTerminalById(e.id, false);
+                                                            } catch (e) {
+                                                                await updateStates();
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Terminal />
+                                                    </IconButton>
+                                                </Tooltip>
 
+                                            )}
+                                            {e.isRunning && (
+                                                <Tooltip title={t('emulators.t_btn_terminal_root')} placement="left-start">
+                                                    <IconButton
+                                                        onClick={async () => {
+                                                            try {
+                                                                await Methods.emulatorTerminalById(e.id, true);
+                                                            } catch (e) {
+                                                                await updateStates();
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Terminal color={'error'} />
+                                                    </IconButton>
+                                                </Tooltip>
+
+                                            )}
                                             {e.isRunning ? (
-                                                <IconButton
-                                                    onClick={async () => {
-                                                        setEffectStateBool(dispatch, itemKey, true);
-                                                        try {
-                                                            await Methods.emulatorCloseById(e.id);
-                                                            await new Promise(r => setTimeout(r, 1000));
-                                                        } catch (e) { }
-                                                        await updateStates();
-                                                        setEffectStateBool(dispatch, itemKey, false);
-                                                    }}
-                                                >
-                                                    <Stop />
-                                                </IconButton>
+                                                <Tooltip title={t('emulators.t_btn_stop')} placement="left-start">
+                                                    <IconButton
+                                                        onClick={async () => {
+                                                            setEffectStateBool(dispatch, itemKey, true);
+                                                            try {
+                                                                await Methods.emulatorCloseById(e.id);
+                                                                await new Promise(r => setTimeout(r, 1000));
+                                                            } catch (e) { }
+                                                            await updateStates();
+                                                            setEffectStateBool(dispatch, itemKey, false);
+                                                        }}
+                                                    >
+                                                        <Stop />
+                                                    </IconButton>
+                                                </Tooltip>
+
                                             ) : (
-                                                <IconButton
-                                                    onClick={async () => {
-                                                        setEffectStateBool(dispatch, itemKey, true);
-                                                        try {
-                                                            await Methods.emulatorOpenById(e.id);
-                                                        } catch (e) { }
-                                                        await updateStates();
-                                                        setEffectStateBool(dispatch, itemKey, false);
-                                                    }}
-                                                >
-                                                    <PlayArrow />
-                                                </IconButton>
+                                                <Tooltip title={t('emulators.t_btn_run')} placement="left-start">
+                                                    <IconButton
+                                                        onClick={async () => {
+                                                            setEffectStateBool(dispatch, itemKey, true);
+                                                            try {
+                                                                await Methods.emulatorOpenById(e.id);
+                                                            } catch (e) { }
+                                                            await updateStates();
+                                                            setEffectStateBool(dispatch, itemKey, false);
+                                                        }}
+                                                    >
+                                                        <PlayArrow />
+                                                    </IconButton>
+                                                </Tooltip>
                                             )}
                                         </Stack>
                                     )}

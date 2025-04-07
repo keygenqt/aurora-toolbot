@@ -107,7 +107,7 @@ export function FlutterItem(props) {
                         <Tooltip title={t('common.t_available')} placement="left-start">
                             <IconButton
                                 onClick={() => {
-                                    AppUtils.openPage(navigate, 'psdksAvailable');
+                                    AppUtils.openPage(navigate, 'fluttersAvailable');
                                 }}
                             >
                                 <FormatListBulleted />

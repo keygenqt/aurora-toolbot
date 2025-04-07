@@ -15,52 +15,120 @@
  */
 import * as React from 'react';
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector } from 'react-redux';
 
-import { useTheme, Typography, ListItem, List, Card, CardActionArea, CardContent, Stack } from '@mui/material';
+import {
+    useTheme,
+    Typography,
+    ListItem,
+    List,
+    Card,
+    CardContent,
+    CardHeader,
+    CardActions,
+    Chip,
+    Box,
+    Tooltip,
+    IconButton,
+    Avatar,
+} from '@mui/material';
 
-import { StateEmpty } from '../../base';
+import { OpenInNew, Done } from '@mui/icons-material';
+
+import { AppUtils, StateEmpty } from '../../base';
 
 export function PsdksAvailablePage(props) {
     // components
     const theme = useTheme();
     const { t } = useTranslation();
-    // data
-    const color = theme.palette.primaryPsdk.main;
     // redux
+    const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
-    // States
+    // fn - check is install
+    const fnIsInstall = React.useCallback(
+        (model) => {
+            if (!Array.isArray(psdkInstalled)) {
+                return false;
+            }
+            for (const i of psdkInstalled) {
+                if (model.versionFull == i.versionId) {
+                    return true;
+                }
+            }
+            return false;
+        }, [psdkInstalled]);
+    // states
     if (!psdkAvailable) {
-        return (<StateEmpty/>);
+        return (<StateEmpty />);
     }
-    // Page
+    // page
     return (
         <List>
-            {psdkAvailable.map((e, index) => (
-                <ListItem key={`key-${index}`}>
-                    <Card
-                        sx={{
-                            border: `1px solid ${color}5e`,
-                            background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                        }}
-                    >
-                        <CardActionArea
-                            onClick={() => {
-
+            {psdkAvailable.map((e, index) => {
+                let isInstall = fnIsInstall(e);
+                let color = isInstall ? theme.palette.primary.main : theme.palette.primaryPsdk.main;
+                let urlRepo = e.urls[0].split('/').slice(0, -1).join('/');
+                let arches = []
+                for (const url of e.urls) {
+                    if (url.includes('Target')) {
+                        try {
+                            arches.push(url.split('-').filter((e) => e.includes('tar'))[0].split('.')[0])
+                        } catch (e) { }
+                    }
+                }
+                return (
+                    <ListItem key={`key-${index}`}>
+                        <Card
+                            sx={{
+                                border: `1px solid ${color}5e`,
+                                background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                             }}
                         >
+                            <CardHeader
+                                avatar={isInstall && (
+                                    <Avatar sx={{ bgcolor: color }} aria-label="recipe">
+                                        <Done color={'white'} />
+                                    </Avatar>
+                                )}
+                                title={`Platform SDK`}
+                                subheader={`v${e.versionFull}`}
+                                sx={{
+                                    paddingBottom: 0,
+                                    '& .MuiCardHeader-title': {
+                                        paddingBottom: 0.5,
+                                    }
+                                }}
+                            />
                             <CardContent>
-                                <Stack spacing={1}>
-                                    <Typography variant="subtitle2">
-                                        v{e.versionFull}
-                                    </Typography>
-                                </Stack>
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    {t('psdksAvailable.t_text')}
+                                </Typography>
                             </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </ListItem>
-            ))}
+                            <CardActions sx={{
+                                p: 2,
+                                paddingTop: 0
+                            }}>
+                                <Chip
+                                    icon={<FontAwesomeIcon icon="fa-solid fa-microchip" />}
+                                    label={`${arches.join(", ")}`}
+                                />
+                                <Box sx={{ flexGrow: 1 }} />
+                                <Tooltip title={t('common.t_open_repo')} placement="left-start">
+                                    <IconButton
+                                        onClick={async () => {
+                                            await AppUtils.openUrl(urlRepo);
+                                        }}
+                                    >
+                                        <OpenInNew />
+                                    </IconButton>
+                                </Tooltip>
+                            </CardActions>
+                        </Card>
+                    </ListItem>
+                );
+            })}
         </List>
     );
 }

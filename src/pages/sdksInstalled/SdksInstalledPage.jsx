@@ -35,6 +35,7 @@ import {
     Box,
     Button,
     CircularProgress,
+    Tooltip,
 } from '@mui/material';
 
 import {
@@ -171,29 +172,32 @@ export function SdksInstalledPage(props) {
                                         direction={'row'}
                                         spacing={1}
                                     >
-                                        <IconButton
-                                            onClick={async () => {
-                                                try {
-                                                    await Methods.appOpenDir(e.dir);
-                                                } catch (e) {
-                                                    console.log(e)
-                                                }
-                                            }}
-                                        >
-                                            <FolderOpen />
-                                        </IconButton>
-
-                                        <IconButton
-                                            onClick={async () => {
-                                                try {
-                                                    await Methods.sdkToolsById(e.id);
-                                                } catch (e) {
-                                                    console.log(e)
-                                                }
-                                            }}
-                                        >
-                                            <Handyman />
-                                        </IconButton>
+                                        <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
+                                            <IconButton
+                                                onClick={async () => {
+                                                    try {
+                                                        await Methods.appOpenDir(e.dir);
+                                                    } catch (e) {
+                                                        console.log(e)
+                                                    }
+                                                }}
+                                            >
+                                                <FolderOpen />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title={t('sdksInstalled.t_btn_tools')} placement="left-start">
+                                            <IconButton
+                                                onClick={async () => {
+                                                    try {
+                                                        await Methods.sdkToolsById(e.id);
+                                                    } catch (e) {
+                                                        console.log(e)
+                                                    }
+                                                }}
+                                            >
+                                                <Handyman />
+                                            </IconButton>
+                                        </Tooltip>
                                     </Stack>
                                 )}
 

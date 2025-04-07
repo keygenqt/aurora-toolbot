@@ -34,7 +34,7 @@ import {
     Avatar,
 } from '@mui/material';
 
-import { CloudOff, CloudQueue, InsertLink, OpenInNew, Download, Done } from '@mui/icons-material';
+import { CloudOff, CloudQueue, InsertLink, OpenInNew, Done } from '@mui/icons-material';
 
 import { AppUtils, AlertDialog, StateEmpty } from '../../base';
 
@@ -68,8 +68,8 @@ export function SdksAvailablePage(props) {
     return (
         <>
             <AlertDialog
-                title={t('sdks.t_dialog_download_title')}
-                body={t('sdks.t_dialog_download_body')}
+                title={t('sdksAvailable.t_dialog_download_title')}
+                body={t('sdksAvailable.t_dialog_download_body')}
                 agreeText={t('common.t_btn_start')}
                 disagreeText={t('common.t_btn_cancel')}
                 open={isOpenDownloadDialogAlert}
@@ -107,17 +107,20 @@ export function SdksAvailablePage(props) {
                                 />
                                 <CardContent>
                                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                        {e.buildType === 'MB2' ? t('sdks.t_item_mb2') : t('sdks.t_item_bt')}
+                                        {e.buildType === 'MB2' ? t('sdksAvailable.t_item_mb2') : t('sdksAvailable.t_item_bt')}
                                     </Typography>
                                 </CardContent>
                                 <CardActions sx={{
                                     p: 2,
                                     paddingTop: 0
                                 }}>
-                                    <Chip icon={e.installType === 'Online' ? (<CloudQueue color='info' />) : (<CloudOff color='primary' />)} label={`${e.installType} installer`} />
+                                    <Chip
+                                        icon={e.installType === 'Online' ? (<CloudQueue color='info' />) : (<CloudOff color='primary' />)}
+                                        label={`${e.installType} installer`}
+                                    />
                                     <Box sx={{ flexGrow: 1 }} />
 
-                                    <Tooltip title={t('common.t_download')} placement="left-start">
+                                    {/* <Tooltip title={t('common.t_download')} placement="left-start">
                                         <IconButton
                                             onClick={() => {
                                                 setIsOpenDownloadDialogAlert(true)
@@ -125,7 +128,7 @@ export function SdksAvailablePage(props) {
                                         >
                                             <Download />
                                         </IconButton>
-                                    </Tooltip>
+                                    </Tooltip> */}
 
                                     <Tooltip title={t('common.t_link_to_file')} placement="left-start">
                                         <IconButton

@@ -36,6 +36,7 @@ import {
     Button,
     Link,
     CircularProgress,
+    Tooltip,
 } from '@mui/material';
 
 import {
@@ -167,29 +168,32 @@ export function PsdksInstalledPage(props) {
                                         direction={'row'}
                                         spacing={1}
                                     >
-                                        <IconButton
-                                            onClick={async () => {
-                                                try {
-                                                    await Methods.appOpenDir(e.dir);
-                                                } catch (e) {
-                                                    console.log(e)
-                                                }
-                                            }}
-                                        >
-                                            <FolderOpen />
-                                        </IconButton>
-
-                                        <IconButton
-                                            onClick={async () => {
-                                                try {
-                                                    await Methods.psdkTerminalById(e.id);
-                                                } catch (e) {
-                                                    console.log(e)
-                                                }
-                                            }}
-                                        >
-                                            <Terminal />
-                                        </IconButton>
+                                        <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
+                                            <IconButton
+                                                onClick={async () => {
+                                                    try {
+                                                        await Methods.appOpenDir(e.dir);
+                                                    } catch (e) {
+                                                        console.log(e)
+                                                    }
+                                                }}
+                                            >
+                                                <FolderOpen />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title={t('psdksInstalled.t_btn_terminal')} placement="left-start">
+                                            <IconButton
+                                                onClick={async () => {
+                                                    try {
+                                                        await Methods.psdkTerminalById(e.id);
+                                                    } catch (e) {
+                                                        console.log(e)
+                                                    }
+                                                }}
+                                            >
+                                                <Terminal />
+                                            </IconButton>
+                                        </Tooltip>
                                     </Stack>
                                 )}
 

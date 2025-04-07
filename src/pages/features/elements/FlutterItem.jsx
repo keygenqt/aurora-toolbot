@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { keysStateBool } from '../../../store/impl/stateBool';
+import { setData as setFlutterInstalled } from '../../../store/impl/flutterInstalled';
 
 import {
     useTheme,
@@ -94,7 +95,10 @@ export function FlutterItem(props) {
                         animate={!Array.isArray(flutterInstalled) || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.fluttersSync, true);
-                            await Methods.flutterSync();
+                            try {
+                                await Methods.flutterSync();
+                                dispatch(flutterInstalled(await Methods.flutterSync()));
+                            } catch (e) {}
                             setEffectStateBool(dispatch, keysStateBool.fluttersSync, false);
                         }}
                     />

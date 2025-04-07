@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { keysStateBool } from '../../../store/impl/stateBool';
+import { setData as setPsdkInstalled } from '../../../store/impl/psdkInstalled';
 
 import {
     useTheme,
@@ -95,7 +96,10 @@ export function PsdkItem(props) {
                         animate={!Array.isArray(psdkInstalled) || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, true);
-                            await Methods.psdkSync();
+                            try {
+                                await Methods.psdkSync();
+                                dispatch(setPsdkInstalled(await Methods.flutterInstalled()));
+                            } catch (e) {}
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, false);
                         }}
                     />

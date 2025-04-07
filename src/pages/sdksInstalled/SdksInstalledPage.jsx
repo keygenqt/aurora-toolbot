@@ -72,14 +72,14 @@ export function SdksInstalledPage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, keysStateBool.sdksUpdate, true);
-        dispatch(setSdkInstalled(await Methods.sdkInstalled()));
-        await new Promise(r => setTimeout(r, 400)); // animation delay
+        try {
+            dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+            await new Promise(r => setTimeout(r, 400)); // animation delay
+        } catch (e) {
+            dispatch(setSdkInstalled(null));
+        }
         setEffectStateBool(dispatch, keysStateBool.sdksUpdate, false);
     };
-    // states
-    if (!sdkInstalled) {
-        return (<StateEmpty />);
-    }
     // page
     return (
         <AppBarLayout index actions={(
@@ -93,139 +93,143 @@ export function SdksInstalledPage(props) {
                 />
             </Stack>
         )} >
-            <List>
-                {sdkInstalled.map((e, index) => (
-                    <ListItem key={`key-${index}`}>
-                        <Card
-                            sx={{
-                                border: `1px solid ${color}5e`,
-                                background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                            }}
-                        >
-                            <CardContent sx={{ paddingBottom: 1 }}>
-                                <Stack
-                                    direction="row"
-                                    spacing={1}
-                                    sx={{ paddingBottom: 1.7, alignItems: "center" }}
-                                >
-                                    <img
-                                        style={{ width: '16px', height: '16px' }}
-                                        src={DataImages.iconSdk}
-                                        alt='Icon' />
-                                    <Typography variant="subtitle2" color={color} >
-                                        Аврора SDK v{e.versionFull}
-                                    </Typography>
-                                </Stack>
-
-                                <Box
-                                    sx={{
-                                        background: `${theme.palette.background.default}bd`,
-                                        borderRadius: 2,
-                                        padding: 1.5,
-                                    }}
-                                >
-                                    <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
-                                        <Stack spacing={1} >
-                                            <Stack
-                                                direction={'row'}
-                                                spacing={1}
-                                                alignItems={'center'}
-                                            >
-                                                <Box width={16} textAlign={'center'}>
-                                                    <FontAwesomeIcon icon="fa-solid fa-square-binary" />
-                                                </Box>
-                                                <Box>Qt Creator v{e.qtCreatorVersion}</Box>
-                                            </Stack>
-                                            <Stack
-                                                direction={'row'}
-                                                spacing={1}
-                                                alignItems={'center'}
-                                            >
-                                                <Box width={16} textAlign={'center'}>
-                                                    <FontAwesomeIcon icon="fa-solid fa-square-binary" />
-                                                </Box>
-                                                <Box>Qt v{e.qtVersion}</Box>
-                                            </Stack>
-                                            <Stack
-                                                direction={'row'}
-                                                spacing={1}
-                                                alignItems={'center'}
-                                            >
-                                                <Box width={16} textAlign={'center'}>
-                                                    <FontAwesomeIcon icon="fa-solid fa-trowel-bricks" />
-                                                </Box>
-                                                <Box>{e.buildDate}</Box>
-                                            </Stack>
-                                        </Stack>
-                                    </Typography>
-                                </Box>
-
-                            </CardContent>
-
-                            <CardActions sx={{
-                                p: 2,
-                                paddingTop: 1
-                            }}>
-                                {isUpdate ? (
-                                    <IconButtonLoading animate={true} />
-                                ) : (
+            {!Array.isArray(sdkInstalled) || sdkInstalled.length === 0 ? (
+                <StateEmpty />
+            ) : (
+                <List>
+                    {sdkInstalled.map((e, index) => (
+                        <ListItem key={`key-${index}`}>
+                            <Card
+                                sx={{
+                                    border: `1px solid ${color}5e`,
+                                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                                }}
+                            >
+                                <CardContent sx={{ paddingBottom: 1 }}>
                                     <Stack
-                                        direction={'row'}
+                                        direction="row"
                                         spacing={1}
+                                        sx={{ paddingBottom: 1.7, alignItems: "center" }}
                                     >
-                                        <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
-                                            <IconButton
-                                                onClick={async () => {
-                                                    try {
-                                                        await Methods.appOpenDir(e.dir);
-                                                    } catch (e) {
-                                                        console.log(e)
-                                                    }
-                                                }}
-                                            >
-                                                <FolderOpen />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <Tooltip title={t('sdksInstalled.t_btn_tools')} placement="left-start">
-                                            <IconButton
-                                                onClick={async () => {
-                                                    try {
-                                                        await Methods.sdkToolsById(e.id);
-                                                    } catch (e) {
-                                                        console.log(e)
-                                                    }
-                                                }}
-                                            >
-                                                <Handyman />
-                                            </IconButton>
-                                        </Tooltip>
+                                        <img
+                                            style={{ width: '16px', height: '16px' }}
+                                            src={DataImages.iconSdk}
+                                            alt='Icon' />
+                                        <Typography variant="subtitle2" color={color} >
+                                            Аврора SDK v{e.versionFull}
+                                        </Typography>
                                     </Stack>
-                                )}
 
-                                <Box sx={{ flexGrow: 1 }} />
+                                    <Box
+                                        sx={{
+                                            background: `${theme.palette.background.default}bd`,
+                                            borderRadius: 2,
+                                            padding: 1.5,
+                                        }}
+                                    >
+                                        <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
+                                            <Stack spacing={1} >
+                                                <Stack
+                                                    direction={'row'}
+                                                    spacing={1}
+                                                    alignItems={'center'}
+                                                >
+                                                    <Box width={16} textAlign={'center'}>
+                                                        <FontAwesomeIcon icon="fa-solid fa-square-binary" />
+                                                    </Box>
+                                                    <Box>Qt Creator v{e.qtCreatorVersion}</Box>
+                                                </Stack>
+                                                <Stack
+                                                    direction={'row'}
+                                                    spacing={1}
+                                                    alignItems={'center'}
+                                                >
+                                                    <Box width={16} textAlign={'center'}>
+                                                        <FontAwesomeIcon icon="fa-solid fa-square-binary" />
+                                                    </Box>
+                                                    <Box>Qt v{e.qtVersion}</Box>
+                                                </Stack>
+                                                <Stack
+                                                    direction={'row'}
+                                                    spacing={1}
+                                                    alignItems={'center'}
+                                                >
+                                                    <Box width={16} textAlign={'center'}>
+                                                        <FontAwesomeIcon icon="fa-solid fa-trowel-bricks" />
+                                                    </Box>
+                                                    <Box>{e.buildDate}</Box>
+                                                </Stack>
+                                            </Stack>
+                                        </Typography>
+                                    </Box>
 
-                                <Button
-                                    disabled={isUpdate}
-                                    size={'small'}
-                                    color={'primarySdk'}
-                                    endIcon={isUpdate ? (
-                                        <CircularProgress color="default" />
+                                </CardContent>
+
+                                <CardActions sx={{
+                                    p: 2,
+                                    paddingTop: 1
+                                }}>
+                                    {isUpdate ? (
+                                        <IconButtonLoading animate={true} />
                                     ) : (
-                                        <KeyboardArrowRight color="default" />
+                                        <Stack
+                                            direction={'row'}
+                                            spacing={1}
+                                        >
+                                            <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
+                                                <IconButton
+                                                    onClick={async () => {
+                                                        try {
+                                                            await Methods.appOpenDir(e.dir);
+                                                        } catch (e) {
+                                                            console.log(e)
+                                                        }
+                                                    }}
+                                                >
+                                                    <FolderOpen />
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title={t('sdksInstalled.t_btn_tools')} placement="left-start">
+                                                <IconButton
+                                                    onClick={async () => {
+                                                        try {
+                                                            await Methods.sdkToolsById(e.id);
+                                                        } catch (e) {
+                                                            console.log(e)
+                                                        }
+                                                    }}
+                                                >
+                                                    <Handyman />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Stack>
                                     )}
-                                    variant="contained"
-                                    sx={{ opacity: 0.8 }}
-                                    onClick={() => {
-                                        AppUtils.openPage(navigate, 'sdk', { state: { model: e } });
-                                    }}
-                                >
-                                    {t('common.t_open')}
-                                </Button>
-                            </CardActions>
-                        </Card>
-                    </ListItem>
-                ))}
-            </List>
+
+                                    <Box sx={{ flexGrow: 1 }} />
+
+                                    <Button
+                                        disabled={isUpdate}
+                                        size={'small'}
+                                        color={'primarySdk'}
+                                        endIcon={isUpdate ? (
+                                            <CircularProgress color="default" />
+                                        ) : (
+                                            <KeyboardArrowRight color="default" />
+                                        )}
+                                        variant="contained"
+                                        sx={{ opacity: 0.8 }}
+                                        onClick={() => {
+                                            AppUtils.openPage(navigate, 'sdk', { state: { model: e } });
+                                        }}
+                                    >
+                                        {t('common.t_open')}
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        </ListItem>
+                    ))}
+                </List>
+            )}
         </AppBarLayout>
     );
 }

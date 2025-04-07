@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { keysStateBool } from '../../../store/impl/stateBool';
+import { setData as setEmulators } from '../../../store/impl/emulators';
 
 import {
     useTheme,
@@ -31,7 +32,6 @@ import {
     CardActions,
     CircularProgress,
     Button,
-    Tooltip,
 } from '@mui/material';
 
 import { KeyboardArrowRight } from '@mui/icons-material';
@@ -86,7 +86,10 @@ export function EmulatorItem(props) {
                         animate={!Array.isArray(emulators) || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.emulatorsSync, true);
-                            await Methods.emulatorSync();
+                            try {
+                                await Methods.emulatorsSync();
+                                dispatch(setEmulators(await Methods.emulatorInfo()));
+                            } catch (e) {}
                             setEffectStateBool(dispatch, keysStateBool.emulatorsSync, false);
                         }}
                     />

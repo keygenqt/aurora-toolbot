@@ -68,7 +68,11 @@ export function SdksAvailablePage(props) {
     // fun
     const updateStates = async () => {
         setIsUpdate(true);
-        dispatch(setSdkAvailable(await Methods.sdkAvailable()));
+        try {
+            dispatch(setSdkAvailable(await Methods.sdkAvailable()));
+        } catch (e) {
+            dispatch(setSdkAvailable(null));
+        }
         setIsUpdate(false);
     };
     const fnIsInstall = React.useCallback(
@@ -112,85 +116,91 @@ export function SdksAvailablePage(props) {
                     />
                 </Stack>
             )} >
-                {isUpdate ? (<StateLoading />) : (
-                    <List>
-                        {sdkAvailable.map((e, index) => {
-                            let isInstall = fnIsInstall(e);
-                            let color = isInstall ? theme.palette.primary.main : theme.palette.primarySdk.main;
-                            return (
-                                <ListItem key={`key-${index}`}>
-                                    <Card
-                                        sx={{
-                                            border: `1px solid ${color}5e`,
-                                            background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                                        }}
-                                    >
-                                        <CardHeader
-                                            avatar={isInstall && (
-                                                <Avatar sx={{ bgcolor: color }} aria-label="recipe">
-                                                    <Done color={'white'} />
-                                                </Avatar>
-                                            )}
-                                            title={`Аврора SDK (${e.buildType})`}
-                                            subheader={`v${e.versionFull}`}
-                                            sx={{
-                                                paddingBottom: 0,
-                                                '& .MuiCardHeader-title': {
-                                                    paddingBottom: 0.5,
-                                                }
-                                            }}
-                                        />
-                                        <CardContent>
-                                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                                {e.buildType === 'MB2' ? t('sdksAvailable.t_item_mb2') : t('sdksAvailable.t_item_bt')}
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions sx={{
-                                            p: 2,
-                                            paddingTop: 0
-                                        }}>
-                                            <Chip
-                                                icon={e.installType === 'Online' ? (<CloudQueue color='info' />) : (<CloudOff color='primary' />)}
-                                                label={`${e.installType} installer`}
-                                            />
-                                            <Box sx={{ flexGrow: 1 }} />
-
-                                            {/* <Tooltip title={t('common.t_download')} placement="left-start">
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setIsOpenDownloadDialogAlert(true)
+                {Array.isArray(sdkAvailable) && sdkAvailable.length === 0 ? (
+                    <StateEmpty />
+                ) : (
+                    <>
+                        {isUpdate ? (<StateLoading />) : (
+                            <List>
+                                {sdkAvailable.map((e, index) => {
+                                    let isInstall = fnIsInstall(e);
+                                    let color = isInstall ? theme.palette.primary.main : theme.palette.primarySdk.main;
+                                    return (
+                                        <ListItem key={`key-${index}`}>
+                                            <Card
+                                                sx={{
+                                                    border: `1px solid ${color}5e`,
+                                                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                                                }}
+                                            >
+                                                <CardHeader
+                                                    avatar={isInstall && (
+                                                        <Avatar sx={{ bgcolor: color }} aria-label="recipe">
+                                                            <Done color={'white'} />
+                                                        </Avatar>
+                                                    )}
+                                                    title={`Аврора SDK (${e.buildType})`}
+                                                    subheader={`v${e.versionFull}`}
+                                                    sx={{
+                                                        paddingBottom: 0,
+                                                        '& .MuiCardHeader-title': {
+                                                            paddingBottom: 0.5,
+                                                        }
                                                     }}
-                                                >
-                                                    <Download />
-                                                </IconButton>
-                                            </Tooltip> */}
+                                                />
+                                                <CardContent>
+                                                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                                        {e.buildType === 'MB2' ? t('sdksAvailable.t_item_mb2') : t('sdksAvailable.t_item_bt')}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardActions sx={{
+                                                    p: 2,
+                                                    paddingTop: 0
+                                                }}>
+                                                    <Chip
+                                                        icon={e.installType === 'Online' ? (<CloudQueue color='info' />) : (<CloudOff color='primary' />)}
+                                                        label={`${e.installType} installer`}
+                                                    />
+                                                    <Box sx={{ flexGrow: 1 }} />
 
-                                            <Tooltip title={t('common.t_link_to_file')} placement="left-start">
-                                                <IconButton
-                                                    onClick={async () => {
-                                                        await AppUtils.openUrl(e.url);
-                                                    }}
-                                                >
-                                                    <InsertLink />
-                                                </IconButton>
-                                            </Tooltip>
+                                                    {/* <Tooltip title={t('common.t_download')} placement="left-start">
+                                                        <IconButton
+                                                            onClick={() => {
+                                                                setIsOpenDownloadDialogAlert(true)
+                                                            }}
+                                                        >
+                                                            <Download />
+                                                        </IconButton>
+                                                    </Tooltip> */}
 
-                                            <Tooltip title={t('common.t_open_repo')} placement="left-start">
-                                                <IconButton
-                                                    onClick={async () => {
-                                                        await AppUtils.openUrl(e.url.split('/').slice(0, -1).join('/'));
-                                                    }}
-                                                >
-                                                    <OpenInNew />
-                                                </IconButton>
-                                            </Tooltip>
+                                                    <Tooltip title={t('common.t_link_to_file')} placement="left-start">
+                                                        <IconButton
+                                                            onClick={async () => {
+                                                                await AppUtils.openUrl(e.url);
+                                                            }}
+                                                        >
+                                                            <InsertLink />
+                                                        </IconButton>
+                                                    </Tooltip>
 
-                                        </CardActions>
-                                    </Card>
-                                </ListItem>
-                            )
-                        })}
-                    </List>
+                                                    <Tooltip title={t('common.t_open_repo')} placement="left-start">
+                                                        <IconButton
+                                                            onClick={async () => {
+                                                                await AppUtils.openUrl(e.url.split('/').slice(0, -1).join('/'));
+                                                            }}
+                                                        >
+                                                            <OpenInNew />
+                                                        </IconButton>
+                                                    </Tooltip>
+
+                                                </CardActions>
+                                            </Card>
+                                        </ListItem>
+                                    )
+                                })}
+                            </List>
+                        )}
+                    </>
                 )}
             </AppBarLayout>
         </>

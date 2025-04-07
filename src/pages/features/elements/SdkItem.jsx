@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { keysStateBool } from '../../../store/impl/stateBool';
+import { setData as setSdkInstalled } from '../../../store/impl/sdkInstalled';
 
 import {
     useTheme,
@@ -103,7 +104,10 @@ export function SdkItem(props) {
                         animate={!Array.isArray(sdkInstalled) || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
-                            await Methods.sdkSync();
+                            try {
+                                await Methods.sdkSync();
+                                dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+                            } catch (e) {}
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
                         }}
                     />
@@ -118,7 +122,7 @@ export function SdkItem(props) {
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
-                    ) : sdkAvailable === null || Array.isArray(sdkAvailable) && sdkInstalled.length == 0 ? (
+                    ) : sdkAvailable === null || Array.isArray(sdkAvailable) && sdkAvailable.length == 0 ? (
                         <StateListIcon title={t('common.t_error')}>
                             <Error color={'error'} />
                         </StateListIcon>

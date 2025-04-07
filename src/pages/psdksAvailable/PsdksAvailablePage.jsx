@@ -63,7 +63,11 @@ export function PsdksAvailablePage(props) {
     // fun
     const updateStates = async () => {
         setIsUpdate(true);
-        dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
+        try {
+            dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
+        } catch (e) {
+            dispatch(setPsdkAvailable(null));
+        }
         setIsUpdate(false);
     };
     const fnIsInstall = React.useCallback(
@@ -95,72 +99,78 @@ export function PsdksAvailablePage(props) {
                 />
             </Stack>
         )} >
-            {isUpdate ? (<StateLoading />) : (
-                <List>
-                    {psdkAvailable.map((e, index) => {
-                        let isInstall = fnIsInstall(e);
-                        let color = isInstall ? theme.palette.primary.main : theme.palette.primaryPsdk.main;
-                        let urlRepo = e.urls[0].split('/').slice(0, -1).join('/');
-                        let arches = []
-                        for (const url of e.urls) {
-                            if (url.includes('Target')) {
-                                try {
-                                    arches.push(url.split('-').filter((e) => e.includes('tar'))[0].split('.')[0])
-                                } catch (e) { }
-                            }
-                        }
-                        return (
-                            <ListItem key={`key-${index}`}>
-                                <Card
-                                    sx={{
-                                        border: `1px solid ${color}5e`,
-                                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                                    }}
-                                >
-                                    <CardHeader
-                                        avatar={isInstall && (
-                                            <Avatar sx={{ bgcolor: color }} aria-label="recipe">
-                                                <Done color={'white'} />
-                                            </Avatar>
-                                        )}
-                                        title={`Platform SDK`}
-                                        subheader={`v${e.versionFull}`}
-                                        sx={{
-                                            paddingBottom: 0,
-                                            '& .MuiCardHeader-title': {
-                                                paddingBottom: 0.5,
-                                            }
-                                        }}
-                                    />
-                                    <CardContent>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                            {t('psdksAvailable.t_text')}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions sx={{
-                                        p: 2,
-                                        paddingTop: 0
-                                    }}>
-                                        <Chip
-                                            icon={<FontAwesomeIcon icon="fa-solid fa-microchip" />}
-                                            label={`${arches.join(", ")}`}
-                                        />
-                                        <Box sx={{ flexGrow: 1 }} />
-                                        <Tooltip title={t('common.t_open_repo')} placement="left-start">
-                                            <IconButton
-                                                onClick={async () => {
-                                                    await AppUtils.openUrl(urlRepo);
+            {Array.isArray(psdkAvailable) && psdkAvailable.length === 0 ? (
+                <StateEmpty />
+            ) : (
+                <>
+                    {isUpdate ? (<StateLoading />) : (
+                        <List>
+                            {psdkAvailable.map((e, index) => {
+                                let isInstall = fnIsInstall(e);
+                                let color = isInstall ? theme.palette.primary.main : theme.palette.primaryPsdk.main;
+                                let urlRepo = e.urls[0].split('/').slice(0, -1).join('/');
+                                let arches = []
+                                for (const url of e.urls) {
+                                    if (url.includes('Target')) {
+                                        try {
+                                            arches.push(url.split('-').filter((e) => e.includes('tar'))[0].split('.')[0])
+                                        } catch (e) { }
+                                    }
+                                }
+                                return (
+                                    <ListItem key={`key-${index}`}>
+                                        <Card
+                                            sx={{
+                                                border: `1px solid ${color}5e`,
+                                                background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                                            }}
+                                        >
+                                            <CardHeader
+                                                avatar={isInstall && (
+                                                    <Avatar sx={{ bgcolor: color }} aria-label="recipe">
+                                                        <Done color={'white'} />
+                                                    </Avatar>
+                                                )}
+                                                title={`Platform SDK`}
+                                                subheader={`v${e.versionFull}`}
+                                                sx={{
+                                                    paddingBottom: 0,
+                                                    '& .MuiCardHeader-title': {
+                                                        paddingBottom: 0.5,
+                                                    }
                                                 }}
-                                            >
-                                                <OpenInNew />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </CardActions>
-                                </Card>
-                            </ListItem>
-                        );
-                    })}
-                </List>
+                                            />
+                                            <CardContent>
+                                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                                    {t('psdksAvailable.t_text')}
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions sx={{
+                                                p: 2,
+                                                paddingTop: 0
+                                            }}>
+                                                <Chip
+                                                    icon={<FontAwesomeIcon icon="fa-solid fa-microchip" />}
+                                                    label={`${arches.join(", ")}`}
+                                                />
+                                                <Box sx={{ flexGrow: 1 }} />
+                                                <Tooltip title={t('common.t_open_repo')} placement="left-start">
+                                                    <IconButton
+                                                        onClick={async () => {
+                                                            await AppUtils.openUrl(urlRepo);
+                                                        }}
+                                                    >
+                                                        <OpenInNew />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </CardActions>
+                                        </Card>
+                                    </ListItem>
+                                );
+                            })}
+                        </List>
+                    )}
+                </>
             )}
         </AppBarLayout>
     );

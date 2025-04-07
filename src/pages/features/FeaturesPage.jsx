@@ -38,6 +38,7 @@ import { GroupWidget } from './elements/GroupWidget';
 import { PsdkItem } from './elements/PsdkItem';
 import { SdkItem } from './elements/SdkItem';
 
+// @todo Check error connect D-Bus!
 
 export function FeaturesPage(props) {
     // components

@@ -22,13 +22,15 @@ import { Cached } from '@mui/icons-material';
 
 export function IconButtonLoading(props) {
     return (
-        <Tooltip title={props.tooltip ? props.tooltip : ''} placement="left-start">
-            <IconButton
-                disabled={props.animate}
-                onClick={props.onClick}
-            >
-                <Cached className={props.animate ? 'spin' : ''} />
-            </IconButton>
+        <Tooltip title={!props.tooltip ? null : props.tooltip} placement="left-start">
+            <span>
+                <IconButton
+                    disabled={props.animate}
+                    onClick={props.onClick}
+                >
+                    <Cached className={props.animate ? 'spin' : ''} />
+                </IconButton>
+            </span>
         </Tooltip>
     );
 }

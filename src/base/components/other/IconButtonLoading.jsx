@@ -16,22 +16,25 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { IconButton } from '@mui/material'
+import { IconButton, Tooltip } from '@mui/material'
 
 import { Cached } from '@mui/icons-material';
 
 export function IconButtonLoading(props) {
     return (
-        <IconButton
-            disabled={props.isLoading}
-            onClick={props.onClick}
-        >
-            <Cached className={props.isLoading ? 'spin' : ''} />
-        </IconButton>
+        <Tooltip title={props.tooltip ? props.tooltip : ''} placement="left-start">
+            <IconButton
+                disabled={props.animate}
+                onClick={props.onClick}
+            >
+                <Cached className={props.animate ? 'spin' : ''} />
+            </IconButton>
+        </Tooltip>
     );
 }
 
 IconButtonLoading.propTypes = {
-    isLoading: PropTypes.func.isRequired,
+    tooltip: PropTypes.string,
+    animate: PropTypes.bool,
     onClick: PropTypes.func,
 };

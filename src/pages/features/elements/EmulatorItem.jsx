@@ -31,6 +31,7 @@ import {
     CardActions,
     CircularProgress,
     Button,
+    Tooltip,
 } from '@mui/material';
 
 import { KeyboardArrowRight } from '@mui/icons-material';
@@ -80,16 +81,15 @@ export function EmulatorItem(props) {
                     p: 2,
                     paddingTop: 0
                 }}>
-                    {Array.isArray(emulators) && (
-                        <IconButtonLoading
-                            isLoading={isSync}
-                            onClick={async () => {
-                                setEffectStateBool(dispatch, keysStateBool.emulatorsSync, true);
-                                await Methods.emulatorSync();
-                                setEffectStateBool(dispatch, keysStateBool.emulatorsSync, false);
-                            }}
-                        />
-                    )}
+                    <IconButtonLoading
+                        tooltip={t('common.t_sync')}
+                        animate={!Array.isArray(emulators) || isSync}
+                        onClick={async () => {
+                            setEffectStateBool(dispatch, keysStateBool.emulatorsSync, true);
+                            await Methods.emulatorSync();
+                            setEffectStateBool(dispatch, keysStateBool.emulatorsSync, false);
+                        }}
+                    />
 
                     <Box sx={{ flexGrow: 1 }} />
 

@@ -17,7 +17,8 @@ import * as React from 'react';
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setData as setFlutterAvailable } from '../../store/impl/flutterAvailable';
 
 import {
     useTheme,
@@ -33,20 +34,38 @@ import {
     Tooltip,
     IconButton,
     Avatar,
+    Stack,
 } from '@mui/material';
 
 import { OpenInNew, Done, InsertLink } from '@mui/icons-material';
 
-import { AppUtils, StateEmpty } from '../../base';
+import {
+    AppUtils,
+    StateEmpty,
+    ActionBack,
+    ActionRefreshState,
+    StateLoading,
+} from '../../base';
+
+import { Methods } from '../../modules';
+import { AppBarLayout } from '../../layouts';
 
 export function FluttersAvailablePage(props) {
     // components
     const theme = useTheme();
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    // data
+    const [isUpdate, setIsUpdate] = React.useState(false);
     // redux
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
-    // fn - check is install
+    // fun
+    const updateStates = async () => {
+        setIsUpdate(true);
+        dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
+        setIsUpdate(false);
+    };
     const fnIsInstall = React.useCallback(
         (model) => {
             if (!Array.isArray(flutterInstalled)) {
@@ -65,74 +84,88 @@ export function FluttersAvailablePage(props) {
     }
     // page
     return (
-        <List>
-            {flutterAvailable.map((e, index) => {
-                let isInstall = fnIsInstall(e);
-                let color = isInstall ? theme.palette.primary.main : theme.palette.primaryFlutter.main;
-                return (
-                    <ListItem key={`key-${index}`}>
-                        <Card
-                            sx={{
-                                border: `1px solid ${color}5e`,
-                                background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                            }}
-                        >
-                            <CardHeader
-                                avatar={isInstall && (
-                                    <Avatar sx={{ bgcolor: color }} aria-label="recipe">
-                                        <Done color={'white'} />
-                                    </Avatar>
-                                )}
-                                title={`Flutter SDK`}
-                                subheader={`v${e.version}`}
-                                sx={{
-                                    paddingBottom: 0,
-                                    '& .MuiCardHeader-title': {
-                                        paddingBottom: 0.5,
-                                    }
-                                }}
-                            />
-                            <CardContent>
-                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                    {t('fluttersAvailable.t_text')}
-                                </Typography>
-                            </CardContent>
-                            <CardActions sx={{
-                                p: 2,
-                                paddingTop: 0
-                            }}>
-                                <Chip
-                                    icon={<FontAwesomeIcon icon="fa-solid fa-tag" />}
-                                    label={e.tag}
-                                />
-                                <Box sx={{ flexGrow: 1 }} />
-
-                                <Tooltip title={t('common.t_link_to_file')} placement="left-start">
-                                    <IconButton
-                                        onClick={async () => {
-                                            await AppUtils.openUrl(e.urlZip);
+        <AppBarLayout index actions={(
+            <Stack direction={'row'} spacing={1}>
+                <ActionBack disabled={isUpdate} />
+                <ActionRefreshState
+                    animate={isUpdate}
+                    onClick={async () => {
+                        await updateStates();
+                    }}
+                />
+            </Stack>
+        )} >
+            {isUpdate ? (<StateLoading />) : (
+                <List>
+                    {flutterAvailable.map((e, index) => {
+                        let isInstall = fnIsInstall(e);
+                        let color = isInstall ? theme.palette.primary.main : theme.palette.primaryFlutter.main;
+                        return (
+                            <ListItem key={`key-${index}`}>
+                                <Card
+                                    sx={{
+                                        border: `1px solid ${color}5e`,
+                                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                                    }}
+                                >
+                                    <CardHeader
+                                        avatar={isInstall && (
+                                            <Avatar sx={{ bgcolor: color }} aria-label="recipe">
+                                                <Done color={'white'} />
+                                            </Avatar>
+                                        )}
+                                        title={`Flutter SDK`}
+                                        subheader={`v${e.version}`}
+                                        sx={{
+                                            paddingBottom: 0,
+                                            '& .MuiCardHeader-title': {
+                                                paddingBottom: 0.5,
+                                            }
                                         }}
-                                    >
-                                        <InsertLink />
-                                    </IconButton>
-                                </Tooltip>
+                                    />
+                                    <CardContent>
+                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                            {t('fluttersAvailable.t_text')}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions sx={{
+                                        p: 2,
+                                        paddingTop: 0
+                                    }}>
+                                        <Chip
+                                            icon={<FontAwesomeIcon icon="fa-solid fa-tag" />}
+                                            label={e.tag}
+                                        />
+                                        <Box sx={{ flexGrow: 1 }} />
 
-                                <Tooltip title={t('common.t_open_repo')} placement="left-start">
-                                    <IconButton
-                                        onClick={async () => {
-                                            await AppUtils.openUrl(e.urlGitlab);
-                                        }}
-                                    >
-                                        <OpenInNew />
-                                    </IconButton>
-                                </Tooltip>
+                                        <Tooltip title={t('common.t_link_to_file')} placement="left-start">
+                                            <IconButton
+                                                onClick={async () => {
+                                                    await AppUtils.openUrl(e.urlZip);
+                                                }}
+                                            >
+                                                <InsertLink />
+                                            </IconButton>
+                                        </Tooltip>
 
-                            </CardActions>
-                        </Card>
-                    </ListItem>
-                );
-            })}
-        </List>
+                                        <Tooltip title={t('common.t_open_repo')} placement="left-start">
+                                            <IconButton
+                                                onClick={async () => {
+                                                    await AppUtils.openUrl(e.urlGitlab);
+                                                }}
+                                            >
+                                                <OpenInNew />
+                                            </IconButton>
+                                        </Tooltip>
+
+                                    </CardActions>
+                                </Card>
+                            </ListItem>
+                        );
+                    })}
+                </List>
+            )}
+        </AppBarLayout>
     );
 }
 

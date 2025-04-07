@@ -25,12 +25,14 @@ export function ActionRefreshState(props) {
         <IconButton
             color="inherit"
             onClick={props.onClick}
+            disabled={props.animate}
         >
-            <Refresh />
+            <Refresh className={props.animate ? 'spin' : ''} />
         </IconButton>
     );
 }
 
 ActionRefreshState.propTypes = {
+    animate: PropTypes.bool,
     onClick: PropTypes.func.isRequired,
 };

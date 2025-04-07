@@ -89,19 +89,15 @@ export function FlutterItem(props) {
                     p: 2,
                     paddingTop: 0
                 }}>
-                    {Array.isArray(flutterInstalled) && (
-                        <Tooltip title={t('common.t_sync')} placement="left-start">
-                            <IconButtonLoading
-                                isLoading={isSync}
-                                onClick={async () => {
-                                    setEffectStateBool(dispatch, keysStateBool.fluttersSync, true);
-                                    await Methods.flutterSync();
-                                    setEffectStateBool(dispatch, keysStateBool.fluttersSync, false);
-                                }}
-                            />
-                        </Tooltip>
-
-                    )}
+                    <IconButtonLoading
+                        tooltip={t('common.t_sync')}
+                        animate={!Array.isArray(flutterInstalled) || isSync}
+                        onClick={async () => {
+                            setEffectStateBool(dispatch, keysStateBool.fluttersSync, true);
+                            await Methods.flutterSync();
+                            setEffectStateBool(dispatch, keysStateBool.fluttersSync, false);
+                        }}
+                    />
 
                     {Array.isArray(flutterAvailable) && flutterAvailable.length ? (
                         <Tooltip title={t('common.t_available')} placement="left-start">
@@ -118,7 +114,7 @@ export function FlutterItem(props) {
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (
-                        <IconButtonLoading isLoading={true} />
+                        <IconButtonLoading animate={true} />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />

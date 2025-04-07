@@ -18,160 +18,160 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setData } from '../../store/impl/appInfo';
+import { setData as setAppInfo } from '../../store/impl/appInfo';
 
 import { Box, Stack, Typography, Button } from '@mui/material';
 import { HomeRepairService, OpenInNew } from '@mui/icons-material';
 
-import { useEffectSingle, DataImages, AppUtils, StateLoading } from '../../base';
+import {
+    useEffectSingleTimeout,
+    DataImages,
+    AppUtils,
+    StateLoading,
+    ActionRefreshState,
+} from '../../base';
+
 import { Methods } from '../../modules';
 import { AppConf } from '../../conf/AppConf';
-import { AppInfoModel } from '../../models';
+import { AppBarLayout } from '../../layouts';
 
 export function MainPage(props) {
     // components
     const navigate = useNavigate();
     const { t } = useTranslation();
-    // states
-    const [connect, setConnect] = React.useState(undefined);
-    const [version, setVersion] = React.useState(undefined);
+    const dispatch = useDispatch();
     // redux
     const appInfo = useSelector((state) => state.appInfo.value);
-    const dispatch = useDispatch();
-    // data
-    useEffectSingle(() => {
-        (async function () {
-            try {
-                // @todo demo app
-                if (window.isMiniApp) {
-                    setVersion(AppConf.appVersion);
-                    setConnect(true);
-                    return;
-                }
-                // Start delay animation
-                if (!appInfo) {
-                    await new Promise(r => setTimeout(r, 800));
-                }
-                // Get appInfo
-                const data = appInfo ? appInfo : await Methods.appInfo();
-                dispatch(setData(data));
-                // Update state
-                const model = AppInfoModel.parse(data);
-                const connect = AppUtils.checkVersion(model);
-                setConnect(connect);
-                setVersion(window.isTauri ? model.apiVersion : model.appVersion)
-            } catch (e) {
-                setConnect(false);
-            }
-        })();
+    // fun
+    const updateStates = async () => {
+        await AppUtils.asyncJoin(
+            async () => {
+                await new Promise(r => setTimeout(r, 800)); // animation delay
+                dispatch(setAppInfo(await Methods.appInfo()));
+            },
+        )
+    };
+    // init
+    useEffectSingleTimeout(async () => {
+        await updateStates();
     });
-    // loading
-    if (connect == undefined) {
-        return (<StateLoading />);
-    }
     // page
     return (
-        <Stack
-            direction="column"
-            spacing={2}
-            height={1}
-            sx={{
-                justifyContent: "space-between",
-                alignItems: "stretch",
-            }}
-        >
-            <Box />
-            <Box sx={{ textAlign: 'center' }}>
-                <img
-                    style={{ width: '100%', maxWidth: '180px', maxHeight: '180px' }}
-                    src={DataImages.icon}
-                    alt='Icon' />
-            </Box>
-            <Typography
-                variant={'h5'}
-                sx={{
-                    maxWidth: 375,
-                    margin: '0 auto !important',
-                    fontWeight: 'bold',
-                    color: 'primary.main',
-                    textAlign: "center"
-                }}
-            >
-                {t('main.t_hello')}
-            </Typography>
-            {connect ? (
-                <>
-                    <Stack spacing={1}>
-                        <Typography
-                            color='success'
-                            sx={{ textAlign: 'center' }}
-                        >
-                            {t('main.t_connect_success')}
-                        </Typography>
-                        <Typography
-                            variant={'caption'}
-                            color='inherit'
-                            sx={{ textAlign: 'center' }}
-                        >
-                            {window.isTauri ?
-                                t('main.t_connect_success_info_t', { version: version }) :
-                                t('main.t_connect_success_info_w', { version: version })}
-                        </Typography>
-                    </Stack>
+        <AppBarLayout actions={(
+            <Stack direction={'row'} spacing={1}>
+                <ActionRefreshState
+                    animate={appInfo === undefined}
+                    onClick={async () => {
+                        dispatch(setAppInfo(undefined));
+                        await updateStates();
+                    }}
+                />
+            </Stack>
+        )} >
+            {appInfo === undefined ? (<StateLoading />) : (
+                <Stack
+                    direction="column"
+                    spacing={2}
+                    height={1}
+                    sx={{
+                        justifyContent: "space-between",
+                        alignItems: "stretch",
+                    }}
+                >
+                    <Box />
                     <Box sx={{ textAlign: 'center' }}>
-                        <Button
-                            startIcon={<HomeRepairService color="default" />}
-                            variant="outlined"
-                            onClick={() => AppUtils.openPageDelay(navigate, "/features")}
-                        >
-                            {t('main.t_connect_btn_start')}
-                        </Button>
+                        <img
+                            style={{ width: '100%', maxWidth: '180px', maxHeight: '180px' }}
+                            src={DataImages.icon}
+                            alt='Icon' />
                     </Box>
-                </>
-            ) : (
-                <>
-                    <Stack spacing={1}>
-                        <Typography
-                            color='error'
-                            sx={{ textAlign: 'center' }}
-                        >
-                            {t('main.t_connect_error')}
-                        </Typography>
+                    <Typography
+                        variant={'h5'}
+                        sx={{
+                            maxWidth: 375,
+                            margin: '0 auto !important',
+                            fontWeight: 'bold',
+                            color: 'primary.main',
+                            textAlign: "center"
+                        }}
+                    >
+                        {t('main.t_hello')}
+                    </Typography>
+                    {appInfo ? (
+                        <>
+                            <Stack spacing={1}>
+                                <Typography
+                                    color='success'
+                                    sx={{ textAlign: 'center' }}
+                                >
+                                    {t('main.t_connect_success')}
+                                </Typography>
+                                <Typography
+                                    variant={'caption'}
+                                    color='inherit'
+                                    sx={{ textAlign: 'center' }}
+                                >
+                                    {window.isTauri ?
+                                        t('main.t_connect_success_info_t', { version: appInfo.apiVersion }) :
+                                        t('main.t_connect_success_info_w', { version: appInfo.appVersion })}
+                                </Typography>
+                            </Stack>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Button
+                                    startIcon={<HomeRepairService color="default" />}
+                                    variant="outlined"
+                                    onClick={() => AppUtils.openPageDelay(navigate, "/features")}
+                                >
+                                    {t('main.t_connect_btn_start')}
+                                </Button>
+                            </Box>
+                        </>
+                    ) : (
+                        <>
+                            <Stack spacing={1}>
+                                <Typography
+                                    color='error'
+                                    sx={{ textAlign: 'center' }}
+                                >
+                                    {t('main.t_connect_error')}
+                                </Typography>
 
-                        {window.isTauri ? (
-                            <Typography
-                                variant={'caption'}
-                                color='inherit'
-                                sx={{ textAlign: 'center' }}
-                            >
-                                {t('main.t_connect_error_info_t')}
-                            </Typography>
-                        ) : (
-                            <Typography
-                                variant={'caption'}
-                                color='inherit'
-                                sx={{ textAlign: 'center' }}
-                            >
-                                {t('main.t_connect_error_info_w')}
-                            </Typography>
-                        )}
-                    </Stack>
+                                {window.isTauri ? (
+                                    <Typography
+                                        variant={'caption'}
+                                        color='inherit'
+                                        sx={{ textAlign: 'center' }}
+                                    >
+                                        {t('main.t_connect_error_info_t')}
+                                    </Typography>
+                                ) : (
+                                    <Typography
+                                        variant={'caption'}
+                                        color='inherit'
+                                        sx={{ textAlign: 'center' }}
+                                    >
+                                        {t('main.t_connect_error_info_w')}
+                                    </Typography>
+                                )}
+                            </Stack>
 
-                    <Box sx={{ textAlign: 'center' }}>
-                        <Button
-                            endIcon={<OpenInNew color="default" />}
-                            variant="outlined"
-                            onClick={async () => {
-                                await AppUtils.openUrl(AppConf.docUrl)
-                            }}
-                        >
-                            {t('main.t_connect_btn_doc')}
-                        </Button>
-                    </Box>
-                </>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Button
+                                    endIcon={<OpenInNew color="default" />}
+                                    variant="outlined"
+                                    onClick={async () => {
+                                        await AppUtils.openUrl(AppConf.docUrl)
+                                    }}
+                                >
+                                    {t('main.t_connect_btn_doc')}
+                                </Button>
+                            </Box>
+                        </>
+                    )}
+                    <Box />
+                </Stack>
             )}
-            <Box />
-        </Stack>
+        </AppBarLayout>
     );
 }
 

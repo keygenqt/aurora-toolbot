@@ -83,10 +83,11 @@ export function PsdksInstalledPage(props) {
     }
     // page
     return (
-        <AppBarLayout index actions={(
+        <AppBarLayout actions={(
             <Stack direction={'row'} spacing={1}>
-                <ActionBack />
+                <ActionBack disabled={isUpdate} />
                 <ActionRefreshState
+                    animate={isUpdate}
                     onClick={async () => {
                         await updateStates();
                     }}
@@ -162,7 +163,7 @@ export function PsdksInstalledPage(props) {
                                 paddingTop: 1
                             }}>
                                 {isUpdate ? (
-                                    <IconButtonLoading isLoading={true} />
+                                    <IconButtonLoading animate={true} />
                                 ) : (
                                     <Stack
                                         direction={'row'}

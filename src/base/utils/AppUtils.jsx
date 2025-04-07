@@ -66,7 +66,7 @@ export const AppUtils = {
     openPageDelay: function (navigate, key, arg = {}) {
         setTimeout(() => {
             AppUtils.openPage(navigate, key, arg)
-        }, 270);
+        }, 300);
     },
     refreshPage: function (navigate) {
         if (window.isMobile) {
@@ -82,7 +82,7 @@ export const AppUtils = {
     refreshPageDelay: function (navigate) {
         setTimeout(() => {
             AppUtils.refreshPage(navigate)
-        }, 270);
+        }, 300);
     },
     asyncJoin: async function(...fns) {
         if (!Array.isArray(fns) && fns.length == 0) {

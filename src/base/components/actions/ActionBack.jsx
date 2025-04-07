@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
 
 import { IconButton } from '@mui/material'
@@ -21,10 +22,11 @@ import { ArrowBack } from '@mui/icons-material';
 
 import { AppUtils } from '../../../base';
 
-export function ActionBack() {
+export function ActionBack(props) {
     const navigate = useNavigate();
     return (
         <IconButton
+            disabled={props.disabled}
             color="inherit"
             onClick={() => AppUtils.openPage(navigate, -1)}
         >
@@ -33,4 +35,6 @@ export function ActionBack() {
     );
 }
 
-ActionBack.propTypes = {};
+ActionBack.propTypes = {
+    disabled: PropTypes.bool,
+};

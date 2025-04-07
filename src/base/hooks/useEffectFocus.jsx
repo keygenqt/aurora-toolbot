@@ -35,18 +35,20 @@ export function useEffectFocus() {
             // Disable change focus if hover appBar
             const toolbarDrag1 = document.getElementById('toolbarDrag1');
             const toolbarDrag2 = document.getElementById('toolbarDrag2');
-            toolbarDrag1.addEventListener("mouseover", () => {
-                wasOver.current = true;
-            });
-            toolbarDrag1.addEventListener("mouseout", () => {
-                wasOver.current = false;
-            });
-            toolbarDrag2.addEventListener("mouseover", () => {
-                wasOver.current = true;
-            });
-            toolbarDrag2.addEventListener("mouseout", () => {
-                wasOver.current = false;
-            });
+            if (toolbarDrag1 && toolbarDrag2) {
+                toolbarDrag1.addEventListener("mouseover", () => {
+                    wasOver.current = true;
+                });
+                toolbarDrag1.addEventListener("mouseout", () => {
+                    wasOver.current = false;
+                });
+                toolbarDrag2.addEventListener("mouseover", () => {
+                    wasOver.current = true;
+                });
+                toolbarDrag2.addEventListener("mouseout", () => {
+                    wasOver.current = false;
+                });
+            }
             // Listen focus change window
             getCurrentWindow().onFocusChanged(({ payload: focused }) => {
                 if (!wasOver.current) {

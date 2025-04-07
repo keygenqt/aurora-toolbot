@@ -90,19 +90,15 @@ export function PsdkItem(props) {
                     p: 2,
                     paddingTop: 0
                 }}>
-                    {Array.isArray(psdkInstalled) && (
-                        <Tooltip title={t('common.t_sync')} placement="left-start">
-                            <IconButtonLoading
-                                isLoading={isSync}
-                                onClick={async () => {
-                                    setEffectStateBool(dispatch, keysStateBool.psdksSync, true);
-                                    await Methods.psdkSync();
-                                    setEffectStateBool(dispatch, keysStateBool.psdksSync, false);
-                                }}
-                            />
-                        </Tooltip>
-
-                    )}
+                    <IconButtonLoading
+                        tooltip={t('common.t_sync')}
+                        animate={!Array.isArray(psdkInstalled) || isSync}
+                        onClick={async () => {
+                            setEffectStateBool(dispatch, keysStateBool.psdksSync, true);
+                            await Methods.psdkSync();
+                            setEffectStateBool(dispatch, keysStateBool.psdksSync, false);
+                        }}
+                    />
 
                     {Array.isArray(psdkAvailable) && psdkAvailable.length ? (
                         <Tooltip title={t('common.t_available')} placement="left-start">
@@ -119,7 +115,7 @@ export function PsdkItem(props) {
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (
-                        <IconButtonLoading isLoading={true} />
+                        <IconButtonLoading animate={true} />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />

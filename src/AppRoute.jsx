@@ -16,7 +16,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from "react-router";
 
-import { ActionBack, ActionRefreshPage } from './base'
+import { ActionBack } from './base'
 import { AppBarLayout } from './layouts'
 import {
     AuthPage,
@@ -44,9 +44,7 @@ export function AppRoute() {
         <BrowserRouter>
             <Routes>
                 <Route index element={(
-                    <AppBarLayout actions={<ActionRefreshPage />} >
-                        <MainPage />
-                    </AppBarLayout>
+                    <MainPage />
                 )} />
                 <Route path="auth" element={(
                     <AppBarLayout actions={<ActionBack />} >
@@ -86,9 +84,7 @@ export function AppRoute() {
                         </AppBarLayout>
                     )} />
                     <Route path="fluttersAvailable" element={(
-                        <AppBarLayout actions={<ActionBack />} >
-                            <FluttersAvailablePage />
-                        </AppBarLayout>
+                        <FluttersAvailablePage />
                     )} />
                     {/* Not save state */}
                     <Route path="fluttersInstalled">
@@ -102,9 +98,7 @@ export function AppRoute() {
                         )} />
                     </Route>
                     <Route path="psdksAvailable" element={(
-                        <AppBarLayout actions={<ActionBack />} >
-                            <PsdksAvailablePage />
-                        </AppBarLayout>
+                        <PsdksAvailablePage />
                     )} />
                     <Route path="psdksInstalled">
                         <Route index padding={0} element={(
@@ -117,9 +111,7 @@ export function AppRoute() {
                         )} />
                     </Route>
                     <Route path="sdksAvailable" element={(
-                        <AppBarLayout actions={<ActionBack />} >
-                            <SdksAvailablePage />
-                        </AppBarLayout>
+                        <SdksAvailablePage />
                     )} />
                     <Route path="sdksInstalled">
                         <Route index padding={0} element={(

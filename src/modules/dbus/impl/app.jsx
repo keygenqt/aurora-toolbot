@@ -15,11 +15,19 @@
  */
 import { invoke } from "@tauri-apps/api/core";
 
-import { AppUtils } from '../../../base'
+import {
+    AppInfoModel,
+} from '../../../models';
+
+import { AppUtils } from '../../../base';
 
 export const app = {
     appInfo: async function () {
-        return await invoke("app_info", {});
+        try {
+            return AppInfoModel.parse(await invoke("app_info", {}));
+        } catch(e) {
+            return null;
+        }
     },
     appOpenDir: async function (path) {
         AppUtils.checkResponse(await invoke("app_open_dir", { path: path }));

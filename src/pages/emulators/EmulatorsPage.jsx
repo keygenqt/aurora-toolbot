@@ -86,8 +86,9 @@ export function EmulatorsPage(props) {
     return (
         <AppBarLayout index actions={(
             <Stack direction={'row'} spacing={1}>
-                <ActionBack />
+                <ActionBack disabled={isUpdate} />
                 <ActionRefreshState
+                    animate={isUpdate}
                     onClick={async () => {
                         await updateStates();
                     }}
@@ -169,7 +170,7 @@ export function EmulatorsPage(props) {
                                     paddingTop: 1
                                 }}>
                                     {isLoading || isUpdate ? (
-                                        <IconButtonLoading isLoading={true} />
+                                        <IconButtonLoading animate={true} />
                                     ) : (
                                         <Stack
                                             direction={'row'}

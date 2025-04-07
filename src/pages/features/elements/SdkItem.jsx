@@ -97,18 +97,16 @@ export function SdkItem(props) {
                             <NewReleases color={'info'} />
                         </StateListIcon>
                     )}
-                    {Array.isArray(sdkInstalled) && (
-                        <Tooltip title={t('common.t_sync')} placement="left-start">
-                            <IconButtonLoading
-                                isLoading={isSync}
-                                onClick={async () => {
-                                    setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
-                                    await Methods.sdkSync();
-                                    setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
-                                }}
-                            />
-                        </Tooltip>
-                    )}
+
+                    <IconButtonLoading
+                        tooltip={t('common.t_sync')}
+                        animate={!Array.isArray(sdkInstalled) || isSync}
+                        onClick={async () => {
+                            setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
+                            await Methods.sdkSync();
+                            setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
+                        }}
+                    />
 
                     {Array.isArray(sdkAvailable) && sdkAvailable.length ? (
                         <Tooltip title={t('common.t_available')} placement="left-start">
@@ -125,7 +123,7 @@ export function SdkItem(props) {
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (
-                        <IconButtonLoading isLoading={true} />
+                        <IconButtonLoading animate={true} />
                     )}
 
                     <Box sx={{ flexGrow: 1 }} />

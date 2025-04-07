@@ -44,7 +44,7 @@ export function FeaturesPage(props) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     // data
-    const [showRefresh, setShowRefresh] = React.useState(false);
+    const [isUpdate, setIsUpdate] = React.useState(false);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
@@ -64,6 +64,7 @@ export function FeaturesPage(props) {
         dispatch(setFlutterAvailable(undefined));
     };
     const updateStates = async (refresh) => {
+        setIsUpdate(true)
         await AppUtils.asyncJoin(
             emulators && !refresh ? null : async () => {
                 dispatch(setEmulators(await Methods.emulatorInfo()));
@@ -87,8 +88,7 @@ export function FeaturesPage(props) {
                 dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
             },
         )
-        // Show menu refresh page
-        setShowRefresh(true)
+        setIsUpdate(false)
     };
     // init
     useEffectSingleTimeout(async () => {
@@ -96,20 +96,19 @@ export function FeaturesPage(props) {
     });
     // page
     return (
-        <AppBarLayout actions={showRefresh ? (
+        <AppBarLayout actions={(
             <Stack direction={'row'} spacing={1}>
                 <ActionMenu />
                 <ActionRefreshState
+                    animate={isUpdate}
                     onClick={async () => {
-                        setShowRefresh(false);
+                        setIsUpdate(true);
                         clearStates();
                         await updateStates(true);
-                        setShowRefresh(true);
+                        setIsUpdate(false);
                     }}
                 />
             </Stack>
-        ) : (
-            <ActionMenu />
         )} >
             <List>
                 <GroupWidget

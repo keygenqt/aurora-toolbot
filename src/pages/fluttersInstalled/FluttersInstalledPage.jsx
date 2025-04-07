@@ -41,7 +41,7 @@ import {
 import {
     FolderOpen,
     KeyboardArrowRight,
-    Terminal
+    Terminal,
 } from '@mui/icons-material';
 
 import {
@@ -84,8 +84,9 @@ export function FluttersInstalledPage(props) {
     return (
         <AppBarLayout index actions={(
             <Stack direction={'row'} spacing={1}>
-                <ActionBack />
+                <ActionBack disabled={isUpdate} />
                 <ActionRefreshState
+                    animate={isUpdate}
                     onClick={async () => {
                         await updateStates();
                     }}
@@ -155,7 +156,7 @@ export function FluttersInstalledPage(props) {
                             }}>
 
                                 {isUpdate ? (
-                                    <IconButtonLoading isLoading={true} />
+                                    <IconButtonLoading animate={true} />
                                 ) : (
                                     <Stack
                                         direction={'row'}

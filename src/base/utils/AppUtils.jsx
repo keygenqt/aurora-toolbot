@@ -116,5 +116,16 @@ export const AppUtils = {
         if (data['key'] === 'StateMessage' && data['jsonData']['state'] === 'Error') {
             throw Error(data['jsonData']['message'])
         }
+    },
+    isInstall: function(installed, modelAvailable, check) {
+        if (!Array.isArray(installed)) {
+            return false;
+        }
+        for (const modelInstalled of installed) {
+            if (check(modelInstalled, modelAvailable)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

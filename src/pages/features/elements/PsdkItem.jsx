@@ -115,7 +115,7 @@ export function PsdkItem(props) {
                             </IconButton>
                         </Tooltip>
                     ) : psdkAvailable === null || Array.isArray(psdkAvailable) && psdkAvailable.length == 0 ? (
-                        <StateListIcon title={t('common.t_error')}>
+                        <StateListIcon title={t('common.t_error_data')}>
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (

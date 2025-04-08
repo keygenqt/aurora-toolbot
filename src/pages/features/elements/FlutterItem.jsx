@@ -114,7 +114,7 @@ export function FlutterItem(props) {
                             </IconButton>
                         </Tooltip>
                     ) : flutterAvailable === null || Array.isArray(flutterAvailable) && flutterAvailable.length == 0 ? (
-                        <StateListIcon title={t('common.t_error')}>
+                        <StateListIcon title={t('common.t_error_data')}>
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (

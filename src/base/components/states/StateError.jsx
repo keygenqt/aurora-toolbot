@@ -18,9 +18,9 @@ import { useTranslation } from "react-i18next";
 
 import { Stack, Typography } from '@mui/material';
 
-import { LottieEmpty } from '../../../base';
+import { LottieError } from '../../../base';
 
-export function StateEmpty(props) {
+export function StateError(props) {
     const { t } = useTranslation();
     return (
         <Stack
@@ -31,17 +31,17 @@ export function StateEmpty(props) {
                 spacing={5}
                 sx={{ alignItems: "center" }}
             >
-                <LottieEmpty />
+                <LottieError/>
                 <Typography
                     variant={'body1'}
                     color={'text.primary'}
                     textAlign={'center'}
                 >
-                    {t('common.t_not_found')}
+                    {t('common.t_error_data')}
                 </Typography>
             </Stack>
         </Stack>
     );
 }
 
-StateEmpty.propTypes = {};
+StateError.propTypes = {};

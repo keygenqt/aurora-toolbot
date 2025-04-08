@@ -38,7 +38,7 @@ export const sdk = {
             }
             return [SdkAvailableModel.parse(data)];
         } catch (e) {
-            return [];
+            return null;
         }
     },
     sdkInstalled: async function () {
@@ -52,7 +52,7 @@ export const sdk = {
             }
             return [SdkInstalledModel.parse(data)];
         } catch (e) {
-            return [];
+            return null;
         }
     },
     sdkToolsById: async function (id) {

@@ -38,7 +38,7 @@ export const flutter = {
             }
             return [FlutterAvailableModel.parse(data)];
         } catch (e) {
-            return [];
+            return null;
         }
     },
     flutterInstalled: async function () {
@@ -52,7 +52,7 @@ export const flutter = {
             }
             return [FlutterInstalledModel.parse(data)];
         } catch (e) {
-            return [];
+            return null;
         }
     },
     flutterTerminalById: async function (id) {

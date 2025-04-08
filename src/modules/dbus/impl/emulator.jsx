@@ -24,7 +24,7 @@ import { AppUtils } from '../../../base';
 
 export const emulator = {
     emulatorSync: async function () {
-        return AppUtils.checkResponse(await invoke("emulator_sync", {}));
+        AppUtils.checkResponse(await invoke("emulator_sync", {}))
     },
     emulatorInfo: async function () {
         try {
@@ -37,7 +37,7 @@ export const emulator = {
             }
             return [EmulatorModel.parse(data)];
         } catch (e) {
-            return [];
+            return null;
         }
     },
     emulatorOpenById: async function (id) {

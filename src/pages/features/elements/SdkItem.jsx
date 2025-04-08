@@ -123,7 +123,7 @@ export function SdkItem(props) {
                             </IconButton>
                         </Tooltip>
                     ) : sdkAvailable === null || Array.isArray(sdkAvailable) && sdkAvailable.length == 0 ? (
-                        <StateListIcon title={t('common.t_error')}>
+                        <StateListIcon title={t('common.t_error_data')}>
                             <Error color={'error'} />
                         </StateListIcon>
                     ) : (

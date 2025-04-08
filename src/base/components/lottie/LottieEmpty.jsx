@@ -13,6 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './AppBarLayout';
-export * from './BaseLayout';
-export * from './ListLayout';
+import * as React from 'react';
+import Lottie from "lottie-react";
+
+import { Box } from '@mui/material';
+
+import { DataLottie } from '../../../base';
+
+export function LottieEmpty() {
+    return (
+        <Box sx={{ width: 280 }}>
+            <Lottie
+                style={{ position: 'relative', right: -7 }}
+                loop={true}
+                animationData={DataLottie.empty}
+            />
+        </Box>
+    );
+}
+
+LottieEmpty.propTypes = {};

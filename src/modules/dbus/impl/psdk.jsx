@@ -38,7 +38,7 @@ export const psdk = {
             }
             return [PsdkAvailableModel.parse(data)];
         } catch (e) {
-            return [];
+            return null;
         }
     },
     psdkInstalled: async function () {
@@ -52,7 +52,7 @@ export const psdk = {
             }
             return [PsdkInstalledModel.parse(data)];
         } catch (e) {
-            return [];
+            return null;
         }
     },
     psdkTerminalById: async function (id) {

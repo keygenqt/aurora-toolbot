@@ -16,6 +16,7 @@
 import coming_soon from '../../assets/lottie/coming_soon.json';
 import error from '../../assets/lottie/error.json';
 import loading from '../../assets/lottie/loading.json';
+import empty from '../../assets/lottie/empty.json';
 
 /**
  * Load data images
@@ -24,4 +25,5 @@ export const DataLottie = {
     comingSoon: coming_soon,
     error: error,
     loading: loading,
+    empty: empty
 }

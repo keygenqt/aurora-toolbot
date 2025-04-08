@@ -25,8 +25,6 @@ import { keysStateBool } from '../../store/impl/stateBool';
 import {
     useTheme,
     Typography,
-    ListItem,
-    List,
     Card,
     CardContent,
     Stack,
@@ -46,18 +44,14 @@ import {
 } from '@mui/icons-material';
 
 import {
-    useEffectStateBool,
     setEffectStateBool,
     IconButtonLoading,
     AppUtils,
-    StateEmpty,
     DataImages,
-    ActionBack,
-    ActionRefreshState,
 } from '../../base';
 
 import { Methods } from '../../modules';
-import { AppBarLayout } from '../../layouts';
+import { ListLayout } from '../../layouts';
 
 export function PsdksInstalledPage(props) {
     // components
@@ -67,166 +61,147 @@ export function PsdksInstalledPage(props) {
     const dispatch = useDispatch();
     // data
     const color = theme.palette.primaryPsdk.main;
-    const isUpdate = useEffectStateBool(keysStateBool.psdksUpdate);
+    const reduxKey = keysStateBool.psdksUpdate;
     // redux
     const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     // fun
     const updateStates = async () => {
-        setEffectStateBool(dispatch, keysStateBool.psdksUpdate, true);
-        try {
-            dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
-            await new Promise(r => setTimeout(r, 400)); // animation delay
-        } catch (e) {
-            dispatch(setPsdkInstalled(null));
-        }
-        setEffectStateBool(dispatch, keysStateBool.psdksUpdate, false);
+        setEffectStateBool(dispatch, reduxKey, true);
+        dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
+        await new Promise(r => setTimeout(r, 400)); // animation delay
+        setEffectStateBool(dispatch, reduxKey, false);
     };
     // page
     return (
-        <AppBarLayout actions={(
-            <Stack direction={'row'} spacing={1}>
-                <ActionBack disabled={isUpdate} />
-                <ActionRefreshState
-                    animate={isUpdate}
-                    onClick={async () => {
-                        await updateStates();
+        <ListLayout
+            models={psdkInstalled}
+            updateStates={updateStates}
+            reduxKey={reduxKey}
+            itemList={(model) => (
+                <Card
+                    sx={{
+                        border: `1px solid ${color}5e`,
+                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                     }}
-                />
-            </Stack>
-        )} >
-            {!Array.isArray(psdkInstalled) || psdkInstalled.length === 0 ? (
-                <StateEmpty />
-            ) : (
-                <List>
-                    {psdkInstalled.map((e, index) => (
-                        <ListItem key={`key-${index}`}>
-                            <Card
-                                sx={{
-                                    border: `1px solid ${color}5e`,
-                                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                                }}
-                            >
-                                <CardContent sx={{ paddingBottom: 1 }}>
+                >
+                    <CardContent sx={{ paddingBottom: 1 }}>
+                        <Stack
+                            direction="row"
+                            spacing={1}
+                            sx={{ paddingBottom: 1.7, alignItems: "center" }}
+                        >
+                            <img
+                                style={{ width: '16px', height: '16px' }}
+                                src={DataImages.iconPsdk}
+                                alt='Icon' />
+                            <Typography variant="subtitle2" color={color} >
+                                Platform SDK v{model.versionId}
+                            </Typography>
+                        </Stack>
+                        <Box
+                            sx={{
+                                background: `${theme.palette.background.default}bd`,
+                                borderRadius: 2,
+                                padding: 1.5,
+                            }}
+                        >
+                            <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
+                                <Stack spacing={1} >
                                     <Stack
-                                        direction="row"
+                                        direction={'row'}
                                         spacing={1}
-                                        sx={{ paddingBottom: 1.7, alignItems: "center" }}
+                                        alignItems={'center'}
                                     >
-                                        <img
-                                            style={{ width: '16px', height: '16px' }}
-                                            src={DataImages.iconPsdk}
-                                            alt='Icon' />
-                                        <Typography variant="subtitle2" color={color} >
-                                            Platform SDK v{e.versionId}
-                                        </Typography>
+                                        <Box width={16} textAlign={'center'}>
+                                            <FontAwesomeIcon icon="fa-solid fa-signature" />
+                                        </Box>
+                                        <Box>{model.versionName}</Box>
                                     </Stack>
-                                    <Box
-                                        sx={{
-                                            background: `${theme.palette.background.default}bd`,
-                                            borderRadius: 2,
-                                            padding: 1.5,
-                                        }}
+                                    <Stack
+                                        direction={'row'}
+                                        spacing={1}
+                                        alignItems={'center'}
                                     >
-                                        <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
-                                            <Stack spacing={1} >
-                                                <Stack
-                                                    direction={'row'}
-                                                    spacing={1}
-                                                    alignItems={'center'}
-                                                >
-                                                    <Box width={16} textAlign={'center'}>
-                                                        <FontAwesomeIcon icon="fa-solid fa-signature" />
-                                                    </Box>
-                                                    <Box>{e.versionName}</Box>
-                                                </Stack>
-                                                <Stack
-                                                    direction={'row'}
-                                                    spacing={1}
-                                                    alignItems={'center'}
-                                                >
-                                                    <Box width={16} textAlign={'center'}>
-                                                        <FontAwesomeIcon icon="fa-solid fa-house" />
-                                                    </Box>
-                                                    <Link
-                                                        href={'#'}
-                                                        onClick={async () => {
-                                                            await AppUtils.openUrl(e.homeUrl)
-                                                        }}
-                                                    >
-                                                        {e.homeUrl}
-                                                    </Link>
-                                                </Stack>
-                                            </Stack>
-                                        </Typography>
-                                    </Box>
-                                </CardContent>
-
-                                <CardActions sx={{
-                                    p: 2,
-                                    paddingTop: 1
-                                }}>
-                                    {isUpdate ? (
-                                        <IconButtonLoading animate={true} />
-                                    ) : (
-                                        <Stack
-                                            direction={'row'}
-                                            spacing={1}
+                                        <Box width={16} textAlign={'center'}>
+                                            <FontAwesomeIcon icon="fa-solid fa-house" />
+                                        </Box>
+                                        <Link
+                                            href={'#'}
+                                            onClick={async () => {
+                                                await AppUtils.openUrl(model.homeUrl)
+                                            }}
                                         >
-                                            <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
-                                                <IconButton
-                                                    onClick={async () => {
-                                                        try {
-                                                            await Methods.appOpenDir(e.dir);
-                                                        } catch (e) {
-                                                            console.log(e)
-                                                        }
-                                                    }}
-                                                >
-                                                    <FolderOpen />
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip title={t('psdksInstalled.t_btn_terminal')} placement="left-start">
-                                                <IconButton
-                                                    onClick={async () => {
-                                                        try {
-                                                            await Methods.psdkTerminalById(e.id);
-                                                        } catch (e) {
-                                                            console.log(e)
-                                                        }
-                                                    }}
-                                                >
-                                                    <Terminal />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </Stack>
-                                    )}
+                                            {model.homeUrl}
+                                        </Link>
+                                    </Stack>
+                                </Stack>
+                            </Typography>
+                        </Box>
+                    </CardContent>
 
-                                    <Box sx={{ flexGrow: 1 }} />
-
-                                    <Button
-                                        disabled={isUpdate}
-                                        size={'small'}
-                                        color={'primaryPsdk'}
-                                        endIcon={isUpdate ? (
-                                            <CircularProgress color="default" />
-                                        ) : (
-                                            <KeyboardArrowRight color="default" />
-                                        )}
-                                        variant="contained"
-                                        sx={{ opacity: 0.8 }}
-                                        onClick={() => {
-                                            AppUtils.openPage(navigate, 'psdk', { state: { model: e } });
+                    <CardActions sx={{
+                        p: 2,
+                        paddingTop: 1
+                    }}>
+                        {false ? (
+                            <IconButtonLoading animate={true} />
+                        ) : (
+                            <Stack
+                                direction={'row'}
+                                spacing={1}
+                            >
+                                <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
+                                    <IconButton
+                                        onClick={async () => {
+                                            try {
+                                                await Methods.appOpenDir(model.dir);
+                                            } catch (e) {
+                                                console.log(e)
+                                            }
                                         }}
                                     >
-                                        {t('common.t_open')}
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </ListItem>
-                    ))}
-                </List>
+                                        <FolderOpen />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title={t('psdksInstalled.t_btn_terminal')} placement="left-start">
+                                    <IconButton
+                                        onClick={async () => {
+                                            try {
+                                                await Methods.psdkTerminalById(model.id);
+                                            } catch (e) {
+                                                console.log(e)
+                                            }
+                                        }}
+                                    >
+                                        <Terminal />
+                                    </IconButton>
+                                </Tooltip>
+                            </Stack>
+                        )}
+
+                        <Box sx={{ flexGrow: 1 }} />
+
+                        <Button
+                            disabled={false}
+                            size={'small'}
+                            color={'primaryPsdk'}
+                            endIcon={false ? (
+                                <CircularProgress color="default" />
+                            ) : (
+                                <KeyboardArrowRight color="default" />
+                            )}
+                            variant="contained"
+                            sx={{ opacity: 0.8 }}
+                            onClick={() => {
+                                AppUtils.openPage(navigate, 'psdk', { state: { model: model } });
+                            }}
+                        >
+                            {t('common.t_open')}
+                        </Button>
+                    </CardActions>
+                </Card>
             )}
-        </AppBarLayout>
+        />
     );
 }
 

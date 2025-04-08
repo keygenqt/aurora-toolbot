@@ -25,8 +25,6 @@ import { keysStateBool } from '../../store/impl/stateBool';
 import {
     useTheme,
     Typography,
-    ListItem,
-    List,
     Card,
     CardContent,
     Stack,
@@ -47,246 +45,221 @@ import {
 } from '@mui/icons-material';
 
 import {
-    useEffectStateBool,
     setEffectStateBool,
     AppUtils,
     DataImages,
-    StateEmpty,
     IconButtonLoading,
-    ActionBack,
-    ActionRefreshState,
 } from '../../base';
 
 import { Methods } from '../../modules';
-import { AppBarLayout } from '../../layouts';
+import { ListLayout } from '../../layouts';
 
 export function EmulatorsPage(props) {
     // components
-    const theme = useTheme();
-    const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const { t } = useTranslation();
     // data
+    const reduxKey = keysStateBool.emulatorsUpdate;
     const color = theme.palette.secondary.main;
-    const isUpdate = useEffectStateBool(keysStateBool.emulatorsUpdate);
+    const [isUpdateItem, setIsUpdateItem] = React.useState([]);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     // fun
+    const updateStatesSilent = async () => {
+        dispatch(setEmulators(await Methods.emulatorInfo()));
+    };
     const updateStates = async () => {
-        setEffectStateBool(dispatch, keysStateBool.emulatorsUpdate, true);
-        try {
-            dispatch(setEmulators(await Methods.emulatorInfo()));
-            await new Promise(r => setTimeout(r, 400)); // animation delay
-        } catch (e) {
-            dispatch(setEmulators(null));
-        }
-        setEffectStateBool(dispatch, keysStateBool.emulatorsUpdate, false);
+        setEffectStateBool(dispatch, reduxKey, true);
+        await updateStatesSilent();
+        await new Promise(r => setTimeout(r, 400)); // animation delay
+        setEffectStateBool(dispatch, reduxKey, false);
     };
     // page
     return (
-        <AppBarLayout index actions={(
-            <Stack direction={'row'} spacing={1}>
-                <ActionBack disabled={isUpdate} />
-                <ActionRefreshState
-                    animate={isUpdate}
-                    onClick={async () => {
-                        await updateStates();
+        <ListLayout
+            disable={isUpdateItem.length !== 0}
+            models={emulators}
+            updateStates={updateStates}
+            reduxKey={reduxKey}
+            itemList={(model, key) => (
+                <Card
+                    sx={{
+                        border: `1px solid ${color}5e`,
+                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
                     }}
-                />
-            </Stack>
-        )} >
-            {!Array.isArray(emulators) || emulators.length === 0 ? (
-                <StateEmpty />
-            ) : (
-                <List>
-                    {emulators.map((e, index) => {
-                        const itemKey = `${keysStateBool.emulatorLoading}-${index}`;
-                        // @todo error - state in map...
-                        // const isLoading = useEffectStateBool(itemKey);
-                        const isLoading = false;
-                        return (
-                            <ListItem key={itemKey}>
-                                <Card
-                                    sx={{
-                                        border: `1px solid ${color}5e`,
-                                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                                    }}
-                                >
-                                    <CardContent sx={{ paddingBottom: 1 }}>
-                                        <Stack
-                                            direction="row"
-                                            spacing={1}
-                                            sx={{ paddingBottom: 1.7, alignItems: "center" }}
-                                        >
-                                            <img
-                                                style={{ width: '16px', height: '16px' }}
-                                                src={DataImages.iconVb}
-                                                alt='Icon' />
-                                            <Typography variant="subtitle2" color={color} >
-                                                {e.name}
-                                            </Typography>
-                                        </Stack>
-                                        <Box
-                                            sx={{
-                                                background: `${theme.palette.background.default}bd`,
-                                                borderRadius: 2,
-                                                padding: 1.5,
-                                            }}
-                                        >
-                                            <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
-                                                <Stack spacing={1} >
-                                                    <Stack
-                                                        direction={'row'}
-                                                        spacing={1}
-                                                        alignItems={'center'}
-                                                    >
-                                                        <Box width={16} textAlign={'center'}>
-                                                            <FontAwesomeIcon icon="fa-solid fa-certificate" />
-                                                        </Box>
-                                                        <Box className={'select'} >{e.uuid}</Box>
-                                                    </Stack>
-                                                    <Stack
-                                                        direction={'row'}
-                                                        spacing={1}
-                                                        alignItems={'center'}
-                                                    >
-                                                        <Box width={16} textAlign={'center'}>
-                                                            <FontAwesomeIcon icon="fa-solid fa-maximize" />
-                                                        </Box>
-                                                        <Box>{e.dimensions}</Box>
-                                                    </Stack>
-                                                    <Stack
-                                                        direction={'row'}
-                                                        spacing={1}
-                                                        alignItems={'center'}
-                                                    >
-                                                        <Box width={16} textAlign={'center'}>
-                                                            <FontAwesomeIcon icon="fa-solid fa-microchip" />
-                                                        </Box>
-                                                        <Box>{e.arch}</Box>
-                                                    </Stack>
-                                                </Stack>
-                                            </Typography>
+                >
+                    <CardContent sx={{ paddingBottom: 1 }}>
+                        <Stack
+                            direction="row"
+                            spacing={1}
+                            sx={{ paddingBottom: 1.7, alignItems: "center" }}
+                        >
+                            <img
+                                style={{ width: '16px', height: '16px' }}
+                                src={DataImages.iconVb}
+                                alt='Icon' />
+                            <Typography variant="subtitle2" color={color} >
+                                {model.name}
+                            </Typography>
+                        </Stack>
+                        <Box
+                            sx={{
+                                background: `${theme.palette.background.default}bd`,
+                                borderRadius: 2,
+                                padding: 1.5,
+                            }}
+                        >
+                            <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
+                                <Stack spacing={1} >
+                                    <Stack
+                                        direction={'row'}
+                                        spacing={1}
+                                        alignItems={'center'}
+                                    >
+                                        <Box width={16} textAlign={'center'}>
+                                            <FontAwesomeIcon icon="fa-solid fa-certificate" />
                                         </Box>
-                                    </CardContent>
+                                        <Box className={'select'} >{model.uuid}</Box>
+                                    </Stack>
+                                    <Stack
+                                        direction={'row'}
+                                        spacing={1}
+                                        alignItems={'center'}
+                                    >
+                                        <Box width={16} textAlign={'center'}>
+                                            <FontAwesomeIcon icon="fa-solid fa-maximize" />
+                                        </Box>
+                                        <Box>{model.dimensions}</Box>
+                                    </Stack>
+                                    <Stack
+                                        direction={'row'}
+                                        spacing={1}
+                                        alignItems={'center'}
+                                    >
+                                        <Box width={16} textAlign={'center'}>
+                                            <FontAwesomeIcon icon="fa-solid fa-microchip" />
+                                        </Box>
+                                        <Box>{model.arch}</Box>
+                                    </Stack>
+                                </Stack>
+                            </Typography>
+                        </Box>
+                    </CardContent>
 
-                                    <CardActions sx={{
-                                        p: 2,
-                                        paddingTop: 1
-                                    }}>
-                                        {isLoading || isUpdate ? (
-                                            <IconButtonLoading animate={true} />
-                                        ) : (
-                                            <Stack
-                                                direction={'row'}
-                                                spacing={1}
-                                            >
-                                                <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
-                                                    <IconButton
-                                                        onClick={async () => {
-                                                            try {
-                                                                await Methods.appOpenDir(e.dirEmulator);
-                                                            } catch (e) { }
-                                                        }}
-                                                    >
-                                                        <FolderOpen />
-                                                    </IconButton>
-                                                </Tooltip>
-                                                {e.isRunning && (
-                                                    <Tooltip title={t('emulators.t_btn_terminal_user')} placement="left-start">
-                                                        <IconButton
-                                                            onClick={async () => {
-                                                                try {
-                                                                    await Methods.emulatorTerminalById(e.id, false);
-                                                                } catch (e) {
-                                                                    await updateStates();
-                                                                }
-                                                            }}
-                                                        >
-                                                            <Terminal />
-                                                        </IconButton>
-                                                    </Tooltip>
-
-                                                )}
-                                                {e.isRunning && (
-                                                    <Tooltip title={t('emulators.t_btn_terminal_root')} placement="left-start">
-                                                        <IconButton
-                                                            onClick={async () => {
-                                                                try {
-                                                                    await Methods.emulatorTerminalById(e.id, true);
-                                                                } catch (e) {
-                                                                    await updateStates();
-                                                                }
-                                                            }}
-                                                        >
-                                                            <Terminal color={'error'} />
-                                                        </IconButton>
-                                                    </Tooltip>
-
-                                                )}
-                                                {e.isRunning ? (
-                                                    <Tooltip title={t('emulators.t_btn_stop')} placement="left-start">
-                                                        <IconButton
-                                                            onClick={async () => {
-                                                                setEffectStateBool(dispatch, itemKey, true);
-                                                                try {
-                                                                    await Methods.emulatorCloseById(e.id);
-                                                                    await new Promise(r => setTimeout(r, 1000));
-                                                                } catch (e) { }
-                                                                await updateStates();
-                                                                setEffectStateBool(dispatch, itemKey, false);
-                                                            }}
-                                                        >
-                                                            <Stop />
-                                                        </IconButton>
-                                                    </Tooltip>
-
-                                                ) : (
-                                                    <Tooltip title={t('emulators.t_btn_run')} placement="left-start">
-                                                        <IconButton
-                                                            onClick={async () => {
-                                                                setEffectStateBool(dispatch, itemKey, true);
-                                                                try {
-                                                                    await Methods.emulatorOpenById(e.id);
-                                                                } catch (e) { }
-                                                                await updateStates();
-                                                                setEffectStateBool(dispatch, itemKey, false);
-                                                            }}
-                                                        >
-                                                            <PlayArrow />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
-                                            </Stack>
-                                        )}
-
-                                        <Box sx={{ flexGrow: 1 }} />
-
-                                        <Button
-                                            disabled={isLoading || isUpdate}
-                                            size={'small'}
-                                            color={'secondary'}
-                                            endIcon={isLoading || isUpdate ? (
-                                                <CircularProgress color="default" />
-                                            ) : (
-                                                <KeyboardArrowRight color="default" />
-                                            )}
-                                            variant="contained"
-                                            sx={{ opacity: 0.8 }}
-                                            onClick={() => {
-                                                AppUtils.openPage(navigate, 'emulator', { state: { model: e } });
+                    <CardActions sx={{
+                        p: 2,
+                        paddingTop: 1
+                    }}>
+                        {isUpdateItem.includes(key) ? (
+                            <IconButtonLoading animate={true} />
+                        ) : (
+                            <Stack
+                                direction={'row'}
+                                spacing={1}
+                            >
+                                <Tooltip title={t('common.t_btn_open_dir')} placement="left-start">
+                                    <IconButton
+                                        onClick={async () => {
+                                            try {
+                                                await Methods.appOpenDir(model.dirEmulator);
+                                            } catch (e) { }
+                                        }}
+                                    >
+                                        <FolderOpen />
+                                    </IconButton>
+                                </Tooltip>
+                                {model.isRunning && (
+                                    <Tooltip title={t('emulators.t_btn_terminal_user')} placement="left-start">
+                                        <IconButton
+                                            onClick={async () => {
+                                                try {
+                                                    await Methods.emulatorTerminalById(model.id, false);
+                                                } catch (e) {
+                                                    await updateStates();
+                                                }
                                             }}
                                         >
-                                            {t('common.t_open')}
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </ListItem>
-                        )
-                    })}
-                </List>
+                                            <Terminal />
+                                        </IconButton>
+                                    </Tooltip>
+
+                                )}
+                                {model.isRunning && (
+                                    <Tooltip title={t('emulators.t_btn_terminal_root')} placement="left-start">
+                                        <IconButton
+                                            onClick={async () => {
+                                                try {
+                                                    await Methods.emulatorTerminalById(model.id, true);
+                                                } catch (e) {
+                                                    await updateStates();
+                                                }
+                                            }}
+                                        >
+                                            <Terminal color={'error'} />
+                                        </IconButton>
+                                    </Tooltip>
+
+                                )}
+                                {model.isRunning ? (
+                                    <Tooltip title={t('emulators.t_btn_stop')} placement="left-start">
+                                        <IconButton
+                                            onClick={async () => {
+                                                setIsUpdateItem(isUpdateItem.concat([key]));
+                                                try {
+                                                    await Methods.emulatorCloseById(model.id);
+                                                    await new Promise(r => setTimeout(r, 1000));
+                                                    await updateStatesSilent();
+                                                } catch (e) { }
+                                                setIsUpdateItem(isUpdateItem.filter((e) => e !== key));
+                                            }}
+                                        >
+                                            <Stop />
+                                        </IconButton>
+                                    </Tooltip>
+                                ) : (
+                                    <Tooltip title={t('emulators.t_btn_run')} placement="left-start">
+                                        <IconButton
+                                            onClick={async () => {
+                                                setIsUpdateItem(isUpdateItem.concat([key]));
+                                                try {
+                                                    await Methods.emulatorOpenById(model.id);
+                                                    await updateStatesSilent();
+                                                } catch (e) { }
+                                                setIsUpdateItem(isUpdateItem.filter((e) => e !== key));
+                                            }}
+                                        >
+                                            <PlayArrow />
+                                        </IconButton>
+                                    </Tooltip>
+                                )}
+                            </Stack>
+                        )}
+
+                        <Box sx={{ flexGrow: 1 }} />
+
+                        <Button
+                            disabled={isUpdateItem.includes(key)}
+                            size={'small'}
+                            color={'secondary'}
+                            endIcon={isUpdateItem.includes(key) ? (
+                                <CircularProgress color="default" />
+                            ) : (
+                                <KeyboardArrowRight color="default" />
+                            )}
+                            variant="contained"
+                            sx={{ opacity: 0.8 }}
+                            onClick={() => {
+                                AppUtils.openPage(navigate, 'emulator', { state: { model: model } });
+                            }}
+                        >
+                            {t('common.t_open')}
+                        </Button>
+                    </CardActions>
+                </Card>
             )}
-        </AppBarLayout>
+        />
     );
 }
 

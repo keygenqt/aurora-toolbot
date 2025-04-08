@@ -131,41 +131,6 @@ export function FluttersAvailablePage(props) {
                 )
             }}
         />
-
-
-
-
-        // <AppBarLayout index actions={(
-        //     <Stack direction={'row'} spacing={1}>
-        //         <ActionBack disabled={isUpdate} />
-        //         <ActionRefreshState
-        //             animate={isUpdate}
-        //             onClick={async () => {
-        //                 await updateStates();
-        //             }}
-        //         />
-        //     </Stack>
-        // )} >
-        //     {!Array.isArray(flutterAvailable) || flutterAvailable.length === 0 ? (
-        //         <StateEmpty />
-        //     ) : (
-        //         <>
-        //             {isUpdate ? (<StateLoading />) : (
-        //                 <List>
-        //                     {flutterAvailable.map((e, index) => {
-        //                         let isInstall = fnIsInstall(e);
-        //                         let color = isInstall ? theme.palette.primary.main : theme.palette.primaryFlutter.main;
-        //                         return (
-        //                             <ListItem key={`key-${index}`}>
-
-        //                             </ListItem>
-        //                         );
-        //                     })}
-        //                 </List>
-        //             )}
-        //         </>
-        //     )}
-        // </AppBarLayout>
     );
 }
 

@@ -93,13 +93,11 @@ export function PsdkItem(props) {
                 }}>
                     <IconButtonLoading
                         tooltip={t('common.t_sync')}
-                        animate={!Array.isArray(psdkInstalled) || isSync}
+                        animate={psdkInstalled === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, true);
-                            try {
-                                await Methods.psdkSync();
-                                dispatch(setPsdkInstalled(await Methods.flutterInstalled()));
-                            } catch (e) {}
+                            try { await Methods.psdkSync() } catch (e) { }
+                            dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, false);
                         }}
                     />
@@ -114,7 +112,7 @@ export function PsdkItem(props) {
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
-                    ) : psdkAvailable === null || Array.isArray(psdkAvailable) && psdkAvailable.length == 0 ? (
+                    ) : psdkAvailable === null ? (
                         <StateListIcon title={t('common.t_error_data')}>
                             <Error color={'error'} />
                         </StateListIcon>
@@ -128,7 +126,7 @@ export function PsdkItem(props) {
                         disabled={(!Array.isArray(psdkInstalled) || psdkInstalled.length == 0 || isSync)}
                         size={'small'}
                         color={'primaryPsdk'}
-                        endIcon={(!Array.isArray(psdkInstalled) || isSync) ? (
+                        endIcon={(psdkInstalled === undefined || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

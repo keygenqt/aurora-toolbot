@@ -128,48 +128,6 @@ export function PsdksAvailablePage(props) {
                 )
             }}
         />
-
-
-        // <AppBarLayout index actions={(
-        //     <Stack direction={'row'} spacing={1}>
-        //         <ActionBack disabled={isUpdate} />
-        //         <ActionRefreshState
-        //             animate={isUpdate}
-        //             onClick={async () => {
-        //                 await updateStates();
-        //             }}
-        //         />
-        //     </Stack>
-        // )} >
-        //     {Array.isArray(psdkAvailable) && psdkAvailable.length === 0 ? (
-        //         <StateEmpty />
-        //     ) : (
-        //         <>
-        //             {isUpdate ? (<StateLoading />) : (
-        //                 <List>
-        //                     {psdkAvailable.map((e, index) => {
-        //                         let isInstall = fnIsInstall(e);
-        //                         let color = isInstall ? theme.palette.primary.main : theme.palette.primaryPsdk.main;
-        //                         let urlRepo = e.urls[0].split('/').slice(0, -1).join('/');
-        //                         let arches = []
-        //                         for (const url of e.urls) {
-        //                             if (url.includes('Target')) {
-        //                                 try {
-        //                                     arches.push(url.split('-').filter((e) => e.includes('tar'))[0].split('.')[0])
-        //                                 } catch (e) { }
-        //                             }
-        //                         }
-        //                         return (
-        //                             <ListItem key={`key-${index}`}>
-
-        //                             </ListItem>
-        //                         );
-        //                     })}
-        //                 </List>
-        //             )}
-        //         </>
-        //     )}
-        // </AppBarLayout>
     );
 }
 

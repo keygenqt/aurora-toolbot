@@ -83,13 +83,11 @@ export function EmulatorItem(props) {
                 }}>
                     <IconButtonLoading
                         tooltip={t('common.t_sync')}
-                        animate={!Array.isArray(emulators) || isSync}
+                        animate={emulators === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.emulatorsSync, true);
-                            try {
-                                await Methods.emulatorsSync();
-                                dispatch(setEmulators(await Methods.emulatorInfo()));
-                            } catch (e) {}
+                            try { await Methods.emulatorSync() } catch (e) {}
+                            dispatch(setEmulators(await Methods.emulatorInfo()));
                             setEffectStateBool(dispatch, keysStateBool.emulatorsSync, false);
                         }}
                     />
@@ -100,7 +98,7 @@ export function EmulatorItem(props) {
                         disabled={(!Array.isArray(emulators) || emulators.length == 0 || isSync)}
                         size={'small'}
                         color={'secondary'}
-                        endIcon={(!Array.isArray(emulators) || isSync) ? (
+                        endIcon={(emulators === undefined || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

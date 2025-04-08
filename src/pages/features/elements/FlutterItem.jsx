@@ -92,13 +92,11 @@ export function FlutterItem(props) {
                 }}>
                     <IconButtonLoading
                         tooltip={t('common.t_sync')}
-                        animate={!Array.isArray(flutterInstalled) || isSync}
+                        animate={flutterInstalled === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.fluttersSync, true);
-                            try {
-                                await Methods.flutterSync();
-                                dispatch(flutterInstalled(await Methods.flutterSync()));
-                            } catch (e) {}
+                            try { await Methods.flutterSync() } catch (e) { }
+                            dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
                             setEffectStateBool(dispatch, keysStateBool.fluttersSync, false);
                         }}
                     />
@@ -113,7 +111,7 @@ export function FlutterItem(props) {
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
-                    ) : flutterAvailable === null || Array.isArray(flutterAvailable) && flutterAvailable.length == 0 ? (
+                    ) : flutterAvailable === null ? (
                         <StateListIcon title={t('common.t_error_data')}>
                             <Error color={'error'} />
                         </StateListIcon>
@@ -127,7 +125,7 @@ export function FlutterItem(props) {
                         disabled={(!Array.isArray(flutterInstalled) || flutterInstalled.length == 0 || isSync)}
                         size={'small'}
                         color={'primaryFlutter'}
-                        endIcon={(!Array.isArray(flutterInstalled) || isSync) ? (
+                        endIcon={(flutterInstalled === undefined || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

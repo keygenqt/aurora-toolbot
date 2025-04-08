@@ -101,13 +101,11 @@ export function SdkItem(props) {
 
                     <IconButtonLoading
                         tooltip={t('common.t_sync')}
-                        animate={!Array.isArray(sdkInstalled) || isSync}
+                        animate={sdkInstalled === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
-                            try {
-                                await Methods.sdkSync();
-                                dispatch(setSdkInstalled(await Methods.sdkInstalled()));
-                            } catch (e) {}
+                            try { await Methods.sdkSync() } catch (e) {}
+                            dispatch(setSdkInstalled(await Methods.sdkInstalled()));
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
                         }}
                     />
@@ -122,7 +120,7 @@ export function SdkItem(props) {
                                 <FormatListBulleted />
                             </IconButton>
                         </Tooltip>
-                    ) : sdkAvailable === null || Array.isArray(sdkAvailable) && sdkAvailable.length == 0 ? (
+                    ) : sdkAvailable === null ? (
                         <StateListIcon title={t('common.t_error_data')}>
                             <Error color={'error'} />
                         </StateListIcon>
@@ -136,7 +134,7 @@ export function SdkItem(props) {
                         disabled={(!Array.isArray(sdkInstalled) || sdkInstalled.length == 0 || isSync)}
                         size={'small'}
                         color={'primarySdk'}
-                        endIcon={(!Array.isArray(sdkInstalled) || isSync) ? (
+                        endIcon={(sdkInstalled === undefined || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />

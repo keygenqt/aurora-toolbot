@@ -20,7 +20,6 @@ import {
     useTheme,
     Typography,
     ListItem,
-    List,
     Card,
     CardActionArea,
     CardContent,

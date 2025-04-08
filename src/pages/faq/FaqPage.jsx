@@ -13,32 +13,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useTranslation } from "react-i18next";
-import { Stack, Typography } from '@mui/material';
-import { LottieComingSoon } from '../../base';
+
+import {
+    Stack,
+    TextField,
+    FormGroup,
+    Button,
+    CircularProgress,
+    Typography,
+} from '@mui/material';
+
+import { Search } from '@mui/icons-material';
 
 export function FaqPage(props) {
     // components
     const { t } = useTranslation();
+    // data
+    const [searchText, setSearchText] = React.useState('');
+    const [searchStart, setSearchStart] = React.useState(false);
     // Page
     return (
         <Stack
-            height={1}
-            sx={{ justifyContent: "center", alignItems: "center" }}
+            sx={{ paddingTop: 2 }}
+            spacing={2}
         >
-            <Stack
-                spacing={5}
-                sx={{ alignItems: "center" }}
-            >
-                <LottieComingSoon />
-                <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    textAlign={'center'}
+            <FormGroup>
+                <Stack
+                    sx={{ paddingTop: 2 }}
+                    spacing={2}
                 >
-                    {t('common.t_coming_soon')}
-                </Typography>
-            </Stack>
+                    <Typography
+                        variant={'body1'}
+                        color={'text.primary'}
+                        textAlign={'center'}
+                    >
+                        {t('common.t_coming_soon')}
+                    </Typography>
+
+                    <TextField
+                        disabled={searchText}
+                        label={t('faq.t_field_search')}
+                        variant={'filled'}
+                        value={searchText}
+                        onChange={(event) => setSearchText(event.target.value)}
+                    />
+
+                    <Button
+                        sx={{
+                            borderRadius: 1
+                        }}
+                        type={'submit'}
+                        variant={'contained'}
+                        size={'large'}
+                        disabled={searchStart}
+                        onClick={() => {
+                            setSearchStart(true)
+                        }}
+                        endIcon={searchStart ? (
+                            <CircularProgress sx={{
+                                mr: 0.5,
+                                height: '18px !important',
+                                width: '18px !important'
+                            }} />
+                        ) : (
+                            <Search color={'text.primary'} sx={{ height: 18 }} />
+                        )}
+                    >
+                        {t('faq.t_btn_search')}
+                    </Button>
+                </Stack>
+            </FormGroup>
         </Stack>
     );
 }

@@ -160,7 +160,7 @@ export function SdksInstalledPage(props) {
                                             try {
                                                 await Methods.appOpenDir(model.dir);
                                             } catch (e) {
-                                                console.log(e)
+                                                await updateStates();
                                             }
                                         }}
                                     >
@@ -173,7 +173,7 @@ export function SdksInstalledPage(props) {
                                             try {
                                                 await Methods.sdkToolsById(model.id);
                                             } catch (e) {
-                                                console.log(e)
+                                                await updateStates();
                                             }
                                         }}
                                     >

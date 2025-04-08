@@ -156,7 +156,7 @@ export function PsdksInstalledPage(props) {
                                             try {
                                                 await Methods.appOpenDir(model.dir);
                                             } catch (e) {
-                                                console.log(e)
+                                                await updateStates();
                                             }
                                         }}
                                     >
@@ -169,7 +169,7 @@ export function PsdksInstalledPage(props) {
                                             try {
                                                 await Methods.psdkTerminalById(model.id);
                                             } catch (e) {
-                                                console.log(e)
+                                                await updateStates();
                                             }
                                         }}
                                     >

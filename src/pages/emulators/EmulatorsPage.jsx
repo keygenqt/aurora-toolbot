@@ -64,6 +64,7 @@ export function EmulatorsPage(props) {
     const reduxKey = keysStateBool.emulatorsUpdate;
     const color = theme.palette.secondary.main;
     const [isUpdateItem, setIsUpdateItem] = React.useState([]);
+    const [isErrorExec, setIsErrorExec] = React.useState(false);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     // fun
@@ -164,7 +165,9 @@ export function EmulatorsPage(props) {
                                         onClick={async () => {
                                             try {
                                                 await Methods.appOpenDir(model.dirEmulator);
-                                            } catch (e) { }
+                                            } catch (e) {
+                                                await updateStates();
+                                            }
                                         }}
                                     >
                                         <FolderOpen />
@@ -211,7 +214,9 @@ export function EmulatorsPage(props) {
                                                     await Methods.emulatorCloseById(model.id);
                                                     await new Promise(r => setTimeout(r, 1000));
                                                     await updateStatesSilent();
-                                                } catch (e) { }
+                                                } catch (e) {
+                                                    await updateStates();
+                                                }
                                                 setIsUpdateItem(isUpdateItem.filter((e) => e !== key));
                                             }}
                                         >
@@ -226,7 +231,9 @@ export function EmulatorsPage(props) {
                                                 try {
                                                     await Methods.emulatorOpenById(model.id);
                                                     await updateStatesSilent();
-                                                } catch (e) { }
+                                                } catch (e) {
+                                                    await updateStates();
+                                                }
                                                 setIsUpdateItem(isUpdateItem.filter((e) => e !== key));
                                             }}
                                         >

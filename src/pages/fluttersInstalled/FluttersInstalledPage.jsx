@@ -149,7 +149,7 @@ export function FluttersInstalledPage(props) {
                                             try {
                                                 await Methods.appOpenDir(model.dir);
                                             } catch (e) {
-                                                console.log(e)
+                                                await updateStates();
                                             }
                                         }}
                                     >
@@ -162,7 +162,7 @@ export function FluttersInstalledPage(props) {
                                             try {
                                                 await Methods.flutterTerminalById(model.id);
                                             } catch (e) {
-                                                console.log(e)
+                                                await updateStates();
                                             }
                                         }}
                                     >

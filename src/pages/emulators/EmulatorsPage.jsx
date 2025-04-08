@@ -64,7 +64,6 @@ export function EmulatorsPage(props) {
     const reduxKey = keysStateBool.emulatorsUpdate;
     const color = theme.palette.secondary.main;
     const [isUpdateItem, setIsUpdateItem] = React.useState([]);
-    const [isErrorExec, setIsErrorExec] = React.useState(false);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     // fun

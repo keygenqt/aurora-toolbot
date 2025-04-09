@@ -17,6 +17,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useLocation } from "react-router";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useTheme, Box, Stack, AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import { Minimize, Close } from '@mui/icons-material';
@@ -46,7 +47,7 @@ export function AppBarLayout(props) {
             }
         }
     }, [size]);
-    // Page
+    // page
     return (
         <>
             <AppBar
@@ -116,6 +117,36 @@ export function AppBarLayout(props) {
                     paddingRight: `${padding}px`,
                 }}
             >
+                {props.bg === 'faq' && (
+                    <Box sx={{
+                        height: 200,
+                        width: 200,
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                        textAlign: 'center',
+                    }} >
+                        <FontAwesomeIcon
+                            style={{ fontSize: 160, color: 'secondary', opacity: 0.1 }}
+                            icon="fa-solid fa-clipboard-question"
+                        />
+                    </Box>
+                )}
+                {props.bg === 'auth' && (
+                    <Box sx={{
+                        height: 200,
+                        width: 200,
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                        textAlign: 'center',
+                    }} >
+                        <FontAwesomeIcon
+                            style={{ fontSize: 160, color: 'secondary', opacity: 0.1 }}
+                            icon="fa-solid fa-id-badge"
+                        />
+                    </Box>
+                )}
                 {props.children}
             </Box>
         </>
@@ -123,6 +154,7 @@ export function AppBarLayout(props) {
 }
 
 AppBarLayout.propTypes = {
+    bg: PropTypes.oneOf(['faq', 'auth']),
     actions: PropTypes.element,
     padding: PropTypes.number,
     children: PropTypes.element.isRequired,

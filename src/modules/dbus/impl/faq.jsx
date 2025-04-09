@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './AppInfoModel';
-export * from './EmulatorModel';
-export * from './FaqModel';
-export * from './FlutterAvailableModel';
-export * from './FlutterInstalledModel';
-export * from './PsdkAvailableModel';
-export * from './PsdkInstalledModel';
-export * from './SdkAvailableModel';
-export * from './SdkInstalledModel';
-export * from './SelectorModel';
+import { invoke } from "@tauri-apps/api/core";
+
+import {
+    FaqModel,
+} from '../../../models';
+
+export const faq = {
+    faqSearch: async function (search) {
+        try {
+            return FaqModel.parses(await invoke("faq_search", { search: search }));
+        } catch (e) {
+            return [];
+        }
+    },
+}

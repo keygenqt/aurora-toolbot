@@ -15,25 +15,27 @@
  */
 import * as React from 'react';
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import {
     Stack,
     TextField,
     FormGroup,
     Button,
-    CircularProgress,
     Typography,
 } from '@mui/material';
 
 import { Search } from '@mui/icons-material';
 
+import { AppUtils } from '../../base';
+
 export function FaqPage(props) {
     // components
+    const navigate = useNavigate();
     const { t } = useTranslation();
     // data
     const [searchText, setSearchText] = React.useState('');
-    const [searchStart, setSearchStart] = React.useState(false);
-    // Page
+    // page
     return (
         <Stack
             sx={{ paddingTop: 2 }}
@@ -42,47 +44,41 @@ export function FaqPage(props) {
             <FormGroup>
                 <Stack
                     sx={{ paddingTop: 2 }}
-                    spacing={2}
+                    spacing={3}
                 >
                     <Typography
                         variant={'body1'}
                         color={'text.primary'}
                         textAlign={'center'}
                     >
-                        {t('common.t_coming_soon')}
+                        {t('faq.t_title')}
                     </Typography>
 
-                    <TextField
-                        disabled={searchText}
-                        label={t('faq.t_field_search')}
-                        variant={'filled'}
-                        value={searchText}
-                        onChange={(event) => setSearchText(event.target.value)}
-                    />
-
-                    <Button
-                        sx={{
-                            borderRadius: 1
-                        }}
-                        type={'submit'}
-                        variant={'contained'}
-                        size={'large'}
-                        disabled={searchStart}
-                        onClick={() => {
-                            setSearchStart(true)
-                        }}
-                        endIcon={searchStart ? (
-                            <CircularProgress sx={{
-                                mr: 0.5,
-                                height: '18px !important',
-                                width: '18px !important'
-                            }} />
-                        ) : (
-                            <Search color={'text.primary'} sx={{ height: 18 }} />
-                        )}
+                    <Stack
+                        direction={'row'}
+                        spacing={2}
                     >
-                        {t('faq.t_btn_search')}
-                    </Button>
+                        <TextField
+                            color={'info'}
+                            sx={{ width: 1 }}
+                            label={t('faq.t_field_search')}
+                            variant={'filled'}
+                            value={searchText}
+                            onChange={(event) => setSearchText(event.target.value)}
+                        />
+                        <Button
+                            sx={{ borderRadius: 1.2 }}
+                            disabled={searchText.length === 0}
+                            color={'info'}
+                            variant={'contained'}
+                            size={'large'}
+                            onClick={() => {
+                                AppUtils.openPage(navigate, 'faq', { state: { search: searchText } });
+                            }}
+                        >
+                            <Search color={'text.primary'} />
+                        </Button>
+                    </Stack>
                 </Stack>
             </FormGroup>
         </Stack>

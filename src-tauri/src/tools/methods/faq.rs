@@ -11,14 +11,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+use tauri::Error;
 
-pub const TIMEOUT_SHORT: u64 = 2000 /* 2s */;
-pub const TIMEOUT_MIDDLE: u64 = 300000 /* 5m */;
-pub const TIMEOUT_LONG: u64 = 7200000 /* 2h */;
+use crate::tools::{client::{get_proxy_bot, get_session}, constants};
 
-pub mod app;
-pub mod emulator;
-pub mod faq;
-pub mod flutter;
-pub mod psdk;
-pub mod sdk;
+use super::TIMEOUT_MIDDLE;
+
+#[tauri::command]
+pub fn faq_search(search: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "FaqSearch";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (search, )) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}

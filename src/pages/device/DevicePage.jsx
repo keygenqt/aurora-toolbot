@@ -20,7 +20,7 @@ import { Stack, Typography } from '@mui/material';
 export function DevicePage(props) {
     // components
     const { key } = useParams();
-    // Page
+    // page
     return (
         <Stack
             height={1}

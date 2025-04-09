@@ -20,6 +20,7 @@ export * from './emulator/EmulatorPage';
 export * from './emulators/EmulatorsPage';
 export * from './error/ErrorPage';
 export * from './faq/FaqPage';
+export * from './faqs/FaqsPage';
 export * from './features/FeaturesPage';
 export * from './flutter/FlutterPage';
 export * from './fluttersAvailable/FluttersAvailablePage';

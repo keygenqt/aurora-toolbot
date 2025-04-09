@@ -37,7 +37,7 @@ export function AuthPage(props) {
     const color = theme.palette.secondary.main;
     const [searchText, setSearchText] = React.useState('');
     const [searchStart, setSearchStart] = React.useState(false);
-    // Page
+    // page
     return (
         <Stack
             height={1}

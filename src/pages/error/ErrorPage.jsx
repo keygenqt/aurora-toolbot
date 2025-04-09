@@ -20,7 +20,7 @@ import { LottieError } from '../../base';
 export function ErrorPage(props) {
     // components
     const { t } = useTranslation();
-    // Page
+    // page
     return (
         <Stack
             height={1}

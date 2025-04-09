@@ -43,7 +43,7 @@ export function ListLayout(props) {
         itemList,
     } = props
 
-    const isUpdate = useEffectStateBool(reduxKey);
+    const isUpdate = useEffectStateBool(reduxKey ? reduxKey : "undefined");
     // page
     return (
         <AppBarLayout index actions={(
@@ -58,11 +58,11 @@ export function ListLayout(props) {
                 />
             </Stack>
         )} >
-            {isUpdate ? (
+            {isUpdate || models === undefined ? (
                 <StateLoading />
             ) : models === null ? (
                 <StateError />
-            ) : models === undefined || Array.isArray(models) && models.length === 0 ? (
+            ) : Array.isArray(models) && models.length === 0 ? (
                 <StateEmpty />
             ) : (
                 <List>
@@ -80,7 +80,7 @@ export function ListLayout(props) {
 ListLayout.propTypes = {
     disable: PropTypes.bool,
     models: PropTypes.array,
+    reduxKey: PropTypes.string,
     updateStates: PropTypes.func.isRequired,
-    reduxKey: PropTypes.string.isRequired,
     itemList: PropTypes.func.isRequired,
 };

@@ -17,6 +17,7 @@ import { debug } from '@tauri-apps/plugin-log';
 
 import { app } from './impl/app';
 import { emulator } from './impl/emulator';
+import { faq } from './impl/faq';
 import { flutter } from './impl/flutter';
 import { psdk } from './impl/psdk';
 import { sdk } from './impl/sdk';
@@ -27,6 +28,7 @@ import { sdk } from './impl/sdk';
 export const MethodsDbus = {
     ...app,
     ...emulator,
+    ...faq,
     ...flutter,
     ...psdk,
     ...sdk,

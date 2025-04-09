@@ -26,6 +26,7 @@ import {
     EmulatorsPage,
     ErrorPage,
     FaqPage,
+    FaqsPage,
     FeaturesPage,
     FlutterPage,
     FluttersAvailablePage,
@@ -47,7 +48,10 @@ export function AppRoute() {
                     <MainPage />
                 )} />
                 <Route path="auth" element={(
-                    <AppBarLayout actions={<ActionBack />} >
+                    <AppBarLayout
+                        bg={'auth'}
+                        actions={<ActionBack />}
+                    >
                         <AuthPage />
                     </AppBarLayout>
                 )} />
@@ -77,18 +81,24 @@ export function AppRoute() {
                             </AppBarLayout>
                         )} />
                     </Route>
-                    {/* Save state */}
-                    <Route path="faq" element={(
-                        <AppBarLayout actions={<ActionBack />} >
-                            <FaqPage />
-                        </AppBarLayout>
-                    )} />
+                    <Route path="faq">
+                        <Route index element={(
+                            <AppBarLayout
+                                bg={'faq'}
+                                actions={<ActionBack />}
+                            >
+                                <FaqPage />
+                            </AppBarLayout>
+                        )} />
+                        <Route path=":key" element={(
+                            <FaqsPage />
+                        )} />
+                    </Route>
                     <Route path="fluttersAvailable" element={(
                         <FluttersAvailablePage />
                     )} />
-                    {/* Not save state */}
                     <Route path="fluttersInstalled">
-                        <Route index padding={0} element={(
+                        <Route index element={(
                             <FluttersInstalledPage />
                         )} />
                         <Route path=":key" element={(
@@ -101,7 +111,7 @@ export function AppRoute() {
                         <PsdksAvailablePage />
                     )} />
                     <Route path="psdksInstalled">
-                        <Route index padding={0} element={(
+                        <Route index element={(
                             <PsdksInstalledPage />
                         )} />
                         <Route path=":key" element={(
@@ -114,7 +124,7 @@ export function AppRoute() {
                         <SdksAvailablePage />
                     )} />
                     <Route path="sdksInstalled">
-                        <Route index padding={0} element={(
+                        <Route index element={(
                             <SdksInstalledPage />
                         )} />
                         <Route path=":key" element={(

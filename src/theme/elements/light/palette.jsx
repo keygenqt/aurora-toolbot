@@ -22,6 +22,10 @@ export const palette = {
         main: '#274c40',
         contrastText: '#fff',
     },
+    formBtn: {
+        main: '#274c40',
+        contrastText: '#fff',
+    },
     primarySdk: {
         main: '#4c0ea1',
         contrastText: '#fff',

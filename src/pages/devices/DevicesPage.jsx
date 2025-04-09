@@ -22,7 +22,7 @@ import { AppUtils } from '../../base';
 export function DevicesPage(props) {
     // components
     const navigate = useNavigate();
-    // Page
+    // page
     return (
         <Stack
             height={1}

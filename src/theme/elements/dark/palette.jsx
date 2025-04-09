@@ -22,6 +22,10 @@ export const palette = {
         main: '#75be9c',
         contrastText: '#fff',
     },
+    formBtn: {
+        main: '#4b7562',
+        contrastText: '#fff',
+    },
     primarySdk: {
         main: '#c19df2',
         contrastText: '#fff',
@@ -35,7 +39,7 @@ export const palette = {
         contrastText: '#fff',
     },
     secondary: {
-        main: '#52c6d1',
+        main: '#02808D',
         contrastText: '#fff',
     },
     info: {

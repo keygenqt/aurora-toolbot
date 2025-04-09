@@ -36,6 +36,8 @@ pub fn run() {
             methods::emulator::emulator_screenshot_by_id,
             methods::emulator::emulator_terminal_by_id,
             methods::emulator::emulator_upload_path_by_id,
+            // faq
+            methods::faq::faq_search,
             // flutter
             methods::flutter::flutter_sync,
             methods::flutter::flutter_available,

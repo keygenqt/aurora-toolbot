@@ -52,7 +52,7 @@ export function ActionMenu() {
     // states
     const [state, setState] = React.useState(false);
     const [about, setAbout] = React.useState(false);
-    const [dark, setDark] = React.useState(darkModeCache === 'true');
+    const [dark, setDark] = React.useState(darkModeCache === true);
     const toggleOpen = function (isOpen) {
         setState(isOpen);
         if (window.isTauri) {

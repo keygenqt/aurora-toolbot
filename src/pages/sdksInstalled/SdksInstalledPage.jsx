@@ -25,7 +25,6 @@ import { keysStateBool } from '../../store/impl/stateBool';
 import {
     useTheme,
     Typography,
-    Card,
     CardContent,
     Stack,
     CardActions,
@@ -47,6 +46,7 @@ import {
     IconButtonLoading,
     AppUtils,
     DataImages,
+    CardGradient,
 } from '../../base';
 
 import { Methods } from '../../modules';
@@ -77,12 +77,7 @@ export function SdksInstalledPage(props) {
             updateStates={updateStates}
             reduxKey={reduxKey}
             itemList={(model) => (
-                <Card
-                    sx={{
-                        border: `1px solid ${color}5e`,
-                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                    }}
-                >
+                <CardGradient color={color}>
                     <CardContent sx={{ paddingBottom: 1 }}>
                         <Stack
                             direction="row"
@@ -203,7 +198,7 @@ export function SdksInstalledPage(props) {
                             {t('common.t_open')}
                         </Button>
                     </CardActions>
-                </Card>
+                </CardGradient>
             )}
         />
     );

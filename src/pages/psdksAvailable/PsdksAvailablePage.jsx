@@ -24,7 +24,6 @@ import { keysStateBool } from '../../store/impl/stateBool';
 import {
     useTheme,
     Typography,
-    Card,
     CardContent,
     CardHeader,
     CardActions,
@@ -37,7 +36,7 @@ import {
 
 import { OpenInNew, Done } from '@mui/icons-material';
 
-import { setEffectStateBool, AppUtils } from '../../base';
+import { setEffectStateBool, AppUtils, CardGradient } from '../../base';
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
 
@@ -79,12 +78,7 @@ export function PsdksAvailablePage(props) {
                     }
                 }
                 return (
-                    <Card
-                        sx={{
-                            border: `1px solid ${color}5e`,
-                            background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                        }}
-                    >
+                    <CardGradient color={color}>
                         <CardHeader
                             avatar={isInstall && (
                                 <Avatar sx={{ bgcolor: color }} aria-label="recipe">
@@ -124,7 +118,7 @@ export function PsdksAvailablePage(props) {
                                 </IconButton>
                             </Tooltip>
                         </CardActions>
-                    </Card>
+                    </CardGradient>
                 )
             }}
         />

@@ -49,6 +49,7 @@ import {
     AppUtils,
     DataImages,
     IconButtonLoading,
+    CardGradient,
 } from '../../base';
 
 import { Methods } from '../../modules';
@@ -84,12 +85,7 @@ export function EmulatorsPage(props) {
             updateStates={updateStates}
             reduxKey={reduxKey}
             itemList={(model, key) => (
-                <Card
-                    sx={{
-                        border: `1px solid ${color}5e`,
-                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                    }}
-                >
+                <CardGradient color={color}>
                     <CardContent sx={{ paddingBottom: 1 }}>
                         <Stack
                             direction="row"
@@ -263,7 +259,7 @@ export function EmulatorsPage(props) {
                             {t('common.t_open')}
                         </Button>
                     </CardActions>
-                </Card>
+                </CardGradient>
             )}
         />
     );

@@ -26,7 +26,6 @@ import {
     Typography,
     List,
     ListItem,
-    Card,
     CardContent,
     CardActionArea,
     IconButton,
@@ -35,7 +34,7 @@ import {
 
 import { Search, AccessTime, DeleteOutline } from '@mui/icons-material';
 
-import { useEffectCache, AppUtils } from '../../base';
+import { useEffectCache, AppUtils, CardGradient } from '../../base';
 
 export function FaqPage(props) {
     // components
@@ -127,12 +126,7 @@ export function FaqPage(props) {
                     <List>
                         {searchHistory.map((text, index) => (
                             <ListItem key={`index-${index}`}>
-                                <Card
-                                    sx={{
-                                        border: `1px solid ${color}5e`,
-                                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                                    }}
-                                >
+                                <CardGradient>
                                     <CardActionArea
                                         onClick={() => {
                                             AppUtils.openPage(navigate, 'faq', { state: { search: text } });
@@ -148,7 +142,7 @@ export function FaqPage(props) {
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
-                                </Card>
+                                </CardGradient>
                             </ListItem>
                         ))}
                     </List>

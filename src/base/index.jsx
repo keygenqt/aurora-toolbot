@@ -32,6 +32,7 @@ export * from './components/states/StateError';
 export * from './components/states/StateListIcon';
 export * from './components/states/StateLoading';
 // other
+export * from './components/other/CardGradient';
 export * from './components/other/IconButtonLoading';
 // data
 export * from './data/DataImages';

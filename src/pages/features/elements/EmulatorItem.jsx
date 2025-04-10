@@ -42,6 +42,7 @@ import {
     setEffectStateBool,
     AppUtils,
     IconButtonLoading,
+    CardGradient,
 } from '../../../base';
 
 export function EmulatorItem(props) {
@@ -57,12 +58,7 @@ export function EmulatorItem(props) {
     // item
     return (
         <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
+            <CardGradient color={color}>
                 <CardContent sx={{ paddingBottom: 1 }}>
                     <Box sx={{ paddingBottom: 1 }}>
                         <Typography variant="subtitle2" color={color} >
@@ -112,7 +108,7 @@ export function EmulatorItem(props) {
                         {t('common.t_open')}
                     </Button>
                 </CardActions>
-            </Card>
+            </CardGradient>
         </ListItem>
     );
 }

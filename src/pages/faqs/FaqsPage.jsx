@@ -26,6 +26,7 @@ import {
 
 import {
     useEffectSingleTimeout,
+    CardGradient,
 } from '../../base';
 
 import { Methods } from '../../modules';
@@ -55,12 +56,7 @@ export function FaqsPage(props) {
             models={models}
             updateStates={updateStates}
             itemList={(model) => (
-                <Card
-                    sx={{
-                        border: `1px solid ${color}5e`,
-                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                    }}
-                >
+                <CardGradient color={color}>
                     <CardContent>
                         <Stack
                             direction={'column'}
@@ -74,7 +70,7 @@ export function FaqsPage(props) {
                             </Typography>
                         </Stack>
                     </CardContent>
-                </Card>
+                </CardGradient>
             )}
         />
     );

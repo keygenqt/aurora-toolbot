@@ -26,7 +26,6 @@ import {
     useTheme,
     Typography,
     ListItem,
-    Card,
     CardContent,
     CardActions,
     IconButton,
@@ -48,6 +47,7 @@ import {
     AppUtils,
     StateListIcon,
     IconButtonLoading,
+    CardGradient,
 } from '../../../base';
 
 
@@ -65,12 +65,7 @@ export function SdkItem(props) {
     // item
     return (
         <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
+            <CardGradient color={color}>
                 <CardContent sx={{ paddingBottom: 1 }}>
                     <Stack
                         direction="row"
@@ -148,7 +143,7 @@ export function SdkItem(props) {
                         {t('common.t_open')}
                     </Button>
                 </CardActions>
-            </Card>
+            </CardGradient>
         </ListItem >
     );
 }

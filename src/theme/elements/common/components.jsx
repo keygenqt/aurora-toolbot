@@ -72,9 +72,17 @@ export const components = {
         styleOverrides: {
             root: {
                 width: '100%',
-                borderRadius: 13,
+                borderRadius: 8,
                 boxShadow: 'none !important',
                 textTransform: 'none'
+            }
+        }
+    },
+    MuiFilledInput: {
+        styleOverrides: {
+            root: {
+                borderTopLeftRadius: 8,
+                borderTopRightRadius: 8,
             }
         }
     },
@@ -147,9 +155,13 @@ export const components = {
         styleOverrides: {
             root: ({ theme }) =>
                 theme.unstable_sx({
+                    borderRadius: '8px',
                     backgroundColor: window.isMobile ? 'transparent !important' : null,
+                    '&.MuiButton-containedSizeLarge': {
+                        borderRadius: 2
+                    },
                     '&.Mui-disabled': {
-                        color: 'black !important',
+                        color: theme.palette.mode === 'dark' ? '#ffffffb3 !important' : 'black !important',
                     },
                     '&.MuiButton-sizeSmall': {
                         fontSize: 11,

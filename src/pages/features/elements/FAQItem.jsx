@@ -20,13 +20,12 @@ import {
     useTheme,
     Typography,
     ListItem,
-    Card,
     CardActionArea,
     CardContent,
     Box,
 } from '@mui/material';
 
-import { AppUtils } from '../../../base';
+import { AppUtils, CardGradient } from '../../../base';
 
 export function FAQItem(props) {
     // components
@@ -38,12 +37,7 @@ export function FAQItem(props) {
     // item
     return (
         <ListItem>
-            <Card
-                sx={{
-                    border: `1px solid ${color}5e`,
-                    background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
-                }}
-            >
+            <CardGradient color={color}>
                 <CardActionArea
                     onClick={() => {
                         AppUtils.openPageDelay(navigate, 'faq')
@@ -60,7 +54,7 @@ export function FAQItem(props) {
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-            </Card>
+            </CardGradient>
         </ListItem>
     );
 }

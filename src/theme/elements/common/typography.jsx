@@ -31,6 +31,13 @@ export const typography = {
             'sans-serif',
         ].join(','),
     },
+    body1: {
+        fontSize: 16,
+        fontFamily: [
+            'Ubuntu',
+            'sans-serif',
+        ].join(','),
+    },
     body2: {
         fontSize: 14,
         fontFamily: [

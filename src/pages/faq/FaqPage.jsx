@@ -18,42 +18,50 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 import {
+    useTheme,
     Stack,
     TextField,
     FormGroup,
     Button,
     Typography,
+    List,
+    ListItem,
+    Card,
+    CardContent,
+    CardActionArea,
+    IconButton,
+    Box,
 } from '@mui/material';
 
-import { Search } from '@mui/icons-material';
+import { Search, AccessTime, DeleteOutline } from '@mui/icons-material';
 
-import { AppUtils } from '../../base';
+import { useEffectCache, AppUtils } from '../../base';
 
 export function FaqPage(props) {
     // components
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const theme = useTheme();
     // data
+    const color = theme.palette.inherit.main;
+    const keySearchHistory = "keySearchHistory"
     const [searchText, setSearchText] = React.useState('');
+    const searchHistory = useEffectCache(keySearchHistory);
     // page
     return (
         <Stack
-            sx={{ paddingTop: 2 }}
-            spacing={2}
+            sx={{ paddingTop: 4 }}
+            spacing={4}
         >
-            <FormGroup>
-                <Stack
-                    sx={{ paddingTop: 2 }}
-                    spacing={3}
+            <Stack spacing={3} >
+                <Typography
+                    variant={'body1'}
+                    color={'text.primary'}
+                    textAlign={'center'}
                 >
-                    <Typography
-                        variant={'body1'}
-                        color={'text.primary'}
-                        textAlign={'center'}
-                    >
-                        {t('faq.t_title')}
-                    </Typography>
-
+                    {t('faq.t_title')}
+                </Typography>
+                <FormGroup>
                     <Stack
                         direction={'row'}
                         spacing={2}
@@ -73,14 +81,79 @@ export function FaqPage(props) {
                             variant={'contained'}
                             size={'large'}
                             onClick={() => {
+                                // Open page
                                 AppUtils.openPage(navigate, 'faq', { state: { search: searchText } });
+                                // Save cache
+                                setTimeout(() => {
+                                    if (!searchHistory || !Array.isArray(searchHistory)) {
+                                        AppUtils.setCache(keySearchHistory, [searchText]);
+                                    } else {
+                                        if (searchHistory.length >= 7) {
+                                            searchHistory.pop();
+                                        }
+                                        AppUtils.setCache(keySearchHistory, [searchText].concat(searchHistory));
+                                    }
+                                }, 10);
                             }}
                         >
                             <Search color={'text.primary'} />
                         </Button>
                     </Stack>
+                </FormGroup>
+            </Stack>
+
+            {Array.isArray(searchHistory) && (
+                <Stack>
+                    <Stack
+                        direction={'row'}
+                        spacing={1}
+                        alignItems={'center'}
+                    >
+                        <AccessTime fontSize={'small'} />
+                        <Typography
+                            variant={'body1'}
+                            color={'text.primary'}
+                        >
+                            {t('faq.t_history_title')}
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <IconButton
+                            color="inherit"
+                            onClick={() => AppUtils.setCache(keySearchHistory, undefined)}
+                        >
+                            <DeleteOutline />
+                        </IconButton>
+                    </Stack>
+                    <List>
+                        {searchHistory.map((text, index) => (
+                            <ListItem key={`index-${index}`}>
+                                <Card
+                                    sx={{
+                                        border: `1px solid ${color}5e`,
+                                        background: `linear-gradient(to right, transparent 0%, ${color}1c 100%)`
+                                    }}
+                                >
+                                    <CardActionArea
+                                        onClick={() => {
+                                            AppUtils.openPage(navigate, 'faq', { state: { search: text } });
+                                        }}
+                                    >
+                                        <CardContent sx={{
+                                            '&:last-child': {
+                                                paddingBottom: 2
+                                            }
+                                        }}>
+                                            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                                                {text}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </ListItem>
+                        ))}
+                    </List>
                 </Stack>
-            </FormGroup>
+            )}
         </Stack>
     );
 }

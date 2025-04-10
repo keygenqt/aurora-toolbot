@@ -33,6 +33,7 @@ import { ListLayout } from '../../layouts';
 
 
 export function FaqsPage(props) {
+    // components
     let { state } = useLocation();
     const theme = useTheme();
     // data

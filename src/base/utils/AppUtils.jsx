@@ -35,7 +35,7 @@ export const AppUtils = {
         }
     },
     setCache: function (key, value) {
-        localStorage.setItem(key, value);
+        localStorage.setItem(key, JSON.stringify(value));
         let values = [],
             keys = Object.keys(localStorage),
             i = keys.length,

@@ -115,6 +115,7 @@ i18n
                     },
                     faq: {
                         t_title: 'Задайте вопрос и релевантный поиск найдет в Aurora Dataset ответ на него.',
+                        t_history_title: 'История запросов',
                         t_field_search: 'Ваш вопрос',
                     },
                     auth: {

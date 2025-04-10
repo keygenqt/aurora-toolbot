@@ -127,7 +127,7 @@ export function AppBarLayout(props) {
                         textAlign: 'center',
                     }} >
                         <FontAwesomeIcon
-                            style={{ fontSize: 160, color: 'secondary', opacity: 0.1 }}
+                            style={{ fontSize: 160, color: 'secondary', opacity: 0.05 }}
                             icon="fa-solid fa-clipboard-question"
                         />
                     </Box>
@@ -142,7 +142,7 @@ export function AppBarLayout(props) {
                         textAlign: 'center',
                     }} >
                         <FontAwesomeIcon
-                            style={{ fontSize: 160, color: 'secondary', opacity: 0.1 }}
+                            style={{ fontSize: 160, color: 'secondary', opacity: 0.05 }}
                             icon="fa-solid fa-id-badge"
                         />
                     </Box>

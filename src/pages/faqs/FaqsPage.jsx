@@ -19,13 +19,18 @@ import { useLocation } from "react-router";
 import {
     useTheme,
     Typography,
-    Card,
     CardContent,
     Stack,
-} from '@mui/material'
+    CardMedia,
+    IconButton,
+    Box,
+} from '@mui/material';
+
+import { Star, Link } from '@mui/icons-material';
 
 import {
     useEffectSingleTimeout,
+    AppUtils,
     CardGradient,
 } from '../../base';
 
@@ -57,17 +62,74 @@ export function FaqsPage(props) {
             updateStates={updateStates}
             itemList={(model) => (
                 <CardGradient color={color}>
+                    {model.image && (
+                        <CardMedia
+                            component={'img'}
+                            image={model.image}
+                            alt={model.title}
+                        />
+                    )}
                     <CardContent>
                         <Stack
                             direction={'column'}
-                            spacing={1}
+                            spacing={2}
                         >
-                            <Typography variant="subtitle2" color={color} >
-                                {model.title}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                {model.text.replace("⌫", "")}
-                            </Typography>
+                            <Stack
+                                direction={'row'}
+                                spacing={2}
+                            >
+                                <IconButton
+                                    color="inherit"
+                                    onClick={async () => {
+                                        await AppUtils.openUrl(model.url)
+                                    }}
+                                >
+                                    <Link />
+                                </IconButton>
+                                <Typography variant="subtitle1" color={color} >
+                                    {model.title}
+                                </Typography>
+                            </Stack>
+
+                            <Stack
+                                direction={'column'}
+                                spacing={0.5}
+                            >
+                                <Typography variant="body2" >
+                                    {new Date(model.timestamp * 1000).toLocaleDateString("ru-RU")}, {model.fname} {model.lname}
+                                </Typography>
+
+                                <Stack
+                                    direction={'row'}
+                                    spacing={0.2}
+                                    sx={{
+                                        marginLeft: '-2px',
+                                        '& .MuiSvgIcon-root': {
+                                            color: '#F5A41C'
+                                        }
+                                    }}
+                                >
+                                    {new Array(Math.floor(model.rating)).fill(0).map((e) => (
+                                        <Star fontSize={'small'} />
+                                    ))}
+                                </Stack>
+                            </Stack>
+
+                            {/* @todo - html telegram parser */}
+                            <Box
+                                sx={{
+                                    borderRadius: 2,
+                                    paddingY: 2,
+                                    paddingX: 1,
+                                    backgroundColor: 'background.default',
+                                    overflow: 'hidden'
+                                }}
+                            >
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    <span dangerouslySetInnerHTML={{ __html: model.text.replaceAll("\n", "<br/>").split("5.")[0] }} />
+                                </Typography>
+                            </Box>
+
                         </Stack>
                     </CardContent>
                 </CardGradient>

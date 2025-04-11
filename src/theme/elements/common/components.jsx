@@ -99,6 +99,25 @@ export const components = {
             }
         }
     },
+    MuiAvatar: {
+        styleOverrides: {
+            root: {
+                fontFamily: [
+                    'Ubuntu',
+                    'sans-serif',
+                ].join(','),
+            }
+        }
+    },
+    MuiCardHeader: {
+        styleOverrides: {
+            root: {
+                '& .MuiCardHeader-title': {
+                    fontWeight: 'bold',
+                }
+            }
+        }
+    },
     MuiDrawer: {
         styleOverrides: {
             root: ({ theme }) =>

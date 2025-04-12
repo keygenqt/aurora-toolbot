@@ -192,7 +192,7 @@ export function SdksInstalledPage(props) {
                             variant="contained"
                             sx={{ opacity: 0.8 }}
                             onClick={() => {
-                                AppUtils.openPage(navigate, 'sdk', { state: { model: model } });
+                                AppUtils.openPage(navigate, 'sdk', { state: { id: model.id } });
                             }}
                         >
                             {t('common.t_open')}

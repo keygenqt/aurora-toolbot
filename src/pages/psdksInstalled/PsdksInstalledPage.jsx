@@ -188,7 +188,7 @@ export function PsdksInstalledPage(props) {
                             variant="contained"
                             sx={{ opacity: 0.8 }}
                             onClick={() => {
-                                AppUtils.openPage(navigate, 'psdk', { state: { model: model } });
+                                AppUtils.openPage(navigate, 'psdk', { state: { id: model.id } });
                             }}
                         >
                             {t('common.t_open')}

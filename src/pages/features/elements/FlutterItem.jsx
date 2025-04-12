@@ -128,7 +128,11 @@ export function FlutterItem(props) {
                         variant="contained"
                         sx={{ opacity: 0.8 }}
                         onClick={() => {
-                            AppUtils.openPage(navigate, 'fluttersInstalled');
+                            if (flutterInstalled.length == 1) {
+                                AppUtils.openPage(navigate, 'flutter', { state: { id: flutterInstalled[0].id } });
+                            } else {
+                                AppUtils.openPage(navigate, 'fluttersInstalled');
+                            }
                         }}
                     >
                         {t('common.t_open')}

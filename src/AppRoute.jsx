@@ -75,7 +75,9 @@ export function AppRoute() {
                         <Route index element={(
                             <EmulatorsPage />
                         )} />
-                        <Route path=":key" element={(
+                    </Route>
+                    <Route path="emulator">
+                        <Route index element={(
                             <EmulatorPage />
                         )} />
                     </Route>
@@ -100,9 +102,12 @@ export function AppRoute() {
                             <FluttersInstalledPage />
                         )} />
                         <Route path=":key" element={(
-                            <AppBarLayout actions={<ActionBack />} >
-                                <FlutterPage />
-                            </AppBarLayout>
+                            <FlutterPage />
+                        )} />
+                    </Route>
+                    <Route path="flutter">
+                        <Route index element={(
+                            <FlutterPage />
                         )} />
                     </Route>
                     <Route path="psdksAvailable" element={(
@@ -113,9 +118,12 @@ export function AppRoute() {
                             <PsdksInstalledPage />
                         )} />
                         <Route path=":key" element={(
-                            <AppBarLayout actions={<ActionBack />} >
-                                <PsdkPage />
-                            </AppBarLayout>
+                            <PsdkPage />
+                        )} />
+                    </Route>
+                    <Route path="psdk">
+                        <Route index element={(
+                            <PsdkPage />
                         )} />
                     </Route>
                     <Route path="sdksAvailable" element={(
@@ -126,9 +134,12 @@ export function AppRoute() {
                             <SdksInstalledPage />
                         )} />
                         <Route path=":key" element={(
-                            <AppBarLayout actions={<ActionBack />} >
-                                <SdkPage />
-                            </AppBarLayout>
+                            <SdkPage />
+                        )} />
+                    </Route>
+                    <Route path="sdk">
+                        <Route index element={(
+                            <SdkPage />
                         )} />
                     </Route>
                 </Route>

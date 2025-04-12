@@ -129,7 +129,11 @@ export function PsdkItem(props) {
                         variant="contained"
                         sx={{ opacity: 0.8 }}
                         onClick={() => {
-                            AppUtils.openPage(navigate, 'psdksInstalled');
+                            if (psdkInstalled.length == 1) {
+                                AppUtils.openPage(navigate, 'psdk', { state: { id: psdkInstalled[0].id } });
+                            } else {
+                                AppUtils.openPage(navigate, 'psdksInstalled');
+                            }
                         }}
                     >
                         {t('common.t_open')}

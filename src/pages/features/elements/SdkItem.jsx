@@ -99,7 +99,7 @@ export function SdkItem(props) {
                         animate={sdkInstalled === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
-                            try { await Methods.sdkSync() } catch (e) {}
+                            try { await Methods.sdkSync() } catch (e) { }
                             dispatch(setSdkInstalled(await Methods.sdkInstalled()));
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
                         }}
@@ -137,7 +137,11 @@ export function SdkItem(props) {
                         variant="contained"
                         sx={{ opacity: 0.8 }}
                         onClick={() => {
-                            AppUtils.openPage(navigate, 'sdksInstalled');
+                            if (sdkInstalled.length == 1) {
+                                AppUtils.openPage(navigate, 'sdk', { state: { id: sdkInstalled[0].id } });
+                            } else {
+                                AppUtils.openPage(navigate, 'sdksInstalled');
+                            }
                         }}
                     >
                         {t('common.t_open')}

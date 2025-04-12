@@ -181,7 +181,7 @@ export function FluttersInstalledPage(props) {
                             variant="contained"
                             sx={{ opacity: 0.8 }}
                             onClick={() => {
-                                AppUtils.openPage(navigate, 'flutter', { state: { model: model } });
+                                AppUtils.openPage(navigate, 'flutter', { state: { id: model.id } });
                             }}
                         >
                             {t('common.t_open')}

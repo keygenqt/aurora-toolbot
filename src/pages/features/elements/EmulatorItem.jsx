@@ -102,7 +102,11 @@ export function EmulatorItem(props) {
                         variant="contained"
                         sx={{ opacity: 0.9 }}
                         onClick={() => {
-                            AppUtils.openPage(navigate, 'emulators');
+                            if (emulators.length == 1) {
+                                AppUtils.openPage(navigate, 'emulator', { state: { id: emulators[0].id } });
+                            } else {
+                                AppUtils.openPage(navigate, 'emulators');
+                            }
                         }}
                     >
                         {t('common.t_open')}

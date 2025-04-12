@@ -13,45 +13,76 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from 'react';
 import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 
-import { Stack, Typography } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { setData as setFlutterInstalled } from '../../store/impl/flutterInstalled';
+import { keysStateBool } from '../../store/impl/stateBool';
 
-import { LottieComingSoon } from '../../base';
+import { useTheme, Stack, Typography, CardContent } from '@mui/material';
+
+import { setEffectStateBool, LottieComingSoon, CardGradient } from '../../base';
+import { ListLayout } from '../../layouts';
+import { Methods } from '../../modules';
 
 export function FlutterPage(props) {
     // components
     const { t } = useTranslation();
+    const { state } = useLocation();
+    const dispatch = useDispatch();
+    const theme = useTheme();
     // data
-    let { state } = useLocation()
+    const color = theme.palette.primaryFlutter.main;
+    const reduxKey = keysStateBool.fluttersUpdate;
+    const [isUpdateItem, setIsUpdateItem] = React.useState(false);
+    // redux
+    const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
+    // fun
+    const updateStatesSilent = async () => {
+        dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
+    };
+    const updateStates = async () => {
+        setEffectStateBool(dispatch, reduxKey, true);
+        await updateStatesSilent();
+        await new Promise(r => setTimeout(r, 400)); // animation delay
+        setEffectStateBool(dispatch, reduxKey, false);
+    };
     // page
     return (
-        <Stack
-            height={1}
-            sx={{ justifyContent: "center", alignItems: "center" }}
-        >
-            <Stack
-                spacing={5}
-                sx={{ alignItems: "center" }}
-            >
-                <LottieComingSoon />
-                <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    textAlign={'center'}
-                >
-                    {t('common.t_coming_soon')}
-                </Typography>
-                <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    textAlign={'center'}
-                >
-                    ({state.model.flutterVersion})
-                </Typography>
-            </Stack>
-        </Stack>
+        <ListLayout
+            disable={isUpdateItem}
+            models={flutterInstalled}
+            updateStates={updateStates}
+            reduxKey={reduxKey}
+            itemList={(model) => {
+                return model.id !== state.id ? null : (
+                    <CardGradient color={color}>
+                        <CardContent sx={{ '&:last-child': { padding: 2 } }} >
+                            <Stack
+                                height={1}
+                                sx={{ justifyContent: "center", alignItems: "center" }}
+                            >
+                                <Stack
+                                    spacing={5}
+                                    sx={{ alignItems: "center" }}
+                                >
+                                    <LottieComingSoon />
+                                    <Typography
+                                        variant={'body1'}
+                                        color={'text.primary'}
+                                        textAlign={'center'}
+                                    >
+                                        {t('common.t_coming_soon')}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                        </CardContent>
+                    </CardGradient>
+                )
+            }}
+        />
     );
 }
 

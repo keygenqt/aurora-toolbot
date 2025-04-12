@@ -22,10 +22,6 @@ export const palette = {
         main: '#75be9c',
         contrastText: '#fff',
     },
-    formBtn: {
-        main: '#4b7562',
-        contrastText: '#fff',
-    },
     primarySdk: {
         main: '#c19df2',
         contrastText: '#fff',
@@ -49,6 +45,9 @@ export const palette = {
         main: '#5c997d',
     },
     inherit: {
+        main: '#f7f7f7',
+    },
+    inheritBtn: {
         main: '#f7f7f7',
     },
 }

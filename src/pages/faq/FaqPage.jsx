@@ -42,7 +42,6 @@ export function FaqPage(props) {
     const { t } = useTranslation();
     const theme = useTheme();
     // data
-    const color = theme.palette.inherit.main;
     const keySearchHistory = "keySearchHistory"
     const [searchText, setSearchText] = React.useState('');
     const searchHistory = useEffectCache(keySearchHistory);

@@ -31,6 +31,7 @@ export const EmulatorModel = {
             uuid: data['jsonData']['model']['uuid'],
             name: data['jsonData']['model']['name'],
             isRunning: data['jsonData']['model']['is_running'],
+            // @todo size wrong
             dimensions: data['jsonData']['model']['dimensions'],
             arch: data['jsonData']['model']['arch'],
         }

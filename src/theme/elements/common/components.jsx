@@ -37,14 +37,20 @@ export const components = {
         styleOverrides: {
             root: ({ theme }) =>
                 theme.unstable_sx({
-                    height: window.isMobile ? '32px' : '24px',
-                    width: window.isMobile ? '32px' : '24px',
+                    '&.MuiIconButton-sizeMedium' : {
+                        height: window.isMobile ? 32 : 24,
+                        width: window.isMobile ? 32 : 24,
+                        '& .MuiSvgIcon-root': {
+                            fontSize: '16px',
+                        },
+                    },
+                    '&.MuiIconButton-sizeLarge' : {
+                        height: 46,
+                        width: 46,
+                    },
                     background: '#adadad45 !important',
                     '&:hover': {
                         background: theme.palette.mode === 'dark' ? '#4a4a4a' : '#dedede',
-                    },
-                    '& .MuiSvgIcon-root': {
-                        fontSize: '16px',
                     },
                 }),
         }

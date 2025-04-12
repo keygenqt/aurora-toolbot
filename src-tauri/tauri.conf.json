@@ -6,7 +6,7 @@
   "identifier": "com.keygenqt.aurora-toolbot",
   "build": {
     "frontendDist": "../dist",
-    "devUrl": "http://localhost:3000",
+    "devUrl": "http://localhost:3025",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },

@@ -25,7 +25,6 @@ import { keysStateBool } from '../../store/impl/stateBool';
 import {
     useTheme,
     Typography,
-    Card,
     CardContent,
     Stack,
     CardActions,
@@ -198,7 +197,6 @@ export function EmulatorsPage(props) {
                                             <Terminal color={'error'} />
                                         </IconButton>
                                     </Tooltip>
-
                                 )}
                                 {model.isRunning ? (
                                     <Tooltip title={t('emulators.t_btn_stop')} placement="left-start">
@@ -253,7 +251,7 @@ export function EmulatorsPage(props) {
                             variant="contained"
                             sx={{ opacity: 0.8 }}
                             onClick={() => {
-                                AppUtils.openPage(navigate, 'emulator', { state: { model: model } });
+                                AppUtils.openPage(navigate, 'emulator', { state: { id: model.id } });
                             }}
                         >
                             {t('common.t_open')}

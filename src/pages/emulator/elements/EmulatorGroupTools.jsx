@@ -16,25 +16,25 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
     useTheme,
     ButtonGroup,
-    Button,
+    Stack,
     Typography,
-    CardContent,
-    Tooltip,
-    IconButton,
-    CircularProgress,
 } from '@mui/material';
 
-import { Terminal } from '@mui/icons-material';
+import {
+    Aod,
+    SecurityUpdate,
+    AppBlocking,
+    ChargingStation,
+    UploadFile,
+} from '@mui/icons-material';
 
-import { DataImages, CardGradient } from '../../../base';
+import { AvatarButton } from '../../../base';
 import { Methods } from '../../../modules';
 
-// @todo
 export function EmulatorGroupTools(props) {
     // components
     const { t } = useTranslation();
@@ -42,64 +42,81 @@ export function EmulatorGroupTools(props) {
     // data
     let {
         model,
-        isUpdate,
-        onUpdate,
-        onRefresh,
+        disabled,
     } = props;
     const color = theme.palette.secondary.main;
     // page
     return (
-        <ButtonGroup
-            orientation="vertical"
-            aria-label="Vertical button group"
+        <Stack
+            direction={'column'}
+            spacing={2}
         >
-            <Button
-                color={'secondary'}
-                sx={{ borderRadius: 2 }}
-                key="one"
-                startIcon={<Terminal color="inherit" />}
+            <Stack
+                direction={'column'}
+                spacing={0.5}
             >
-                Install application
-            </Button>
-            <Button
-                color={'secondary'}
-                sx={{ borderRadius: 2 }}
-                key="one"
-                startIcon={<Terminal color="error" />}
+                <Typography variant="subtitle2" >
+                    Tools
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    Инструменты которые позволяют легко управлять данными и приложениями на вашем эмуляторе.
+                </Typography>
+            </Stack>
+            <ButtonGroup
+                disabled={disabled}
+                orientation="vertical"
             >
-                Install package
-            </Button>
-            <Button
-                color={'secondary'}
-                sx={{ borderRadius: 2 }}
-                key="one"
-                startIcon={<Terminal color="error" />}
-            >
-                Uninstall package
-            </Button>
-            <Button
-                color={'secondary'}
-                sx={{ borderRadius: 2 }}
-                key="one"
-                startIcon={<Terminal color="error" />}
-            >
-                Run package
-            </Button>
-            <Button
-                color={'secondary'}
-                sx={{ borderRadius: 2 }}
-                key="one"
-                startIcon={<Terminal color="error" />}
-            >
-                Upload file
-            </Button>
-        </ButtonGroup>
+                <AvatarButton
+                    icon={Aod}
+                    color={'secondary.main'}
+                    title={t('emulator.t_btn_group_install_app_title')}
+                    text={t('emulator.t_btn_group_install_app_text')}
+                    onClick={async () => {
+                        // @todo
+                    }}
+                />
+                <AvatarButton
+                    icon={SecurityUpdate}
+                    color={'secondary.main'}
+                    title={t('emulator.t_btn_group_install_rpm_title')}
+                    text={t('emulator.t_btn_group_install_rpm_text')}
+                    onClick={async () => {
+                        // @todo
+                    }}
+                />
+                <AvatarButton
+                    icon={AppBlocking}
+                    color={'secondary.main'}
+                    title={t('emulator.t_btn_group_install_uninstall_title')}
+                    text={t('emulator.t_btn_group_install_uninstall_text')}
+                    onClick={async () => {
+                        // @todo
+                    }}
+                />
+                <AvatarButton
+                    icon={ChargingStation}
+                    color={'secondary.main'}
+                    title={t('emulator.t_btn_group_install_run_app_title')}
+                    text={t('emulator.t_btn_group_install_run_app_text')}
+                    onClick={async () => {
+                        // @todo
+                    }}
+                />
+                <AvatarButton
+                    icon={UploadFile}
+                    color={'secondary.main'}
+                    title={t('emulator.t_btn_group_install_upload_title')}
+                    text={t('emulator.t_btn_group_install_upload_text')}
+                    onClick={async () => {
+                        // @todo
+                    }}
+                />
+            </ButtonGroup>
+        </Stack >
     );
 }
 
 EmulatorGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
-    isUpdate: PropTypes.bool.isRequired,
-    onUpdate: PropTypes.func.isRequired,
-    onRefresh: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
 };

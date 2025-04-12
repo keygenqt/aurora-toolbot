@@ -68,6 +68,10 @@ export function EmulatorPage(props) {
                             onUpdate={(state) => setIsUpdateItem(state)}
                             onRefresh={updateStatesSilent}
                         />
+                        <EmulatorGroupTools
+                            model={model}
+                            disabled={isUpdateItem || !model.isRunning}
+                        />
                     </Stack>
                 )
             }}

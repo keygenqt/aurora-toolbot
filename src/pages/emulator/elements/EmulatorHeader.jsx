@@ -151,7 +151,7 @@ export function EmulatorHeader(props) {
                             sx={{ alignItems: 'center' }}
                         >
                             {model.isRunning && (
-                                <Tooltip title={t('emulators.t_btn_stop')} placement="top">
+                                <Tooltip title={t('emulator.t_btn_stop')} placement="top">
                                     <IconButton
                                         size={'large'}
                                         onClick={async () => {
@@ -169,7 +169,7 @@ export function EmulatorHeader(props) {
                                 </Tooltip>
                             )}
                             {!model.isRunning && (
-                                <Tooltip title={t('emulators.t_btn_run')} placement="top">
+                                <Tooltip title={t('emulator.t_btn_run')} placement="top">
                                     <IconButton
                                         size={'large'}
                                         onClick={async () => {
@@ -204,7 +204,7 @@ export function EmulatorHeader(props) {
                                 <FolderOpen color={'default'} />
                             </Button>
                         </Tooltip>
-                        <Tooltip title={t('emulators.t_btn_terminal_user')} placement="top">
+                        <Tooltip title={t('emulator.t_btn_terminal_user')} placement="top">
                             <Button
                                 onClick={async () => {
                                     try {
@@ -217,7 +217,7 @@ export function EmulatorHeader(props) {
                                 <Terminal color={(!model.isRunning || isUpdate) ? 'default' : 'inherit'} />
                             </Button>
                         </Tooltip>
-                        <Tooltip title={t('emulators.t_btn_terminal_root')} placement="top">
+                        <Tooltip title={t('emulator.t_btn_terminal_root')} placement="top">
                             <Button
                                 onClick={async () => {
                                     try {

@@ -42,7 +42,7 @@ export function AuthPage(props) {
         <Stack
             height={1}
             sx={{
-                justifyContent: 'center',
+                alignItems: 'center',
             }}
         >
             <Box

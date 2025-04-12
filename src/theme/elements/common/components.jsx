@@ -185,11 +185,8 @@ export const components = {
                     '&.MuiButton-containedSizeLarge': {
                         borderRadius: 2
                     },
-                    '&.Mui-disabled': {
-                        color: theme.palette.mode === 'dark' ? '#ffffffb3 !important' : 'black !important',
-                    },
-                    '&.MuiButton-sizeSmall': {
-                        fontSize: 11,
+                    '&.MuiButton-contained.Mui-disabled': {
+                        color: theme.palette.mode === 'dark' ? '#ffffffb3 !important' : '#000000de !important',
                     },
                     '&.Mui-disabled.MuiButton-sizeSmall .MuiButton-icon .MuiCircularProgress-root': {
                         marginLeft: '4px',

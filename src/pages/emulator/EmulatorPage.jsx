@@ -27,7 +27,6 @@ import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
 import { EmulatorHeader } from './elements/EmulatorHeader';
-import { EmulatorGroupTerminal } from './elements/EmulatorGroupTerminal';
 import { EmulatorGroupTools } from './elements/EmulatorGroupTools';
 
 
@@ -64,18 +63,6 @@ export function EmulatorPage(props) {
                         spacing={3}
                     >
                         <EmulatorHeader
-                            model={model}
-                            isUpdate={isUpdateItem}
-                            onUpdate={(state) => setIsUpdateItem(state)}
-                            onRefresh={updateStatesSilent}
-                        />
-                        <EmulatorGroupTerminal
-                            model={model}
-                            isUpdate={isUpdateItem}
-                            onUpdate={(state) => setIsUpdateItem(state)}
-                            onRefresh={updateStatesSilent}
-                        />
-                        <EmulatorGroupTools
                             model={model}
                             isUpdate={isUpdateItem}
                             onUpdate={(state) => setIsUpdateItem(state)}

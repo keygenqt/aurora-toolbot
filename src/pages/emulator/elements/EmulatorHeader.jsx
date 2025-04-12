@@ -27,9 +27,18 @@ import {
     Tooltip,
     IconButton,
     CircularProgress,
+    ButtonGroup,
+    Button,
 } from '@mui/material';
 
-import { Stop, PlayArrow } from '@mui/icons-material';
+import {
+    Stop,
+    PlayArrow,
+    Smartphone,
+    SystemSecurityUpdateGood,
+    FolderOpen,
+    Terminal,
+} from '@mui/icons-material';
 
 import { DataImages, CardGradient } from '../../../base';
 import { Methods } from '../../../modules';
@@ -57,15 +66,17 @@ export function EmulatorHeader(props) {
             >
                 <Box
                     sx={{
-                        width: 16,
-                        height: 16,
-                        borderRadius: 16,
-                        backgroundColor: model.isRunning ? 'success.main' : 'error.main',
                         position: 'absolute',
                         top: 16,
                         right: 16,
                     }}
-                />
+                >
+                    {model.isRunning ? (
+                        <SystemSecurityUpdateGood fontSize={'small'} />
+                    ) : (
+                        <Smartphone fontSize={'small'} />
+                    )}
+                </Box>
                 <Stack
                     direction={'column'}
                     spacing={2}
@@ -99,7 +110,6 @@ export function EmulatorHeader(props) {
                                 <Stack
                                     direction={'row'}
                                     spacing={1}
-                                    alignItems={'center'}
                                 >
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-certificate" />
@@ -135,7 +145,11 @@ export function EmulatorHeader(props) {
                             <CircularProgress size={27} />
                         </Box>
                     ) : (
-                        <>
+                        <Stack
+                            direction={'column'}
+                            spacing={2}
+                            sx={{ alignItems: 'center' }}
+                        >
                             {model.isRunning && (
                                 <Tooltip title={t('emulators.t_btn_stop')} placement="top">
                                     <IconButton
@@ -169,8 +183,54 @@ export function EmulatorHeader(props) {
                                     </IconButton>
                                 </Tooltip>
                             )}
-                        </>
+                        </Stack>
                     )}
+
+                    <ButtonGroup
+                        variant={'outlined'}
+                        color={'secondary'}
+                        disabled={!model.isRunning || isUpdate}
+                    >
+                        <Tooltip title={t('common.t_btn_open_dir')} placement="top">
+                            <Button
+                                onClick={async () => {
+                                    try {
+                                        await Methods.appOpenDir(model.dirEmulator);
+                                    } catch (e) {
+                                        await onRefresh();
+                                    }
+                                }}
+                            >
+                                <FolderOpen color={'default'} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title={t('emulators.t_btn_terminal_user')} placement="top">
+                            <Button
+                                onClick={async () => {
+                                    try {
+                                        await Methods.emulatorTerminalById(model.id, false);
+                                    } catch (e) {
+                                        await onRefresh();
+                                    }
+                                }}
+                            >
+                                <Terminal color={(!model.isRunning || isUpdate) ? 'default' : 'inherit'} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title={t('emulators.t_btn_terminal_root')} placement="top">
+                            <Button
+                                onClick={async () => {
+                                    try {
+                                        await Methods.emulatorTerminalById(model.id, true);
+                                    } catch (e) {
+                                        await onRefresh();
+                                    }
+                                }}
+                            >
+                                <Terminal color={(!model.isRunning || isUpdate) ? 'default' : 'error'} />
+                            </Button>
+                        </Tooltip>
+                    </ButtonGroup>
                 </Stack>
             </CardContent>
         </CardGradient>

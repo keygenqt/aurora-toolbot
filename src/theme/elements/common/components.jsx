@@ -33,6 +33,42 @@ export const components = {
             }
         }
     },
+    MuiButtonGroup: {
+        styleOverrides: {
+            root: ({ theme }) =>
+                theme.unstable_sx({
+                    '& .MuiButtonBase-root:not(.Mui-disabled) .MuiTypography-body2': {
+                        color: 'text.secondary'
+                    },
+                    '& .MuiButtonBase-root:not(.Mui-disabled) .MuiAvatar-root': {
+                        backgroundColor: 'var(--variant-outlinedColor)'
+                    },
+                }),
+        }
+    },
+    MuiButtonBase: {
+        styleOverrides: {
+            root: ({ theme }) =>
+                theme.unstable_sx({
+                    borderRadius: '8px',
+                    backgroundColor: window.isMobile ? 'transparent !important' : null,
+                    '&.MuiButton-containedSizeLarge': {
+                        borderRadius: 2
+                    },
+                    '&.MuiButton-contained.Mui-disabled': {
+                        color: theme.palette.mode === 'dark' ? '#ffffffb3 !important' : '#000000de !important',
+                    },
+                    '&.Mui-disabled.MuiButton-sizeSmall .MuiButton-icon .MuiCircularProgress-root': {
+                        marginLeft: '4px',
+                        width: '14px !important',
+                        height: '14px !important',
+                    },
+                    '&.MuiButton-sizeSmall .MuiButton-icon': {
+                        marginLeft: '2px',
+                    }
+                }),
+        }
+    },
     MuiIconButton: {
         styleOverrides: {
             root: ({ theme }) =>
@@ -173,29 +209,6 @@ export const components = {
                     '& .MuiPaper-root': {
                         borderRadius: '13px',
                     },
-                }),
-        }
-    },
-    MuiButtonBase: {
-        styleOverrides: {
-            root: ({ theme }) =>
-                theme.unstable_sx({
-                    borderRadius: '8px',
-                    backgroundColor: window.isMobile ? 'transparent !important' : null,
-                    '&.MuiButton-containedSizeLarge': {
-                        borderRadius: 2
-                    },
-                    '&.MuiButton-contained.Mui-disabled': {
-                        color: theme.palette.mode === 'dark' ? '#ffffffb3 !important' : '#000000de !important',
-                    },
-                    '&.Mui-disabled.MuiButton-sizeSmall .MuiButton-icon .MuiCircularProgress-root': {
-                        marginLeft: '4px',
-                        width: '14px !important',
-                        height: '14px !important',
-                    },
-                    '&.MuiButton-sizeSmall .MuiButton-icon': {
-                        marginLeft: '2px',
-                    }
                 }),
         }
     },

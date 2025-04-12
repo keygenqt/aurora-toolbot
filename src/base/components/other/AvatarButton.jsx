@@ -26,10 +26,8 @@ import {
 export function AvatarButton(props) {
 
     const {
-        color,
         title,
         text,
-        icon,
         onClick,
     } = props;
 
@@ -37,7 +35,6 @@ export function AvatarButton(props) {
 
     return (
         <Button
-            color={'secondary'}
             sx={{
                 borderRadius: 2,
                 padding: 0
@@ -57,7 +54,6 @@ export function AvatarButton(props) {
                     spacing={1.5}
                 >
                     <Avatar sx={{
-                        bgcolor: color ? color : 'inherit.main',
                         width: 47,
                         height: 47,
                     }}>
@@ -74,7 +70,7 @@ export function AvatarButton(props) {
                         <Typography variant="subtitle2" >
                             {title}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        <Typography variant="body2">
                             {text}
                         </Typography>
                     </Stack>

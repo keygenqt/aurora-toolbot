@@ -55,7 +55,7 @@ export function EmulatorGroupTools(props) {
                 direction={'column'}
                 spacing={0.5}
             >
-                <Typography variant="subtitle2" >
+                <Typography variant="subtitle2" sx={{ color: 'text.primary' }} >
                     Tools
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -64,11 +64,11 @@ export function EmulatorGroupTools(props) {
             </Stack>
             <ButtonGroup
                 disabled={disabled}
-                orientation="vertical"
+                orientation={'vertical'}
+                color={'secondary'}
             >
                 <AvatarButton
                     icon={Aod}
-                    color={'secondary.main'}
                     title={t('emulator.t_btn_group_install_app_title')}
                     text={t('emulator.t_btn_group_install_app_text')}
                     onClick={async () => {
@@ -77,7 +77,6 @@ export function EmulatorGroupTools(props) {
                 />
                 <AvatarButton
                     icon={SecurityUpdate}
-                    color={'secondary.main'}
                     title={t('emulator.t_btn_group_install_rpm_title')}
                     text={t('emulator.t_btn_group_install_rpm_text')}
                     onClick={async () => {
@@ -86,7 +85,6 @@ export function EmulatorGroupTools(props) {
                 />
                 <AvatarButton
                     icon={AppBlocking}
-                    color={'secondary.main'}
                     title={t('emulator.t_btn_group_install_uninstall_title')}
                     text={t('emulator.t_btn_group_install_uninstall_text')}
                     onClick={async () => {
@@ -95,7 +93,6 @@ export function EmulatorGroupTools(props) {
                 />
                 <AvatarButton
                     icon={ChargingStation}
-                    color={'secondary.main'}
                     title={t('emulator.t_btn_group_install_run_app_title')}
                     text={t('emulator.t_btn_group_install_run_app_text')}
                     onClick={async () => {
@@ -104,7 +101,6 @@ export function EmulatorGroupTools(props) {
                 />
                 <AvatarButton
                     icon={UploadFile}
-                    color={'secondary.main'}
                     title={t('emulator.t_btn_group_install_upload_title')}
                     text={t('emulator.t_btn_group_install_upload_text')}
                     onClick={async () => {

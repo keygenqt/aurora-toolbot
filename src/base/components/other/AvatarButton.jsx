@@ -37,7 +37,8 @@ export function AvatarButton(props) {
         <Button
             sx={{
                 borderRadius: 2,
-                padding: 0
+                padding: 0,
+                overflow: 'hidden'
             }}
             onClick={onClick}
         >
@@ -46,30 +47,41 @@ export function AvatarButton(props) {
                 spacing={2}
                 sx={{
                     width: 1,
-                    padding: 1.5
+                    padding: 1.5,
+                    backgroundColor: 'background.default',
                 }}
             >
                 <Stack
                     direction={'row'}
                     spacing={1.5}
+                    sx={{
+                        '& .MuiSvgIcon-root': {
+                            height: '65%'
+                        }
+                    }}
                 >
-                    <Avatar sx={{
-                        width: 47,
-                        height: 47,
-                    }}>
-                        <Icon color={'default'}  />
-                    </Avatar>
+                    {Icon && (
+                        <Avatar sx={{
+                            width: 47,
+                            height: 47,
+                        }}>
+                            <Icon color={'default'} />
+                        </Avatar>
+                    )}
                     <Stack
                         direction={'column'}
                         spacing={0.5}
                         sx={{
                             width: 1,
-                            textAlign: 'left'
+                            textAlign: 'left',
+                            justifyContent: 'center',
                         }}
                     >
-                        <Typography variant="subtitle2" >
-                            {title}
-                        </Typography>
+                        {title && (
+                            <Typography variant="subtitle2" >
+                                {title}
+                            </Typography>
+                        )}
                         <Typography variant="body2">
                             {text}
                         </Typography>

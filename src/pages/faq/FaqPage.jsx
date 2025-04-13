@@ -30,11 +30,16 @@ import {
     CardActionArea,
     IconButton,
     Box,
+    ButtonGroup,
 } from '@mui/material';
 
 import { Search, AccessTime, DeleteOutline } from '@mui/icons-material';
 
-import { useEffectCache, AppUtils, CardGradient } from '../../base';
+import {
+    useEffectCache,
+    AppUtils,
+    AvatarButton,
+} from '../../base';
 
 export function FaqPage(props) {
     // components
@@ -65,6 +70,7 @@ export function FaqPage(props) {
                         spacing={2}
                     >
                         <TextField
+                            autoFocus
                             color={'info'}
                             sx={{ width: 1 }}
                             label={t('faq.t_field_search')}
@@ -86,7 +92,7 @@ export function FaqPage(props) {
                                     if (!searchHistory || !Array.isArray(searchHistory)) {
                                         AppUtils.setCache(keySearchHistory, [searchText]);
                                     } else {
-                                        if (searchHistory.length >= 7) {
+                                        if (searchHistory.length >= 11) {
                                             searchHistory.pop();
                                         }
                                         AppUtils.setCache(keySearchHistory, [searchText].concat(searchHistory));
@@ -101,50 +107,47 @@ export function FaqPage(props) {
             </Stack>
 
             {Array.isArray(searchHistory) && (
-                <Stack>
+                <Stack
+                    direction={'column'}
+                    spacing={2}
+                    sx={{
+                        paddingBottom: 3
+                    }}
+                >
                     <Stack
                         direction={'row'}
                         spacing={1}
                         alignItems={'center'}
                     >
-                        <AccessTime fontSize={'small'} />
+                        <AccessTime fontSize={'small'} color={'info'} />
                         <Typography
-                            variant={'body1'}
-                            color={'text.primary'}
+                            variant={'subtitle2'}
+                            color={'info'}
+                            sx={{paddingBottom: '1px'}}
                         >
                             {t('faq.t_history_title')}
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
                         <IconButton
-                            color="inherit"
                             onClick={() => AppUtils.setCache(keySearchHistory, undefined)}
                         >
                             <DeleteOutline />
                         </IconButton>
                     </Stack>
-                    <List>
-                        {searchHistory.map((text, index) => (
-                            <ListItem key={`index-${index}`}>
-                                <CardGradient>
-                                    <CardActionArea
-                                        onClick={() => {
-                                            AppUtils.openPage(navigate, 'faq', { state: { search: text } });
-                                        }}
-                                    >
-                                        <CardContent sx={{
-                                            '&:last-child': {
-                                                paddingBottom: 2
-                                            }
-                                        }}>
-                                            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                                                {text}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                </CardGradient>
-                            </ListItem>
+
+                    <ButtonGroup
+                        orientation={'vertical'}
+                        color={'info'}
+                    >
+                        {searchHistory.map((text) => (
+                            <AvatarButton
+                                text={text}
+                                onClick={async () => {
+                                    AppUtils.openPage(navigate, 'faq', { state: { search: text } });
+                                }}
+                            />
                         ))}
-                    </List>
+                    </ButtonGroup>
                 </Stack>
             )}
         </Stack>

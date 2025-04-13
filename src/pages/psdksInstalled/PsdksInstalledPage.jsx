@@ -121,7 +121,7 @@ export function PsdksInstalledPage(props) {
                                             <FontAwesomeIcon icon="fa-solid fa-house" />
                                         </Box>
                                         <Link
-                                            href={'#'}
+                                            href={'javascript:void(0)'}
                                             onClick={async () => {
                                                 await AppUtils.openUrl(model.homeUrl)
                                             }}

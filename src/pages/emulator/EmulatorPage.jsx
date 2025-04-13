@@ -61,6 +61,7 @@ export function EmulatorPage(props) {
                     <Stack
                         direction={'column'}
                         spacing={3}
+                        sx={{width: 1}}
                     >
                         <EmulatorHeader
                             model={model}

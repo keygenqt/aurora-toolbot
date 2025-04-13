@@ -15,21 +15,21 @@
  */
 import * as React from 'react';
 import { useLocation } from "react-router";
-import { useTranslation } from "react-i18next";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setFlutterInstalled } from '../../store/impl/flutterInstalled';
 import { keysStateBool } from '../../store/impl/stateBool';
 
-import { useTheme, Stack, Typography, CardContent } from '@mui/material';
+import { useTheme, Stack } from '@mui/material';
 
-import { setEffectStateBool, LottieComingSoon, CardGradient } from '../../base';
+import { setEffectStateBool } from '../../base';
 import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
+import { FlutterHeader } from './elements/FlutterHeader';
+
 export function FlutterPage(props) {
     // components
-    const { t } = useTranslation();
     const { state } = useLocation();
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -58,28 +58,18 @@ export function FlutterPage(props) {
             reduxKey={reduxKey}
             itemList={(model) => {
                 return model.id !== state.id ? null : (
-                    <CardGradient color={color}>
-                        <CardContent sx={{ '&:last-child': { padding: 2 } }} >
-                            <Stack
-                                height={1}
-                                sx={{ justifyContent: "center", alignItems: "center" }}
-                            >
-                                <Stack
-                                    spacing={5}
-                                    sx={{ alignItems: "center" }}
-                                >
-                                    <LottieComingSoon />
-                                    <Typography
-                                        variant={'body1'}
-                                        color={'text.primary'}
-                                        textAlign={'center'}
-                                    >
-                                        {t('common.t_coming_soon')}
-                                    </Typography>
-                                </Stack>
-                            </Stack>
-                        </CardContent>
-                    </CardGradient>
+                    <Stack
+                        direction={'column'}
+                        spacing={3}
+                        sx={{ width: 1 }}
+                    >
+                        <FlutterHeader
+                            model={model}
+                            isUpdate={isUpdateItem}
+                            onUpdate={(state) => setIsUpdateItem(state)}
+                            onRefresh={updateStatesSilent}
+                        />
+                    </Stack>
                 )
             }}
         />

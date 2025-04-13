@@ -22,35 +22,58 @@ i18n
         resources: {
             ru: {
                 translation: {
-                    main: {
-                        t_hello: 'Добро пожаловать в приложение Aurora Toolbot!',
-                        t_connect_success: 'Соединение успешно установлено.',
-                        t_connect_success_info_t: 'D-Bus: v{{version}}',
-                        t_connect_success_info_w: 'Aurora Bot: v{{version}}',
-                        t_connect_btn_start: 'Инструменты',
-                        t_connect_error: 'Не удалось установить соединение.',
-                        t_connect_error_info_t: 'Установите актуальную версию приложения Aurora Bot.',
-                        t_connect_error_info_w: 'Необходимо установить актуальную версию приложения Aurora Bot и активировать соединение с сервером.',
-                        t_connect_btn_doc: 'Документация',
-                        menu: {
-                            t_title_settings: 'Настройки',
-                            t_title_info: 'Информация',
-                            t_btn_auth: 'Авторизация',
-                            t_btn_force_dark: 'Force Dark Mode',
-                            t_btn_docs: 'Документация',
-                            t_btn_about: 'О Aurora Toolbot',
-                        },
-                        dialog_info: {
-                            t_desc: 'Приложение обеспечивающие лёгкое управление экосистемой ОС Аврора.',
-                        }
+                    /// PAGE: auth
+                    auth: {
+                        t_field_token: 'Токен',
+                        t_btn_auth: 'Отправить',
                     },
-                    forbidden: {
-                        t_hello: 'Добро пожаловать в приложение Aurora Toolbot!',
-                        t_info: 'Это не безопасная зона, и здесь приложение не доступно, воспользуйтесь Telegram Mini-app.',
+                    /// PAGE: device
+                    device: {
+
                     },
+                    /// PAGE: devices
+                    devices: {
+
+                    },
+                    /// PAGE: emulator
+                    emulator: {
+                        t_btn_run: 'Запустить эмулятор',
+                        t_btn_stop: 'Остановить эмулятор',
+                        t_btn_terminal_user: 'SSH Терминал user',
+                        t_btn_terminal_root: 'SSH Терминал root',
+                        t_btn_group_install_app_title: 'Установка приложений',
+                        t_btn_group_install_app_text: 'Установка предварительно собранных демонстрационных приложений.',
+                        t_btn_group_install_rpm_title: 'Установка пакета',
+                        t_btn_group_install_rpm_text: 'Загрузка и установка пакета RPM на ваш эмулятор.',
+                        t_btn_group_install_uninstall_title: 'Удаление пакета',
+                        t_btn_group_install_uninstall_text: 'Удалите установленный пакет с вашего эмулятора.',
+                        t_btn_group_install_run_app_title: 'Запуск пакета',
+                        t_btn_group_install_run_app_text: 'Запустите в песочнице приложение на эмуляторе.',
+                        t_btn_group_install_upload_title: 'Загрузка файла',
+                        t_btn_group_install_upload_text: 'Загрузите файл на ваш эмулятор.',
+                    },
+                    /// PAGE: emulators
+                    emulators: {
+                        t_btn_run: 'Запустить эмулятор',
+                        t_btn_stop: 'Остановить эмулятор',
+                        t_btn_terminal_user: 'SSH Терминал user',
+                        t_btn_terminal_root: 'SSH Терминал root',
+                    },
+                    /// PAGE: error
                     error: {
                         t_text: 'Хм, такой станицы не существует.'
                     },
+                    /// PAGE: faq
+                    faq: {
+                        t_title: 'Задайте вопрос и релевантный поиск найдет в Aurora Dataset ответ на него.',
+                        t_history_title: 'История запросов',
+                        t_field_search: 'Ваш вопрос',
+                    },
+                    /// PAGE: faqs
+                    faqs: {
+
+                    },
+                    /// PAGE: features
                     features: {
                         devices: {
                             t_title: 'Устройства',
@@ -86,58 +109,74 @@ i18n
                             t_text: 'В этом разделе вы можете задавать вопросы а релевантный поиск найдет ответы на них.',
                         },
                     },
-                    emulators: {
-                        t_btn_run: 'Запустить эмулятор',
-                        t_btn_stop: 'Остановить эмулятор',
-                        t_btn_terminal_user: 'SSH Терминал user',
-                        t_btn_terminal_root: 'SSH Терминал root',
-                    },
-                    emulator: {
-                        t_btn_run: 'Запустить эмулятор',
-                        t_btn_stop: 'Остановить эмулятор',
-                        t_btn_terminal_user: 'SSH Терминал user',
-                        t_btn_terminal_root: 'SSH Терминал root',
-                        t_btn_group_install_app_title: 'Установка приложений',
-                        t_btn_group_install_app_text: 'Установка предварительно собранных демонстрационных приложений.',
-                        t_btn_group_install_rpm_title: 'Установка пакета',
-                        t_btn_group_install_rpm_text: 'Загрузка и установка пакета RPM на ваш эмулятор.',
-                        t_btn_group_install_uninstall_title: 'Удаление пакета',
-                        t_btn_group_install_uninstall_text: 'Удалите установленный пакет с вашего эмулятора.',
-                        t_btn_group_install_run_app_title: 'Запуск пакета',
-                        t_btn_group_install_run_app_text: 'Запустите в песочнице приложение на эмуляторе.',
-                        t_btn_group_install_upload_title: 'Загрузка файла',
-                        t_btn_group_install_upload_text: 'Загрузите файл на ваш эмулятор.',
-                    },
-                    fluttersInstalled: {
+                    /// PAGE: flutter
+                    flutter: {
                         t_btn_terminal: 'Терминал Flutter',
                     },
-                    psdksInstalled: {
-                        t_btn_terminal: 'Терминал PSDK',
-                    },
-                    sdksInstalled: {
-                        t_btn_tools: 'Maintenance Tool',
-                    },
+                    /// PAGE: fluttersAvailable
                     fluttersAvailable: {
                         t_text: 'Фреймворк для создания красивых, изначально скомпилированных, приложений на основе единой кодовой базы с поддержкой ОС Аврора.',
                     },
+                    /// PAGE: fluttersInstalled
+                    fluttersInstalled: {
+                        t_btn_terminal: 'Терминал Flutter',
+                    },
+                    /// PAGE: forbidden
+                    forbidden: {
+                        t_hello: 'Добро пожаловать в приложение Aurora Toolbot!',
+                        t_info: 'Это не безопасная зона, и здесь приложение не доступно, воспользуйтесь Telegram Mini-app.',
+                    },
+                    /// PAGE: main
+                    main: {
+                        t_hello: 'Добро пожаловать в приложение Aurora Toolbot!',
+                        t_connect_success: 'Соединение успешно установлено.',
+                        t_connect_success_info_t: 'D-Bus: v{{version}}',
+                        t_connect_success_info_w: 'Aurora Bot: v{{version}}',
+                        t_connect_btn_start: 'Инструменты',
+                        t_connect_error: 'Не удалось установить соединение.',
+                        t_connect_error_info_t: 'Установите актуальную версию приложения Aurora Bot.',
+                        t_connect_error_info_w: 'Необходимо установить актуальную версию приложения Aurora Bot и активировать соединение с сервером.',
+                        t_connect_btn_doc: 'Документация',
+                        menu: {
+                            t_title_settings: 'Настройки',
+                            t_title_info: 'Информация',
+                            t_btn_auth: 'Авторизация',
+                            t_btn_force_dark: 'Force Dark Mode',
+                            t_btn_docs: 'Документация',
+                            t_btn_about: 'О Aurora Toolbot',
+                        },
+                        dialog_info: {
+                            t_desc: 'Приложение обеспечивающие лёгкое управление экосистемой ОС Аврора.',
+                        }
+                    },
+                    /// PAGE: psdk
+                    psdk: {
+                        t_btn_terminal: 'Терминал PSDK',
+                    },
+                    /// PAGE: psdksAvailable
                     psdksAvailable: {
                         t_text: 'Набор инструментов для разработки, отладки и тестирования компонентов ОС Аврора предназначенного для CI.',
                     },
+                    /// PAGE: psdksInstalled
+                    psdksInstalled: {
+                        t_btn_terminal: 'Терминал PSDK',
+                    },
+                    /// PAGE: sdk
+                    sdk: {
+                        t_btn_tools: 'Maintenance Tool',
+                    },
+                    /// PAGE: sdksAvailable
                     sdksAvailable: {
                         t_dialog_download_title: 'Скачать Аврора SDK',
                         t_dialog_download_body: 'Будет запущен процесс скачивания установочного файла Аврора SDK в директорию загрузок.',
                         t_item_mb2: 'Набор инструментов для сборки, разработки, отладки и тестирования прикладного ПО для ОС Аврора, использующий инструмент mb2.',
                         t_item_bt: 'Набор инструментов для разработки, отладки, сборки и тестирования прикладного ПО для ОС Аврора, использующий инструменты для кросс-компиляции Аврора Build Tools.'
                     },
-                    faq: {
-                        t_title: 'Задайте вопрос и релевантный поиск найдет в Aurora Dataset ответ на него.',
-                        t_history_title: 'История запросов',
-                        t_field_search: 'Ваш вопрос',
+                    /// PAGE: sdksInstalled
+                    sdksInstalled: {
+                        t_btn_tools: 'Maintenance Tool',
                     },
-                    auth: {
-                        t_field_token: 'Токен',
-                        t_btn_auth: 'Отправить',
-                    },
+                    // Common text for pages
                     common: {
                         t_sync: 'Синхронизация',
                         t_download: 'Скачать',

@@ -24,9 +24,6 @@ import {
 import { AppUtils } from '../../../base';
 
 export const sdk = {
-    sdkSync: async function () {
-        return AppUtils.checkResponse(await invoke("sdk_sync", {}));
-    },
     sdkAvailable: async function () {
         try {
             let data = await invoke("sdk_available", {});
@@ -41,7 +38,13 @@ export const sdk = {
             return null;
         }
     },
-    sdkInstalled: async function () {
+    sdkIdeCloseById: async function (id) {
+        AppUtils.checkResponse(await invoke("sdk_ide_close_by_id", { id: id }));
+    },
+    sdkIdeOpenById: async function (id) {
+        AppUtils.checkResponse(await invoke("sdk_ide_open_by_id", { id: id }));
+    },
+    sdkInfo: async function () {
         try {
             let data = await invoke("sdk_info", {});
             let selector = SelectorModel.parse(data);
@@ -54,6 +57,9 @@ export const sdk = {
         } catch (e) {
             return null;
         }
+    },
+    sdkSync: async function () {
+        return AppUtils.checkResponse(await invoke("sdk_sync", {}));
     },
     sdkToolsById: async function (id) {
         AppUtils.checkResponse(await invoke("sdk_tools_by_id", { id: id }));

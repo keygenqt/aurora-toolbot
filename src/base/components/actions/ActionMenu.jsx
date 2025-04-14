@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import { useNavigate } from 'react-router';
 import { useTranslation } from "react-i18next";
 
 import {
@@ -47,7 +46,6 @@ import { AppConf } from '../../../conf/AppConf'
 export function ActionMenu() {
     // components
     const { t } = useTranslation();
-    const navigate = useNavigate();
     const darkModeCache = useEffectCache('isDark');
     // states
     const [state, setState] = React.useState(false);
@@ -109,23 +107,6 @@ export function ActionMenu() {
                     >
                         {t('main.menu.t_title_settings')}
                     </Typography>
-                    {window.isTauri && (
-                        <ListItem key={'menu-2'} disablePadding>
-                            <ListItemButton
-                                onClick={() => {
-                                    setTimeout(() => {
-                                        toggleOpen(false)
-                                        AppUtils.openPage(navigate, "/auth")
-                                    }, 200);
-                                }}
-                            >
-                                <ListItemIcon>
-                                    <LockOpen />
-                                </ListItemIcon>
-                                <ListItemText primary={t('main.menu.t_btn_auth')} />
-                            </ListItemButton>
-                        </ListItem>
-                    )}
                     <ListItem key={'menu-1'} disablePadding>
                         <ListItemButton
                             onClick={() => {

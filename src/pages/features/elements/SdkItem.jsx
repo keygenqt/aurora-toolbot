@@ -100,7 +100,7 @@ export function SdkItem(props) {
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
                             try { await Methods.sdkSync() } catch (e) { }
-                            dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+                            dispatch(setSdkInstalled(await Methods.sdkInfo()));
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
                         }}
                     />

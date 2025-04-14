@@ -92,7 +92,7 @@ export function PsdkItem(props) {
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, true);
                             try { await Methods.psdkSync() } catch (e) { }
-                            dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
+                            dispatch(setPsdkInstalled(await Methods.psdkInfo()));
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, false);
                         }}
                     />

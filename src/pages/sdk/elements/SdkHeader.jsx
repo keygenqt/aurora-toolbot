@@ -27,11 +27,15 @@ import {
     Tooltip,
     ButtonGroup,
     Button,
+    IconButton,
+    CircularProgress,
 } from '@mui/material';
 
 import {
     FolderOpen,
     Handyman,
+    PlayArrow,
+    Stop,
 } from '@mui/icons-material';
 
 import { DataImages, CardGradient } from '../../../base';
@@ -106,7 +110,7 @@ export function SdkHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    <Box>Qt v{model.qtVersion}</Box>
+                                    <Box>Based on Qt v{model.qtVersion}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -122,10 +126,52 @@ export function SdkHeader(props) {
                         </Typography>
                     </Stack>
 
+                    {isUpdate ? (
+                        <Box sx={{ padding: 1 }}>
+                            <CircularProgress size={27} />
+                        </Box>
+                    ) : (
+                        <Stack
+                            direction={'column'}
+                            spacing={2}
+                            sx={{ alignItems: 'center' }}
+                        >
+                            {model.isRunning && (
+                                <Tooltip title={t('sdk.t_btn_stop')} placement="top">
+                                    <IconButton
+                                        size={'large'}
+                                        onClick={async () => {
+                                            onUpdate(true)
+                                            try { await Methods.sdkIdeCloseById(model.id) } catch (e) { }
+                                            await onRefresh();
+                                            onUpdate(false)
+                                        }}
+                                    >
+                                        <Stop />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                            {!model.isRunning && (
+                                <Tooltip title={t('sdk.t_btn_run')} placement="top">
+                                    <IconButton
+                                        size={'large'}
+                                        onClick={async () => {
+                                            onUpdate(true)
+                                            try { await Methods.sdkIdeOpenById(model.id) } catch (e) { }
+                                            await onRefresh();
+                                            onUpdate(false)
+                                        }}
+                                    >
+                                        <PlayArrow />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                        </Stack>
+                    )}
+
                     <ButtonGroup
                         variant={'outlined'}
                         color={'primarySdk'}
-                        disabled={isUpdate}
                     >
                         <Tooltip title={t('common.t_btn_open_dir')} placement="top">
                             <Button

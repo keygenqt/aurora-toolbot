@@ -40,7 +40,7 @@ export function SdkPage(props) {
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+        dispatch(setSdkInstalled(await Methods.sdkInfo()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);

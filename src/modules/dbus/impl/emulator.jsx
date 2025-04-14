@@ -23,8 +23,8 @@ import {
 import { AppUtils } from '../../../base';
 
 export const emulator = {
-    emulatorSync: async function () {
-        AppUtils.checkResponse(await invoke("emulator_sync", {}))
+    emulatorCloseById: async function (id) {
+        AppUtils.checkResponse(await invoke("emulator_close_by_id", { id: id }));
     },
     emulatorInfo: async function () {
         try {
@@ -43,9 +43,6 @@ export const emulator = {
     emulatorOpenById: async function (id) {
         AppUtils.checkResponse(await invoke("emulator_open_by_id", { id: id }));
     },
-    emulatorCloseById: async function (id) {
-        AppUtils.checkResponse(await invoke("emulator_close_by_id", { id: id }));
-    },
     emulatorRecordStartById: async function (id) {
         AppUtils.checkResponse(await invoke("emulator_record_start_by_id", { id: id }));
     },
@@ -54,6 +51,9 @@ export const emulator = {
     },
     emulatorScreenshotById: async function (id) {
         AppUtils.checkResponse(await invoke("emulator_screenshot_by_id", { id: id }));
+    },
+    emulatorSync: async function () {
+        AppUtils.checkResponse(await invoke("emulator_sync", {}))
     },
     emulatorTerminalById: async function (id, isRoot) {
         AppUtils.checkResponse(await invoke("emulator_terminal_by_id", { id: id, isRoot: isRoot }));

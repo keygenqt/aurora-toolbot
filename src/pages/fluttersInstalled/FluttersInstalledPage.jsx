@@ -66,7 +66,7 @@ export function FluttersInstalledPage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
+        dispatch(setFlutterInstalled(await Methods.flutterInfo()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };

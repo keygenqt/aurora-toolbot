@@ -31,6 +31,7 @@ export const SdkInstalledModel = {
             qtCreatorVersion: data['jsonData']['model']['qt_creator_version'],
             qtVersion: data['jsonData']['model']['qt_version'],
             buildDate: data['jsonData']['model']['build_date'],
+            isRunning: data['jsonData']['model']['is_running'],
             // custom
             versionFull: data['jsonData']['model']['version'].split('-')[0],
             buildType: data['jsonData']['model']['version'].split('-')[1].toUpperCase(),

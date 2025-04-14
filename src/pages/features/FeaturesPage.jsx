@@ -69,19 +69,19 @@ export function FeaturesPage(props) {
                 dispatch(setEmulators(await Methods.emulatorInfo()));
             },
             sdkInstalled && !refresh ? null : async () => {
-                dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+                dispatch(setSdkInstalled(await Methods.sdkInfo()));
             },
             sdkAvailable && !refresh ? null : async () => {
                 dispatch(setSdkAvailable(await Methods.sdkAvailable()));
             },
             psdkInstalled && !refresh ? null : async () => {
-                dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
+                dispatch(setPsdkInstalled(await Methods.psdkInfo()));
             },
             psdkAvailable && !refresh ? null : async () => {
                 dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
             },
             flutterInstalled && !refresh ? null : async () => {
-                dispatch(setFlutterInstalled(await Methods.flutterInstalled()));
+                dispatch(setFlutterInstalled(await Methods.flutterInfo()));
             },
             flutterAvailable && !refresh ? null : async () => {
                 dispatch(setFlutterAvailable(await Methods.flutterAvailable()));

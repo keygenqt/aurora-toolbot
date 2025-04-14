@@ -132,21 +132,6 @@ export function AppBarLayout(props) {
                         />
                     </Box>
                 )}
-                {props.bg === 'auth' && (
-                    <Box sx={{
-                        height: 200,
-                        width: 200,
-                        position: 'absolute',
-                        bottom: 0,
-                        right: 0,
-                        textAlign: 'center',
-                    }} >
-                        <FontAwesomeIcon
-                            style={{ fontSize: 160, color: 'secondary', opacity: 0.05 }}
-                            icon="fa-solid fa-id-badge"
-                        />
-                    </Box>
-                )}
                 {props.children}
             </Box>
         </>
@@ -154,7 +139,7 @@ export function AppBarLayout(props) {
 }
 
 AppBarLayout.propTypes = {
-    bg: PropTypes.oneOf(['faq', 'auth']),
+    bg: PropTypes.oneOf(['faq']),
     actions: PropTypes.element,
     padding: PropTypes.number,
     children: PropTypes.element.isRequired,

@@ -18,21 +18,6 @@ use crate::tools::{client::{get_proxy_bot, get_session}, constants};
 use super::{TIMEOUT_MIDDLE, TIMEOUT_SHORT};
 
 #[tauri::command(async)]
-pub fn psdk_sync() -> Result<String, Error> {
-    // Open session connect
-    let conn = get_session()?;
-    // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
-    // Request
-    let method = "PsdkSync";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
-        Ok(value) => value,
-        Err(e) => Err(Error::Anyhow(e.into()))?,
-    };
-    Ok(result)
-}
-
-#[tauri::command(async)]
 pub fn psdk_available() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
@@ -86,6 +71,21 @@ pub fn psdk_info_by_id(id: String) -> Result<String, Error> {
     // Request
     let method = "PsdkInfoById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn psdk_sync() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "PsdkSync";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

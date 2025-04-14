@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './auth/AuthPage';
 export * from './device/DevicePage';
 export * from './devices/DevicesPage';
 export * from './emulator/EmulatorPage';

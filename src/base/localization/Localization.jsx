@@ -22,11 +22,6 @@ i18n
         resources: {
             ru: {
                 translation: {
-                    /// PAGE: auth
-                    auth: {
-                        t_field_token: 'Токен',
-                        t_btn_auth: 'Отправить',
-                    },
                     /// PAGE: device
                     device: {
 
@@ -140,7 +135,6 @@ i18n
                         menu: {
                             t_title_settings: 'Настройки',
                             t_title_info: 'Информация',
-                            t_btn_auth: 'Авторизация',
                             t_btn_force_dark: 'Force Dark Mode',
                             t_btn_docs: 'Документация',
                             t_btn_about: 'О Aurora Toolbot',
@@ -164,6 +158,8 @@ i18n
                     /// PAGE: sdk
                     sdk: {
                         t_btn_tools: 'Maintenance Tool',
+                        t_btn_run: 'Запустить Аврора IDE',
+                        t_btn_stop: 'Остановить Аврора IDE',
                     },
                     /// PAGE: sdksAvailable
                     sdksAvailable: {

@@ -67,7 +67,7 @@ export function PsdksInstalledPage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setPsdkInstalled(await Methods.psdkInstalled()));
+        dispatch(setPsdkInstalled(await Methods.psdkInfo()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };

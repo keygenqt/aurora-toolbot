@@ -66,7 +66,7 @@ export function SdksInstalledPage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setSdkInstalled(await Methods.sdkInstalled()));
+        dispatch(setSdkInstalled(await Methods.sdkInfo()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };

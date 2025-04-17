@@ -32,6 +32,7 @@ import {
     FluttersInstalledPage,
     MainPage,
     PsdkPage,
+    PsdkTargetPage,
     PsdksAvailablePage,
     PsdksInstalledPage,
     SdkPage,
@@ -108,14 +109,26 @@ export function AppRoute() {
                         <Route index element={(
                             <PsdksInstalledPage />
                         )} />
-                        <Route path=":key" element={(
-                            <PsdkPage />
-                        )} />
+                        <Route path="psdk">
+                            <Route index element={(
+                                <PsdkPage />
+                            )} />
+                            <Route path="psdkTarget">
+                                <Route index element={(
+                                    <PsdkTargetPage />
+                                )} />
+                            </Route>
+                        </Route>
                     </Route>
                     <Route path="psdk">
                         <Route index element={(
                             <PsdkPage />
                         )} />
+                        <Route path="psdkTarget">
+                            <Route index element={(
+                                <PsdkTargetPage />
+                            )} />
+                        </Route>
                     </Route>
                     <Route path="sdksAvailable" element={(
                         <SdksAvailablePage />

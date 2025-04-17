@@ -40,6 +40,13 @@ export function useEffectTheme() {
                 (async function () {
                     try {
                         let theme = await invoke('get_theme', {});
+                        if (theme.mode === 'dark') {
+                            root.classList.remove('light');
+                            root.classList.add('dark');
+                        } else {
+                            root.classList.add('light');
+                            root.classList.remove('dark');
+                        }
                         setThemeMode(theme.mode);
                     } catch(e) {
                         console.error(e)
@@ -62,7 +69,7 @@ export function useEffectTheme() {
             root.classList.add("Tauri");
             (async function () {
                 await listen('event-theme', (event) => {
-                    if (localStorage.getItem('isDark') !== 'true') {
+                    if (localStorage.getItem('isDark') !== true) {
                         if (event.payload.mode === 'light') {
                             root.classList.add("light");
                             root.classList.remove("dark");
@@ -79,11 +86,11 @@ export function useEffectTheme() {
         // Listen mode telegram
         if (window.isMiniApp) {
             root.classList.add("MiniApp");
-            if (localStorage.getItem('isDark') !== 'true') {
+            if (localStorage.getItem('isDark') !== true) {
                 setThemeMode(window.Telegram.WebApp.colorScheme);
             }
             function themeChanged() {
-                if (localStorage.getItem('isDark') !== 'true') {
+                if (localStorage.getItem('isDark') !== true) {
                     if (window.Telegram.WebApp.colorScheme === 'light') {
                         root.classList.add("light");
                         root.classList.remove("dark");

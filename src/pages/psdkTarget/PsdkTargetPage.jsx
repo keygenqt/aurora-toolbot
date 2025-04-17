@@ -17,30 +17,33 @@ import * as React from 'react';
 import { useLocation } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setData as setFlutterInstalled } from '../../store/impl/flutterInstalled';
+import { setData as setPsdkInstalled } from '../../store/impl/psdkInstalled';
 import { keysStateBool } from '../../store/impl/stateBool';
 
-import { Stack } from '@mui/material';
+import { useTheme, Stack } from '@mui/material';
 
 import { setEffectStateBool } from '../../base';
 import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
-import { FlutterGroupTools } from './elements/FlutterGroupTools';
-import { FlutterHeader } from './elements/FlutterHeader';
+import { PsdkTargetGroupTools } from './elements/PsdkTargetGroupTools';
+import { PsdkTargetHeader } from './elements/PsdkTargetHeader';
 
-export function FlutterPage(props) {
+export function PsdkTargetPage(props) {
     // components
     const { state } = useLocation();
     const dispatch = useDispatch();
+    const theme = useTheme();
     // data
-    const reduxKey = keysStateBool.fluttersUpdate;
+    const reduxKey = keysStateBool.psdksUpdate;
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
     // redux
-    const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
+    const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
+    const model = psdkInstalled.filter((model) => model.id === state.id);
+    const targets = model === undefined ? undefined : model[0].targets;
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setFlutterInstalled(await Methods.flutterInfo()));
+        dispatch(setPsdkInstalled(await Methods.psdkInfo()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
@@ -52,23 +55,27 @@ export function FlutterPage(props) {
     return (
         <ListLayout
             disable={isUpdateItem}
-            models={flutterInstalled}
+            models={targets}
             updateStates={updateStates}
             reduxKey={reduxKey}
-            itemList={(model) => {
-                return model.id !== state.id ? null : (
+            itemList={(target) => {
+                return target.id !== state.idTarget ? null : (
                     <Stack
                         direction={'column'}
                         spacing={3}
                         sx={{ width: 1 }}
                     >
-                        <FlutterHeader
-                            model={model}
+                        <PsdkTargetHeader
+                            model={model[0]}
+                            target={target}
                             isUpdate={isUpdateItem}
                             onUpdate={(state) => setIsUpdateItem(state)}
                             onRefresh={updateStatesSilent}
                         />
-                        <FlutterGroupTools model={model} />
+                        <PsdkTargetGroupTools
+                            model={model[0]}
+                            target={target}
+                        />
                     </Stack>
                 )
             }}
@@ -76,4 +83,4 @@ export function FlutterPage(props) {
     );
 }
 
-FlutterPage.propTypes = {};
+PsdkTargetPage.propTypes = {};

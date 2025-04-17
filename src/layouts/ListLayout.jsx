@@ -66,11 +66,16 @@ export function ListLayout(props) {
                 <StateEmpty />
             ) : (
                 <List>
-                    {models.map((model, index) => (
-                        <ListItem key={`index-${index}`}>
-                            {itemList(model, `index-${index}`)}
-                        </ListItem>
-                    ))}
+                    {models.map((model, index) => {
+                        const item = itemList(model, `index-${index}`);
+                        if (item) {
+                            return (
+                                <ListItem key={`index-${index}`}>
+                                    {itemList(model, `index-${index}`)}
+                                </ListItem>
+                            )
+                        }
+                    })}
                 </List>
             )}
         </AppBarLayout>

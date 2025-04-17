@@ -36,6 +36,8 @@ i18n
                         t_btn_stop: 'Остановить эмулятор',
                         t_btn_terminal_user: 'SSH Терминал user',
                         t_btn_terminal_root: 'SSH Терминал root',
+                        t_group_tools_title: 'Tools',
+                        t_group_tools_text: 'Инструменты которые позволяют легко управлять данными и приложениями на вашем эмуляторе.',
                         t_btn_group_install_app_title: 'Установка приложений',
                         t_btn_group_install_app_text: 'Установка предварительно собранных демонстрационных приложений.',
                         t_btn_group_install_rpm_title: 'Установка пакета',
@@ -107,6 +109,14 @@ i18n
                     /// PAGE: flutter
                     flutter: {
                         t_btn_terminal: 'Терминал Flutter',
+                        t_group_tools_title: 'Tools',
+                        t_group_tools_text: 'Инструменты Flutter SDK.',
+                        t_btn_group_format_title: 'Формат',
+                        t_btn_group_format_text: 'Форматирование проекта Flutter на Dart и C++.',
+                        t_btn_group_gen_report_title: 'Отчет',
+                        t_btn_group_gen_report_text: 'Генерация отчета по плагинам проекта Flutter.',
+                        t_btn_group_remove_title: 'Удалить',
+                        t_btn_group_remove_text: 'Удалить установленную версию Flutter SDK.',
                     },
                     /// PAGE: fluttersAvailable
                     fluttersAvailable: {
@@ -146,6 +156,16 @@ i18n
                     /// PAGE: psdk
                     psdk: {
                         t_btn_terminal: 'Терминал PSDK',
+                        t_group_targets_title: 'Targets',
+                        t_group_targets_text: 'Список целевых архитектур Platform SDK.',
+                        t_group_tools_title: 'Tools',
+                        t_group_tools_text: 'Инструменты Platform SDK.',
+                        t_btn_group_sign_title: 'Подписать пакет',
+                        t_btn_group_sign_text: 'Подписать RPM пакет публичным ключом.',
+                        t_btn_group_add_sudoers_title: 'Добавить Sudoers',
+                        t_btn_group_add_sudoers_text: 'Добавить запись в Sudoers для доступа без root прав.',
+                        t_btn_group_remove_title: 'Удалить',
+                        t_btn_group_remove_text: 'Удалить установленную версию Platform SDK.',
                     },
                     /// PAGE: psdksAvailable
                     psdksAvailable: {
@@ -155,11 +175,26 @@ i18n
                     psdksInstalled: {
                         t_btn_terminal: 'Терминал PSDK',
                     },
+                    /// PAGE: psdkTarget
+                    psdkTarget: {
+                        t_group_tools_title: 'Tools',
+                        t_group_tools_text: 'Инструменты которые позволяют управлять пакетами таргета Platform SDK.',
+                        t_btn_group_install_rpm_title: 'Установка пакета',
+                        t_btn_group_install_rpm_text: 'Установка пакета RPM в таргет.',
+                        t_btn_group_install_uninstall_title: 'Удаление пакета',
+                        t_btn_group_install_uninstall_text: 'Удаление пакета RPM из таргета.',
+                    },
                     /// PAGE: sdk
                     sdk: {
                         t_btn_tools: 'Maintenance Tool',
                         t_btn_run: 'Запустить Аврора IDE',
                         t_btn_stop: 'Остановить Аврора IDE',
+                        t_group_tools_title: 'Tools',
+                        t_group_tools_text: 'Инструменты Аврора SDK.',
+                        t_btn_group_format_title: 'Формат',
+                        t_btn_group_format_text: 'Форматирование проекта ОС Аврора Qt/C++.',
+                        t_btn_group_remove_title: 'Удалить',
+                        t_btn_group_remove_text: 'Удалить установленную версию Аврора SDK.',
                     },
                     /// PAGE: sdksAvailable
                     sdksAvailable: {

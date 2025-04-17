@@ -25,17 +25,15 @@ import {
 } from '@mui/material';
 
 import {
-    Aod,
-    SecurityUpdate,
-    AppBlocking,
-    ChargingStation,
-    UploadFile,
+    FormatIndentIncrease,
+    ReceiptLong,
+    Delete,
 } from '@mui/icons-material';
 
 import { AvatarButton } from '../../../base';
 import { Methods } from '../../../modules';
 
-export function EmulatorGroupTools(props) {
+export function FlutterGroupTools(props) {
     // components
     const { t } = useTranslation();
     const theme = useTheme();
@@ -56,53 +54,37 @@ export function EmulatorGroupTools(props) {
                 spacing={0.5}
             >
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }} >
-                    {t('emulator.t_group_tools_title')}
+                    {t('flutter.t_group_tools_title')}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {t('emulator.t_group_tools_text')}
+                    {t('flutter.t_group_tools_text')}
                 </Typography>
             </Stack>
             <ButtonGroup
                 disabled={disabled}
                 orientation={'vertical'}
-                color={'secondary'}
+                color={'primaryFlutter'}
             >
                 <AvatarButton
-                    icon={Aod}
-                    title={t('emulator.t_btn_group_install_app_title')}
-                    text={t('emulator.t_btn_group_install_app_text')}
+                    icon={FormatIndentIncrease}
+                    title={t('flutter.t_btn_group_format_title')}
+                    text={t('flutter.t_btn_group_format_text')}
                     onClick={async () => {
                         // @todo
                     }}
                 />
                 <AvatarButton
-                    icon={SecurityUpdate}
-                    title={t('emulator.t_btn_group_install_rpm_title')}
-                    text={t('emulator.t_btn_group_install_rpm_text')}
+                    icon={ReceiptLong}
+                    title={t('flutter.t_btn_group_gen_report_title')}
+                    text={t('flutter.t_btn_group_gen_report_text')}
                     onClick={async () => {
                         // @todo
                     }}
                 />
                 <AvatarButton
-                    icon={AppBlocking}
-                    title={t('emulator.t_btn_group_install_uninstall_title')}
-                    text={t('emulator.t_btn_group_install_uninstall_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
-                    icon={ChargingStation}
-                    title={t('emulator.t_btn_group_install_run_app_title')}
-                    text={t('emulator.t_btn_group_install_run_app_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
-                    icon={UploadFile}
-                    title={t('emulator.t_btn_group_install_upload_title')}
-                    text={t('emulator.t_btn_group_install_upload_text')}
+                    icon={Delete}
+                    title={t('flutter.t_btn_group_remove_title')}
+                    text={t('flutter.t_btn_group_remove_text')}
                     onClick={async () => {
                         // @todo
                     }}
@@ -112,7 +94,7 @@ export function EmulatorGroupTools(props) {
     );
 }
 
-EmulatorGroupTools.propTypes = {
+FlutterGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
 };

@@ -26,6 +26,8 @@ import { setEffectStateBool } from '../../base';
 import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
+import { PsdkGroupTargets } from './elements/PsdkGroupTargets';
+import { PsdkGroupTools } from './elements/PsdkGroupTools';
 import { PsdkHeader } from './elements/PsdkHeader';
 
 export function PsdkPage(props) {
@@ -68,6 +70,8 @@ export function PsdkPage(props) {
                             onUpdate={(state) => setIsUpdateItem(state)}
                             onRefresh={updateStatesSilent}
                         />
+                        <PsdkGroupTools model={model} />
+                        <PsdkGroupTargets model={model} />
                     </Stack>
                 )
             }}

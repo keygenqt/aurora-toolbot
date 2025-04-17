@@ -27,6 +27,7 @@ export * from './fluttersInstalled/FluttersInstalledPage';
 export * from './forbidden/FeaturesPage';
 export * from './main/MainPage';
 export * from './psdk/PsdkPage';
+export * from './psdkTarget/PsdkTargetPage';
 export * from './psdksAvailable/PsdksAvailablePage';
 export * from './psdksInstalled/PsdksInstalledPage';
 export * from './sdk/SdkPage';

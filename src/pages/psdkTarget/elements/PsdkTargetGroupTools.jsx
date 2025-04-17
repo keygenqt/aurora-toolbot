@@ -18,33 +18,27 @@ import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
 
 import {
-    useTheme,
     ButtonGroup,
     Stack,
     Typography,
 } from '@mui/material';
 
 import {
-    Aod,
-    SecurityUpdate,
-    AppBlocking,
-    ChargingStation,
-    UploadFile,
+    PlaylistAdd,
+    PlaylistRemove,
 } from '@mui/icons-material';
 
 import { AvatarButton } from '../../../base';
 import { Methods } from '../../../modules';
 
-export function EmulatorGroupTools(props) {
+export function PsdkTargetGroupTools(props) {
     // components
     const { t } = useTranslation();
-    const theme = useTheme();
     // data
     let {
         model,
         disabled,
     } = props;
-    const color = theme.palette.secondary.main;
     // page
     return (
         <Stack
@@ -56,53 +50,29 @@ export function EmulatorGroupTools(props) {
                 spacing={0.5}
             >
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }} >
-                    {t('emulator.t_group_tools_title')}
+                    {t('psdkTarget.t_group_tools_title')}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {t('emulator.t_group_tools_text')}
+                    {t('psdkTarget.t_group_tools_text')}
                 </Typography>
             </Stack>
             <ButtonGroup
                 disabled={disabled}
                 orientation={'vertical'}
-                color={'secondary'}
+                color={'primaryPsdkTarget'}
             >
                 <AvatarButton
-                    icon={Aod}
-                    title={t('emulator.t_btn_group_install_app_title')}
-                    text={t('emulator.t_btn_group_install_app_text')}
+                    icon={PlaylistAdd}
+                    title={t('psdkTarget.t_btn_group_install_rpm_title')}
+                    text={t('psdkTarget.t_btn_group_install_rpm_text')}
                     onClick={async () => {
                         // @todo
                     }}
                 />
                 <AvatarButton
-                    icon={SecurityUpdate}
-                    title={t('emulator.t_btn_group_install_rpm_title')}
-                    text={t('emulator.t_btn_group_install_rpm_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
-                    icon={AppBlocking}
-                    title={t('emulator.t_btn_group_install_uninstall_title')}
-                    text={t('emulator.t_btn_group_install_uninstall_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
-                    icon={ChargingStation}
-                    title={t('emulator.t_btn_group_install_run_app_title')}
-                    text={t('emulator.t_btn_group_install_run_app_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
-                    icon={UploadFile}
-                    title={t('emulator.t_btn_group_install_upload_title')}
-                    text={t('emulator.t_btn_group_install_upload_text')}
+                    icon={PlaylistRemove}
+                    title={t('psdkTarget.t_btn_group_install_uninstall_title')}
+                    text={t('psdkTarget.t_btn_group_install_uninstall_text')}
                     onClick={async () => {
                         // @todo
                     }}
@@ -112,7 +82,8 @@ export function EmulatorGroupTools(props) {
     );
 }
 
-EmulatorGroupTools.propTypes = {
+PsdkTargetGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
+    target: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
 };

@@ -30,6 +30,10 @@ export const palette = {
         main: '#2895a8',
         contrastText: '#fff',
     },
+    primaryPsdkTarget: {
+        main: '#00a48c',
+        contrastText: '#fff',
+    },
     primaryFlutter: {
         main: '#379ded',
         contrastText: '#fff',

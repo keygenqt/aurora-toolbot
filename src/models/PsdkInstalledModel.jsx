@@ -31,6 +31,7 @@ export const PsdkInstalledModel = {
             versionId: data['jsonData']['model']['version_id'],
             build: data['jsonData']['model']['build'],
             homeUrl: data['jsonData']['model']['home_url'],
+            targets: data['jsonData']['model']['targets'],
             // custom
             versionName: data['jsonData']['model']['version'].split('(')[1].replace(")", ""),
         }

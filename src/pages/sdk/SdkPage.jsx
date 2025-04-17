@@ -26,6 +26,7 @@ import { setEffectStateBool } from '../../base';
 import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
+import { SdkGroupTools } from './elements/SdkGroupTools';
 import { SdkHeader } from './elements/SdkHeader';
 
 export function SdkPage(props) {
@@ -60,13 +61,17 @@ export function SdkPage(props) {
                     <Stack
                         direction={'column'}
                         spacing={3}
-                        sx={{width: 1}}
+                        sx={{ width: 1 }}
                     >
                         <SdkHeader
                             model={model}
                             isUpdate={isUpdateItem}
                             onUpdate={(state) => setIsUpdateItem(state)}
                             onRefresh={updateStatesSilent}
+                        />
+                        <SdkGroupTools
+                            model={model}
+                            disabled={isUpdateItem || model.isRunning}
                         />
                     </Stack>
                 )

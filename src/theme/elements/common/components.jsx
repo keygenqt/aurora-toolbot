@@ -63,6 +63,9 @@ export const components = {
                         width: '14px !important',
                         height: '14px !important',
                     },
+                    '&.MuiButton-sizeSmall': {
+                        paddingBottom: '6px',
+                    },
                     '&.MuiButton-sizeSmall .MuiButton-endIcon' : {
                         marginLeft: '4px !important',
                     },

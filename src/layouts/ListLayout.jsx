@@ -50,8 +50,8 @@ export function ListLayout(props) {
             <Stack direction={'row'} spacing={1}>
                 <ActionBack disabled={isUpdate || disable} />
                 <ActionRefreshState
-                    disable={disable}
-                    animate={isUpdate}
+                    disable={disable || models === undefined}
+                    animate={isUpdate || models === undefined}
                     onClick={async () => {
                         await updateStates();
                     }}

@@ -15,6 +15,7 @@
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -32,12 +33,13 @@ import {
     UploadFile,
 } from '@mui/icons-material';
 
-import { AvatarButton } from '../../../base';
+import { AppUtils, AvatarButton } from '../../../base';
 import { Methods } from '../../../modules';
 
 export function EmulatorGroupTools(props) {
     // components
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const theme = useTheme();
     // data
     let {
@@ -72,7 +74,7 @@ export function EmulatorGroupTools(props) {
                     title={t('emulator.t_btn_group_install_app_title')}
                     text={t('emulator.t_btn_group_install_app_text')}
                     onClick={async () => {
-                        // @todo
+                        AppUtils.openPage(navigate, 'appsInstall', { state: { id: model.id } });
                     }}
                 />
                 <AvatarButton

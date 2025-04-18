@@ -16,6 +16,7 @@
 import { debug } from '@tauri-apps/plugin-log';
 
 import { app } from './impl/app';
+import { demoApp } from './impl/demoApp';
 import { emulator } from './impl/emulator';
 import { faq } from './impl/faq';
 import { flutter } from './impl/flutter';
@@ -27,6 +28,7 @@ import { sdk } from './impl/sdk';
  */
 export const MethodsDbus = {
     ...app,
+    ...demoApp,
     ...emulator,
     ...faq,
     ...flutter,

@@ -19,7 +19,7 @@
  */
 export const AppConf = {
     apiUrl: 'http://localhost:3025/',
-    docUrl: 'https://github.com/keygenqt/aurora-bot',
+    docUrl: 'https://aurora-bot.keygenqt.com/',
     version: '0.0.1',
     apiVersion: '0.0.1',
     appVersion: '0.0.6',

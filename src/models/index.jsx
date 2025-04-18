@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export * from './AppInfoModel';
+export * from './DemoAppModel';
 export * from './EmulatorModel';
 export * from './FaqModel';
 export * from './FlutterAvailableModel';

@@ -63,9 +63,12 @@ export const components = {
                         width: '14px !important',
                         height: '14px !important',
                     },
+                    '&.MuiButton-sizeSmall .MuiButton-endIcon' : {
+                        marginLeft: '4px !important',
+                    },
                     '&.MuiButton-sizeSmall .MuiButton-icon': {
                         marginLeft: '2px',
-                    }
+                    },
                 }),
         }
     },

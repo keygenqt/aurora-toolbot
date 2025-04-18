@@ -63,6 +63,7 @@ export function PsdkGroupTargets(props) {
             >
                 {model.targets.map((target) => (
                     <AvatarButton
+                        key={`index-${target.id}`}
                         icon={Memory}
                         title={target.name}
                         text={target.arch}

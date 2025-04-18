@@ -25,6 +25,9 @@ pub fn run() {
             // app
             methods::app::app_info,
             methods::app::app_open_dir,
+            // demo app
+            methods::demo_app::demo_app_info,
+            methods::demo_app::demo_app_info_by_id,
             // emulator
             methods::emulator::emulator_close_by_id,
             methods::emulator::emulator_info,

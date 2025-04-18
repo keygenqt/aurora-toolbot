@@ -19,6 +19,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { ActionBack } from './base'
 import { AppBarLayout } from './layouts'
 import {
+    DemoAppsPage,
     DevicePage,
     DevicesPage,
     EmulatorPage,
@@ -72,6 +73,11 @@ export function AppRoute() {
                         <Route index element={(
                             <EmulatorPage />
                         )} />
+                        <Route path="appsInstall">
+                            <Route index element={(
+                                <DemoAppsPage />
+                            )} />
+                        </Route>
                     </Route>
                     <Route path="faq">
                         <Route index element={(

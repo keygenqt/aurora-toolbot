@@ -103,7 +103,11 @@ export function FluttersAvailablePage(props) {
                             <Tooltip title={t('common.t_link_to_file')} placement="left-start">
                                 <IconButton
                                     onClick={async () => {
-                                        await AppUtils.openUrl(model.urlZip);
+                                        if (model.urlRepo) {
+                                            await AppUtils.openUrl(model.urlRepo);
+                                        } else {
+                                            await AppUtils.openUrl(model.urlZip);
+                                        }
                                     }}
                                 >
                                     <InsertLink />

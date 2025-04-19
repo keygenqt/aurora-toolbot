@@ -30,6 +30,7 @@ export const FlutterAvailableModel = {
             urlGitlab: data['jsonData']['model']['url_gitlab'],
             urlZip: data['jsonData']['model']['url_zip'],
             urlTarGz: data['jsonData']['model']['url_tar_gz'],
+            urlRepo: data['jsonData']['model']['url_repo'],
         }
     }
 }

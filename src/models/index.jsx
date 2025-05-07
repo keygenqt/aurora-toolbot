@@ -15,6 +15,7 @@
  */
 export * from './AppInfoModel';
 export * from './DemoAppModel';
+export * from './DeviceModel';
 export * from './EmulatorModel';
 export * from './FaqModel';
 export * from './FlutterAvailableModel';

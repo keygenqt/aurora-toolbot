@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { invoke } from "@tauri-apps/api/core";
 
-import {
-    AppInfoModel,
-} from '../../../models';
-
-import { AppUtils } from '../../../base';
-
-export const app = {
-    appInfo: async function () {
-        try {
-            return AppInfoModel.parse(await invoke("app_info", {}));
-        } catch(e) {
-            return null;
+/**
+ * DeviceInfo data model
+ */
+export const DeviceModel = {
+    parse: function (json) {
+        let data = typeof json === 'string' || json instanceof String ? JSON.parse(json) : json
+        if (data['key'] !== 'DeviceInfo') {
+            throw new Error(`Failed key: ${data['key']} != DeviceInfo`);
         }
-    },
-    appOpenDir: async function (path) {
-        AppUtils.checkResponse(await invoke("app_open_dir", { path: path }));
-    },
-    appOpenFile: async function (path) {
-        AppUtils.checkResponse(await invoke("app_open_file", { path: path }));
-    },
+        return {
+            id: data['jsonData']['model']['id'],
+            host: data['jsonData']['model']['host'],
+            name: data['jsonData']['model']['name'],
+            version: data['jsonData']['model']['version'],
+            arch: data['jsonData']['model']['arch'],
+        }
+    }
 }

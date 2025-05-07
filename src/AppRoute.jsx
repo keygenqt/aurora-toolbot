@@ -20,8 +20,6 @@ import { ActionBack } from './base'
 import { AppBarLayout } from './layouts'
 import {
     DemoAppsPage,
-    DevicePage,
-    DevicesPage,
     EmulatorPage,
     EmulatorsPage,
     ErrorPage,
@@ -52,18 +50,6 @@ export function AppRoute() {
                     <Route index element={(
                         <FeaturesPage />
                     )} />
-                    <Route path="devices">
-                        <Route index element={(
-                            <AppBarLayout index actions={<ActionBack />} >
-                                <DevicesPage />
-                            </AppBarLayout>
-                        )} />
-                        <Route path=":key" element={(
-                            <AppBarLayout actions={<ActionBack />} >
-                                <DevicePage />
-                            </AppBarLayout>
-                        )} />
-                    </Route>
                     <Route path="emulators">
                         <Route index element={(
                             <EmulatorsPage />

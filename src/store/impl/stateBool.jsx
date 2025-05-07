@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const keysStateBool = {
+    devicesSync: 'devicesSync',
+    devicesUpdate: 'devicesUpdate',
+    deviceLoading: 'deviceLoading',
     emulatorsSync: 'emulatorsSync',
     emulatorsUpdate: 'emulatorsUpdate',
     emulatorLoading: 'emulatorLoading',

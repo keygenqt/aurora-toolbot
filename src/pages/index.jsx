@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 export * from './demoApps/DemoAppsPage';
-export * from './device/DevicePage';
-export * from './devices/DevicesPage';
 export * from './emulator/EmulatorPage';
 export * from './emulators/EmulatorsPage';
 export * from './error/ErrorPage';

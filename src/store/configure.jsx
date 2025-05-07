@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import appInfoReducer from './impl/appInfo'
+import devicesReducer from './impl/devices'
 import emulatorsReducer from './impl/emulators'
 import sdkAvailableReducer from './impl/sdkAvailable'
 import sdkInstalledReducer from './impl/sdkInstalled'
@@ -14,6 +15,7 @@ import stateBoolReducer from './impl/stateBool'
 export default configureStore({
   reducer: {
     appInfo: appInfoReducer,
+    devices: devicesReducer,
     emulators: emulatorsReducer,
     sdkAvailable: sdkAvailableReducer,
     sdkInstalled: sdkInstalledReducer,

@@ -18,6 +18,7 @@ pub const TIMEOUT_LONG: u64 = 7200000 /* 2h */;
 
 pub mod app;
 pub mod demo_app;
+pub mod device;
 pub mod emulator;
 pub mod faq;
 pub mod flutter;

@@ -46,7 +46,7 @@ export const palette = {
         main: '#0295c2',
     },
     success: {
-        main: '#5c997d',
+        main: '#23a076',
     },
     inherit: {
         main: '#f7f7f7',

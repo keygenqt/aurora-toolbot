@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { keysStateBool } from '../../../store/impl/stateBool';
-import { setData as setEmulators } from '../../../store/impl/emulators';
+import { setData as setDevices } from '../../../store/impl/devices';
 
 import {
     useTheme,
@@ -31,9 +31,11 @@ import {
     CardActions,
     CircularProgress,
     Button,
+    Tooltip,
+    IconButton,
 } from '@mui/material';
 
-import { KeyboardArrowRight } from '@mui/icons-material';
+import { KeyboardArrowRight, Settings } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
 import {
@@ -44,16 +46,16 @@ import {
     CardGradient,
 } from '../../../base';
 
-export function EmulatorItem(props) {
+export function DeviceItem(props) {
     // components
     const { t } = useTranslation();
     const theme = useTheme();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // data
-    const color = theme.palette.secondary.main;
-    const { emulators } = props;
-    const isSync = useEffectStateBool(keysStateBool.emulatorsSync);
+    const color = theme.palette.success.main;
+    const { devices } = props;
+    const isSync = useEffectStateBool(keysStateBool.devicesSync);
     // item
     return (
         <ListItem>
@@ -61,14 +63,14 @@ export function EmulatorItem(props) {
                 <CardContent sx={{ paddingBottom: 1 }}>
                     <Box sx={{ paddingBottom: 1 }}>
                         <Typography variant="subtitle2" color={color} >
-                            {t('features.emulator.t_title')}
+                            {t('features.device.t_title')}
                         </Typography>
                     </Box>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {(Array.isArray(emulators) && emulators.length == 0) ? (
-                            t('features.emulator.t_not_found')
+                        {(Array.isArray(devices) && devices.length == 0) ? (
+                            t('features.device.t_not_found')
                         ) : (
-                            t('features.emulator.t_text')
+                            t('features.device.t_text')
                         )}
                     </Typography>
                 </CardContent>
@@ -78,22 +80,32 @@ export function EmulatorItem(props) {
                 }}>
                     <IconButtonLoading
                         tooltip={t('common.t_sync')}
-                        animate={emulators === undefined || isSync}
+                        animate={devices === undefined || isSync}
                         onClick={async () => {
-                            setEffectStateBool(dispatch, keysStateBool.emulatorsSync, true);
-                            try { await Methods.emulatorSync() } catch (e) {}
-                            dispatch(setEmulators(await Methods.emulatorInfo()));
-                            setEffectStateBool(dispatch, keysStateBool.emulatorsSync, false);
+                            setEffectStateBool(dispatch, keysStateBool.devicesSync, true);
+                            try { await Methods.deviceSync() } catch (e) {}
+                            dispatch(setDevices(await Methods.deviceInfo()));
+                            setEffectStateBool(dispatch, keysStateBool.devicesSync, false);
                         }}
                     />
+
+                    <Tooltip title={t('features.device.t_open_config')} placement="left-start">
+                        <IconButton
+                            onClick={async () => {
+                                await Methods.appOpenFile("devices.json");
+                            }}
+                        >
+                            <Settings />
+                        </IconButton>
+                    </Tooltip>
 
                     <Box sx={{ flexGrow: 1 }} />
 
                     <Button
-                        disabled={(!Array.isArray(emulators) || emulators.length == 0 || isSync)}
+                        disabled={(!Array.isArray(devices) || devices.length == 0 || isSync)}
                         size={'small'}
-                        color={'secondary'}
-                        endIcon={(emulators === undefined || isSync) ? (
+                        color={'success'}
+                        endIcon={(devices === undefined || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (
                             <KeyboardArrowRight color="default" />
@@ -101,10 +113,10 @@ export function EmulatorItem(props) {
                         variant="contained"
                         sx={{ opacity: 0.9 }}
                         onClick={() => {
-                            if (emulators.length == 1) {
-                                AppUtils.openPage(navigate, 'emulator', { state: { id: emulators[0].id } });
+                            if (devices.length == 1) {
+                                AppUtils.openPage(navigate, 'device', { state: { id: devices[0].id } });
                             } else {
-                                AppUtils.openPage(navigate, 'emulators');
+                                AppUtils.openPage(navigate, 'devices');
                             }
                         }}
                     >
@@ -116,6 +128,6 @@ export function EmulatorItem(props) {
     );
 }
 
-EmulatorItem.propTypes = {
-    emulators: PropTypes.array,
+DeviceItem.propTypes = {
+    devices: PropTypes.array,
 };

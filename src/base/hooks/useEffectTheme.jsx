@@ -23,31 +23,39 @@ import { useEffectCache } from '../../base'
  * Listen change theme for telegram & tauri
  */
 export function useEffectTheme() {
-    const darkModeCache = useEffectCache('isDark');
+    const darkStorageKey = 'isDark'
+    const darkModeCache = useEffectCache(darkStorageKey);
     const [themeMode, setThemeMode] = React.useState(darkModeCache === true ? 'dark' : (
         window.isMiniApp ? window.Telegram.WebApp.colorScheme : window.colorScheme
     ));
 
-    React.useEffect(() => {
+    function setDark() {
         const root = document.querySelector('#root');
+        root.classList.remove('light');
+        root.classList.add('dark');
+        setThemeMode('dark');
+    }
+
+    function setLight() {
+        const root = document.querySelector('#root');
+        root.classList.remove('dark');
+        root.classList.add('light');
+        setThemeMode('light');
+    }
+
+    React.useEffect(() => {
         if (darkModeCache === true) {
-            root.classList.remove('light');
-            root.classList.add('dark');
-            setThemeMode('dark');
+            setDark();
         }
         if (darkModeCache === false) {
             if (window.isTauri) {
                 (async function () {
                     try {
-                        let theme = await invoke('get_theme', {});
-                        if (theme.mode === 'dark') {
-                            root.classList.remove('light');
-                            root.classList.add('dark');
+                        if ((await invoke('get_theme', {})).mode === 'dark') {
+                            setDark();
                         } else {
-                            root.classList.add('light');
-                            root.classList.remove('dark');
+                            setLight();
                         }
-                        setThemeMode(theme.mode);
                     } catch(e) {
                         console.error(e)
                     }
@@ -69,15 +77,12 @@ export function useEffectTheme() {
             root.classList.add("Tauri");
             (async function () {
                 await listen('event-theme', (event) => {
-                    if (localStorage.getItem('isDark') !== true) {
+                    if (localStorage.getItem(darkStorageKey) !== 'true') {
                         if (event.payload.mode === 'light') {
-                            root.classList.add("light");
-                            root.classList.remove("dark");
+                            setLight();
                         } else {
-                            root.classList.remove("light");
-                            root.classList.add("dark");
+                            setDark();
                         }
-                        setThemeMode(event.payload.mode)
                     }
                 });
                 await invoke('listen_theme', {});
@@ -86,24 +91,22 @@ export function useEffectTheme() {
         // Listen mode telegram
         if (window.isMiniApp) {
             root.classList.add("MiniApp");
-            if (localStorage.getItem('isDark') !== true) {
+            if (localStorage.getItem(darkStorageKey) !== true) {
                 setThemeMode(window.Telegram.WebApp.colorScheme);
             }
             function themeChanged() {
-                if (localStorage.getItem('isDark') !== true) {
+                if (localStorage.getItem(darkStorageKey) !== 'true') {
                     if (window.Telegram.WebApp.colorScheme === 'light') {
-                        root.classList.add("light");
-                        root.classList.remove("dark");
+                        setLight();;
                     } else {
-                        root.classList.remove("light");
-                        root.classList.add("dark");
+                        setDark();
                     }
                     setThemeMode(window.Telegram.WebApp.colorScheme);
                 }
             }
             window.Telegram.WebApp.onEvent("themeChanged", themeChanged);
         }
-    }, []);
+    }, [darkModeCache]);
 
     return themeMode;
 }

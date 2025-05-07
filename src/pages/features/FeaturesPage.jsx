@@ -17,6 +17,7 @@ import * as React from 'react';
 import { useTranslation } from "react-i18next";
 
 import { useSelector, useDispatch } from 'react-redux';
+import { setData as setDevices } from '../../store/impl/devices';
 import { setData as setEmulators } from '../../store/impl/emulators';
 import { setData as setSdkInstalled } from '../../store/impl/sdkInstalled';
 import { setData as setSdkAvailable } from '../../store/impl/sdkAvailable';
@@ -31,6 +32,7 @@ import { useEffectSingleTimeout, AppUtils, ActionMenu, ActionRefreshState } from
 import { AppBarLayout } from '../../layouts'
 import { Methods } from '../../modules';
 
+import { DeviceItem } from './elements/DeviceItem';
 import { EmulatorItem } from './elements/EmulatorItem';
 import { FAQItem } from './elements/FAQItem';
 import { FlutterItem } from './elements/FlutterItem';
@@ -45,6 +47,7 @@ export function FeaturesPage(props) {
     // data
     const [isUpdate, setIsUpdate] = React.useState(false);
     // redux
+    const devices = useSelector((state) => state.devices.value);
     const emulators = useSelector((state) => state.emulators.value);
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
     const sdkAvailable = useSelector((state) => state.sdkAvailable.value);
@@ -54,6 +57,7 @@ export function FeaturesPage(props) {
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
     // fun
     const clearStates = () => {
+        dispatch(setDevices(undefined));
         dispatch(setEmulators(undefined));
         dispatch(setSdkInstalled(undefined));
         dispatch(setSdkAvailable(undefined));
@@ -65,25 +69,28 @@ export function FeaturesPage(props) {
     const updateStates = async (refresh) => {
         setIsUpdate(true)
         await AppUtils.asyncJoin(
-            emulators && !refresh ? null : async () => {
+            (devices || devices === null) && !refresh ? null : async () => {
+                dispatch(setDevices(await Methods.deviceInfo()));
+            },
+            (emulators || emulators === null) && !refresh ? null : async () => {
                 dispatch(setEmulators(await Methods.emulatorInfo()));
             },
-            sdkInstalled && !refresh ? null : async () => {
+            (sdkInstalled || sdkInstalled === null) && !refresh ? null : async () => {
                 dispatch(setSdkInstalled(await Methods.sdkInfo()));
             },
-            sdkAvailable && !refresh ? null : async () => {
+            (sdkAvailable || sdkAvailable === null) && !refresh ? null : async () => {
                 dispatch(setSdkAvailable(await Methods.sdkAvailable()));
             },
-            psdkInstalled && !refresh ? null : async () => {
+            (psdkInstalled || psdkInstalled === null) && !refresh ? null : async () => {
                 dispatch(setPsdkInstalled(await Methods.psdkInfo()));
             },
-            psdkAvailable && !refresh ? null : async () => {
+            (psdkAvailable || psdkAvailable === null) && !refresh ? null : async () => {
                 dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
             },
-            flutterInstalled && !refresh ? null : async () => {
+            (flutterInstalled || flutterInstalled === null) && !refresh ? null : async () => {
                 dispatch(setFlutterInstalled(await Methods.flutterInfo()));
             },
-            flutterAvailable && !refresh ? null : async () => {
+            (flutterAvailable || flutterAvailable === null) && !refresh ? null : async () => {
                 dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
             },
         )
@@ -113,6 +120,9 @@ export function FeaturesPage(props) {
                 <GroupWidget
                     title={t('features.devices.t_title')}
                     text={t('features.devices.t_text')}
+                />
+                <DeviceItem
+                    devices={devices}
                 />
                 <EmulatorItem
                     emulators={emulators}

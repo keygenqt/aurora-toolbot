@@ -16,23 +16,28 @@
 import { invoke } from "@tauri-apps/api/core";
 
 import {
-    AppInfoModel,
+    SelectorModel,
+    DeviceModel,
 } from '../../../models';
 
 import { AppUtils } from '../../../base';
 
-export const app = {
-    appInfo: async function () {
+export const device = {
+    deviceInfo: async function () {
         try {
-            return AppInfoModel.parse(await invoke("app_info", {}));
-        } catch(e) {
+            let data = await invoke("device_info", {});
+            let selector = SelectorModel.parse(data);
+            if (selector !== undefined) {
+                return AppUtils.asyncJoin(selector.variants.map((e) => async () => {
+                    return DeviceModel.parse(await invoke("device_info_by_id", { id: e['incoming']['id'] }));
+                }));
+            }
+            return [DeviceModel.parse(data)];
+        } catch (e) {
             return null;
         }
     },
-    appOpenDir: async function (path) {
-        AppUtils.checkResponse(await invoke("app_open_dir", { path: path }));
-    },
-    appOpenFile: async function (path) {
-        AppUtils.checkResponse(await invoke("app_open_file", { path: path }));
+    deviceSync: async function () {
+        AppUtils.checkResponse(await invoke("device_sync", {}))
     },
 }

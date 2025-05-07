@@ -32,7 +32,7 @@ pub fn emulator_close_by_id(id: String) -> Result<String, Error> {
     Ok(result)
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub fn emulator_info() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
@@ -47,7 +47,7 @@ pub fn emulator_info() -> Result<String, Error> {
     Ok(result)
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub fn emulator_info_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;

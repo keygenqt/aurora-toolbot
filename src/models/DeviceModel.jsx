@@ -23,12 +23,19 @@ export const DeviceModel = {
         if (data['key'] !== 'DeviceInfo') {
             throw new Error(`Failed key: ${data['key']} != DeviceInfo`);
         }
+        const typeConnection = data['jsonData']['model']['pass'] == null ? 'SSH key' : 'Password';
+        const nameClear = data['jsonData']['model']['name']
+            .replace(data['jsonData']['model']['version'], '')
+            .replace(/ +(?= )/g, '');
         return {
             id: data['jsonData']['model']['id'],
             host: data['jsonData']['model']['host'],
-            name: data['jsonData']['model']['name'],
+            isAvailable: data['jsonData']['model']['is_available'],
             version: data['jsonData']['model']['version'],
             arch: data['jsonData']['model']['arch'],
+            // custom
+            name: nameClear,
+            typeConnection: typeConnection,
         }
     }
 }

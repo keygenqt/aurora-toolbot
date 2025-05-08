@@ -23,12 +23,26 @@ i18n
             ru: {
                 translation: {
                     /// PAGE: device
+                    // @todo
                     device: {
-
+                        t_btn_terminal_user: 'SSH Терминал user',
+                        t_group_tools_title: 'Tools',
+                        t_group_tools_text: 'Инструменты которые позволяют легко управлять данными и приложениями на вашем устройстве.',
+                        t_btn_group_install_app_title: 'Установка приложений',
+                        t_btn_group_install_app_text: 'Установка предварительно собранных демонстрационных приложений.',
+                        t_btn_group_install_rpm_title: 'Установка пакета',
+                        t_btn_group_install_rpm_text: 'Загрузка и установка пакета RPM на ваше устройство.',
+                        t_btn_group_install_uninstall_title: 'Удаление пакета',
+                        t_btn_group_install_uninstall_text: 'Удалите установленный пакет с вашего устройства.',
+                        t_btn_group_install_run_app_title: 'Запуск пакета',
+                        t_btn_group_install_run_app_text: 'Запустите в песочнице приложение на устройстве.',
+                        t_btn_group_install_upload_title: 'Загрузка файла',
+                        t_btn_group_install_upload_text: 'Загрузите файл на ваше устройство.',
                     },
                     /// PAGE: devices
                     devices: {
-
+                        t_not_connection: 'Нет соединения',
+                        t_btn_terminal_user: 'SSH Терминал user',
                     },
                     /// PAGE: emulator
                     emulator: {

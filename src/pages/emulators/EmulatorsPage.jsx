@@ -181,7 +181,6 @@ export function EmulatorsPage(props) {
                                             <Terminal />
                                         </IconButton>
                                     </Tooltip>
-
                                 )}
                                 {model.isRunning && (
                                     <Tooltip title={t('emulators.t_btn_terminal_root')} placement="left-start">

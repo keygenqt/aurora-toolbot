@@ -40,4 +40,7 @@ export const device = {
     deviceSync: async function () {
         AppUtils.checkResponse(await invoke("device_sync", {}))
     },
+    deviceTerminalById: async function (id) {
+        AppUtils.checkResponse(await invoke("device_terminal_by_id", { id: id }));
+    },
 }

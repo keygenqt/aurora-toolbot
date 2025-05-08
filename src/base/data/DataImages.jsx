@@ -20,6 +20,7 @@ import icon_psdk from '../../assets/images/icon_psdk.svg';
 import icon_sdk from '../../assets/images/icon_sdk.svg';
 import icon_target from '../../assets/images/icon_target.png';
 import icon_vb from '../../assets/images/icon_vb.png';
+import icon_device from '../../assets/images/icon_device.png';
 
 /**
  * Load data images
@@ -32,4 +33,5 @@ export const DataImages = {
     iconSdk: icon_sdk,
     iconTarget: icon_target,
     iconVb: icon_vb,
+    iconDevice: icon_device,
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub const TIMEOUT_SHORT: u64 = 2000 /* 2s */;
+pub const TIMEOUT_SHORT: u64 = 5000 /* 5s */;
 pub const TIMEOUT_MIDDLE: u64 = 300000 /* 5m */;
 pub const TIMEOUT_LONG: u64 = 7200000 /* 2h */;
 

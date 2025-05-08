@@ -33,6 +33,7 @@ pub fn run() {
             methods::device::device_info,
             methods::device::device_info_by_id,
             methods::device::device_sync,
+            methods::device::device_terminal_by_id,
             // emulator
             methods::emulator::emulator_close_by_id,
             methods::emulator::emulator_info,

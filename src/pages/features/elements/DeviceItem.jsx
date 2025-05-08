@@ -113,12 +113,11 @@ export function DeviceItem(props) {
                         variant="contained"
                         sx={{ opacity: 0.9 }}
                         onClick={() => {
-                            // @todo
-                            // if (devices.length == 1) {
-                            //     AppUtils.openPage(navigate, 'device', { state: { id: devices[0].id } });
-                            // } else {
+                            if (devices.length == 1) {
+                                AppUtils.openPage(navigate, 'device', { state: { id: devices[0].id } });
+                            } else {
                                 AppUtils.openPage(navigate, 'devices');
-                            // }
+                            }
                         }}
                     >
                         {t('common.t_open')}

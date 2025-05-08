@@ -214,7 +214,7 @@ export function EmulatorHeader(props) {
                                     }
                                 }}
                             >
-                                <Terminal color={(!model.isRunning || isUpdate) ? 'default' : 'inherit'} />
+                                <Terminal color={'default'} />
                             </Button>
                         </Tooltip>
                         <Tooltip title={t('emulator.t_btn_terminal_root')} placement="top">

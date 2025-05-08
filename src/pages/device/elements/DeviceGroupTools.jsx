@@ -36,7 +36,6 @@ import {
 import { AppUtils, AvatarButton } from '../../../base';
 import { Methods } from '../../../modules';
 
-// @todo
 export function DeviceGroupTools(props) {
     // components
     const { t } = useTranslation();

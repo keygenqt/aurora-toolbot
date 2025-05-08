@@ -52,11 +52,20 @@ export function AppRoute() {
                     <Route index element={(
                         <FeaturesPage />
                     )} />
-
                     <Route path="devices">
                         <Route index element={(
                             <DevicesPage />
                         )} />
+                        <Route path="device">
+                            <Route index element={(
+                                <DevicePage />
+                            )} />
+                            <Route path="appsInstall">
+                                <Route index element={(
+                                    <DemoAppsPage />
+                                )} />
+                            </Route>
+                        </Route>
                     </Route>
                     <Route path="device">
                         <Route index element={(
@@ -68,11 +77,20 @@ export function AppRoute() {
                             )} />
                         </Route>
                     </Route>
-
                     <Route path="emulators">
                         <Route index element={(
                             <EmulatorsPage />
                         )} />
+                        <Route path="emulator">
+                            <Route index element={(
+                                <EmulatorPage />
+                            )} />
+                            <Route path="appsInstall">
+                                <Route index element={(
+                                    <DemoAppsPage />
+                                )} />
+                            </Route>
+                        </Route>
                     </Route>
                     <Route path="emulator">
                         <Route index element={(

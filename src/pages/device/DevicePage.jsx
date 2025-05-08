@@ -29,7 +29,6 @@ import { Methods } from '../../modules';
 import { DeviceHeader } from './elements/DeviceHeader';
 import { DeviceGroupTools } from './elements/DeviceGroupTools';
 
-// @todo
 export function DevicePage(props) {
     // components
     let { state } = useLocation();
@@ -71,7 +70,7 @@ export function DevicePage(props) {
                         />
                         <DeviceGroupTools
                             model={model}
-                            disabled={isUpdateItem || !model.isRunning}
+                            disabled={isUpdateItem || !model.isAvailable}
                         />
                     </Stack>
                 )

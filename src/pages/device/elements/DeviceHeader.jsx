@@ -26,24 +26,19 @@ import {
     CardContent,
     Tooltip,
     IconButton,
-    CircularProgress,
     ButtonGroup,
     Button,
 } from '@mui/material';
 
 import {
-    Stop,
-    PlayArrow,
-    Smartphone,
-    SystemSecurityUpdateGood,
-    FolderOpen,
+    CameraEnhance,
+    Settings,
     Terminal,
 } from '@mui/icons-material';
 
 import { DataImages, CardGradient } from '../../../base';
 import { Methods } from '../../../modules';
 
-// @todo
 export function DeviceHeader(props) {
     // components
     const { t } = useTranslation();
@@ -56,9 +51,10 @@ export function DeviceHeader(props) {
         onRefresh,
     } = props;
     const color = theme.palette.success.main;
+    const colorDisabled = theme.palette.inherit.main;
     // page
     return (
-        <CardGradient color={color}>
+        <CardGradient color={model.isAvailable ? color : colorDisabled}>
             <CardContent
                 sx={{
                     position: 'relative',
@@ -72,11 +68,19 @@ export function DeviceHeader(props) {
                         right: 16,
                     }}
                 >
-                    {model.isRunning ? (
-                        <SystemSecurityUpdateGood fontSize={'small'} />
-                    ) : (
-                        <Smartphone fontSize={'small'} />
-                    )}
+                    <Tooltip title={t('device.t_open_config')} placement="left-start">
+                        <IconButton
+                            onClick={async () => {
+                                try {
+                                    await Methods.appOpenFile("devices.json");
+                                } catch (e) {
+                                    await onRefresh();
+                                }
+                            }}
+                        >
+                            <Settings />
+                        </IconButton>
+                    </Tooltip>
                 </Box>
                 <Stack
                     direction={'column'}
@@ -90,7 +94,7 @@ export function DeviceHeader(props) {
                 >
                     <img
                         style={{ width: '50px', height: '50px' }}
-                        src={DataImages.iconVb}
+                        src={DataImages.iconDevice}
                         alt='Icon' />
 
                     <Typography variant="h6" >
@@ -111,11 +115,12 @@ export function DeviceHeader(props) {
                                 <Stack
                                     direction={'row'}
                                     spacing={1}
+                                    alignItems={'center'}
                                 >
                                     <Box width={16} textAlign={'center'}>
-                                        <FontAwesomeIcon icon="fa-solid fa-certificate" />
+                                        <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    <Box className={'select'} >{model.uuid}</Box>
+                                    <Box sx={{ minHeight: 21 }} >Aurora OS v{model.version}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -123,9 +128,19 @@ export function DeviceHeader(props) {
                                     alignItems={'center'}
                                 >
                                     <Box width={16} textAlign={'center'}>
-                                        <FontAwesomeIcon icon="fa-solid fa-maximize" />
+                                        <FontAwesomeIcon icon="fa-solid fa-location-crosshairs" />
                                     </Box>
-                                    <Box>{model.dimensions}</Box>
+                                    <Box className={'select'} >{model.host}</Box>
+                                </Stack>
+                                <Stack
+                                    direction={'row'}
+                                    spacing={1}
+                                    alignItems={'center'}
+                                >
+                                    <Box width={16} textAlign={'center'}>
+                                        <FontAwesomeIcon icon="fa-solid fa-key" />
+                                    </Box>
+                                    <Box>{model.typeConnection}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -141,94 +156,31 @@ export function DeviceHeader(props) {
                         </Typography>
                     </Stack>
 
-                    {isUpdate ? (
-                        <Box sx={{ padding: 1 }}>
-                            <CircularProgress size={27} />
-                        </Box>
-                    ) : (
-                        <Stack
-                            direction={'column'}
-                            spacing={2}
-                            sx={{ alignItems: 'center' }}
-                        >
-                            {model.isRunning && (
-                                <Tooltip title={t('device.t_btn_stop')} placement="top">
-                                    <IconButton
-                                        size={'large'}
-                                        onClick={async () => {
-                                            onUpdate(true)
-                                            try {
-                                                await Methods.deviceCloseById(model.id);
-                                                await new Promise(r => setTimeout(r, 1000));
-                                            } catch (e) { }
-                                            await onRefresh();
-                                            onUpdate(false)
-                                        }}
-                                    >
-                                        <Stop />
-                                    </IconButton>
-                                </Tooltip>
-                            )}
-                            {!model.isRunning && (
-                                <Tooltip title={t('device.t_btn_run')} placement="top">
-                                    <IconButton
-                                        size={'large'}
-                                        onClick={async () => {
-                                            onUpdate(true)
-                                            try { await Methods.deviceOpenById(model.id) } catch (e) { }
-                                            await onRefresh();
-                                            onUpdate(false)
-                                        }}
-                                    >
-                                        <PlayArrow />
-                                    </IconButton>
-                                </Tooltip>
-                            )}
-                        </Stack>
-                    )}
-
                     <ButtonGroup
                         variant={'outlined'}
-                        color={'secondary'}
-                        disabled={!model.isRunning || isUpdate}
+                        color={'success'}
+                        disabled={!model.isAvailable || isUpdate}
                     >
-                        <Tooltip title={t('common.t_btn_open_dir')} placement="top">
-                            <Button
-                                onClick={async () => {
-                                    try {
-                                        await Methods.appOpenDir(model.dirDevice);
-                                    } catch (e) {
-                                        await onRefresh();
-                                    }
-                                }}
-                            >
-                                <FolderOpen color={'default'} />
-                            </Button>
-                        </Tooltip>
                         <Tooltip title={t('device.t_btn_terminal_user')} placement="top">
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.deviceTerminalById(model.id, false);
+                                        await Methods.deviceTerminalById(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }
                                 }}
                             >
-                                <Terminal color={(!model.isRunning || isUpdate) ? 'default' : 'inherit'} />
+                                <Terminal color={'default'} />
                             </Button>
                         </Tooltip>
-                        <Tooltip title={t('device.t_btn_terminal_root')} placement="top">
+                        <Tooltip title={t('device.t_btn_screenshot')} placement="top">
                             <Button
                                 onClick={async () => {
-                                    try {
-                                        await Methods.deviceTerminalById(model.id, true);
-                                    } catch (e) {
-                                        await onRefresh();
-                                    }
+                                    // @todo
                                 }}
                             >
-                                <Terminal color={(!model.isRunning || isUpdate) ? 'default' : 'error'} />
+                                <CameraEnhance color={'default'} />
                             </Button>
                         </Tooltip>
                     </ButtonGroup>

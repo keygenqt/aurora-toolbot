@@ -23,8 +23,9 @@ i18n
             ru: {
                 translation: {
                     /// PAGE: device
-                    // @todo
                     device: {
+                        t_open_config: 'Конфигурационный файл',
+                        t_btn_screenshot: 'Сделать скриншот',
                         t_btn_terminal_user: 'SSH Терминал user',
                         t_group_tools_title: 'Tools',
                         t_group_tools_text: 'Инструменты которые позволяют легко управлять данными и приложениями на вашем устройстве.',

@@ -11,11 +11,21 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+use tauri::Error;
 
-/// Urls api
-pub const DBUS_BOT_DEST: &str = "com.keygenqt.aurora_bot";
+use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE}};
 
-/// Timeouts query
-pub const TIMEOUT_SHORT: u64 = 5000 /* 5s */;
-pub const TIMEOUT_MIDDLE: u64 = 300000 /* 5m */;
-pub const TIMEOUT_LONG: u64 = 7200000 /* 2h */;
+#[tauri::command(async)]
+pub fn sdk_ide_open_by_id(id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "SdkIdeOpenById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}

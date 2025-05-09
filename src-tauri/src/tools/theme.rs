@@ -33,7 +33,7 @@ fn send_event(window: &Window, mode: Mode) {
     let _ = window.emit("event-theme", data_mode(mode));
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub fn listen_theme(window: Window) {
     match darkmode::detect() {
         Ok(mode) => send_event(&window, mode),
@@ -42,7 +42,7 @@ pub fn listen_theme(window: Window) {
     let _ = darkmode::subscribe(move |mode| send_event(&window, mode));
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub fn get_theme() -> Result<Theme, Error> {
     match darkmode::detect() {
         Ok(mode) => Ok(data_mode(mode)),

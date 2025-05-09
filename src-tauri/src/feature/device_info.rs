@@ -13,19 +13,16 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants};
+use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_SHORT}};
 
-use super::TIMEOUT_SHORT;
-use super::TIMEOUT_MIDDLE;
-
-#[tauri::command]
-pub fn app_info() -> Result<String, Error> {
+#[tauri::command(async)]
+pub fn device_info() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
-    let method = "AppInfo";
+    let method = "DeviceInfo";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
@@ -34,29 +31,14 @@ pub fn app_info() -> Result<String, Error> {
 }
 
 #[tauri::command(async)]
-pub fn app_open_dir(path: String) -> Result<String, Error> {
+pub fn device_info_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
-    let method = "AppOpenDir";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path, )) {
-        Ok(value) => value,
-        Err(e) => Err(Error::Anyhow(e.into()))?,
-    };
-    Ok(result)
-}
-
-#[tauri::command(async)]
-pub fn app_open_file(path: String) -> Result<String, Error> {
-    // Open session connect
-    let conn = get_session()?;
-    // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
-    // Request
-    let method = "AppOpenFile";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path, )) {
+    let method = "DeviceInfoById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

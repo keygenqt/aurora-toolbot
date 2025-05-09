@@ -13,19 +13,17 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants};
+use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE}};
 
-use super::TIMEOUT_MIDDLE;
-
-#[tauri::command]
-pub fn faq_search(search: String) -> Result<String, Error> {
+#[tauri::command(async)]
+pub fn sdk_ide_close_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
     let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
     // Request
-    let method = "FaqSearch";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (search, )) {
+    let method = "SdkIdeCloseById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

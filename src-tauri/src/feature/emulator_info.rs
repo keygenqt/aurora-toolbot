@@ -13,18 +13,16 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants};
-
-use super::{TIMEOUT_MIDDLE, TIMEOUT_SHORT};
+use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_SHORT}};
 
 #[tauri::command(async)]
-pub fn device_info() -> Result<String, Error> {
+pub fn emulator_info() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
-    let method = "DeviceInfo";
+    let method = "EmulatorInfo";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
@@ -33,43 +31,13 @@ pub fn device_info() -> Result<String, Error> {
 }
 
 #[tauri::command(async)]
-pub fn device_info_by_id(id: String) -> Result<String, Error> {
+pub fn emulator_info_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
-    let method = "DeviceInfoById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
-        Ok(value) => value,
-        Err(e) => Err(Error::Anyhow(e.into()))?,
-    };
-    Ok(result)
-}
-
-#[tauri::command(async)]
-pub fn device_sync() -> Result<String, Error> {
-    // Open session connect
-    let conn = get_session()?;
-    // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
-    // Request
-    let method = "DeviceSync";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
-        Ok(value) => value,
-        Err(e) => Err(Error::Anyhow(e.into()))?,
-    };
-    Ok(result)
-}
-
-#[tauri::command(async)]
-pub fn device_terminal_by_id(id: String) -> Result<String, Error> {
-    // Open session connect
-    let conn = get_session()?;
-    // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
-    // Request
-    let method = "DeviceTerminalById";
+    let method = "EmulatorInfoById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,

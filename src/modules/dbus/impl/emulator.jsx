@@ -55,10 +55,10 @@ export const emulator = {
     emulatorSync: async function () {
         AppUtils.checkResponse(await invoke("emulator_sync", {}))
     },
-    emulatorTerminalById: async function (id, isRoot) {
-        AppUtils.checkResponse(await invoke("emulator_terminal_by_id", { id: id, isRoot: isRoot }));
+    emulatorTerminalById: async function (isRoot, id) {
+        AppUtils.checkResponse(await invoke("emulator_terminal_by_id", { isRoot: isRoot, id: id}));
     },
-    emulatorUploadByPathId: async function (id, path) {
-        AppUtils.checkResponse(await invoke("emulator_upload_by_id", { id: id, path: path }));
+    emulatorUploadByPathId: async function (path, id) {
+        AppUtils.checkResponse(await invoke("emulator_upload_by_id", { path: path, id: id }));
     },
 }

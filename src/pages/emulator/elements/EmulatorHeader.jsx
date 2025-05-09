@@ -208,7 +208,7 @@ export function EmulatorHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.emulatorTerminalById(model.id, false);
+                                        await Methods.emulatorTerminalById(false, model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }
@@ -221,7 +221,7 @@ export function EmulatorHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.emulatorTerminalById(model.id, true);
+                                        await Methods.emulatorTerminalById(true, model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }

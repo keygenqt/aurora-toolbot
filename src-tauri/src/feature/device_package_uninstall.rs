@@ -11,3 +11,66 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+use tauri::Error;
+
+use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_SHORT}};
+
+#[tauri::command(async)]
+pub fn device_package_uninstall() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "DevicePackageUninstall";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn device_package_uninstall_by_id(id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "DevicePackageUninstallById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn device_package_uninstall_package(package: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "DevicePackageUninstallPackage";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn device_package_uninstall_package_by_id(package: String, id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "DevicePackageUninstallPackageById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}

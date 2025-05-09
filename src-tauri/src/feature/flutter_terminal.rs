@@ -16,6 +16,21 @@ use tauri::Error;
 use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE}};
 
 #[tauri::command(async)]
+pub fn flutter_terminal() -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "FlutterTerminal";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
 pub fn flutter_terminal_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
@@ -23,7 +38,7 @@ pub fn flutter_terminal_by_id(id: String) -> Result<String, Error> {
     let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
     // Request
     let method = "FlutterTerminalById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

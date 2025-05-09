@@ -16,14 +16,29 @@ use tauri::Error;
 use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE}};
 
 #[tauri::command(async)]
-pub fn emulator_terminal_by_id(id: String, is_root: bool) -> Result<String, Error> {
+pub fn emulator_terminal(is_root: bool) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    // Request
+    let method = "EmulatorTerminal";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (is_root,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn emulator_terminal_by_id(is_root: bool, id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
     let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorTerminalById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, is_root, )) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (is_root, id, )) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

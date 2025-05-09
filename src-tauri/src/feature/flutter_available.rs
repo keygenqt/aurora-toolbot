@@ -38,7 +38,7 @@ pub fn flutter_available_by_id(id: String) -> Result<String, Error> {
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "FlutterAvailableById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

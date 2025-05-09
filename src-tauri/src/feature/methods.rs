@@ -23,7 +23,7 @@ pub fn faq_search(search: String) -> Result<String, Error> {
     let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
     // Request
     let method = "FaqSearch";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (search, )) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (search,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

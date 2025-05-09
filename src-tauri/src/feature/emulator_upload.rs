@@ -11,3 +11,66 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+use tauri::Error;
+
+use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_SHORT}};
+
+#[tauri::command(async)]
+pub fn emulator_upload_path(path: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "EmulatorUploadPath";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn emulator_upload_path_by_id(path: String, id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "EmulatorUploadPathById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path, id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn emulator_upload_url(url: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "EmulatorUploadUrl";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (url,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn emulator_upload_url_by_id(url: String, id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "EmulatorUploadUrlById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (url, id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}

@@ -11,3 +11,66 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+use tauri::Error;
+
+use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_SHORT}};
+
+#[tauri::command(async)]
+pub fn psdk_target_package_find(package: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "PsdkTargetPackageFind";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn psdk_target_package_find_by_id(package: String, id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "PsdkTargetPackageFindById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn psdk_target_package_find_target(package: String, target_id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "PsdkTargetPackageFindTarget";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}
+
+#[tauri::command(async)]
+pub fn psdk_target_package_find_target_by_id(package: String, target_id: String, id: String) -> Result<String, Error> {
+    // Open session connect
+    let conn = get_session()?;
+    // Get proxy with timeout
+    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    // Request
+    let method = "PsdkTargetPackageFindTargetById";
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id, id,)) {
+        Ok(value) => value,
+        Err(e) => Err(Error::Anyhow(e.into()))?,
+    };
+    Ok(result)
+}

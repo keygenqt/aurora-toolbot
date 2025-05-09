@@ -13,7 +13,11 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE, TIMEOUT_SHORT}};
+use crate::tools::client::get_proxy_bot;
+use crate::tools::client::get_session;
+use crate::tools::constants::TIMEOUT_MIDDLE;
+use crate::tools::constants::TIMEOUT_SHORT;
+use crate::tools::constants::{self};
 
 #[tauri::command(async)]
 pub fn device_info() -> Result<String, Error> {
@@ -38,7 +42,7 @@ pub fn device_info_by_id(id: String) -> Result<String, Error> {
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "DeviceInfoById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id, )) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

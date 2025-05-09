@@ -13,7 +13,10 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE}};
+use crate::tools::client::get_proxy_bot;
+use crate::tools::client::get_session;
+use crate::tools::constants::TIMEOUT_MIDDLE;
+use crate::tools::constants::{self};
 
 #[tauri::command(async)]
 pub fn emulator_open() -> Result<String, Error> {
@@ -53,7 +56,7 @@ pub fn emulator_open_vnc(password: String, port: u64) -> Result<String, Error> {
     let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorOpenVnc";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (password, port,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (password, port)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -68,7 +71,7 @@ pub fn emulator_open_vnc_by_id(password: String, port: u64, id: String) -> Resul
     let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorOpenVncById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (password, port, id,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (password, port, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

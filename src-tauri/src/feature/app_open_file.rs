@@ -13,7 +13,10 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE}};
+use crate::tools::client::get_proxy_bot;
+use crate::tools::client::get_session;
+use crate::tools::constants::TIMEOUT_MIDDLE;
+use crate::tools::constants::{self};
 
 #[tauri::command(async)]
 pub fn app_open_file(path: String) -> Result<String, Error> {
@@ -23,7 +26,7 @@ pub fn app_open_file(path: String) -> Result<String, Error> {
     let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
     // Request
     let method = "AppOpenFile";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path, )) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

@@ -13,7 +13,10 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_SHORT}};
+use crate::tools::client::get_proxy_bot;
+use crate::tools::client::get_session;
+use crate::tools::constants::TIMEOUT_SHORT;
+use crate::tools::constants::{self};
 
 #[tauri::command(async)]
 pub fn psdk_target_package_find(package: String) -> Result<String, Error> {
@@ -38,7 +41,7 @@ pub fn psdk_target_package_find_by_id(package: String, id: String) -> Result<Str
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "PsdkTargetPackageFindById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, id,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -53,7 +56,7 @@ pub fn psdk_target_package_find_target(package: String, target_id: String) -> Re
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "PsdkTargetPackageFindTarget";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -68,7 +71,7 @@ pub fn psdk_target_package_find_target_by_id(package: String, target_id: String,
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "PsdkTargetPackageFindTargetById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id, id,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

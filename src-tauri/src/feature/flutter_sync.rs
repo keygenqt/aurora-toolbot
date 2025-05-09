@@ -13,7 +13,10 @@
 // limitations under the License.
 use tauri::Error;
 
-use crate::tools::{client::{get_proxy_bot, get_session}, constants::{self, TIMEOUT_MIDDLE}};
+use crate::tools::client::get_proxy_bot;
+use crate::tools::client::get_session;
+use crate::tools::constants::TIMEOUT_MIDDLE;
+use crate::tools::constants::{self};
 
 #[tauri::command(async)]
 pub fn flutter_sync() -> Result<String, Error> {

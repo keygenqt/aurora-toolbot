@@ -18,7 +18,6 @@ use crate::tools::client::get_session;
 use crate::tools::constants::TIMEOUT_SHORT;
 use crate::tools::constants::{self};
 
-// @todo using SUDO!
 #[tauri::command(async)]
 pub fn psdk_uninstall() -> Result<String, Error> {
     // Open session connect
@@ -34,7 +33,6 @@ pub fn psdk_uninstall() -> Result<String, Error> {
     Ok(result)
 }
 
-// @todo using SUDO!
 #[tauri::command(async)]
 pub fn psdk_uninstall_by_id(id: String) -> Result<String, Error> {
     // Open session connect

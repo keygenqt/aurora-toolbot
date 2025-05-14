@@ -113,9 +113,34 @@ export const AppUtils = {
     },
     checkResponse: function(result) {
         let data = typeof result === 'string' || result instanceof String ? JSON.parse(result) : result
-        if (data['key'] === 'StateMessage' && data['jsonData']['state'] === 'Error') {
-            throw Error(data['jsonData']['message'])
+        // Check error state
+        if (data['key'] === 'StateMessage') {
+            if (data['jsonData']['state'] === 'Error') {
+                throw Error(data['jsonData']['message'])
+            } else {
+                return {
+                    key: "StateMessage",
+                    state: data['jsonData']['state'],
+                    message: data['jsonData']['message'],
+                }
+            }
         }
+        // Check selector
+        if (data['key'] === 'Selector') {
+            return {
+                key: data['jsonData']['key'],
+                variants: data['jsonData']['variants'],
+            }
+        }
+        // Check model
+        if (data['jsonData'] && data['jsonData']['model']) {
+            return data['jsonData']['model'];
+        }
+        // Check data
+        if (data['jsonData']) {
+            return data['jsonData'];
+        }
+        // Any
         return data;
     },
     isInstall: function(installed, modelAvailable, check) {

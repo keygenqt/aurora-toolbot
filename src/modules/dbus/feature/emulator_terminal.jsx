@@ -14,6 +14,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
+// @todo check
 export const emulator_terminal = {
     emulator_terminal: async function (is_root) {
         return AppUtils.checkResponse(await invoke("emulator_terminal", { is_root: is_root }));

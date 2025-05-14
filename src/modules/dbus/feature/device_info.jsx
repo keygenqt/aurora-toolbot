@@ -16,7 +16,16 @@ import { AppUtils } from '../../../base';
 
 export const device_info = {
     device_info: async function () {
-        return AppUtils.checkResponse(await invoke("device_info", {}));
+        let data = AppUtils.checkResponse(await invoke("device_info", {}));
+        if (data.variants) {
+            return AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                return await device_info.device_info_by_id(e['incoming']['id']);
+            }));
+        }
+        if (data['key'] === 'StateMessage') {
+            return [];
+        }
+        return [data];
     },
     device_info_by_id: async function (id) {
         return AppUtils.checkResponse(await invoke("device_info_by_id", { id: id }));

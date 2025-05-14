@@ -14,6 +14,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
+// @todo check
 export const sdk_tools = {
     sdk_tools: async function () {
         return AppUtils.checkResponse(await invoke("sdk_tools", {}));

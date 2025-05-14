@@ -14,6 +14,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
+// @todo check
 export const device_package_run = {
     device_package_run: async function () {
         return AppUtils.checkResponse(await invoke("device_package_run", {}));

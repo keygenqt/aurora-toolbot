@@ -14,6 +14,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
+// @todo check
 export const device_sync = {
     device_sync: async function (token) {
         return AppUtils.checkResponse(await invoke("device_sync", { token: token }));

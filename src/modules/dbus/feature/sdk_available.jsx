@@ -16,7 +16,16 @@ import { AppUtils } from '../../../base';
 
 export const sdk_available = {
     sdk_available: async function () {
-        return AppUtils.checkResponse(await invoke("sdk_available", {}));
+        let data = AppUtils.checkResponse(await invoke("sdk_available", {}));
+        if (data.variants) {
+            return AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                return await sdk_available.sdk_available_by_id(e['incoming']['id']);
+            }));
+        }
+        if (data['key'] === 'StateMessage') {
+            return [];
+        }
+        return [data];
     },
     sdk_available_by_id: async function (id) {
         return AppUtils.checkResponse(await invoke("sdk_available_by_id", { id: id }));

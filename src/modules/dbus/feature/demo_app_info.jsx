@@ -16,7 +16,13 @@ import { AppUtils } from '../../../base';
 
 export const demo_app_info = {
     demo_app_info: async function () {
-        return AppUtils.checkResponse(await invoke("demo_app_info", {}));
+        let data = AppUtils.checkResponse(await invoke("demo_app_info", {}));
+        if (data.variants) {
+            return AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                return await demo_app_info.demo_app_info_by_id(e['incoming']['id']);
+            }));
+        }
+        return [data];
     },
     demo_app_info_by_id: async function (id) {
         return AppUtils.checkResponse(await invoke("demo_app_info_by_id", { id: id }));

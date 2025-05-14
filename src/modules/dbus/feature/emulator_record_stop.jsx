@@ -20,6 +20,7 @@ import { AppUtils } from '../../../base';
 //     Gif,
 // }
 
+// @todo check
 export const emulator_record_stop = {
     emulator_record_stop: async function (stop_type) {
         return AppUtils.checkResponse(await invoke("emulator_record_stop", { stop_type: stop_type }));

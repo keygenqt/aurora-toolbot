@@ -16,7 +16,16 @@ import { AppUtils } from '../../../base';
 
 export const emulator_info = {
     emulator_info: async function () {
-        return AppUtils.checkResponse(await invoke("emulator_info", {}));
+        let data = AppUtils.checkResponse(await invoke("emulator_info", {}));
+        if (data.variants) {
+            return AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                return await emulator_info.emulator_info_by_id(e['incoming']['id']);
+            }));
+        }
+        if (data['key'] === 'StateMessage') {
+            return [];
+        }
+        return [data];
     },
     emulator_info_by_id: async function (id) {
         return AppUtils.checkResponse(await invoke("emulator_info_by_id", { id: id }));

@@ -14,6 +14,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
+// @todo check
 export const methods = {
     faq_search: async function (search) {
         return AppUtils.checkResponse(await invoke("faq_search", { search: search }));

@@ -120,7 +120,16 @@ export function MainPage(props) {
                                 <Button
                                     startIcon={<HomeRepairService color="default" />}
                                     variant="outlined"
-                                    onClick={() => AppUtils.openPageDelay(navigate, "/features")}
+                                    onClick={async () => {
+                                        try {
+                                            let result = await Methods.device_info();
+                                            console.log(result)
+                                        } catch (e) {
+                                            console.log(e)
+                                        }
+                                        // @todo check
+                                        // AppUtils.openPageDelay(navigate, "/features")
+                                    }}
                                 >
                                     {t('main.t_connect_btn_start')}
                                 </Button>

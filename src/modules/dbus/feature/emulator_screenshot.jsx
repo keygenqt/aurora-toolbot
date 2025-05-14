@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const emulator_screenshot = {
     emulator_screenshot: async function () {
         return AppUtils.checkResponse(await invoke("emulator_screenshot", {}));

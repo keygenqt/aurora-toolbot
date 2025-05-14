@@ -14,12 +14,11 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const emulator_terminal = {
     emulator_terminal: async function (is_root) {
-        return AppUtils.checkResponse(await invoke("emulator_terminal", { is_root: is_root }));
+        return AppUtils.checkResponse(await invoke("emulator_terminal", { isRoot: is_root }));
     },
     emulator_terminal_by_id: async function (is_root, id) {
-        return AppUtils.checkResponse(await invoke("emulator_terminal_by_id", { is_root: is_root, id: id }));
+        return AppUtils.checkResponse(await invoke("emulator_terminal_by_id", { isRoot: is_root, id: id }));
     }
 }

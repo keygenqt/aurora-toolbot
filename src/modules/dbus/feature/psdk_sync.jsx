@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const psdk_sync = {
     psdk_sync: async function () {
         return AppUtils.checkResponse(await invoke("psdk_sync", {}));

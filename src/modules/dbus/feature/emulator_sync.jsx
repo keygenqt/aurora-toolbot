@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const emulator_sync = {
     emulator_sync: async function () {
         return AppUtils.checkResponse(await invoke("emulator_sync", {}));

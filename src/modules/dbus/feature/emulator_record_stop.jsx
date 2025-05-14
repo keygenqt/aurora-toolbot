@@ -14,18 +14,23 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// pub enum EmulatorRecordStopType {
-//     Raw,
-//     Mp4,
-//     Gif,
-// }
-
-// @todo check
 export const emulator_record_stop = {
-    emulator_record_stop: async function (stop_type) {
-        return AppUtils.checkResponse(await invoke("emulator_record_stop", { stop_type: stop_type }));
+    emulator_record_stop_raw: async function () {
+        return AppUtils.checkResponse(await invoke("emulator_record_stop", { stopType: 'Raw' }));
     },
-    emulator_record_stop_by_id: async function (stop_type, id) {
-        return AppUtils.checkResponse(await invoke("emulator_record_stop_by_id", { stop_type: stop_type, id: id }));
-    }
+    emulator_record_stop_raw_by_id: async function (id) {
+        return AppUtils.checkResponse(await invoke("emulator_record_stop_by_id", { stopType: 'Raw', id: id }));
+    },
+    emulator_record_stop_mp4: async function () {
+        return AppUtils.checkResponse(await invoke("emulator_record_stop", { stopType: 'Mp4' }));
+    },
+    emulator_record_stop_mp4_by_id: async function (id) {
+        return AppUtils.checkResponse(await invoke("emulator_record_stop_by_id", { stopType: 'Mp4', id: id }));
+    },
+    emulator_record_stop_gif: async function () {
+        return AppUtils.checkResponse(await invoke("emulator_record_stop", { stopType: 'Gif' }));
+    },
+    emulator_record_stop_gif_by_id: async function (id) {
+        return AppUtils.checkResponse(await invoke("emulator_record_stop_by_id", { stopType: 'Gif', id: id }));
+    },
 }

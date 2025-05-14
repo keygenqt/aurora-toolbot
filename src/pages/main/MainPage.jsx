@@ -122,8 +122,7 @@ export function MainPage(props) {
                                     variant="outlined"
                                     onClick={async () => {
                                         try {
-                                            let result = await Methods.device_info();
-                                            console.log(result)
+                                            console.log(await Methods.emulator_info())
                                         } catch (e) {
                                             console.log(e)
                                         }

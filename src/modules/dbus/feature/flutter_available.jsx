@@ -19,7 +19,10 @@ export const flutter_available = {
         let data = AppUtils.checkResponse(await invoke("flutter_available", {}));
         if (data.variants) {
             return AppUtils.asyncJoin(data.variants.map((e) => async () => {
-                return await flutter_available.flutter_available_by_id(e['incoming']['id']);
+                return {
+                    id: e['incoming']['id'],
+                    ...(await flutter_available.flutter_available_by_id(e['incoming']['id']))
+                };
             }));
         }
         if (data['key'] === 'StateMessage') {

@@ -119,7 +119,6 @@ pub fn run() {
             feature::psdk_sync::psdk_sync,
             feature::psdk_target_package_find::psdk_target_package_find,
             feature::psdk_target_package_find::psdk_target_package_find_by_id,
-            feature::psdk_target_package_find::psdk_target_package_find_target,
             feature::psdk_target_package_find::psdk_target_package_find_target_by_id,
             feature::psdk_target_package_install::psdk_target_package_install,
             feature::psdk_target_package_install::psdk_target_package_install_by_id,

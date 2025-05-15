@@ -122,8 +122,10 @@ export function MainPage(props) {
                                     variant="outlined"
                                     onClick={async () => {
                                         try {
-                                            console.log(await Methods.emulator_info())
+                                            // console.log(await Methods.psdk_available())
+                                            console.log(await Methods.psdk_download_by_id('c2d587aa541b6366ed1afca611c093c2'))
                                         } catch (e) {
+                                            console.log("ERROR")
                                             console.log(e)
                                         }
                                         // @todo check

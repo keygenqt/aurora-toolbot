@@ -19,14 +19,14 @@ use crate::tools::constants::TIMEOUT_SHORT;
 use crate::tools::constants::{self};
 
 #[tauri::command(async)]
-pub fn psdk_package_sign() -> Result<String, Error> {
+pub fn psdk_package_sign(path: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "PsdkPackageSign";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -34,14 +34,14 @@ pub fn psdk_package_sign() -> Result<String, Error> {
 }
 
 #[tauri::command(async)]
-pub fn psdk_package_sign_by_id(id: String) -> Result<String, Error> {
+pub fn psdk_package_sign_by_id(path: String, id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
     let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
     // Request
     let method = "PsdkPackageSignById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path, id,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

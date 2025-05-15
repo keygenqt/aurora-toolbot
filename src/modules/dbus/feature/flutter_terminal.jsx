@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const flutter_terminal = {
     flutter_terminal: async function () {
         return AppUtils.checkResponse(await invoke("flutter_terminal", {}));

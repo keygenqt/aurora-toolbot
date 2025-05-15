@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const device_upload = {
     device_upload_path: async function (path) {
         return AppUtils.checkResponse(await invoke("device_upload_path", { path: path }));

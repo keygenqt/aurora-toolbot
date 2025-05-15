@@ -15,7 +15,7 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_SHORT;
+use crate::tools::constants::TIMEOUT_LONG;
 use crate::tools::constants::{self};
 
 #[tauri::command(async)]
@@ -23,7 +23,7 @@ pub fn flutter_project_report_path(path: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, TIMEOUT_LONG);
     // Request
     let method = "FlutterProjectReportPath";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path,)) {
@@ -38,7 +38,7 @@ pub fn flutter_project_report_path_by_id(path: String, id: String) -> Result<Str
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, TIMEOUT_LONG);
     // Request
     let method = "FlutterProjectReportPathById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path, id)) {
@@ -53,7 +53,7 @@ pub fn flutter_project_report_url(url: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, TIMEOUT_LONG);
     // Request
     let method = "FlutterProjectReportUrl";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (url,)) {
@@ -68,7 +68,7 @@ pub fn flutter_project_report_url_by_id(url: String, id: String) -> Result<Strin
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, TIMEOUT_LONG);
     // Request
     let method = "FlutterProjectReportUrlById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (url, id)) {

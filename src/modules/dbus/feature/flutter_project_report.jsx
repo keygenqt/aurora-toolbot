@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const flutter_project_report = {
     flutter_project_report_path: async function (path) {
         return AppUtils.checkResponse(await invoke("flutter_project_report_path", { path: path }));

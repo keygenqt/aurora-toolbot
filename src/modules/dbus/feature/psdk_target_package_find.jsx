@@ -14,18 +14,53 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const psdk_target_package_find = {
     psdk_target_package_find: async function (package_name) {
-        return AppUtils.checkResponse(await invoke("psdk_target_package_find", { package: package_name }));
+        let data = AppUtils.checkResponse(await invoke("psdk_target_package_find", { package: package_name }));
+        if (data.variants) {
+            if (data.variants[0]['incoming']['target_id']) {
+                let result = [];
+                await AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                    result.push({
+                        name: e['name'],
+                        ...(await psdk_target_package_find.psdk_target_package_find_target_by_id(package_name, e['incoming']['target_id'], e['incoming']['id'])),
+                    });
+                }));
+                return result;
+            } else {
+                let result = [];
+                await AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                    result.push({
+                        name: e['name'],
+                        targets: await psdk_target_package_find.psdk_target_package_find_by_id(package_name, e['incoming']['id']),
+                    });
+                }));
+                return result;
+            }
+        }
+        if (data['key'] === 'StateMessage') {
+            return [];
+        }
+        return [data];
     },
     psdk_target_package_find_by_id: async function (package_name, id) {
-        return AppUtils.checkResponse(await invoke("psdk_target_package_find_by_id", { package: package_name, id: id }));
-    },
-    psdk_target_package_find_target: async function (package_name, target_id) {
-        return AppUtils.checkResponse(await invoke("psdk_target_package_find_target", { package: package_name, target_id: target_id }));
+        let data = AppUtils.checkResponse(await invoke("psdk_target_package_find_by_id", { package: package_name, id: id }));
+        if (data.variants) {
+            let result = [];
+            await AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                result.push({
+                    name: e['name'],
+                    ...(await psdk_target_package_find.psdk_target_package_find_target_by_id(package_name, e['incoming']['target_id'], e['incoming']['id'])),
+                });
+            }));
+            return result;
+        }
+        if (data['key'] === 'StateMessage') {
+            return [];
+        }
+        return [data];
     },
     psdk_target_package_find_target_by_id: async function (package_name, target_id, id) {
-        return AppUtils.checkResponse(await invoke("psdk_target_package_find_target_by_id", { package: package_name, target_id: target_id, id: id }));
+        return AppUtils.checkResponse(await invoke("psdk_target_package_find_target_by_id", { package: package_name, targetId: target_id, id: id }));
     }
 }

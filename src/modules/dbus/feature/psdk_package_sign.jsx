@@ -14,12 +14,11 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const psdk_package_sign = {
-    psdk_package_sign: async function () {
-        return AppUtils.checkResponse(await invoke("psdk_package_sign", {}));
+    psdk_package_sign: async function (path) {
+        return AppUtils.checkResponse(await invoke("psdk_package_sign", { path: path }));
     },
-    psdk_package_sign_by_id: async function (id) {
-        return AppUtils.checkResponse(await invoke("psdk_package_sign_by_id", { id: id }));
+    psdk_package_sign_by_id: async function (path, id) {
+        return AppUtils.checkResponse(await invoke("psdk_package_sign_by_id", { path: path, id: id }));
     }
 }

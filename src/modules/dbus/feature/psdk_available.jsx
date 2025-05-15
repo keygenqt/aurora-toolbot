@@ -19,7 +19,10 @@ export const psdk_available = {
         let data = AppUtils.checkResponse(await invoke("psdk_available", {}));
         if (data.variants) {
             return AppUtils.asyncJoin(data.variants.map((e) => async () => {
-                return await psdk_available.psdk_available_by_id(e['incoming']['id']);
+                return {
+                    id: e['incoming']['id'],
+                    ...(await psdk_available.psdk_available_by_id(e['incoming']['id']))
+                };
             }));
         }
         if (data['key'] === 'StateMessage') {

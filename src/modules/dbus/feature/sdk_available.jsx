@@ -19,7 +19,10 @@ export const sdk_available = {
         let data = AppUtils.checkResponse(await invoke("sdk_available", {}));
         if (data.variants) {
             return AppUtils.asyncJoin(data.variants.map((e) => async () => {
-                return await sdk_available.sdk_available_by_id(e['incoming']['id']);
+                return {
+                    id: e['incoming']['id'],
+                    ...(await sdk_available.sdk_available_by_id(e['incoming']['id']))
+                };
             }));
         }
         if (data['key'] === 'StateMessage') {

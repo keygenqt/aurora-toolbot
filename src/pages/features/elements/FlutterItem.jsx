@@ -90,8 +90,8 @@ export function FlutterItem(props) {
                         animate={flutterInstalled === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.fluttersSync, true);
-                            try { await Methods.flutterSync() } catch (e) { }
-                            dispatch(setFlutterInstalled(await Methods.flutterInfo()));
+                            try { await Methods.flutter_sync() } catch (e) { }
+                            dispatch(setFlutterInstalled(await Methods.flutter_info()));
                             setEffectStateBool(dispatch, keysStateBool.fluttersSync, false);
                         }}
                     />

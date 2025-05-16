@@ -23,6 +23,8 @@ export const psdk_target_package_find = {
                 await AppUtils.asyncJoin(data.variants.map((e) => async () => {
                     result.push({
                         name: e['name'],
+                        id: e['incoming']['id'],
+                        target_id: e['incoming']['target_id'],
                         ...(await psdk_target_package_find.psdk_target_package_find_target_by_id(package_name, e['incoming']['target_id'], e['incoming']['id'])),
                     });
                 }));
@@ -50,6 +52,8 @@ export const psdk_target_package_find = {
             await AppUtils.asyncJoin(data.variants.map((e) => async () => {
                 result.push({
                     name: e['name'],
+                    id: e['incoming']['id'],
+                    target_id: e['incoming']['target_id'],
                     ...(await psdk_target_package_find.psdk_target_package_find_target_by_id(package_name, e['incoming']['target_id'], e['incoming']['id'])),
                 });
             }));

@@ -73,15 +73,6 @@ import { sdk_project_format } from './feature/sdk_project_format';
 import { sdk_sync } from './feature/sdk_sync';
 import { sdk_tools } from './feature/sdk_tools';
 import { sdk_uninstall } from './feature/sdk_uninstall';
-// old
-import { app } from './impl/app';
-import { demoApp } from './impl/demoApp';
-import { device } from './impl/device';
-import { emulator } from './impl/emulator';
-import { faq } from './impl/faq';
-import { flutter } from './impl/flutter';
-import { psdk } from './impl/psdk';
-import { sdk } from './impl/sdk';
 
 /**
  * Tauri application methods
@@ -144,15 +135,6 @@ export const MethodsDbus = {
     ...sdk_sync,
     ...sdk_tools,
     ...sdk_uninstall,
-    // old
-    ...app,
-    ...demoApp,
-    ...device,
-    ...emulator,
-    ...faq,
-    ...flutter,
-    ...psdk,
-    ...sdk,
     log: function (message) {
         debug(message)
     }

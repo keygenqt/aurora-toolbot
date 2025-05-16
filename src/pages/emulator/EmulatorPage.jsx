@@ -41,7 +41,7 @@ export function EmulatorPage(props) {
     const emulators = useSelector((state) => state.emulators.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setEmulators(await Methods.emulatorInfo()));
+        dispatch(setEmulators(await Methods.emulator_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
@@ -71,7 +71,7 @@ export function EmulatorPage(props) {
                         />
                         <EmulatorGroupTools
                             model={model}
-                            disabled={isUpdateItem || !model.isRunning}
+                            disabled={isUpdateItem || !model.is_running}
                         />
                     </Stack>
                 )

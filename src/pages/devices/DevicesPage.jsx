@@ -65,7 +65,7 @@ export function DevicesPage(props) {
     const devices = useSelector((state) => state.devices.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setDevices(await Methods.deviceInfo()));
+        dispatch(setDevices(await Methods.device_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
@@ -80,7 +80,7 @@ export function DevicesPage(props) {
             updateStates={updateStates}
             reduxKey={reduxKey}
             itemList={(model, key) => (
-                <CardGradient color={model.isAvailable ? color : colorDisabled}>
+                <CardGradient color={model.is_available ? color : colorDisabled}>
                     <CardContent sx={{ paddingBottom: 1 }}>
                         <Stack
                             direction="row"
@@ -91,8 +91,8 @@ export function DevicesPage(props) {
                                 style={{ width: '16px', height: '16px' }}
                                 src={DataImages.iconDevice}
                                 alt='Icon' />
-                            <Typography variant="subtitle2" color={model.isAvailable ? color : colorDisabled} >
-                                {model.name}
+                            <Typography variant="subtitle2" color={model.is_available ? color : colorDisabled} >
+                                {model.name.replace(model.version, "")}
                             </Typography>
                         </Stack>
                         <Box
@@ -132,7 +132,7 @@ export function DevicesPage(props) {
                                         <Box width={16} textAlign={'center'}>
                                             <FontAwesomeIcon icon="fa-solid fa-key" />
                                         </Box>
-                                        <Box>{model.typeConnection}</Box>
+                                        <Box>{model.pass == null ? 'SSH key' : 'Password'}</Box>
                                     </Stack>
                                     <Stack
                                         direction={'row'}
@@ -157,12 +157,12 @@ export function DevicesPage(props) {
                             direction={'row'}
                             spacing={1}
                         >
-                            {model.isAvailable && (
+                            {model.is_available && (
                                 <Tooltip title={t('devices.t_btn_terminal_user')} placement="left-start">
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.deviceTerminalById(model.id);
+                                                await Methods.device_terminal_by_id(model.id);
                                             } catch (e) {
                                                 await updateStates();
                                             }
@@ -172,7 +172,7 @@ export function DevicesPage(props) {
                                     </IconButton>
                                 </Tooltip>
                             )}
-                            {!model.isAvailable && (
+                            {!model.is_available && (
                                 <Typography component={'div'} variant="body2" sx={{ color: 'text.secondary' }}>
                                     {t('devices.t_not_connection')}
                                 </Typography>
@@ -182,7 +182,7 @@ export function DevicesPage(props) {
                         <Box sx={{ flexGrow: 1 }} />
 
                         <Button
-                            disabled={!model.isAvailable}
+                            disabled={!model.is_available}
                             size={'small'}
                             color={'success'}
                             endIcon={<KeyboardArrowRight color="default" />}

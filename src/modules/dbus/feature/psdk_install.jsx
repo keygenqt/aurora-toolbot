@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { invoke } from "@tauri-apps/api/core";
-import { SelectorModel, PsdkAvailableModel } from '../../../models';
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const psdk_install = {
     psdk_install: async function () {
         return AppUtils.checkResponse(await invoke("psdk_install", {}));

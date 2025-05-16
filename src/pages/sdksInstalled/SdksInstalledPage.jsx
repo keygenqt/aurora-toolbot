@@ -66,7 +66,7 @@ export function SdksInstalledPage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setSdkInstalled(await Methods.sdkInfo()));
+        dispatch(setSdkInstalled(await Methods.sdk_info()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
@@ -89,7 +89,7 @@ export function SdksInstalledPage(props) {
                                 src={DataImages.iconSdk}
                                 alt='Icon' />
                             <Typography variant="subtitle2" color={color} >
-                                Аврора SDK v{model.versionFull}
+                                Аврора SDK v{model.version_full}
                             </Typography>
                         </Stack>
 
@@ -110,7 +110,7 @@ export function SdksInstalledPage(props) {
                                         <Box width={16} textAlign={'center'}>
                                             <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                         </Box>
-                                        <Box>Qt Creator v{model.qtCreatorVersion}</Box>
+                                        <Box>Qt Creator v{model.qt_creator_version}</Box>
                                     </Stack>
                                     <Stack
                                         direction={'row'}
@@ -120,7 +120,7 @@ export function SdksInstalledPage(props) {
                                         <Box width={16} textAlign={'center'}>
                                             <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                         </Box>
-                                        <Box>Qt v{model.qtVersion}</Box>
+                                        <Box>Qt v{model.qt_version}</Box>
                                     </Stack>
                                     <Stack
                                         direction={'row'}
@@ -130,7 +130,7 @@ export function SdksInstalledPage(props) {
                                         <Box width={16} textAlign={'center'}>
                                             <FontAwesomeIcon icon="fa-solid fa-trowel-bricks" />
                                         </Box>
-                                        <Box>{model.buildDate}</Box>
+                                        <Box>{model.build_date}</Box>
                                     </Stack>
                                 </Stack>
                             </Typography>
@@ -153,7 +153,7 @@ export function SdksInstalledPage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.appOpenDir(model.dir);
+                                                await Methods.app_open_dir(model.dir);
                                             } catch (e) {
                                                 await updateStates();
                                             }
@@ -166,7 +166,7 @@ export function SdksInstalledPage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.sdkToolsById(model.id);
+                                                await Methods.sdk_tools_by_id(model.id);
                                             } catch (e) {
                                                 await updateStates();
                                             }

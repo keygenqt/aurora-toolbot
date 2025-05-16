@@ -40,7 +40,7 @@ export function DevicePage(props) {
     const devices = useSelector((state) => state.devices.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setDevices(await Methods.deviceInfo()));
+        dispatch(setDevices(await Methods.device_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
@@ -70,7 +70,7 @@ export function DevicePage(props) {
                         />
                         <DeviceGroupTools
                             model={model}
-                            disabled={isUpdateItem || !model.isAvailable}
+                            disabled={isUpdateItem || !model.is_available}
                         />
                     </Stack>
                 )

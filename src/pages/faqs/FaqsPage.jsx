@@ -49,7 +49,7 @@ export function FaqsPage(props) {
     const updateStates = async () => {
         setModels(undefined);
         await new Promise(r => setTimeout(r, 800)); // animation delay
-        setModels(await Methods.faqSearch(state.search));
+        setModels(await Methods.faq_search(state.search));
     };
     // init
     useEffectSingleTimeout(async () => {

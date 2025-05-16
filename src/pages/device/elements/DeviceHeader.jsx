@@ -54,7 +54,7 @@ export function DeviceHeader(props) {
     const colorDisabled = theme.palette.inherit.main;
     // page
     return (
-        <CardGradient color={model.isAvailable ? color : colorDisabled}>
+        <CardGradient color={model.is_available ? color : colorDisabled}>
             <CardContent
                 sx={{
                     position: 'relative',
@@ -72,7 +72,7 @@ export function DeviceHeader(props) {
                         <IconButton
                             onClick={async () => {
                                 try {
-                                    await Methods.appOpenFile("devices.json");
+                                    await Methods.app_open_file("devices.json");
                                 } catch (e) {
                                     await onRefresh();
                                 }
@@ -98,7 +98,7 @@ export function DeviceHeader(props) {
                         alt='Icon' />
 
                     <Typography variant="h6" >
-                        {model.name}
+                        {model.name.replace(model.version, "")}
                     </Typography>
 
                     <Stack
@@ -140,7 +140,7 @@ export function DeviceHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-key" />
                                     </Box>
-                                    <Box>{model.typeConnection}</Box>
+                                    <Box>{model.pass == null ? 'SSH key' : 'Password'}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -159,13 +159,13 @@ export function DeviceHeader(props) {
                     <ButtonGroup
                         variant={'outlined'}
                         color={'success'}
-                        disabled={!model.isAvailable || isUpdate}
+                        disabled={!model.is_available || isUpdate}
                     >
                         <Tooltip title={t('device.t_btn_terminal_user')} placement="top">
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.deviceTerminalById(model.id);
+                                        await Methods.device_terminal_by_id(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }

@@ -78,7 +78,7 @@ export function SdkHeader(props) {
                         alt='Icon' />
 
                     <Typography variant="h6" >
-                        Аврора SDK v{model.versionFull}
+                        Аврора SDK v{model.version_full}
                     </Typography>
 
                     <Stack
@@ -100,7 +100,7 @@ export function SdkHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    <Box>Qt Creator v{model.qtCreatorVersion}</Box>
+                                    <Box>Qt Creator v{model.qt_creator_version}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -110,7 +110,7 @@ export function SdkHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    <Box>Based on Qt v{model.qtVersion}</Box>
+                                    <Box>Based on Qt v{model.qt_version}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -120,7 +120,7 @@ export function SdkHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-trowel-bricks" />
                                     </Box>
-                                    <Box>{model.buildDate}</Box>
+                                    <Box>{model.build_date}</Box>
                                 </Stack>
                             </Stack>
                         </Typography>
@@ -136,13 +136,13 @@ export function SdkHeader(props) {
                             spacing={2}
                             sx={{ alignItems: 'center' }}
                         >
-                            {model.isRunning && (
+                            {model.is_running && (
                                 <Tooltip title={t('sdk.t_btn_stop')} placement="top">
                                     <IconButton
                                         size={'large'}
                                         onClick={async () => {
                                             onUpdate(true)
-                                            try { await Methods.sdkIdeCloseById(model.id) } catch (e) { }
+                                            try { await Methods.sdk_ide_close_by_id(model.id) } catch (e) { }
                                             await onRefresh();
                                             onUpdate(false)
                                         }}
@@ -151,13 +151,13 @@ export function SdkHeader(props) {
                                     </IconButton>
                                 </Tooltip>
                             )}
-                            {!model.isRunning && (
+                            {!model.is_running && (
                                 <Tooltip title={t('sdk.t_btn_run')} placement="top">
                                     <IconButton
                                         size={'large'}
                                         onClick={async () => {
                                             onUpdate(true)
-                                            try { await Methods.sdkIdeOpenById(model.id) } catch (e) { }
+                                            try { await Methods.sdk_ide_open_by_id(model.id) } catch (e) { }
                                             await onRefresh();
                                             onUpdate(false)
                                         }}
@@ -177,7 +177,7 @@ export function SdkHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.appOpenDir(model.dir);
+                                        await Methods.app_open_dir(model.dir);
                                     } catch (e) {
                                         await onRefresh();
                                     }
@@ -190,7 +190,7 @@ export function SdkHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.sdkToolsById(model.id);
+                                        await Methods.sdk_tools_by_id(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }

@@ -81,8 +81,8 @@ export function EmulatorItem(props) {
                         animate={emulators === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.emulatorsSync, true);
-                            try { await Methods.emulatorSync() } catch (e) {}
-                            dispatch(setEmulators(await Methods.emulatorInfo()));
+                            try { await Methods.emulator_sync() } catch (e) {}
+                            dispatch(setEmulators(await Methods.emulator_info()));
                             setEffectStateBool(dispatch, keysStateBool.emulatorsSync, false);
                         }}
                     />

@@ -74,7 +74,7 @@ export function FlutterHeader(props) {
                         alt='Icon' />
 
                     <Typography variant="h6" >
-                        Flutter SDK v{model.flutterVersion}
+                        Flutter SDK v{model.flutter_version}
                     </Typography>
 
                     <Stack
@@ -96,7 +96,7 @@ export function FlutterHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    <Box>Dart v{model.dartVersion}</Box>
+                                    <Box>Dart v{model.dart_version}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -106,7 +106,7 @@ export function FlutterHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    <Box>Tools v{model.toolsVersion}</Box>
+                                    <Box>Tools v{model.tools_version}</Box>
                                 </Stack>
                             </Stack>
                         </Typography>
@@ -121,7 +121,7 @@ export function FlutterHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.appOpenDir(model.dir);
+                                        await Methods.app_open_dir(model.dir);
                                     } catch (e) {
                                         await onRefresh();
                                     }
@@ -134,7 +134,7 @@ export function FlutterHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.flutterTerminalById(model.id);
+                                        await Methods.flutter_terminal_by_id(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }

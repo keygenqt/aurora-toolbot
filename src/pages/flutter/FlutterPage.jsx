@@ -40,7 +40,7 @@ export function FlutterPage(props) {
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setFlutterInstalled(await Methods.flutterInfo()));
+        dispatch(setFlutterInstalled(await Methods.flutter_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);

@@ -53,7 +53,7 @@ export function FluttersAvailablePage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
+        dispatch(setFlutterAvailable(await Methods.flutter_available()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
@@ -104,9 +104,9 @@ export function FluttersAvailablePage(props) {
                                 <IconButton
                                     onClick={async () => {
                                         if (model.urlRepo) {
-                                            await AppUtils.openUrl(model.urlRepo);
+                                            await AppUtils.openUrl(model.url_repo);
                                         } else {
-                                            await AppUtils.openUrl(model.urlZip);
+                                            await AppUtils.openUrl(model.url_zip);
                                         }
                                     }}
                                 >
@@ -117,7 +117,7 @@ export function FluttersAvailablePage(props) {
                             <Tooltip title={t('common.t_open_repo')} placement="left-start">
                                 <IconButton
                                     onClick={async () => {
-                                        await AppUtils.openUrl(model.urlGitlab);
+                                        await AppUtils.openUrl(model.url_gitlab);
                                     }}
                                 >
                                     <OpenInNew />

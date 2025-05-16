@@ -68,7 +68,7 @@ export function EmulatorsPage(props) {
     const emulators = useSelector((state) => state.emulators.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setEmulators(await Methods.emulatorInfo()));
+        dispatch(setEmulators(await Methods.emulator_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
@@ -158,7 +158,7 @@ export function EmulatorsPage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.appOpenDir(model.dirEmulator);
+                                                await Methods.app_open_dir(model.dirEmulator);
                                             } catch (e) {
                                                 await updateStates();
                                             }
@@ -167,12 +167,12 @@ export function EmulatorsPage(props) {
                                         <FolderOpen />
                                     </IconButton>
                                 </Tooltip>
-                                {model.isRunning && (
+                                {model.is_running && (
                                     <Tooltip title={t('emulators.t_btn_terminal_user')} placement="left-start">
                                         <IconButton
                                             onClick={async () => {
                                                 try {
-                                                    await Methods.emulatorTerminalById(false, model.id);
+                                                    await Methods.emulator_terminal_by_id(false, model.id);
                                                 } catch (e) {
                                                     await updateStates();
                                                 }
@@ -182,12 +182,12 @@ export function EmulatorsPage(props) {
                                         </IconButton>
                                     </Tooltip>
                                 )}
-                                {model.isRunning && (
+                                {model.is_running && (
                                     <Tooltip title={t('emulators.t_btn_terminal_root')} placement="left-start">
                                         <IconButton
                                             onClick={async () => {
                                                 try {
-                                                    await Methods.emulatorTerminalById(true, model.id);
+                                                    await Methods.emulator_terminal_by_id(true, model.id);
                                                 } catch (e) {
                                                     await updateStates();
                                                 }
@@ -197,13 +197,13 @@ export function EmulatorsPage(props) {
                                         </IconButton>
                                     </Tooltip>
                                 )}
-                                {model.isRunning ? (
+                                {model.is_running ? (
                                     <Tooltip title={t('emulators.t_btn_stop')} placement="left-start">
                                         <IconButton
                                             onClick={async () => {
                                                 setIsUpdateItem(isUpdateItem.concat([key]));
                                                 try {
-                                                    await Methods.emulatorCloseById(model.id);
+                                                    await Methods.emulator_close_by_id(model.id);
                                                     await new Promise(r => setTimeout(r, 1000));
                                                     await updateStatesSilent();
                                                 } catch (e) {
@@ -221,7 +221,7 @@ export function EmulatorsPage(props) {
                                             onClick={async () => {
                                                 setIsUpdateItem(isUpdateItem.concat([key]));
                                                 try {
-                                                    await Methods.emulatorOpenById(model.id);
+                                                    await Methods.emulator_open_by_id(model.id);
                                                     await updateStatesSilent();
                                                 } catch (e) {
                                                     await updateStates();

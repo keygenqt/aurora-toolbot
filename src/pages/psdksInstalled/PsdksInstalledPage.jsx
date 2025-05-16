@@ -67,7 +67,7 @@ export function PsdksInstalledPage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setPsdkInstalled(await Methods.psdkInfo()));
+        dispatch(setPsdkInstalled(await Methods.psdk_info()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
@@ -90,7 +90,7 @@ export function PsdksInstalledPage(props) {
                                 src={DataImages.iconPsdk}
                                 alt='Icon' />
                             <Typography variant="subtitle2" color={color} >
-                                Platform SDK v{model.versionId}
+                                Platform SDK v{model.version_id}
                             </Typography>
                         </Stack>
                         <Box
@@ -110,7 +110,7 @@ export function PsdksInstalledPage(props) {
                                         <Box width={16} textAlign={'center'}>
                                             <FontAwesomeIcon icon="fa-solid fa-signature" />
                                         </Box>
-                                        <Box>{model.versionName}</Box>
+                                        <Box>{model.version.split('(')[1].replace(")", "")}</Box>
                                     </Stack>
                                     <Stack
                                         direction={'row'}
@@ -123,10 +123,10 @@ export function PsdksInstalledPage(props) {
                                         <Link
                                             href={'javascript:void(0)'}
                                             onClick={async () => {
-                                                await AppUtils.openUrl(model.homeUrl)
+                                                await AppUtils.openUrl(model.home_url)
                                             }}
                                         >
-                                            {model.homeUrl}
+                                            {model.home_url}
                                         </Link>
                                     </Stack>
                                 </Stack>
@@ -149,7 +149,7 @@ export function PsdksInstalledPage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.appOpenDir(model.dir);
+                                                await Methods.app_open_dir(model.dir);
                                             } catch (e) {
                                                 await updateStates();
                                             }
@@ -162,7 +162,7 @@ export function PsdksInstalledPage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.psdkTerminalById(model.id);
+                                                await Methods.psdk_terminal_by_id(model.id);
                                             } catch (e) {
                                                 await updateStates();
                                             }

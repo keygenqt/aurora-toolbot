@@ -15,7 +15,7 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_SHORT;
+use crate::tools::constants::TIMEOUT_LONG;
 use crate::tools::constants::{self};
 
 #[tauri::command(async)]
@@ -23,7 +23,7 @@ pub fn psdk_install() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, TIMEOUT_LONG);
     // Request
     let method = "PsdkInstall";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
@@ -38,7 +38,7 @@ pub fn psdk_install_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, TIMEOUT_LONG);
     // Request
     let method = "PsdkInstallById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {

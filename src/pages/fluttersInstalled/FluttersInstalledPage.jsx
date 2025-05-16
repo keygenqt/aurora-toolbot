@@ -66,7 +66,7 @@ export function FluttersInstalledPage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setFlutterInstalled(await Methods.flutterInfo()));
+        dispatch(setFlutterInstalled(await Methods.flutter_info()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
@@ -89,7 +89,7 @@ export function FluttersInstalledPage(props) {
                                 src={DataImages.iconFlutter}
                                 alt='Icon' />
                             <Typography variant="subtitle2" color={color} >
-                                Flutter SDK v{model.flutterVersion}
+                                Flutter SDK v{model.flutter_version}
                             </Typography>
                         </Stack>
                         <Box
@@ -109,7 +109,7 @@ export function FluttersInstalledPage(props) {
                                         <Box width={16} textAlign={'center'}>
                                             <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                         </Box>
-                                        <Box>Dart v{model.dartVersion}</Box>
+                                        <Box>Dart v{model.dart_version}</Box>
                                     </Stack>
                                     <Stack
                                         direction={'row'}
@@ -119,7 +119,7 @@ export function FluttersInstalledPage(props) {
                                         <Box width={16} textAlign={'center'}>
                                             <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                         </Box>
-                                        <Box>Tools v{model.toolsVersion}</Box>
+                                        <Box>Tools v{model.tools_version}</Box>
                                     </Stack>
                                 </Stack>
                             </Typography>
@@ -142,7 +142,7 @@ export function FluttersInstalledPage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.appOpenDir(model.dir);
+                                                await Methods.app_open_dir(model.dir);
                                             } catch (e) {
                                                 await updateStates();
                                             }
@@ -155,7 +155,7 @@ export function FluttersInstalledPage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
-                                                await Methods.flutterTerminalById(model.id);
+                                                await Methods.flutter_terminal_by_id(model.id);
                                             } catch (e) {
                                                 await updateStates();
                                             }

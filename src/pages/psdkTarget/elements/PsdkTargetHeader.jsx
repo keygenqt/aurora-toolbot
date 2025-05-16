@@ -123,7 +123,7 @@ export function PsdkTargetHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.appOpenDir(target.dir);
+                                        await Methods.app_open_dir(target.dir);
                                     } catch (e) {
                                         await onRefresh();
                                     }

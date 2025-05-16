@@ -32,3 +32,8 @@ pub fn faq_search(search: String) -> Result<String, Error> {
     };
     Ok(result)
 }
+
+#[tauri::command(async)]
+pub fn is_debug() -> Result<bool, Error> {
+    Ok(cfg!(debug_assertions))
+}

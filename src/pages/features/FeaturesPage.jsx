@@ -70,28 +70,28 @@ export function FeaturesPage(props) {
         setIsUpdate(true)
         await AppUtils.asyncJoin(
             (devices || devices === null) && !refresh ? null : async () => {
-                dispatch(setDevices(await Methods.deviceInfo()));
+                dispatch(setDevices(await Methods.device_info()));
             },
             (emulators || emulators === null) && !refresh ? null : async () => {
-                dispatch(setEmulators(await Methods.emulatorInfo()));
+                dispatch(setEmulators(await Methods.emulator_info()));
             },
             (sdkInstalled || sdkInstalled === null) && !refresh ? null : async () => {
-                dispatch(setSdkInstalled(await Methods.sdkInfo()));
+                dispatch(setSdkInstalled(await Methods.sdk_info()));
             },
             (sdkAvailable || sdkAvailable === null) && !refresh ? null : async () => {
-                dispatch(setSdkAvailable(await Methods.sdkAvailable()));
+                dispatch(setSdkAvailable(await Methods.sdk_available()));
             },
             (psdkInstalled || psdkInstalled === null) && !refresh ? null : async () => {
-                dispatch(setPsdkInstalled(await Methods.psdkInfo()));
+                dispatch(setPsdkInstalled(await Methods.psdk_info()));
             },
             (psdkAvailable || psdkAvailable === null) && !refresh ? null : async () => {
-                dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
+                dispatch(setPsdkAvailable(await Methods.psdk_available()));
             },
             (flutterInstalled || flutterInstalled === null) && !refresh ? null : async () => {
-                dispatch(setFlutterInstalled(await Methods.flutterInfo()));
+                dispatch(setFlutterInstalled(await Methods.flutter_info()));
             },
             (flutterAvailable || flutterAvailable === null) && !refresh ? null : async () => {
-                dispatch(setFlutterAvailable(await Methods.flutterAvailable()));
+                dispatch(setFlutterAvailable(await Methods.flutter_available()));
             },
         )
         setIsUpdate(false)

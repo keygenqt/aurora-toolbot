@@ -49,21 +49,6 @@ pub fn psdk_target_package_uninstall_by_id(package: String, id: String) -> Resul
 }
 
 #[tauri::command(async)]
-pub fn psdk_target_package_uninstall_target(package: String, target_id: String) -> Result<String, Error> {
-    // Open session connect
-    let conn = get_session()?;
-    // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
-    // Request
-    let method = "PsdkTargetPackageUninstallTarget";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id)) {
-        Ok(value) => value,
-        Err(e) => Err(Error::Anyhow(e.into()))?,
-    };
-    Ok(result)
-}
-
-#[tauri::command(async)]
 pub fn psdk_target_package_uninstall_target_by_id(
     package: String,
     target_id: String,

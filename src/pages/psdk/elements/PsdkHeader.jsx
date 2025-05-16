@@ -75,7 +75,7 @@ export function PsdkHeader(props) {
                         alt='Icon' />
 
                     <Typography variant="h6" >
-                        Platform SDK v{model.versionId}
+                        Platform SDK v{model.version_id}
                     </Typography>
 
                     <Stack
@@ -97,7 +97,7 @@ export function PsdkHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-signature" />
                                     </Box>
-                                    <Box>{model.versionName}</Box>
+                                    <Box>{model.version.split('(')[1].replace(")", "")}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -110,10 +110,10 @@ export function PsdkHeader(props) {
                                     <Link
                                         href={'javascript:void(0)'}
                                         onClick={async () => {
-                                            await AppUtils.openUrl(model.homeUrl)
+                                            await AppUtils.openUrl(model.home_url)
                                         }}
                                     >
-                                        {model.homeUrl}
+                                        {model.home_url}
                                     </Link>
                                 </Stack>
                             </Stack>
@@ -129,7 +129,7 @@ export function PsdkHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.appOpenDir(model.dir);
+                                        await Methods.app_open_dir(model.dir);
                                     } catch (e) {
                                         await onRefresh();
                                     }
@@ -142,7 +142,7 @@ export function PsdkHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.psdkTerminalById(model.id);
+                                        await Methods.psdk_terminal_by_id(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }

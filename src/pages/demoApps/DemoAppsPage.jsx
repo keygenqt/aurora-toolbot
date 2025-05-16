@@ -49,7 +49,7 @@ export function DemoAppsPage(props) {
     const updateStates = async () => {
         setDemoApps(undefined);
         await new Promise(r => setTimeout(r, 400)); // animation delay
-        setDemoApps(await Methods.demoAppInfo());
+        setDemoApps(await Methods.demo_app_info());
     };
     // init
     useEffectSingleTimeout(async () => {

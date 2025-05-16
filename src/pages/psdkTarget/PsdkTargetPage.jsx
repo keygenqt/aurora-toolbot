@@ -43,7 +43,7 @@ export function PsdkTargetPage(props) {
     const targets = model === undefined ? undefined : model[0].targets;
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setPsdkInstalled(await Methods.psdkInfo()));
+        dispatch(setPsdkInstalled(await Methods.psdk_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);

@@ -52,7 +52,7 @@ export function SdksAvailablePage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setSdkAvailable(await Methods.sdkAvailable()));
+        dispatch(setSdkAvailable(await Methods.sdk_available()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
@@ -64,7 +64,7 @@ export function SdksAvailablePage(props) {
             reduxKey={reduxKey}
             itemList={(model) => {
                 const isInstall = AppUtils.isInstall(sdkInstalled, model, (i, a) => {
-                    return i.versionFull == a.versionFull && i.buildType == a.buildType;
+                    return i.version.split('-')[0] == a.version_full && i.version.includes(a.build_type.toLowerCase());
                 });
                 let color = isInstall ? theme.palette.primary.main : theme.palette.primarySdk.main;
                 return (
@@ -75,8 +75,8 @@ export function SdksAvailablePage(props) {
                                     <Done color={'white'} />
                                 </Avatar>
                             )}
-                            title={`Аврора SDK (${model.buildType})`}
-                            subheader={`v${model.versionFull}`}
+                            title={`Аврора SDK (${model.build_type})`}
+                            subheader={`v${model.version_full}`}
                             sx={{
                                 paddingBottom: 0,
                                 '& .MuiCardHeader-title': {
@@ -86,7 +86,7 @@ export function SdksAvailablePage(props) {
                         />
                         <CardContent>
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                {model.buildType === 'MB2' ? t('sdksAvailable.t_item_mb2') : t('sdksAvailable.t_item_bt')}
+                                {model.build_type === 'MB2' ? t('sdksAvailable.t_item_mb2') : t('sdksAvailable.t_item_bt')}
                             </Typography>
                         </CardContent>
                         <CardActions sx={{
@@ -94,8 +94,8 @@ export function SdksAvailablePage(props) {
                             paddingTop: 0
                         }}>
                             <Chip
-                                icon={model.installType === 'Online' ? (<CloudQueue color='info' />) : (<CloudOff color='primary' />)}
-                                label={`${model.installType} installer`}
+                                icon={model.install_type === 'Online' ? (<CloudQueue color='info' />) : (<CloudOff color='primary' />)}
+                                label={`${model.install_type} installer`}
                             />
                             <Box sx={{ flexGrow: 1 }} />
 

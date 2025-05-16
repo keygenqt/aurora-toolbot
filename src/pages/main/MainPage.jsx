@@ -47,7 +47,7 @@ export function MainPage(props) {
         await AppUtils.asyncJoin(
             async () => {
                 await new Promise(r => setTimeout(r, 800)); // animation delay
-                dispatch(setAppInfo(await Methods.appInfo()));
+                dispatch(setAppInfo(await Methods.app_info()));
             },
         )
     };
@@ -112,8 +112,8 @@ export function MainPage(props) {
                                     sx={{ textAlign: 'center' }}
                                 >
                                     {window.isTauri ?
-                                        t('main.t_connect_success_info_t', { version: appInfo.apiVersion }) :
-                                        t('main.t_connect_success_info_w', { version: appInfo.appVersion })}
+                                        t('main.t_connect_success_info_t', { version: appInfo.api_version }) :
+                                        t('main.t_connect_success_info_w', { version: appInfo.version })}
                                 </Typography>
                             </Stack>
                             <Box sx={{ textAlign: 'center' }}>
@@ -121,15 +121,7 @@ export function MainPage(props) {
                                     startIcon={<HomeRepairService color="default" />}
                                     variant="outlined"
                                     onClick={async () => {
-                                        try {
-                                            // console.log(await Methods.psdk_available())
-                                            console.log(await Methods.psdk_download_by_id('c2d587aa541b6366ed1afca611c093c2'))
-                                        } catch (e) {
-                                            console.log("ERROR")
-                                            console.log(e)
-                                        }
-                                        // @todo check
-                                        // AppUtils.openPageDelay(navigate, "/features")
+                                        AppUtils.openPageDelay(navigate, "/features")
                                     }}
                                 >
                                     {t('main.t_connect_btn_start')}

@@ -39,7 +39,6 @@ import {
 import { FormatListBulleted, KeyboardArrowRight, NewReleases, Error } from '@mui/icons-material';
 
 import { Methods } from '../../../modules';
-import { SdkAvailableModel } from '../../../models';
 import {
     useEffectStateBool,
     setEffectStateBool,
@@ -60,7 +59,7 @@ export function SdkItem(props) {
     // data
     const color = theme.palette.primarySdk.main;
     const { sdkInstalled, sdkAvailable } = props;
-    const isNew = SdkAvailableModel.hasNew(sdkAvailable, sdkInstalled);
+    const isNew = false; // @todo
     const isSync = useEffectStateBool(keysStateBool.sdksSync);
     // item
     return (
@@ -99,8 +98,8 @@ export function SdkItem(props) {
                         animate={sdkInstalled === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, true);
-                            try { await Methods.sdkSync() } catch (e) { }
-                            dispatch(setSdkInstalled(await Methods.sdkInfo()));
+                            try { await Methods.sdk_sync() } catch (e) { }
+                            dispatch(setSdkInstalled(await Methods.sdk_info()));
                             setEffectStateBool(dispatch, keysStateBool.sdksSync, false);
                         }}
                     />

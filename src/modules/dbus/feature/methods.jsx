@@ -17,5 +17,8 @@ import { AppUtils } from '../../../base';
 export const methods = {
     faq_search: async function (search) {
         return AppUtils.checkResponse(await invoke("faq_search", { search: search }));
+    },
+    is_debug: async function () {
+        return await invoke("is_debug", {});
     }
 }

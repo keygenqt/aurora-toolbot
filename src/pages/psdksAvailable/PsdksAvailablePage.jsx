@@ -53,7 +53,7 @@ export function PsdksAvailablePage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        dispatch(setPsdkAvailable(await Methods.psdkAvailable()));
+        dispatch(setPsdkAvailable(await Methods.psdk_available()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
@@ -65,7 +65,7 @@ export function PsdksAvailablePage(props) {
             reduxKey={reduxKey}
             itemList={(model) => {
                 const isInstall = AppUtils.isInstall(psdkInstalled, model, (i, a) => {
-                    return i.versionId == a.versionFull;
+                    return i.version_id == a.version_full;
                 });
                 const color = isInstall ? theme.palette.primary.main : theme.palette.primaryPsdk.main;
                 let urlRepo = model.urls[0].split('/').slice(0, -1).join('/');
@@ -86,7 +86,7 @@ export function PsdksAvailablePage(props) {
                                 </Avatar>
                             )}
                             title={`Platform SDK`}
-                            subheader={`v${model.versionFull}`}
+                            subheader={`v${model.version_full}`}
                             sx={{
                                 paddingBottom: 0,
                                 '& .MuiCardHeader-title': {

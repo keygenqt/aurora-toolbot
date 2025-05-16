@@ -83,8 +83,8 @@ export function DeviceItem(props) {
                         animate={devices === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.devicesSync, true);
-                            try { await Methods.deviceSync() } catch (e) {}
-                            dispatch(setDevices(await Methods.deviceInfo()));
+                            try { await Methods.device_sync() } catch (e) {}
+                            dispatch(setDevices(await Methods.device_info()));
                             setEffectStateBool(dispatch, keysStateBool.devicesSync, false);
                         }}
                     />
@@ -92,7 +92,7 @@ export function DeviceItem(props) {
                     <Tooltip title={t('features.device.t_open_config')} placement="left-start">
                         <IconButton
                             onClick={async () => {
-                                await Methods.appOpenFile("devices.json");
+                                await Methods.app_open_file("devices.json");
                             }}
                         >
                             <Settings />

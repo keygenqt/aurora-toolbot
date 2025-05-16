@@ -42,7 +42,7 @@ export function PsdkPage(props) {
     const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setPsdkInstalled(await Methods.psdkInfo()));
+        dispatch(setPsdkInstalled(await Methods.psdk_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);

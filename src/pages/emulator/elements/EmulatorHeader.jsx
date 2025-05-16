@@ -71,7 +71,7 @@ export function EmulatorHeader(props) {
                         right: 16,
                     }}
                 >
-                    {model.isRunning ? (
+                    {model.is_running ? (
                         <SystemSecurityUpdateGood fontSize={'small'} />
                     ) : (
                         <Smartphone fontSize={'small'} />
@@ -150,14 +150,14 @@ export function EmulatorHeader(props) {
                             spacing={2}
                             sx={{ alignItems: 'center' }}
                         >
-                            {model.isRunning && (
+                            {model.is_running && (
                                 <Tooltip title={t('emulator.t_btn_stop')} placement="top">
                                     <IconButton
                                         size={'large'}
                                         onClick={async () => {
                                             onUpdate(true)
                                             try {
-                                                await Methods.emulatorCloseById(model.id);
+                                                await Methods.emulator_close_by_id(model.id);
                                                 await new Promise(r => setTimeout(r, 1000));
                                             } catch (e) { }
                                             await onRefresh();
@@ -168,13 +168,13 @@ export function EmulatorHeader(props) {
                                     </IconButton>
                                 </Tooltip>
                             )}
-                            {!model.isRunning && (
+                            {!model.is_running && (
                                 <Tooltip title={t('emulator.t_btn_run')} placement="top">
                                     <IconButton
                                         size={'large'}
                                         onClick={async () => {
                                             onUpdate(true)
-                                            try { await Methods.emulatorOpenById(model.id) } catch (e) { }
+                                            try { await Methods.emulator_open_by_id(model.id) } catch (e) { }
                                             await onRefresh();
                                             onUpdate(false)
                                         }}
@@ -189,13 +189,13 @@ export function EmulatorHeader(props) {
                     <ButtonGroup
                         variant={'outlined'}
                         color={'secondary'}
-                        disabled={!model.isRunning || isUpdate}
+                        disabled={!model.is_running || isUpdate}
                     >
                         <Tooltip title={t('common.t_btn_open_dir')} placement="top">
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.appOpenDir(model.dirEmulator);
+                                        await Methods.app_open_dir(model.dir);
                                     } catch (e) {
                                         await onRefresh();
                                     }
@@ -208,7 +208,7 @@ export function EmulatorHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.emulatorTerminalById(false, model.id);
+                                        await Methods.emulator_terminal_by_id(false, model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }
@@ -221,13 +221,13 @@ export function EmulatorHeader(props) {
                             <Button
                                 onClick={async () => {
                                     try {
-                                        await Methods.emulatorTerminalById(true, model.id);
+                                        await Methods.emulator_terminal_by_id(true, model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }
                                 }}
                             >
-                                <Terminal color={(!model.isRunning || isUpdate) ? 'default' : 'error'} />
+                                <Terminal color={(!model.is_running || isUpdate) ? 'default' : 'error'} />
                             </Button>
                         </Tooltip>
                     </ButtonGroup>

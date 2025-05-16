@@ -41,7 +41,7 @@ export function SdkPage(props) {
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
     // fun
     const updateStatesSilent = async () => {
-        dispatch(setSdkInstalled(await Methods.sdkInfo()));
+        dispatch(setSdkInstalled(await Methods.sdk_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
@@ -71,7 +71,7 @@ export function SdkPage(props) {
                         />
                         <SdkGroupTools
                             model={model}
-                            disabled={isUpdateItem || model.isRunning}
+                            disabled={isUpdateItem || model.is_running}
                         />
                     </Stack>
                 )

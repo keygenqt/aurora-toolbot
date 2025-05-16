@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const psdk_target_package_uninstall = {
     psdk_target_package_uninstall: async function (package_name) {
         return AppUtils.checkResponse(await invoke("psdk_target_package_uninstall", { package: package_name }));
@@ -22,10 +21,7 @@ export const psdk_target_package_uninstall = {
     psdk_target_package_uninstall_by_id: async function (package_name, id) {
         return AppUtils.checkResponse(await invoke("psdk_target_package_uninstall_by_id", { package: package_name, id: id }));
     },
-    psdk_target_package_uninstall_target: async function (package_name, target_id) {
-        return AppUtils.checkResponse(await invoke("psdk_target_package_uninstall_target", { package: package_name, target_id: target_id }));
-    },
     psdk_target_package_uninstall_target_by_id: async function (package_name, target_id, id) {
-        return AppUtils.checkResponse(await invoke("psdk_target_package_uninstall_target_by_id", { package: package_name, target_id: target_id, id: id }));
+        return AppUtils.checkResponse(await invoke("psdk_target_package_uninstall_target_by_id", { package: package_name, targetId: target_id, id: id }));
     }
 }

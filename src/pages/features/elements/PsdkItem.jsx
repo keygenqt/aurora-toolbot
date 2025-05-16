@@ -91,8 +91,8 @@ export function PsdkItem(props) {
                         animate={psdkInstalled === undefined || isSync}
                         onClick={async () => {
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, true);
-                            try { await Methods.psdkSync() } catch (e) { }
-                            dispatch(setPsdkInstalled(await Methods.psdkInfo()));
+                            try { await Methods.psdk_sync() } catch (e) { }
+                            dispatch(setPsdkInstalled(await Methods.psdk_info()));
                             setEffectStateBool(dispatch, keysStateBool.psdksSync, false);
                         }}
                     />

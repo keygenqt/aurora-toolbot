@@ -11,11 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import { listen } from '@tauri-apps/api/event'
+import { AppUtils } from '../../../base';
 
-/// Urls api
-pub const DBUS_BOT_DEST: &str = "com.keygenqt.aurora_bot";
-
-/// Timeouts query
-pub const TIMEOUT_SHORT: u64 = 5000 /* 5s */;
-pub const TIMEOUT_MIDDLE: u64 = 1800000 /* 30m */;
-pub const TIMEOUT_LONG: u64 = 86400000 /* 1d */;
+export const dbus_state_listen = {
+    dbus_state_listen: async function (callback) {
+        return await listen('event-dbus_state_listen', (event) => {
+            callback(AppUtils.checkResponse(event.payload));
+        });
+    },
+}

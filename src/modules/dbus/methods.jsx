@@ -21,6 +21,7 @@ import { app_auth_logout } from './feature/app_auth_logout';
 import { app_info } from './feature/app_info';
 import { app_open_dir } from './feature/app_open_dir';
 import { app_open_file } from './feature/app_open_file';
+import { dbus_state_listen } from './feature/dbus_state_listen';
 import { demo_app_info } from './feature/demo_app_info';
 import { device_info } from './feature/device_info';
 import { device_package_install } from './feature/device_package_install';
@@ -83,6 +84,7 @@ export const MethodsDbus = {
     ...app_info,
     ...app_open_dir,
     ...app_open_file,
+    ...dbus_state_listen,
     ...demo_app_info,
     ...device_info,
     ...device_package_install,

@@ -36,7 +36,12 @@ import {
 
 import { OpenInNew, Done } from '@mui/icons-material';
 
-import { setEffectStateBool, AppUtils, CardGradient } from '../../base';
+import {
+    setEffectStateBool,
+    AppUtils,
+    CardGradient,
+} from '../../base';
+
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
 

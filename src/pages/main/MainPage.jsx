@@ -47,7 +47,11 @@ export function MainPage(props) {
         await AppUtils.asyncJoin(
             async () => {
                 await new Promise(r => setTimeout(r, 800)); // animation delay
-                dispatch(setAppInfo(await Methods.app_info()));
+                try {
+                    dispatch(setAppInfo(await Methods.app_info()));
+                } catch(e) {
+                    dispatch(setAppInfo(null));
+                }
             },
         )
     };

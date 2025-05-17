@@ -21,6 +21,7 @@ export * from './components/actions/ActionRefreshPage';
 export * from './components/actions/ActionRefreshState';
 // dialogs
 export * from './components/dialogs/AlertDialog';
+export * from './components/dialogs/ProgressDialog';
 // lottie
 export * from './components/lottie/LottieComingSoon';
 export * from './components/lottie/LottieEmpty';

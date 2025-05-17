@@ -18,7 +18,6 @@ import PropTypes from 'prop-types';
 
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
-
 export function AlertDialog(props) {
 
     const {

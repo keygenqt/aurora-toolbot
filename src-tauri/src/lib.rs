@@ -11,6 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+use tauri::Manager;
+use tools::state;
 use tools::theme;
 
 mod feature;
@@ -19,6 +21,13 @@ mod tools;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .setup(|app| {
+            let main_window: tauri::WebviewWindow = app.get_webview_window("main").unwrap();
+            std::thread::spawn(move || {
+                let _ = state::dbus_state_listen(main_window);
+            });
+            Ok(())
+        })
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_log::Builder::new().build())
         .invoke_handler(tauri::generate_handler![

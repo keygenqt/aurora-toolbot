@@ -15,18 +15,17 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_SHORT;
-use crate::tools::constants::{self};
+use crate::tools::constants;
 
 #[tauri::command(async)]
 pub fn psdk_target_package_uninstall(package: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "PsdkTargetPackageUninstall";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -38,10 +37,10 @@ pub fn psdk_target_package_uninstall_by_id(package: String, id: String) -> Resul
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "PsdkTargetPackageUninstallById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -57,10 +56,11 @@ pub fn psdk_target_package_uninstall_target_by_id(
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "PsdkTargetPackageUninstallTargetById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (package, target_id, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package, target_id, id))
+    {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

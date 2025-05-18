@@ -13,18 +13,18 @@ use std::time::Duration;
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+use dbus::Message;
+use dbus::arg;
+use dbus::blocking::Connection;
 use tauri::Emitter;
 use tauri::Error;
 use tauri::WebviewWindow;
-use dbus::blocking::Connection;
-use dbus::Message;
-use dbus::arg;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
 use crate::tools::constants::TIMEOUT_LONG;
 
-use super::constants::DBUS_BOT_DEST;
+use super::constants::DBUS_BOT_INTERFACE;
 
 #[derive(Clone, serde::Serialize)]
 pub struct State {
@@ -44,15 +44,13 @@ impl arg::AppendAll for DbusStateListen {
 
 impl arg::ReadAll for DbusStateListen {
     fn read(i: &mut arg::Iter) -> Result<Self, arg::TypeMismatchError> {
-        Ok(DbusStateListen {
-            sender: i.read()?,
-        })
+        Ok(DbusStateListen { sender: i.read()? })
     }
 }
 
 impl dbus::message::SignalArgs for DbusStateListen {
     const NAME: &'static str = "listen";
-    const INTERFACE: &'static str = DBUS_BOT_DEST;
+    const INTERFACE: &'static str = DBUS_BOT_INTERFACE;
 }
 
 pub fn dbus_state_listen(window: WebviewWindow) -> Result<(), Error> {
@@ -66,8 +64,10 @@ pub fn dbus_state_listen(window: WebviewWindow) -> Result<(), Error> {
         println!("{}", h.sender.to_string());
         true
     }) {
-        Ok(token) => println!("Connect to listen. Token: {}", token.0),
+        Ok(_) => println!("Connect to listen."),
         Err(e) => Err(Error::Anyhow(e.into()))?,
     }
-    loop { let _ = conn.process(Duration::from_millis(500)); }
+    loop {
+        let _ = conn.process(Duration::from_millis(500));
+    }
 }

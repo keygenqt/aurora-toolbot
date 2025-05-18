@@ -15,18 +15,17 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_MIDDLE;
-use crate::tools::constants::{self};
+use crate::tools::constants;
 
 #[tauri::command(async)]
 pub fn emulator_open() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorOpen";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, ()) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -38,10 +37,10 @@ pub fn emulator_open_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorOpenById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (id,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (id,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -53,10 +52,10 @@ pub fn emulator_open_vnc(password: String, port: u64) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorOpenVnc";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (password, port)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (password, port)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -68,10 +67,10 @@ pub fn emulator_open_vnc_by_id(password: String, port: u64, id: String) -> Resul
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorOpenVncById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (password, port, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (password, port, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

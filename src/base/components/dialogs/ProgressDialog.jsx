@@ -32,6 +32,7 @@ export function ProgressDialog(props) {
         <Dialog
             open={open}
             onClose={onClose}
+            // dismiss={{ enabled: false }}
             aria-labelledby="progress-dialog-title"
             aria-describedby="progress-dialog-description"
         >

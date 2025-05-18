@@ -78,9 +78,6 @@ export function SdksAvailablePage(props) {
                 body={'Выполняется задача загрузки Аврора SDK. Дождитесь выполнения процесса.'}
                 progress={downloadProgress}
                 open={downloadProgress !== null}
-                onClose={() => {
-                    // @todo cancel
-                }}
             />
             <ListLayout
                 models={sdkAvailable}
@@ -127,15 +124,17 @@ export function SdksAvailablePage(props) {
                                     <IconButton
                                         onClick={async () => {
                                             try {
+                                                setDownloadProgress(parseInt(0))
                                                 const unlisten = await Methods.dbus_state_listen((state) => {
                                                     if (state.state == 'Progress') {
                                                         setDownloadProgress(parseInt(state.message))
                                                     }
                                                 })
                                                 await Methods.sdk_download_by_id(model.id);
+                                                await new Promise(r => setTimeout(r, 500)); // animation delay
                                                 unlisten();
-                                                setDownloadProgress(null)
                                                 setDownloadDone(true)
+                                                setDownloadProgress(null)
                                             } catch (e) {
                                                 console.log(e)
                                             }

@@ -15,18 +15,17 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_SHORT;
-use crate::tools::constants::{self};
+use crate::tools::constants;
 
 #[tauri::command(async)]
 pub fn emulator_package_run(is_listen: bool) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "EmulatorPackageRun";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (is_listen,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -38,10 +37,10 @@ pub fn emulator_package_run_by_id(is_listen: bool, id: String) -> Result<String,
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "EmulatorPackageRunById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (is_listen, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -53,10 +52,10 @@ pub fn emulator_package_run_package(is_listen: bool, package: String) -> Result<
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "EmulatorPackageRunPackage";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (is_listen, package)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen, package)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -68,10 +67,11 @@ pub fn emulator_package_run_package_by_id(is_listen: bool, package: String, id: 
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "EmulatorPackageRunPackageById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (is_listen, package, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen, package, id))
+    {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

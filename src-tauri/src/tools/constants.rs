@@ -13,7 +13,8 @@
 // limitations under the License.
 
 /// Urls api
-pub const DBUS_BOT_DEST: &str = "com.keygenqt.aurora_bot";
+pub const DBUS_BOT_DEST: &str = "com.keygenqt.aurora_bot.toolbot";
+pub const DBUS_BOT_INTERFACE: &str = "com.keygenqt.aurora_bot";
 
 /// Timeouts query
 pub const TIMEOUT_SHORT: u64 = 5000 /* 5s */;

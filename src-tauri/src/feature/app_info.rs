@@ -15,18 +15,17 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_SHORT;
-use crate::tools::constants::{self};
+use crate::tools::constants;
 
 #[tauri::command(async)]
 pub fn app_info() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "AppInfo";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, ()) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, ()) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

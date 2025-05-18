@@ -15,8 +15,7 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_MIDDLE;
-use crate::tools::constants::{self};
+use crate::tools::constants;
 
 // pub enum EmulatorRecordStopType {
 //     Raw,
@@ -29,10 +28,10 @@ pub fn emulator_record_stop(stop_type: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorRecordStop";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (stop_type,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (stop_type,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -44,10 +43,10 @@ pub fn emulator_record_stop_by_id(stop_type: String, id: String) -> Result<Strin
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorRecordStopById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (stop_type, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (stop_type, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

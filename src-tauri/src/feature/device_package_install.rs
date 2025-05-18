@@ -15,18 +15,17 @@ use tauri::Error;
 
 use crate::tools::client::get_proxy_bot;
 use crate::tools::client::get_session;
-use crate::tools::constants::TIMEOUT_SHORT;
-use crate::tools::constants::{self};
+use crate::tools::constants;
 
 #[tauri::command(async)]
 pub fn device_package_install_path(path: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "DevicePackageInstallPath";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (path,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -38,10 +37,10 @@ pub fn device_package_install_urls(urls: Vec<String>) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "DevicePackageInstallUrls";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (urls,)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (urls,)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -53,10 +52,10 @@ pub fn device_package_install_path_by_id(path: String, id: String) -> Result<Str
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "DevicePackageInstallPathById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (path, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (path, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };
@@ -68,10 +67,10 @@ pub fn device_package_install_urls_by_id(urls: Vec<String>, id: String) -> Resul
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
     // Request
     let method = "DevicePackageInstallUrlsById";
-    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_DEST, method, (urls, id)) {
+    let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (urls, id)) {
         Ok(value) => value,
         Err(e) => Err(Error::Anyhow(e.into()))?,
     };

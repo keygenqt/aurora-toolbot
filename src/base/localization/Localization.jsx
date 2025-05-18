@@ -143,11 +143,14 @@ i18n
                     fluttersAvailable: {
                         t_text: 'Фреймворк для создания красивых, изначально скомпилированных, приложений на основе единой кодовой базы с поддержкой ОС Аврора.',
                         t_download_dialog_success_title: 'Загрузка: Flutter SDK',
-                        t_download_dialog_success_body: 'Задача выполнена: Flutter SDK успешно скачано в загрузки.',
+                        t_download_dialog_success_body: 'Flutter SDK успешно скачано в директорию загрузок.',
                         t_download_dialog_error_title: 'Загрузка: Flutter SDK',
                         t_download_dialog_error_body: 'Выполнение загрузки не возможно, утеряно соединение.',
                         t_download_dialog_progress_title: 'Загрузка: Flutter SDK',
-                        t_download_dialog_progress_body: 'Выполняется задача загрузки Flutter SDK. Дождитесь выполнения процесса.',
+                        t_download_dialog_progress_body: 'Начинаем загрузку...',
+                        t_install_dialog_error_title: 'Установка: Flutter SDK',
+                        t_install_dialog_error_body: 'Выполнение установки не возможно, утеряно соединение.',
+                        t_install_dialog_progress_title: 'Установка: Flutter SDK',
                     },
                     /// PAGE: fluttersInstalled
                     fluttersInstalled: {
@@ -198,11 +201,11 @@ i18n
                     psdksAvailable: {
                         t_text: 'Набор инструментов для разработки, отладки и тестирования компонентов ОС Аврора предназначенного для CI.',
                         t_download_dialog_success_title: 'Загрузка: Platform SDK',
-                        t_download_dialog_success_body: 'Задача выполнена: Platform SDK успешно скачано в загрузки.',
+                        t_download_dialog_success_body: 'Platform SDK успешно скачано в директорию загрузок.',
                         t_download_dialog_error_title: 'Загрузка: Platform SDK',
                         t_download_dialog_error_body: 'Выполнение загрузки не возможно, утеряно соединение.',
                         t_download_dialog_progress_title: 'Загрузка: Platform SDK',
-                        t_download_dialog_progress_body: 'Выполняется задача загрузки Platform SDK. Дождитесь выполнения процесса.',
+                        t_download_dialog_progress_body: 'Начинаем загрузку...',
                     },
                     /// PAGE: psdksInstalled
                     psdksInstalled: {
@@ -234,11 +237,11 @@ i18n
                         t_item_mb2: 'Набор инструментов для сборки, разработки, отладки и тестирования прикладного ПО для ОС Аврора, использующий инструмент mb2.',
                         t_item_bt: 'Набор инструментов для разработки, отладки, сборки и тестирования прикладного ПО для ОС Аврора, использующий инструменты для кросс-компиляции Аврора Build Tools.',
                         t_download_dialog_success_title: 'Загрузка: Аврора SDK',
-                        t_download_dialog_success_body: 'Задача выполнена: Аврора SDK успешно скачано в загрузки.',
+                        t_download_dialog_success_body: 'Аврора SDK успешно скачано в директорию загрузок.',
                         t_download_dialog_error_title: 'Загрузка: Аврора SDK',
                         t_download_dialog_error_body: 'Выполнение загрузки не возможно, утеряно соединение.',
                         t_download_dialog_progress_title: 'Загрузка: Аврора SDK',
-                        t_download_dialog_progress_body: 'Выполняется задача загрузки Аврора SDK. Дождитесь выполнения процесса.',
+                        t_download_dialog_progress_body: 'Начинаем загрузку...',
                     },
                     /// PAGE: sdksInstalled
                     sdksInstalled: {

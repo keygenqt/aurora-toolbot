@@ -15,6 +15,7 @@
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from "react-i18next";
 
 import {
     Dialog,
@@ -28,7 +29,7 @@ import {
 } from '@mui/material';
 
 export function ProgressDialog(props) {
-
+    const { t } = useTranslation();
     const {
         title,
         body,
@@ -41,38 +42,47 @@ export function ProgressDialog(props) {
         <Dialog
             open={open}
             onClose={onClose}
-            // dismiss={{ enabled: false }}
+            dismiss={{ enabled: false }}
             aria-labelledby="progress-dialog-title"
             aria-describedby="progress-dialog-description"
+            sx={{
+                '& .MuiPaper-root': {
+                    width: '100%',
+                    maxWidth: '335px',
+                }
+            }}
         >
             <DialogTitle id="progress-dialog-title">
                 {title}
             </DialogTitle>
             <DialogContent>
                 <Stack
-                    spacing={2}
+                    spacing={2.5}
                 >
                     <LinearProgress variant="determinate" value={progress} />
-                    <DialogContentText id="progress-dialog-description">
-                        {body}
-                    </DialogContentText>
+                    {body && (
+                        <DialogContentText id="progress-dialog-description">
+                            {body}
+                        </DialogContentText>
+                    )}
                 </Stack>
             </DialogContent>
-            <DialogActions>
-                <Button
-                    onClick={onClose}>
-                    {/* @todo */}
-                    {'Отмена'}
-                </Button>
-            </DialogActions>
+            {onClose && (
+                <DialogActions>
+                    <Button
+                        onClick={onClose}>
+                        {t('common.t_btn_cancel')}
+                    </Button>
+                </DialogActions>
+            )}
         </Dialog>
     );
 }
 
 ProgressDialog.propTypes = {
     title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
+    body: PropTypes.string,
     progress: PropTypes.number.isRequired,
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
+    onClose: PropTypes.func,
 };

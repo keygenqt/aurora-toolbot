@@ -36,6 +36,12 @@ export function AlertDialog(props) {
             onClose={onClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            sx={{
+                '& .MuiPaper-root': {
+                    width: '100%',
+                    maxWidth: '335px',
+                }
+            }}
         >
             <DialogTitle id="alert-dialog-title">
                 {title}

@@ -61,7 +61,9 @@ pub fn dbus_state_listen(window: WebviewWindow) -> Result<(), Error> {
     // Listen
     match proxy.match_signal(move |h: DbusStateListen, _: &Connection, _: &Message| {
         let _ = window.emit("event-dbus_state_listen", &h.sender);
-        println!("{}", h.sender.to_string());
+        if cfg!(debug_assertions) {
+            println!("{}", h.sender.to_string());
+        }
         true
     }) {
         Ok(_) => println!("Connect to listen."),

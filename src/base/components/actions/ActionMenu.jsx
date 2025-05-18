@@ -38,7 +38,7 @@ import {
 } from '@mui/material'
 import { MoreVert } from '@mui/icons-material';
 
-import { DarkMode, Info, OpenInNew, LockOpen } from '@mui/icons-material';
+import { DarkMode, Info, OpenInNew } from '@mui/icons-material';
 
 import { useEffectCache, AppUtils } from '../../../base'
 import { AppConf } from '../../../conf/AppConf'

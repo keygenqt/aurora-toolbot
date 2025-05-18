@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { setData as setFlutterInstalled } from '../../store/impl/flutterInstalled';
 import { setData as setFlutterAvailable } from '../../store/impl/flutterAvailable';
 import { keysStateBool } from '../../store/impl/stateBool';
 
@@ -34,7 +35,7 @@ import {
     Avatar,
 } from '@mui/material';
 
-import { OpenInNew, Done, InsertLink, Download } from '@mui/icons-material';
+import { OpenInNew, Done, InsertLink, Download, InstallDesktop } from '@mui/icons-material';
 
 import {
     setEffectStateBool,
@@ -58,12 +59,19 @@ export function FluttersAvailablePage(props) {
     const [downloadDone, setDownloadDone] = React.useState(false);
     const [downloadError, setDownloadError] = React.useState(false);
     const [downloadCancel, setDownloadCancel] = React.useState(false);
+
+    const [installProgress, setInstallProgress] = React.useState(null);
+    const [installProgressState, setInstallProgressState] = React.useState(null);
+    const [installError, setInstallError] = React.useState(false);
+    const [installCancel, setInstallCancel] = React.useState(false);
     // redux
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
+        // await Methods.flutter_sync();
+        dispatch(setFlutterInstalled(await Methods.flutter_info()));
         dispatch(setFlutterAvailable(await Methods.flutter_available()));
         await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
@@ -71,6 +79,7 @@ export function FluttersAvailablePage(props) {
     // page
     return (
         <>
+            {/* Download */}
             <AlertDialog
                 title={t('fluttersAvailable.t_download_dialog_success_title')}
                 body={t('fluttersAvailable.t_download_dialog_success_body')}
@@ -103,13 +112,36 @@ export function FluttersAvailablePage(props) {
                     setDownloadCancel(false);
                 }}
             />
+            {/* Install */}
+            <AlertDialog
+                title={t('fluttersAvailable.t_install_dialog_error_title')}
+                body={t('fluttersAvailable.t_install_dialog_error_body')}
+                agreeText={'Ok'}
+                agree={() => { }}
+                open={installError && !installCancel}
+                onClose={() => {
+                    setInstallError(false)
+                }}
+            />
+            <ProgressDialog
+                title={t('fluttersAvailable.t_install_dialog_progress_title')}
+                body={installProgressState}
+                progress={installProgress}
+                open={installProgress !== null}
+                onClose={installProgress === 100 ? null : async () => {
+                    setInstallCancel(true);
+                    await Methods.restart_dbus();
+                    setInstallError(false);
+                    setInstallCancel(false);
+                }}
+            />
             <ListLayout
                 models={flutterAvailable}
                 updateStates={updateStates}
                 reduxKey={reduxKey}
                 itemList={(model) => {
                     const isInstall = AppUtils.isInstall(flutterInstalled, model, (i, a) => {
-                        return i.flutterVersion == a.version;
+                        return i.flutter_version == a.version;
                     });
                     const color = isInstall ? theme.palette.primary.main : theme.palette.primaryFlutter.main;
                     return (
@@ -144,6 +176,44 @@ export function FluttersAvailablePage(props) {
                                 />
                                 <Box sx={{ flexGrow: 1 }} />
 
+                                {!isInstall && (
+                                    <Tooltip title={t('common.t_install')} placement="left-start">
+                                        <IconButton
+                                            onClick={async () => {
+                                                const unlisten = await Methods.dbus_state_listen((state) => {
+                                                    if (state.state == 'Progress') {
+                                                        setInstallProgress(parseInt(state.message));
+                                                        return;
+                                                    }
+                                                    if (state.state == 'Info') {
+                                                        setInstallProgress(100)
+                                                        return;
+                                                    }
+                                                    setInstallProgressState(AppUtils.formatMessage(state.message));
+                                                })
+                                                if (unlisten) {
+                                                    try {
+                                                        setInstallProgress(0)
+                                                        await Methods.flutter_install_by_id(model.id);
+                                                        await unlisten();
+                                                        setInstallProgress(null);
+                                                        setInstallProgressState(null);
+                                                        await updateStates();
+                                                    } catch (e) {
+                                                        await unlisten();
+                                                        setInstallProgress(null);
+                                                        setInstallProgressState(null);
+                                                        setInstallError(true);
+                                                    }
+                                                } else {
+                                                    setInstallError(true);
+                                                }
+                                            }}
+                                        >
+                                            <InstallDesktop />
+                                        </IconButton>
+                                    </Tooltip>
+                                )}
 
                                 <Tooltip title={t('common.t_download')} placement="left-start">
                                     <IconButton

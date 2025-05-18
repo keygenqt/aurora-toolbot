@@ -16,9 +16,16 @@ import { AppUtils } from '../../../base';
 
 export const methods = {
     faq_search: async function (search) {
+        // Search faq from api via D-bus
         return AppUtils.checkResponse(await invoke("faq_search", { search: search }));
     },
+    restart_dbus: async function () {
+        // Cancel all running processes
+        await invoke("restart_dbus", {});
+        await new Promise(r => setTimeout(r, 500));
+    },
     is_debug: async function () {
+        // Get is debug from rust
         return await invoke("is_debug", {});
     }
 }

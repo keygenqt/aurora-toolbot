@@ -34,9 +34,15 @@ import {
     Avatar,
 } from '@mui/material';
 
-import { OpenInNew, Done, InsertLink } from '@mui/icons-material';
+import { OpenInNew, Done, InsertLink, Download } from '@mui/icons-material';
 
-import { setEffectStateBool, AppUtils, CardGradient } from '../../base';
+import {
+    setEffectStateBool,
+    AppUtils,
+    CardGradient,
+    AlertDialog,
+    ProgressDialog,
+} from '../../base';
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
 
@@ -47,6 +53,11 @@ export function FluttersAvailablePage(props) {
     const dispatch = useDispatch();
     // data
     const reduxKey = keysStateBool.fluttersUpdate;
+    // states
+    const [downloadProgress, setDownloadProgress] = React.useState(null);
+    const [downloadDone, setDownloadDone] = React.useState(false);
+    const [downloadError, setDownloadError] = React.useState(false);
+    const [downloadCancel, setDownloadCancel] = React.useState(false);
     // redux
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     const flutterAvailable = useSelector((state) => state.flutterAvailable.value);
@@ -59,76 +70,140 @@ export function FluttersAvailablePage(props) {
     };
     // page
     return (
-        <ListLayout
-            models={flutterAvailable}
-            updateStates={updateStates}
-            reduxKey={reduxKey}
-            itemList={(model) => {
-                const isInstall = AppUtils.isInstall(flutterInstalled, model, (i, a) => {
-                    return i.flutterVersion == a.version;
-                });
-                const color = isInstall ? theme.palette.primary.main : theme.palette.primaryFlutter.main;
-                return (
-                    <CardGradient color={color}>
-                        <CardHeader
-                            avatar={isInstall && (
-                                <Avatar sx={{ bgcolor: color }} aria-label="recipe">
-                                    <Done color={'white'} />
-                                </Avatar>
-                            )}
-                            title={`Flutter SDK`}
-                            subheader={`v${model.version}`}
-                            sx={{
-                                paddingBottom: 0,
-                                '& .MuiCardHeader-title': {
-                                    paddingBottom: 0.5,
-                                }
-                            }}
-                        />
-                        <CardContent>
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                {t('fluttersAvailable.t_text')}
-                            </Typography>
-                        </CardContent>
-                        <CardActions sx={{
-                            p: 2,
-                            paddingTop: 0
-                        }}>
-                            <Chip
-                                icon={<FontAwesomeIcon icon="fa-solid fa-tag" />}
-                                label={model.tag}
+        <>
+            <AlertDialog
+                title={t('fluttersAvailable.t_download_dialog_success_title')}
+                body={t('fluttersAvailable.t_download_dialog_success_body')}
+                agreeText={'Ok'}
+                agree={() => { }}
+                open={downloadDone}
+                onClose={() => {
+                    setDownloadDone(false)
+                }}
+            />
+            <AlertDialog
+                title={t('fluttersAvailable.t_download_dialog_error_title')}
+                body={t('fluttersAvailable.t_download_dialog_error_body')}
+                agreeText={'Ok'}
+                agree={() => { }}
+                open={downloadError && !downloadCancel}
+                onClose={() => {
+                    setDownloadError(false)
+                }}
+            />
+            <ProgressDialog
+                title={t('fluttersAvailable.t_download_dialog_progress_title')}
+                body={t('fluttersAvailable.t_download_dialog_progress_body')}
+                progress={downloadProgress}
+                open={downloadProgress !== null}
+                onClose={async () => {
+                    setDownloadCancel(true);
+                    await Methods.restart_dbus();
+                    setDownloadError(false);
+                    setDownloadCancel(false);
+                }}
+            />
+            <ListLayout
+                models={flutterAvailable}
+                updateStates={updateStates}
+                reduxKey={reduxKey}
+                itemList={(model) => {
+                    const isInstall = AppUtils.isInstall(flutterInstalled, model, (i, a) => {
+                        return i.flutterVersion == a.version;
+                    });
+                    const color = isInstall ? theme.palette.primary.main : theme.palette.primaryFlutter.main;
+                    return (
+                        <CardGradient color={color}>
+                            <CardHeader
+                                avatar={isInstall && (
+                                    <Avatar sx={{ bgcolor: color }} aria-label="recipe">
+                                        <Done color={'white'} />
+                                    </Avatar>
+                                )}
+                                title={`Flutter SDK`}
+                                subheader={`v${model.version}`}
+                                sx={{
+                                    paddingBottom: 0,
+                                    '& .MuiCardHeader-title': {
+                                        paddingBottom: 0.5,
+                                    }
+                                }}
                             />
-                            <Box sx={{ flexGrow: 1 }} />
+                            <CardContent>
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    {t('fluttersAvailable.t_text')}
+                                </Typography>
+                            </CardContent>
+                            <CardActions sx={{
+                                p: 2,
+                                paddingTop: 0
+                            }}>
+                                <Chip
+                                    icon={<FontAwesomeIcon icon="fa-solid fa-tag" />}
+                                    label={model.tag}
+                                />
+                                <Box sx={{ flexGrow: 1 }} />
 
-                            <Tooltip title={t('common.t_link_to_file')} placement="left-start">
-                                <IconButton
-                                    onClick={async () => {
-                                        if (model.urlRepo) {
-                                            await AppUtils.openUrl(model.url_repo);
-                                        } else {
-                                            await AppUtils.openUrl(model.url_zip);
-                                        }
-                                    }}
-                                >
-                                    <InsertLink />
-                                </IconButton>
-                            </Tooltip>
 
-                            <Tooltip title={t('common.t_open_repo')} placement="left-start">
-                                <IconButton
-                                    onClick={async () => {
-                                        await AppUtils.openUrl(model.url_gitlab);
-                                    }}
-                                >
-                                    <OpenInNew />
-                                </IconButton>
-                            </Tooltip>
+                                <Tooltip title={t('common.t_download')} placement="left-start">
+                                    <IconButton
+                                        onClick={async () => {
+                                            const unlisten = await Methods.dbus_state_listen((state) => {
+                                                if (state.state == 'Progress') {
+                                                    setDownloadProgress(parseInt(state.message));
+                                                }
+                                            })
+                                            if (unlisten) {
+                                                try {
+                                                    setDownloadProgress(0)
+                                                    await Methods.flutter_download_by_id(model.id);
+                                                    await unlisten();
+                                                    setDownloadProgress(null);
+                                                    setDownloadDone(true);
+                                                } catch (e) {
+                                                    await unlisten();
+                                                    setDownloadProgress(null);
+                                                    setDownloadError(true);
+                                                }
+                                            } else {
+                                                setDownloadError(true);
+                                            }
+                                        }}
+                                    >
+                                        <Download />
+                                    </IconButton>
+                                </Tooltip>
 
-                        </CardActions>
-                    </CardGradient>
-                )
-            }}
-        />
+                                <Tooltip title={t('common.t_link_to_file')} placement="left-start">
+                                    <IconButton
+                                        onClick={async () => {
+                                            if (model.urlRepo) {
+                                                await AppUtils.openUrl(model.url_repo);
+                                            } else {
+                                                await AppUtils.openUrl(model.url_zip);
+                                            }
+                                        }}
+                                    >
+                                        <InsertLink />
+                                    </IconButton>
+                                </Tooltip>
+
+                                <Tooltip title={t('common.t_open_repo')} placement="left-start">
+                                    <IconButton
+                                        onClick={async () => {
+                                            await AppUtils.openUrl(model.url_gitlab);
+                                        }}
+                                    >
+                                        <OpenInNew />
+                                    </IconButton>
+                                </Tooltip>
+
+                            </CardActions>
+                        </CardGradient>
+                    )
+                }}
+            />
+        </>
     );
 }
 

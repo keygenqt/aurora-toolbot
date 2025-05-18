@@ -35,7 +35,13 @@ import {
 
 import { CloudOff, CloudQueue, InsertLink, OpenInNew, Done, Download } from '@mui/icons-material';
 
-import { setEffectStateBool, AppUtils, CardGradient, AlertDialog, ProgressDialog } from '../../base';
+import {
+    setEffectStateBool,
+    AppUtils,
+    CardGradient,
+    AlertDialog,
+    ProgressDialog,
+} from '../../base';
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
 
@@ -49,7 +55,8 @@ export function SdksAvailablePage(props) {
     // states
     const [downloadProgress, setDownloadProgress] = React.useState(null);
     const [downloadDone, setDownloadDone] = React.useState(false);
-
+    const [downloadError, setDownloadError] = React.useState(false);
+    const [downloadCancel, setDownloadCancel] = React.useState(false);
     // redux
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
     const sdkAvailable = useSelector((state) => state.sdkAvailable.value);
@@ -64,20 +71,36 @@ export function SdksAvailablePage(props) {
     return (
         <>
             <AlertDialog
-                title={'Загрузка: Аврора SDK'}
-                body={'Задача выполнена: Аврора SDK успешно скачана в загрузки.'}
+                title={t('sdksAvailable.t_download_dialog_success_title')}
+                body={t('sdksAvailable.t_download_dialog_success_body')}
                 agreeText={'Ok'}
-                agree={() => {}}
+                agree={() => { }}
                 open={downloadDone}
                 onClose={() => {
                     setDownloadDone(false)
                 }}
             />
+            <AlertDialog
+                title={t('sdksAvailable.t_download_dialog_error_title')}
+                body={t('sdksAvailable.t_download_dialog_error_body')}
+                agreeText={'Ok'}
+                agree={() => { }}
+                open={downloadError && !downloadCancel}
+                onClose={() => {
+                    setDownloadError(false)
+                }}
+            />
             <ProgressDialog
-                title={'Загрузка: Аврора SDK'}
-                body={'Выполняется задача загрузки Аврора SDK. Дождитесь выполнения процесса.'}
+                title={t('sdksAvailable.t_download_dialog_progress_title')}
+                body={t('sdksAvailable.t_download_dialog_progress_body')}
                 progress={downloadProgress}
                 open={downloadProgress !== null}
+                onClose={async () => {
+                    setDownloadCancel(true);
+                    await Methods.restart_dbus();
+                    setDownloadError(false);
+                    setDownloadCancel(false);
+                }}
             />
             <ListLayout
                 models={sdkAvailable}
@@ -123,20 +146,25 @@ export function SdksAvailablePage(props) {
                                 <Tooltip title={t('common.t_download')} placement="left-start">
                                     <IconButton
                                         onClick={async () => {
-                                            try {
-                                                setDownloadProgress(parseInt(0))
-                                                const unlisten = await Methods.dbus_state_listen((state) => {
-                                                    if (state.state == 'Progress') {
-                                                        setDownloadProgress(parseInt(state.message))
-                                                    }
-                                                })
-                                                await Methods.sdk_download_by_id(model.id);
-                                                await new Promise(r => setTimeout(r, 500)); // animation delay
-                                                unlisten();
-                                                setDownloadDone(true)
-                                                setDownloadProgress(null)
-                                            } catch (e) {
-                                                console.log(e)
+                                            const unlisten = await Methods.dbus_state_listen((state) => {
+                                                if (state.state == 'Progress') {
+                                                    setDownloadProgress(parseInt(state.message));
+                                                }
+                                            })
+                                            if (unlisten) {
+                                                try {
+                                                    setDownloadProgress(0)
+                                                    await Methods.sdk_download_by_id(model.id);
+                                                    await unlisten();
+                                                    setDownloadProgress(null);
+                                                    setDownloadDone(true);
+                                                } catch (e) {
+                                                    await unlisten();
+                                                    setDownloadProgress(null);
+                                                    setDownloadError(true);
+                                                }
+                                            } else {
+                                                setDownloadError(true);
                                             }
                                         }}
                                     >

@@ -115,6 +115,7 @@ pub fn run() {
             feature::flutter_uninstall::flutter_uninstall,
             feature::flutter_uninstall::flutter_uninstall_by_id,
             feature::methods::faq_search,
+            feature::methods::restart_dbus,
             feature::methods::is_debug,
             feature::psdk_available::psdk_available,
             feature::psdk_available::psdk_available_by_id,

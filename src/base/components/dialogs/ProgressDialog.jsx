@@ -16,7 +16,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { Dialog, DialogTitle, DialogContent, DialogContentText, LinearProgress, Stack, Box } from '@mui/material';
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    LinearProgress,
+    Stack,
+    DialogActions,
+    Button
+} from '@mui/material';
 
 export function ProgressDialog(props) {
 
@@ -48,8 +57,14 @@ export function ProgressDialog(props) {
                         {body}
                     </DialogContentText>
                 </Stack>
-
             </DialogContent>
+            <DialogActions>
+                <Button
+                    onClick={onClose}>
+                    {/* @todo */}
+                    {'Отмена'}
+                </Button>
+            </DialogActions>
         </Dialog>
     );
 }

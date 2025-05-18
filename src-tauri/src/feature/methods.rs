@@ -33,6 +33,21 @@ pub fn faq_search(search: String) -> Result<String, Error> {
 }
 
 #[tauri::command(async)]
+pub fn restart_dbus() -> Result<(), Error> {
+    fn _restart_dbus(conn: dbus::blocking::Connection) -> Result<(), dbus::Error> {
+        // Get proxy with timeout
+        let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
+        // Request
+        let method = "RestartDbus";
+        proxy.method_call(constants::DBUS_BOT_INTERFACE, method, ("toolbot",))
+    }
+    // Open session connect
+    let conn = get_session()?;
+    let _ = _restart_dbus(conn);
+    Ok(())
+}
+
+#[tauri::command(async)]
 pub fn is_debug() -> Result<bool, Error> {
     Ok(cfg!(debug_assertions))
 }

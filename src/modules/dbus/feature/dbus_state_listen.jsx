@@ -11,13 +11,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import { invoke } from "@tauri-apps/api/core";
 import { listen } from '@tauri-apps/api/event'
 import { AppUtils } from '../../../base';
 
 export const dbus_state_listen = {
     dbus_state_listen: async function (callback) {
-        return await listen('event-dbus_state_listen', (event) => {
-            callback(AppUtils.checkResponse(event.payload));
-        });
+        try {
+            // Check connect
+            AppUtils.checkResponse(await invoke("app_info", {}));
+            // Init listener
+            return await listen('event-dbus_state_listen', (event) => {
+                callback(AppUtils.checkResponse(event.payload));
+            });
+        } catch(e) {
+            console.log(e)
+            return null;
+        }
     },
 }

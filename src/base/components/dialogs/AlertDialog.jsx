@@ -51,24 +51,28 @@ export function AlertDialog(props) {
                     {body}
                 </DialogContentText>
             </DialogContent>
-            <DialogActions>
-                <Button
-                    color="inherit"
-                    onClick={onClose}>
-                    {disagreeText}
-                </Button>
-                {agree && (
-                    <Button
-                        autoFocus
-                        onClick={() => {
-                            onClose();
-                            agree();
-                        }}
-                    >
-                        {agreeText}
-                    </Button>
-                )}
-            </DialogActions>
+            {(onClose || agree) && (
+                <DialogActions>
+                    {onClose && (
+                        <Button
+                            color="inherit"
+                            onClick={onClose}>
+                            {disagreeText}
+                        </Button>
+                    )}
+                    {agree && (
+                        <Button
+                            autoFocus
+                            onClick={() => {
+                                onClose();
+                                agree();
+                            }}
+                        >
+                            {agreeText}
+                        </Button>
+                    )}
+                </DialogActions>
+            )}
         </Dialog>
     );
 }

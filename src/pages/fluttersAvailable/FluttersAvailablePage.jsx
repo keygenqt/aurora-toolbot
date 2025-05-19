@@ -59,7 +59,6 @@ export function FluttersAvailablePage(props) {
     const [downloadDone, setDownloadDone] = React.useState(false);
     const [downloadError, setDownloadError] = React.useState(false);
     const [downloadCancel, setDownloadCancel] = React.useState(false);
-
     const [installProgress, setInstallProgress] = React.useState(null);
     const [installProgressState, setInstallProgressState] = React.useState(null);
     const [installError, setInstallError] = React.useState(false);
@@ -70,10 +69,8 @@ export function FluttersAvailablePage(props) {
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
-        // await Methods.flutter_sync();
         dispatch(setFlutterInstalled(await Methods.flutter_info()));
         dispatch(setFlutterAvailable(await Methods.flutter_available()));
-        await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
     // page
@@ -81,7 +78,7 @@ export function FluttersAvailablePage(props) {
         <>
             {/* Download */}
             <AlertDialog
-                title={t('fluttersAvailable.t_download_dialog_success_title')}
+                title={t('fluttersAvailable.t_download_dialog_title')}
                 body={t('fluttersAvailable.t_download_dialog_success_body')}
                 agreeText={'Ok'}
                 agree={() => { }}
@@ -91,7 +88,7 @@ export function FluttersAvailablePage(props) {
                 }}
             />
             <AlertDialog
-                title={t('fluttersAvailable.t_download_dialog_error_title')}
+                title={t('fluttersAvailable.t_download_dialog_title')}
                 body={t('fluttersAvailable.t_download_dialog_error_body')}
                 agreeText={'Ok'}
                 agree={() => { }}
@@ -101,7 +98,7 @@ export function FluttersAvailablePage(props) {
                 }}
             />
             <ProgressDialog
-                title={t('fluttersAvailable.t_download_dialog_progress_title')}
+                title={t('fluttersAvailable.t_download_dialog_title')}
                 body={t('fluttersAvailable.t_download_dialog_progress_body')}
                 progress={downloadProgress}
                 open={downloadProgress !== null}
@@ -114,7 +111,7 @@ export function FluttersAvailablePage(props) {
             />
             {/* Install */}
             <AlertDialog
-                title={t('fluttersAvailable.t_install_dialog_error_title')}
+                title={t('fluttersAvailable.t_install_dialog_title')}
                 body={t('fluttersAvailable.t_install_dialog_error_body')}
                 agreeText={'Ok'}
                 agree={() => { }}
@@ -124,7 +121,7 @@ export function FluttersAvailablePage(props) {
                 }}
             />
             <ProgressDialog
-                title={t('fluttersAvailable.t_install_dialog_progress_title')}
+                title={t('fluttersAvailable.t_install_dialog_title')}
                 body={installProgressState}
                 progress={installProgress}
                 open={installProgress !== null}

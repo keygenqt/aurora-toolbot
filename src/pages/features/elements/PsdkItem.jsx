@@ -97,7 +97,7 @@ export function PsdkItem(props) {
                         }}
                     />
 
-                    {Array.isArray(psdkAvailable) && psdkAvailable.length ? (
+                    {Array.isArray(psdkAvailable) && psdkAvailable.length && !(psdkInstalled === undefined || isSync) ? (
                         <Tooltip title={t('common.t_available')} placement="left-start">
                             <IconButton
                                 onClick={() => {

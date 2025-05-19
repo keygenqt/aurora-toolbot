@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { setData as setPsdkInstalled } from '../../store/impl/psdkInstalled';
 import { setData as setPsdkAvailable } from '../../store/impl/psdkAvailable';
 import { keysStateBool } from '../../store/impl/stateBool';
 
@@ -34,7 +35,7 @@ import {
     Avatar,
 } from '@mui/material';
 
-import { OpenInNew, Done, Download } from '@mui/icons-material';
+import { OpenInNew, Done, Download, InstallDesktop } from '@mui/icons-material';
 
 import {
     setEffectStateBool,
@@ -58,21 +59,23 @@ export function PsdksAvailablePage(props) {
     const [downloadDone, setDownloadDone] = React.useState(false);
     const [downloadError, setDownloadError] = React.useState(false);
     const [downloadCancel, setDownloadCancel] = React.useState(false);
+    const [installRun, setInstallRun] = React.useState(false);
+    const [installError, setInstallError] = React.useState(false);
     // redux
     const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
+        dispatch(setPsdkInstalled(await Methods.psdk_info()));
         dispatch(setPsdkAvailable(await Methods.psdk_available()));
-        await new Promise(r => setTimeout(r, 400)); // animation delay
         setEffectStateBool(dispatch, reduxKey, false);
     };
     // page
     return (
         <>
             <AlertDialog
-                title={t('psdksAvailable.t_download_dialog_success_title')}
+                title={t('psdksAvailable.t_download_dialog_title')}
                 body={t('psdksAvailable.t_download_dialog_success_body')}
                 agreeText={'Ok'}
                 agree={() => { }}
@@ -82,7 +85,7 @@ export function PsdksAvailablePage(props) {
                 }}
             />
             <AlertDialog
-                title={t('psdksAvailable.t_download_dialog_error_title')}
+                title={t('psdksAvailable.t_download_dialog_title')}
                 body={t('psdksAvailable.t_download_dialog_error_body')}
                 agreeText={'Ok'}
                 agree={() => { }}
@@ -92,7 +95,7 @@ export function PsdksAvailablePage(props) {
                 }}
             />
             <ProgressDialog
-                title={t('psdksAvailable.t_download_dialog_progress_title')}
+                title={t('psdksAvailable.t_download_dialog_title')}
                 body={t('psdksAvailable.t_download_dialog_progress_body')}
                 progress={downloadProgress}
                 open={downloadProgress !== null}
@@ -101,6 +104,22 @@ export function PsdksAvailablePage(props) {
                     await Methods.restart_dbus();
                     setDownloadError(false);
                     setDownloadCancel(false);
+                }}
+            />
+            {/* Install */}
+            <AlertDialog
+                title={t('psdksAvailable.t_install_dialog_title')}
+                body={t('psdksAvailable.t_install_dialog_run_body')}
+                open={installRun}
+            />
+            <AlertDialog
+                title={t('psdksAvailable.t_install_dialog_title')}
+                body={t('psdksAvailable.t_install_dialog_error_body')}
+                agreeText={'Ok'}
+                agree={() => { }}
+                open={installError && !installCancel}
+                onClose={() => {
+                    setInstallError(false)
                 }}
             />
             <ListLayout
@@ -152,8 +171,25 @@ export function PsdksAvailablePage(props) {
                                     label={`${arches.join(", ")}`}
                                 />
                                 <Box sx={{ flexGrow: 1 }} />
-
-
+                                {!isInstall && (
+                                    <Tooltip title={t('common.t_install')} placement="left-start">
+                                        <IconButton
+                                            onClick={async () => {
+                                                try {
+                                                    setInstallRun(true);
+                                                    await Methods.psdk_install_by_id(model.id);
+                                                    setInstallRun(false);
+                                                    await updateStates();
+                                                } catch (e) {
+                                                    setInstallRun(false);
+                                                    setInstallError(true);
+                                                }
+                                            }}
+                                        >
+                                            <InstallDesktop />
+                                        </IconButton>
+                                    </Tooltip>
+                                )}
                                 <Tooltip title={t('common.t_download')} placement="left-start">
                                     <IconButton
                                         onClick={async () => {

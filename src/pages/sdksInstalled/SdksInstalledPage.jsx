@@ -89,7 +89,7 @@ export function SdksInstalledPage(props) {
                                 src={DataImages.iconSdk}
                                 alt='Icon' />
                             <Typography variant="subtitle2" color={color} >
-                                Аврора SDK v{model.version_full}
+                                Аврора SDK v{model.version.split('-')[0]}
                             </Typography>
                         </Stack>
 

@@ -78,7 +78,7 @@ export function SdkHeader(props) {
                         alt='Icon' />
 
                     <Typography variant="h6" >
-                        Аврора SDK v{model.version_full}
+                        Аврора SDK v{model.version.split('-')[0]}
                     </Typography>
 
                     <Stack

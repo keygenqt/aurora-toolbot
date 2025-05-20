@@ -37,6 +37,7 @@ export function ListLayout(props) {
     // data
     const {
         disable,
+        animate,
         models,
         updateStates,
         reduxKey,
@@ -48,10 +49,10 @@ export function ListLayout(props) {
     return (
         <AppBarLayout index actions={(
             <Stack direction={'row'} spacing={1}>
-                <ActionBack disabled={isUpdate || disable} />
+                <ActionBack disabled={isUpdate || disable || animate} />
                 <ActionRefreshState
-                    disable={disable || models === undefined}
-                    animate={isUpdate || models === undefined}
+                    disable={disable || animate || models === undefined}
+                    animate={isUpdate || animate || models === undefined}
                     onClick={async () => {
                         await updateStates();
                     }}
@@ -84,6 +85,7 @@ export function ListLayout(props) {
 
 ListLayout.propTypes = {
     disable: PropTypes.bool,
+    animate: PropTypes.bool,
     models: PropTypes.array,
     reduxKey: PropTypes.string,
     updateStates: PropTypes.func.isRequired,

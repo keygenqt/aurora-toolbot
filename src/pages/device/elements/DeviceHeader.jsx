@@ -48,6 +48,7 @@ export function DeviceHeader(props) {
         model,
         isUpdate,
         onUpdate,
+        onAnimate,
         onRefresh,
     } = props;
     const color = theme.palette.success.main;
@@ -177,7 +178,14 @@ export function DeviceHeader(props) {
                         <Tooltip title={t('device.t_btn_screenshot')} placement="top">
                             <Button
                                 onClick={async () => {
-                                    // @todo
+                                    onAnimate(true)
+                                    try {
+                                        let result = await Methods.device_screenshot_by_id(model.id);
+                                        await Methods.app_open_file(result.path);
+                                    } catch (e) {
+                                        await onRefresh();
+                                    }
+                                    onAnimate(false)
                                 }}
                             >
                                 <CameraEnhance color={'default'} />
@@ -194,5 +202,6 @@ DeviceHeader.propTypes = {
     model: PropTypes.object.isRequired,
     isUpdate: PropTypes.bool.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    onAnimate: PropTypes.func.isRequired,
     onRefresh: PropTypes.func.isRequired,
 };

@@ -74,19 +74,12 @@ export function PsdkGroupTools(props) {
                     }}
                 />
                 <AvatarButton
-                    icon={Lock}
-                    title={t('psdk.t_btn_group_add_sudoers_title')}
-                    text={t('psdk.t_btn_group_add_sudoers_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
                     icon={Delete}
                     title={t('psdk.t_btn_group_remove_title')}
                     text={t('psdk.t_btn_group_remove_text')}
                     onClick={async () => {
-                        // @todo
+                        // @todo dialog
+                        await Methods.psdk_uninstall();
                     }}
                 />
             </ButtonGroup>

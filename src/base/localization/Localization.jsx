@@ -189,8 +189,6 @@ i18n
                         t_group_tools_text: 'Инструменты Platform SDK.',
                         t_btn_group_sign_title: 'Подписать пакет',
                         t_btn_group_sign_text: 'Подписать RPM пакет публичным ключом.',
-                        t_btn_group_add_sudoers_title: 'Добавить Sudoers',
-                        t_btn_group_add_sudoers_text: 'Добавить запись в Sudoers для доступа без root прав.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Platform SDK.',
                     },

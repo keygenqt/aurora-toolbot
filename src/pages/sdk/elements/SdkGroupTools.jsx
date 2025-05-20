@@ -39,7 +39,6 @@ export function SdkGroupTools(props) {
     // data
     let {
         model,
-        disabled,
     } = props;
     const color = theme.palette.secondary.main;
     // page
@@ -60,7 +59,6 @@ export function SdkGroupTools(props) {
                 </Typography>
             </Stack>
             <ButtonGroup
-                disabled={disabled}
                 orientation={'vertical'}
                 color={'primarySdk'}
             >
@@ -77,7 +75,8 @@ export function SdkGroupTools(props) {
                     title={t('sdk.t_btn_group_remove_title')}
                     text={t('sdk.t_btn_group_remove_text')}
                     onClick={async () => {
-                        // @todo
+                        // @todo dialog
+                        await Methods.sdk_uninstall();
                     }}
                 />
             </ButtonGroup>
@@ -87,5 +86,4 @@ export function SdkGroupTools(props) {
 
 SdkGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
-    disabled: PropTypes.bool.isRequired,
 };

@@ -29,6 +29,7 @@ export function AvatarButton(props) {
         title,
         text,
         onClick,
+        disabled,
     } = props;
 
     const Icon = props.icon;
@@ -41,6 +42,7 @@ export function AvatarButton(props) {
                 overflow: 'hidden'
             }}
             onClick={onClick}
+            disabled={disabled}
         >
             <Stack
                 direction={'column'}
@@ -94,6 +96,7 @@ export function AvatarButton(props) {
 
 AvatarButton.propTypes = {
     color: PropTypes.string,
+    disabled: PropTypes.bool,
     title: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     icon: PropTypes.element.isRequired,

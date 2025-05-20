@@ -36,6 +36,7 @@ export function DevicePage(props) {
     // data
     const reduxKey = keysStateBool.devicesUpdate;
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
+    const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
     const devices = useSelector((state) => state.devices.value);
     // fun
@@ -52,6 +53,7 @@ export function DevicePage(props) {
     return (
         <ListLayout
             disable={isUpdateItem}
+            animate={isAnimateLoading}
             models={devices}
             updateStates={updateStates}
             reduxKey={reduxKey}
@@ -64,13 +66,14 @@ export function DevicePage(props) {
                     >
                         <DeviceHeader
                             model={model}
-                            isUpdate={isUpdateItem}
+                            isUpdate={isUpdateItem || isAnimateLoading}
                             onUpdate={(state) => setIsUpdateItem(state)}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                             onRefresh={updateStatesSilent}
                         />
                         <DeviceGroupTools
                             model={model}
-                            disabled={isUpdateItem || !model.is_available}
+                            disabled={isUpdateItem || isAnimateLoading || !model.is_available}
                         />
                     </Stack>
                 )

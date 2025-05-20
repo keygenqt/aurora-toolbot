@@ -71,7 +71,6 @@ export function SdkPage(props) {
                         />
                         <SdkGroupTools
                             model={model}
-                            disabled={isUpdateItem || model.is_running}
                         />
                     </Stack>
                 )

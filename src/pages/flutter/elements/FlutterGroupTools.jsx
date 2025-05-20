@@ -86,7 +86,8 @@ export function FlutterGroupTools(props) {
                     title={t('flutter.t_btn_group_remove_title')}
                     text={t('flutter.t_btn_group_remove_text')}
                     onClick={async () => {
-                        // @todo
+                        // @todo dialog
+                        // await Methods.flutter_uninstall();
                     }}
                 />
             </ButtonGroup>

@@ -1,39 +1,39 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "Aurora Toolbot",
-  "mainBinaryName": "aurora-toolbot",
-  "version": "0.0.1",
-  "identifier": "com.keygenqt.aurora-toolbot",
-  "build": {
-    "frontendDist": "../dist",
-    "devUrl": "http://localhost:3025",
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build"
-  },
-  "app": {
-    "windows": [
-      {
-        "width": 400,
-        "height": 800,
-        "minWidth": 400,
-        "minHeight": 800,
-        "fullscreen": false,
-        "decorations": false,
-        "transparent": true
-      }
-    ],
-    "security": {
-      "csp": null
+    "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+    "productName": "Aurora Toolbot",
+    "mainBinaryName": "aurora-toolbot",
+    "version": "0.0.1",
+    "identifier": "com.keygenqt.aurora-toolbot",
+    "build": {
+        "frontendDist": "../dist",
+        "devUrl": "http://localhost:3025",
+        "beforeDevCommand": "npm run dev",
+        "beforeBuildCommand": "npm run build"
+    },
+    "app": {
+        "windows": [
+            {
+                "width": 400,
+                "height": 800,
+                "minWidth": 400,
+                "minHeight": 800,
+                "fullscreen": false,
+                "decorations": false,
+                "transparent": true
+            }
+        ],
+        "security": {
+            "csp": null
+        }
+    },
+    "bundle": {
+        "active": true,
+        "targets": "all",
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.ico"
+        ]
     }
-  },
-  "bundle": {
-    "active": true,
-    "targets": "all",
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.ico"
-    ]
-  }
 }

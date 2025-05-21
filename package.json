@@ -20,6 +20,7 @@
     "@mui/material": "^6.4.7",
     "@reduxjs/toolkit": "^2.6.1",
     "@tauri-apps/api": "^2.3.0",
+    "@tauri-apps/plugin-dialog": "^2.2.2",
     "@tauri-apps/plugin-log": "^2.3.0",
     "@tauri-apps/plugin-opener": "^2.2.6",
     "axios": "^1.8.2",

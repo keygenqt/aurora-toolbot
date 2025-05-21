@@ -39,6 +39,10 @@ i18n
                         t_btn_group_install_run_app_text: 'Запустите в песочнице приложение на устройстве.',
                         t_btn_group_install_upload_title: 'Загрузка файла',
                         t_btn_group_install_upload_text: 'Загрузите файл на ваше устройство.',
+                        t_dialog_success_install: 'Установка успешно выполнена!',
+                        t_dialog_error_install: 'Установка завершилась ошибкой :(',
+                        t_dialog_success_upload: 'Загрузка успешно выполнена!',
+                        t_dialog_error_upload: 'Загрузка завершилась ошибкой :(',
                     },
                     /// PAGE: devices
                     devices: {
@@ -260,7 +264,13 @@ i18n
                         t_btn_cancel: 'Отменить',
                         t_coming_soon: 'Этого функционала пока нет, будет реализован позже.',
                         t_not_found: 'Ничего не найдено.',
-                        t_error_data: 'Ошибка получения данных!'
+                        t_error_data: 'Ошибка получения данных!',
+                        t_dialog_error_title: 'Ошибка...',
+                        t_dialog_success_title: 'Статус',
+                        t_dialog_select: {
+                            title: "Выбор файла",
+                            body: "Выберите необходимый файл..."
+                        }
                     }
                 },
             },

@@ -121,7 +121,8 @@ export function DeviceHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    <Box sx={{ minHeight: 21 }} >Aurora OS v{model.version}</Box>
+                                    {/* <Box sx={{ minHeight: 21 }} >Aurora OS v{model.version}</Box> */}
+                                    <Box sx={{ minHeight: 21 }} >Aurora OS v100.500.00</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}

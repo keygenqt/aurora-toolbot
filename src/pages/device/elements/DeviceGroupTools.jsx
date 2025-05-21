@@ -17,6 +17,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
+import { open } from '@tauri-apps/plugin-dialog';
 
 import {
     useTheme,
@@ -45,8 +46,9 @@ export function DeviceGroupTools(props) {
     let {
         model,
         disabled,
+        onSelect,
+        onAnimate,
     } = props;
-    const color = theme.palette.success.main;
     // page
     return (
         <Stack
@@ -82,7 +84,24 @@ export function DeviceGroupTools(props) {
                     title={t('device.t_btn_group_install_rpm_title')}
                     text={t('device.t_btn_group_install_rpm_text')}
                     onClick={async () => {
-                        // @todo
+                        onSelect(true);
+                        const path = await open({
+                            multiple: false,
+                            filters: [{
+                                name: 'Package RPM',
+                                extensions: ['rpm']
+                            }]
+                        });
+                        onSelect(false);
+                        if (path) {
+                            onAnimate(true);
+                            try {
+                                await Methods.device_package_install_path_by_id(path, model.id);
+                                onAnimate(false, t('device.t_dialog_success_install'), null);
+                            } catch (e) {
+                                onAnimate(false, null, t('device.t_dialog_error_install'));
+                            }
+                        }
                     }}
                 />
                 <AvatarButton
@@ -106,7 +125,25 @@ export function DeviceGroupTools(props) {
                     title={t('device.t_btn_group_install_upload_title')}
                     text={t('device.t_btn_group_install_upload_text')}
                     onClick={async () => {
-                        // @todo
+                        onSelect(true);
+                        const path = await open({
+                            multiple: false,
+                            filters: [{
+                                name: 'Package RPM',
+                                extensions: ['rpm']
+                            }]
+                        });
+                        onSelect(false);
+                        if (path) {
+                            onAnimate(true);
+                            try {
+                                await Methods.device_upload_path_by_id(path, model.id);
+                                onAnimate(false, t('device.t_dialog_success_upload'), null);
+                            } catch (e) {
+                                onAnimate(false, null, t('device.t_dialog_error_upload'));
+                            }
+                            onAnimate(false);
+                        }
                     }}
                 />
             </ButtonGroup>
@@ -117,4 +154,6 @@ export function DeviceGroupTools(props) {
 DeviceGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    onAnimate: PropTypes.func.isRequired,
 };

@@ -128,10 +128,6 @@ export function DeviceGroupTools(props) {
                         onSelect(true);
                         const path = await open({
                             multiple: false,
-                            filters: [{
-                                name: 'Package RPM',
-                                extensions: ['rpm']
-                            }]
                         });
                         onSelect(false);
                         if (path) {

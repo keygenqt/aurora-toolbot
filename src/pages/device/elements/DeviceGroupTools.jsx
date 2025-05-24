@@ -46,6 +46,7 @@ export function DeviceGroupTools(props) {
     let {
         model,
         disabled,
+        onLock,
         onSelect,
         onAnimate,
     } = props;
@@ -105,17 +106,23 @@ export function DeviceGroupTools(props) {
                     }}
                 />
                 <AvatarButton
-                    icon={AppBlocking}
-                    title={t('device.t_btn_group_install_uninstall_title')}
-                    text={t('device.t_btn_group_install_uninstall_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
                     icon={ChargingStation}
                     title={t('device.t_btn_group_install_run_app_title')}
                     text={t('device.t_btn_group_install_run_app_text')}
+                    onClick={async () => {
+                        try {
+                            onLock(true, 'запуск')
+                            console.log(await Methods.device_package_run_by_id(model.id))
+                            console.log(await Methods.device_package_run_package_by_id('ru.omp.TinyPdfViewer', model.id))
+                        } catch (e) {
+                            console.log(e)
+                        }
+                    }}
+                />
+                <AvatarButton
+                    icon={AppBlocking}
+                    title={t('device.t_btn_group_install_uninstall_title')}
+                    text={t('device.t_btn_group_install_uninstall_text')}
                     onClick={async () => {
                         // @todo
                     }}
@@ -150,6 +157,7 @@ export function DeviceGroupTools(props) {
 DeviceGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
+    onLock: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
     onAnimate: PropTypes.func.isRequired,
 };

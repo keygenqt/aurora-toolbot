@@ -41,8 +41,8 @@ import {
     setEffectStateBool,
     AppUtils,
     CardGradient,
-    AlertDialog,
-    ProgressDialog,
+    _AlertDialog,
+    _ProgressDialog,
 } from '../../base';
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
@@ -74,7 +74,7 @@ export function PsdksAvailablePage(props) {
     // page
     return (
         <>
-            <AlertDialog
+            <_AlertDialog
                 title={t('psdksAvailable.t_download_dialog_title')}
                 body={t('psdksAvailable.t_download_dialog_success_body')}
                 agreeText={'Ok'}
@@ -84,7 +84,7 @@ export function PsdksAvailablePage(props) {
                     setDownloadDone(false)
                 }}
             />
-            <AlertDialog
+            <_AlertDialog
                 title={t('psdksAvailable.t_download_dialog_title')}
                 body={t('psdksAvailable.t_download_dialog_error_body')}
                 agreeText={'Ok'}
@@ -94,7 +94,7 @@ export function PsdksAvailablePage(props) {
                     setDownloadError(false)
                 }}
             />
-            <ProgressDialog
+            <_ProgressDialog
                 title={t('psdksAvailable.t_download_dialog_title')}
                 body={t('psdksAvailable.t_download_dialog_progress_body')}
                 progress={downloadProgress}
@@ -107,12 +107,12 @@ export function PsdksAvailablePage(props) {
                 }}
             />
             {/* Install */}
-            <AlertDialog
+            <_AlertDialog
                 title={t('psdksAvailable.t_install_dialog_title')}
                 body={t('psdksAvailable.t_install_dialog_run_body')}
                 open={installRun}
             />
-            <AlertDialog
+            <_AlertDialog
                 title={t('psdksAvailable.t_install_dialog_title')}
                 body={t('psdksAvailable.t_install_dialog_error_body')}
                 agreeText={'Ok'}

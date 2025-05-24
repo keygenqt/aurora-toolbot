@@ -41,8 +41,8 @@ import {
     setEffectStateBool,
     AppUtils,
     CardGradient,
-    AlertDialog,
-    ProgressDialog,
+    _AlertDialog,
+    _ProgressDialog,
 } from '../../base';
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
@@ -77,7 +77,7 @@ export function FluttersAvailablePage(props) {
     return (
         <>
             {/* Download */}
-            <AlertDialog
+            <_AlertDialog
                 title={t('fluttersAvailable.t_download_dialog_title')}
                 body={t('fluttersAvailable.t_download_dialog_success_body')}
                 agreeText={'Ok'}
@@ -87,7 +87,7 @@ export function FluttersAvailablePage(props) {
                     setDownloadDone(false)
                 }}
             />
-            <AlertDialog
+            <_AlertDialog
                 title={t('fluttersAvailable.t_download_dialog_title')}
                 body={t('fluttersAvailable.t_download_dialog_error_body')}
                 agreeText={'Ok'}
@@ -97,7 +97,7 @@ export function FluttersAvailablePage(props) {
                     setDownloadError(false)
                 }}
             />
-            <ProgressDialog
+            <_ProgressDialog
                 title={t('fluttersAvailable.t_download_dialog_title')}
                 body={t('fluttersAvailable.t_download_dialog_progress_body')}
                 progress={downloadProgress}
@@ -110,7 +110,7 @@ export function FluttersAvailablePage(props) {
                 }}
             />
             {/* Install */}
-            <AlertDialog
+            <_AlertDialog
                 title={t('fluttersAvailable.t_install_dialog_title')}
                 body={t('fluttersAvailable.t_install_dialog_error_body')}
                 agreeText={'Ok'}
@@ -120,7 +120,7 @@ export function FluttersAvailablePage(props) {
                     setInstallError(false)
                 }}
             />
-            <ProgressDialog
+            <_ProgressDialog
                 title={t('fluttersAvailable.t_install_dialog_title')}
                 body={installProgressState}
                 progress={installProgress}

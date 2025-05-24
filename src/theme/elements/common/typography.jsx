@@ -23,6 +23,14 @@ export const typography = {
             'sans-serif',
         ].join(','),
     },
+    subtitle1: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        fontFamily: [
+            'Ubuntu',
+            'sans-serif',
+        ].join(','),
+    },
     subtitle2: {
         fontSize: 15,
         fontWeight: 'bold',

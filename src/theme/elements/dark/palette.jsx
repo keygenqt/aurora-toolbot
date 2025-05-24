@@ -50,6 +50,7 @@ export const palette = {
     },
     inherit: {
         main: '#f7f7f7',
+        light: '#e7e7e7',
     },
     inheritBtn: {
         main: '#f7f7f7',

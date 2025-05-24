@@ -23,7 +23,7 @@ import { keysStateBool } from '../../store/impl/stateBool';
 
 import { Stack } from '@mui/material';
 
-import { setEffectStateBool, AlertDialog } from '../../base';
+import { setEffectStateBool, _AlertDialog, SelectDialog, MainDialog } from '../../base';
 import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
@@ -43,6 +43,7 @@ export function DevicePage(props) {
     const [isSelectLoading, setIsSelectLoading] = React.useState(false);
     const [dialogError, setDialogError] = React.useState(null);
     const [dialogSuccess, setDialogSuccess] = React.useState(null);
+    const [dialogLock, setDialogLock] = React.useState(null);
     // redux
     const devices = useSelector((state) => state.devices.value);
     // fun
@@ -58,12 +59,12 @@ export function DevicePage(props) {
     // page
     return (
         <>
-            <AlertDialog
+            <_AlertDialog
                 open={isSelectLoading}
                 title={t('common.t_dialog_select.title')}
                 body={t('common.t_dialog_select.body')}
             />
-            <AlertDialog
+            <_AlertDialog
                 open={dialogError !== null}
                 title={t('common.t_dialog_error_title')}
                 body={dialogError}
@@ -73,7 +74,7 @@ export function DevicePage(props) {
                     setDialogError(null)
                 }}
             />
-            <AlertDialog
+            <_AlertDialog
                 open={dialogSuccess !== null}
                 title={t('common.t_dialog_success_title')}
                 body={dialogSuccess}
@@ -83,6 +84,22 @@ export function DevicePage(props) {
                     setDialogSuccess(null)
                 }}
             />
+
+            {/* <SelectDialog color={'success'} open={true} /> */}
+
+            <MainDialog
+                title={'Установка Platform SDK'}
+                body={'Начинаем загрузку...'}
+                color={'primarySdk'}
+                state={'default'}
+                open={true}
+                progress={50}
+                onClickBtn={() => {
+                    console.log('yes')
+                }}
+            />
+
+
             <ListLayout
                 disable={isUpdateItem}
                 animate={isAnimateLoading}
@@ -106,6 +123,7 @@ export function DevicePage(props) {
                             <DeviceGroupTools
                                 model={model}
                                 disabled={isUpdateItem || isAnimateLoading || !model.is_available}
+                                onLock={(state, message) => setIsSelectLoading(state)}
                                 onSelect={(state) => setIsSelectLoading(state)}
                                 onAnimate={(state, success, error) => {
                                     setIsAnimateLoading(state);

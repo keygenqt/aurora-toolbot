@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
-export function AlertDialog(props) {
+export function _AlertDialog(props) {
 
     const {
         title,
@@ -77,7 +77,7 @@ export function AlertDialog(props) {
     );
 }
 
-AlertDialog.propTypes = {
+_AlertDialog.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     agreeText: PropTypes.string.isRequired,

@@ -22,7 +22,7 @@ pub fn device_package_run() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageRun";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, ()) {
@@ -37,7 +37,7 @@ pub fn device_package_run_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageRunById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (id,)) {
@@ -52,7 +52,7 @@ pub fn device_package_run_package(package: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageRunPackage";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package,)) {
@@ -67,7 +67,7 @@ pub fn device_package_run_package_by_id(package: String, id: String) -> Result<S
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageRunPackageById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package, id)) {

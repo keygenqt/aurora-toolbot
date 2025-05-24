@@ -20,8 +20,10 @@ export * from './components/actions/ActionMenu';
 export * from './components/actions/ActionRefreshPage';
 export * from './components/actions/ActionRefreshState';
 // dialogs
-export * from './components/dialogs/AlertDialog';
-export * from './components/dialogs/ProgressDialog';
+export * from './components/dialogs/_AlertDialog';
+export * from './components/dialogs/MainDialog';
+export * from './components/dialogs/SelectDialog';
+export * from './components/dialogs/_ProgressDialog';
 // lottie
 export * from './components/lottie/LottieComingSoon';
 export * from './components/lottie/LottieEmpty';

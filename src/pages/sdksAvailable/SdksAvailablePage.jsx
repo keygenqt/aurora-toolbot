@@ -49,8 +49,8 @@ import {
     setEffectStateBool,
     AppUtils,
     CardGradient,
-    AlertDialog,
-    ProgressDialog,
+    _AlertDialog,
+    _ProgressDialog,
 } from '../../base';
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
@@ -100,7 +100,7 @@ export function SdksAvailablePage(props) {
     return (
         <>
             {/* Download */}
-            <AlertDialog
+            <_AlertDialog
                 title={t('sdksAvailable.t_download_dialog_title')}
                 body={t('sdksAvailable.t_download_dialog_success_body')}
                 agreeText={'Ok'}
@@ -110,7 +110,7 @@ export function SdksAvailablePage(props) {
                     setDownloadDone(false)
                 }}
             />
-            <AlertDialog
+            <_AlertDialog
                 title={t('sdksAvailable.t_download_dialog_title')}
                 body={t('sdksAvailable.t_download_dialog_error_body')}
                 agreeText={'Ok'}
@@ -120,7 +120,7 @@ export function SdksAvailablePage(props) {
                     setDownloadError(false)
                 }}
             />
-            <ProgressDialog
+            <_ProgressDialog
                 title={t('sdksAvailable.t_download_dialog_title')}
                 body={t('sdksAvailable.t_download_dialog_progress_body')}
                 progress={downloadProgress}
@@ -133,7 +133,7 @@ export function SdksAvailablePage(props) {
                 }}
             />
             {/* Install */}
-            <AlertDialog
+            <_AlertDialog
                 title={t('sdksAvailable.t_install_dialog_title')}
                 body={t('sdksAvailable.t_install_dialog_error_body')}
                 agreeText={'Ok'}
@@ -143,7 +143,7 @@ export function SdksAvailablePage(props) {
                     setInstallError(false)
                 }}
             />
-            <ProgressDialog
+            <_ProgressDialog
                 title={t('sdksAvailable.t_install_dialog_title')}
                 body={installProgressState}
                 progress={installProgress}

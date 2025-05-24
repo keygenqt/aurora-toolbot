@@ -28,7 +28,7 @@ import {
     Button
 } from '@mui/material';
 
-export function ProgressDialog(props) {
+export function _ProgressDialog(props) {
     const { t } = useTranslation();
     const {
         title,
@@ -79,7 +79,7 @@ export function ProgressDialog(props) {
     );
 }
 
-ProgressDialog.propTypes = {
+_ProgressDialog.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string,
     progress: PropTypes.number.isRequired,

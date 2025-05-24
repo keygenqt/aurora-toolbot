@@ -47,6 +47,7 @@ export function MainDialog(props) {
     const Icon = icon;
     const stateData = state ? state : 'default'
     const colorName = color ? color : 'primary'
+    const colorForce = (stateData == "error" || stateData == "success") ? stateData : colorName
 
     return (
         <Dialog
@@ -68,47 +69,27 @@ export function MainDialog(props) {
             }}
         >
             <DialogTitle id="progress-dialog-title">
-                {stateData == "default" && (
+                <Stack spacing={1.5} >
                     <Stack
-                        spacing={1.5}
+                        direction={'row'}
+                        spacing={1.2}
+                        sx={{ alignItems: "center" }}
                     >
-                        <Stack
-                            direction={'row'}
-                            spacing={1.2}
-                            sx={{ alignItems: "center" }}
-                        >
-                            {icon && (
-                                <Icon color={colorName} />
-                            )}
-                            <Typography variant={'subtitle1'} color={colorName} >
-                                {title}
-                            </Typography>
-                        </Stack>
-                        {Boolean(progress) && (
-                            <LinearProgress
-                                color={colorName}
-                                variant={'determinate'}
-                                value={progress}
-                            />
+                        {icon && (
+                            <Icon color={colorForce} />
                         )}
-                    </Stack>
-                )}
-                {(stateData == "error" || stateData == "success") && (
-                    <Stack
-                        spacing={1.5}
-                    >
-                        <Typography variant={'subtitle1'} color={stateData} >
+                        <Typography variant={'subtitle1'} color={colorForce} >
                             {title}
                         </Typography>
-                        {Boolean(progress) && (
-                            <LinearProgress
-                                color={stateData}
-                                variant={'determinate'}
-                                value={progress}
-                            />
-                        )}
                     </Stack>
-                )}
+                    {Boolean(progress) && (
+                        <LinearProgress
+                            color={colorForce}
+                            variant={'determinate'}
+                            value={progress}
+                        />
+                    )}
+                </Stack>
             </DialogTitle>
             {body && (
                 <DialogContent>

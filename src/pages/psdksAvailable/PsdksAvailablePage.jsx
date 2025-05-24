@@ -37,13 +37,7 @@ import {
 
 import { OpenInNew, Done, Download, InstallDesktop } from '@mui/icons-material';
 
-import {
-    setEffectStateBool,
-    AppUtils,
-    CardGradient,
-    _AlertDialog,
-    _ProgressDialog,
-} from '../../base';
+import { setEffectStateBool, AppUtils, CardGradient, MainDialog } from '../../base';
 import { Methods } from '../../modules';
 import { ListLayout } from '../../layouts';
 
@@ -55,18 +49,18 @@ export function PsdksAvailablePage(props) {
     // data
     const reduxKey = keysStateBool.psdksUpdate;
     // states
-    const [downloadProgress, setDownloadProgress] = React.useState(null);
-    const [downloadDone, setDownloadDone] = React.useState(false);
-    const [downloadError, setDownloadError] = React.useState(false);
-    const [downloadCancel, setDownloadCancel] = React.useState(false);
-    const [installRun, setInstallRun] = React.useState(false);
-    const [installError, setInstallError] = React.useState(false);
+    const [isDialogDownload, setIsDialogDownload] = React.useState(false);
+    const [isDialogInstall, setIsDialogInstall] = React.useState(false);
+    const [dialogProgress, setDialogProgress] = React.useState(undefined);
+    const [dialogState, setDialogState] = React.useState('default');
+    const [dialogBody, setDialogBody] = React.useState(undefined);
     // redux
     const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     const psdkAvailable = useSelector((state) => state.psdkAvailable.value);
     // fun
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
+        await new Promise(r => setTimeout(r, 400)); // animation delay
         dispatch(setPsdkInstalled(await Methods.psdk_info()));
         dispatch(setPsdkAvailable(await Methods.psdk_available()));
         setEffectStateBool(dispatch, reduxKey, false);
@@ -74,52 +68,49 @@ export function PsdksAvailablePage(props) {
     // page
     return (
         <>
-            <_AlertDialog
-                title={t('psdksAvailable.t_download_dialog_title')}
-                body={t('psdksAvailable.t_download_dialog_success_body')}
-                agreeText={'Ok'}
-                agree={() => { }}
-                open={downloadDone}
-                onClose={() => {
-                    setDownloadDone(false)
+            <MainDialog
+                icon={InstallDesktop}
+                color={'primaryPsdk'}
+                title={t('psdksAvailable.t_dialog_install_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogInstall}
+                progress={dialogProgress}
+                onClickBtn={async () => {
+                    setIsDialogInstall(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
+                    // Update state
+                    if (Boolean(dialogProgress) && dialogProgress === 100) {
+                        await updateStates();
+                    }
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                    setDialogProgress(undefined);
                 }}
             />
-            <_AlertDialog
-                title={t('psdksAvailable.t_download_dialog_title')}
-                body={t('psdksAvailable.t_download_dialog_error_body')}
-                agreeText={'Ok'}
-                agree={() => { }}
-                open={downloadError && !downloadCancel}
-                onClose={() => {
-                    setDownloadError(false)
-                }}
-            />
-            <_ProgressDialog
-                title={t('psdksAvailable.t_download_dialog_title')}
-                body={t('psdksAvailable.t_download_dialog_progress_body')}
-                progress={downloadProgress}
-                open={downloadProgress !== null}
-                onClose={async () => {
-                    setDownloadCancel(true);
-                    await Methods.restart_dbus();
-                    setDownloadError(false);
-                    setDownloadCancel(false);
-                }}
-            />
-            {/* Install */}
-            <_AlertDialog
-                title={t('psdksAvailable.t_install_dialog_title')}
-                body={t('psdksAvailable.t_install_dialog_run_body')}
-                open={installRun}
-            />
-            <_AlertDialog
-                title={t('psdksAvailable.t_install_dialog_title')}
-                body={t('psdksAvailable.t_install_dialog_error_body')}
-                agreeText={'Ok'}
-                agree={() => { }}
-                open={installError && !installCancel}
-                onClose={() => {
-                    setInstallError(false)
+            <MainDialog
+                icon={Download}
+                color={'primaryPsdk'}
+                title={t('psdksAvailable.t_dialog_download_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogDownload}
+                progress={dialogProgress}
+                onClickBtn={async () => {
+                    // Hide dialog
+                    setIsDialogDownload(false);
+                    // Cancel if progress
+                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
+                        await Methods.restart_dbus();
+                    }
+                    // Delay before clear
+                    await new Promise(r => setTimeout(r, 200));
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                    setDialogProgress(undefined);
                 }}
             />
             <ListLayout
@@ -175,14 +166,16 @@ export function PsdksAvailablePage(props) {
                                     <Tooltip title={t('common.t_install')} placement="left-start">
                                         <IconButton
                                             onClick={async () => {
+                                                setIsDialogInstall(true);
+                                                setDialogBody(t('psdksAvailable.t_dialog_install_body'));
                                                 try {
-                                                    setInstallRun(true);
                                                     await Methods.psdk_install_by_id(model.id);
-                                                    setInstallRun(false);
-                                                    await updateStates();
+                                                    setDialogProgress(100);
+                                                    setDialogState('success');
+                                                    setDialogBody(t('psdksAvailable.t_dialog_install_body_success'));
                                                 } catch (e) {
-                                                    setInstallRun(false);
-                                                    setInstallError(true);
+                                                    setDialogState('error');
+                                                    setDialogBody(t('common.t_dialog_body_error'));
                                                 }
                                             }}
                                         >
@@ -193,25 +186,35 @@ export function PsdksAvailablePage(props) {
                                 <Tooltip title={t('common.t_download')} placement="left-start">
                                     <IconButton
                                         onClick={async () => {
+                                            setDialogProgress(0);
+                                            setIsDialogDownload(true);
+                                            setDialogBody(t('common.t_dialog_body_connection'));
                                             const unlisten = await Methods.dbus_state_listen((state) => {
                                                 if (state.state == 'Progress') {
-                                                    setDownloadProgress(parseInt(state.message));
+                                                    setDialogProgress(parseInt(state.message));
+                                                    return;
                                                 }
+                                                if (state.state == 'Info') {
+                                                    setDialogProgress(100);
+                                                    return;
+                                                }
+                                                setDialogBody(AppUtils.formatMessage(state.message));
                                             })
                                             if (unlisten) {
                                                 try {
-                                                    setDownloadProgress(0)
                                                     await Methods.psdk_download_by_id(model.id);
                                                     await unlisten();
-                                                    setDownloadProgress(null);
-                                                    setDownloadDone(true);
+                                                    setDialogProgress(100);
+                                                    setDialogState('success');
+                                                    setDialogBody(t('common.t_dialog_body_download_success'));
                                                 } catch (e) {
                                                     await unlisten();
-                                                    setDownloadProgress(null);
-                                                    setDownloadError(true);
+                                                    setDialogState('error');
+                                                    setDialogBody(t('common.t_dialog_body_error'));
                                                 }
                                             } else {
-                                                setDownloadError(true);
+                                                setDialogState('error');
+                                                setDialogBody(t('common.t_dialog_body_error'));
                                             }
                                         }}
                                     >

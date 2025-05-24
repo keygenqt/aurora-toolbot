@@ -82,7 +82,7 @@ export function MainDialog(props) {
                             {title}
                         </Typography>
                     </Stack>
-                    {Boolean(progress) && (
+                    {(progress !== null && progress !== undefined) && (
                         <LinearProgress
                             color={colorForce}
                             variant={'determinate'}
@@ -100,15 +100,17 @@ export function MainDialog(props) {
                     </Stack>
                 </DialogContent>
             )}
-            {onClickBtn && (
+            {onClickBtn && (stateData == "default" && progress !== null && progress !== undefined && progress !== 0 && progress !== 100) && (
                 <DialogActions>
-                    {stateData == "default" && (
-                        <Button
-                            color={colorName}
-                            onClick={onClickBtn}>
-                            {t('common.t_dialog_btn_default')}
-                        </Button>
-                    )}
+                    <Button
+                        color={colorName}
+                        onClick={onClickBtn}>
+                        {t('common.t_dialog_btn_default')}
+                    </Button>
+                </DialogActions>
+            )}
+            {onClickBtn && (stateData != "default") && (
+                <DialogActions>
                     {stateData == "error" && (
                         <Button
                             color={colorName}

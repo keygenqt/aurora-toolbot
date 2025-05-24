@@ -46,9 +46,7 @@ export function DeviceGroupTools(props) {
     let {
         model,
         disabled,
-        onLock,
-        onSelect,
-        onAnimate,
+        onDialogSelect,
     } = props;
     // page
     return (
@@ -85,7 +83,7 @@ export function DeviceGroupTools(props) {
                     title={t('device.t_btn_group_install_rpm_title')}
                     text={t('device.t_btn_group_install_rpm_text')}
                     onClick={async () => {
-                        onSelect(true);
+                        onDialogSelect(true);
                         const path = await open({
                             multiple: false,
                             filters: [{
@@ -93,16 +91,17 @@ export function DeviceGroupTools(props) {
                                 extensions: ['rpm']
                             }]
                         });
-                        onSelect(false);
-                        if (path) {
-                            onAnimate(true);
-                            try {
-                                await Methods.device_package_install_path_by_id(path, model.id);
-                                onAnimate(false, t('device.t_dialog_success_install'), null);
-                            } catch (e) {
-                                onAnimate(false, null, t('device.t_dialog_error_install'));
-                            }
-                        }
+                        onDialogSelect(false);
+                        console.log(path);
+                        // if (path) {
+                        //     onAnimate(true);
+                        //     try {
+                        //         await Methods.device_package_install_path_by_id(path, model.id);
+                        //         onAnimate(false, t('device.t_dialog_success_install'), null);
+                        //     } catch (e) {
+                        //         onAnimate(false, null, t('device.t_dialog_error_install'));
+                        //     }
+                        // }
                     }}
                 />
                 <AvatarButton
@@ -110,13 +109,14 @@ export function DeviceGroupTools(props) {
                     title={t('device.t_btn_group_install_run_app_title')}
                     text={t('device.t_btn_group_install_run_app_text')}
                     onClick={async () => {
-                        try {
-                            onLock(true, 'запуск')
-                            console.log(await Methods.device_package_run_by_id(model.id))
-                            console.log(await Methods.device_package_run_package_by_id('ru.omp.TinyPdfViewer', model.id))
-                        } catch (e) {
-                            console.log(e)
-                        }
+                        // @todo
+                        // try {
+                        //     onLock(true, 'запуск')
+                        //     console.log(await Methods.device_package_run_by_id(model.id))
+                        //     console.log(await Methods.device_package_run_package_by_id('ru.omp.TinyPdfViewer', model.id))
+                        // } catch (e) {
+                        //     console.log(e)
+                        // }
                     }}
                 />
                 <AvatarButton
@@ -132,21 +132,23 @@ export function DeviceGroupTools(props) {
                     title={t('device.t_btn_group_install_upload_title')}
                     text={t('device.t_btn_group_install_upload_text')}
                     onClick={async () => {
-                        onSelect(true);
+                        onDialogSelect(true);
                         const path = await open({
                             multiple: false,
                         });
-                        onSelect(false);
-                        if (path) {
-                            onAnimate(true);
-                            try {
-                                await Methods.device_upload_path_by_id(path, model.id);
-                                onAnimate(false, t('device.t_dialog_success_upload'), null);
-                            } catch (e) {
-                                onAnimate(false, null, t('device.t_dialog_error_upload'));
-                            }
-                            onAnimate(false);
-                        }
+                        onDialogSelect(false);
+                        console.log(false);
+                        // @todo
+                        // if (path) {
+                        //     onAnimate(true);
+                        //     try {
+                        //         await Methods.device_upload_path_by_id(path, model.id);
+                        //         onAnimate(false, t('device.t_dialog_success_upload'), null);
+                        //     } catch (e) {
+                        //         onAnimate(false, null, t('device.t_dialog_error_upload'));
+                        //     }
+                        //     onAnimate(false);
+                        // }
                     }}
                 />
             </ButtonGroup>
@@ -157,7 +159,5 @@ export function DeviceGroupTools(props) {
 DeviceGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
-    onLock: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    onAnimate: PropTypes.func.isRequired,
+    onDialogSelect: PropTypes.func.isRequired,
 };

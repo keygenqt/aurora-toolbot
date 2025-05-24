@@ -23,7 +23,7 @@ import { keysStateBool } from '../../store/impl/stateBool';
 
 import { Stack } from '@mui/material';
 
-import { setEffectStateBool, _AlertDialog, SelectDialog, MainDialog } from '../../base';
+import { setEffectStateBool, SelectDialog } from '../../base';
 import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
@@ -40,10 +40,7 @@ export function DevicePage(props) {
     const reduxKey = keysStateBool.devicesUpdate;
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
     const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
-    const [isSelectLoading, setIsSelectLoading] = React.useState(false);
-    const [dialogError, setDialogError] = React.useState(null);
-    const [dialogSuccess, setDialogSuccess] = React.useState(null);
-    const [dialogLock, setDialogLock] = React.useState(null);
+    const [isDialogSelect, setIsDialogSelect] = React.useState(false);
     // redux
     const devices = useSelector((state) => state.devices.value);
     // fun
@@ -59,47 +56,10 @@ export function DevicePage(props) {
     // page
     return (
         <>
-            <_AlertDialog
-                open={isSelectLoading}
-                title={t('common.t_dialog_select.title')}
-                body={t('common.t_dialog_select.body')}
+            <SelectDialog
+                color={'success'}
+                open={isDialogSelect}
             />
-            <_AlertDialog
-                open={dialogError !== null}
-                title={t('common.t_dialog_error_title')}
-                body={dialogError}
-                agreeText={'Ok'}
-                agree={() => { }}
-                onClose={() => {
-                    setDialogError(null)
-                }}
-            />
-            <_AlertDialog
-                open={dialogSuccess !== null}
-                title={t('common.t_dialog_success_title')}
-                body={dialogSuccess}
-                agreeText={'Ok'}
-                agree={() => { }}
-                onClose={() => {
-                    setDialogSuccess(null)
-                }}
-            />
-
-            {/* <SelectDialog color={'success'} open={true} /> */}
-
-            <MainDialog
-                title={'Установка Platform SDK'}
-                body={'Начинаем загрузку...'}
-                color={'primarySdk'}
-                state={'default'}
-                open={true}
-                progress={50}
-                onClickBtn={() => {
-                    console.log('yes')
-                }}
-            />
-
-
             <ListLayout
                 disable={isUpdateItem}
                 animate={isAnimateLoading}
@@ -123,17 +83,7 @@ export function DevicePage(props) {
                             <DeviceGroupTools
                                 model={model}
                                 disabled={isUpdateItem || isAnimateLoading || !model.is_available}
-                                onLock={(state, message) => setIsSelectLoading(state)}
-                                onSelect={(state) => setIsSelectLoading(state)}
-                                onAnimate={(state, success, error) => {
-                                    setIsAnimateLoading(state);
-                                    if (success) {
-                                        setDialogSuccess(success);
-                                    }
-                                    if (error) {
-                                        setDialogError(error);
-                                    }
-                                }}
+                                onDialogSelect={(state) => setIsDialogSelect(state)}
                             />
                         </Stack>
                     )

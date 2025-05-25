@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { FolderOpen } from '@mui/icons-material';
 import { MainDialog } from './MainDialog';
 
-export function SelectDialog(props) {
+export function SelectFileDialog(props) {
     const { t } = useTranslation();
     const {
         open,
@@ -35,7 +35,7 @@ export function SelectDialog(props) {
     );
 }
 
-SelectDialog.propTypes = {
+SelectFileDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     color: PropTypes.string,
 };

@@ -23,7 +23,7 @@ import { keysStateBool } from '../../store/impl/stateBool';
 
 import { Stack } from '@mui/material';
 
-import { setEffectStateBool, SelectDialog } from '../../base';
+import { setEffectStateBool } from '../../base';
 import { ListLayout } from '../../layouts';
 import { Methods } from '../../modules';
 
@@ -38,9 +38,9 @@ export function DevicePage(props) {
     const dispatch = useDispatch();
     // data
     const reduxKey = keysStateBool.devicesUpdate;
+    // states
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
     const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
-    const [isDialogSelect, setIsDialogSelect] = React.useState(false);
     // redux
     const devices = useSelector((state) => state.devices.value);
     // fun
@@ -55,41 +55,35 @@ export function DevicePage(props) {
     };
     // page
     return (
-        <>
-            <SelectDialog
-                color={'success'}
-                open={isDialogSelect}
-            />
-            <ListLayout
-                disable={isUpdateItem}
-                animate={isAnimateLoading}
-                models={devices}
-                updateStates={updateStates}
-                reduxKey={reduxKey}
-                itemList={(model) => {
-                    return model.id !== state.id ? null : (
-                        <Stack
-                            direction={'column'}
-                            spacing={3}
-                            sx={{ width: 1 }}
-                        >
-                            <DeviceHeader
-                                model={model}
-                                isUpdate={isUpdateItem || isAnimateLoading}
-                                onUpdate={(state) => setIsUpdateItem(state)}
-                                onAnimate={(state) => setIsAnimateLoading(state)}
-                                onRefresh={updateStatesSilent}
-                            />
-                            <DeviceGroupTools
-                                model={model}
-                                disabled={isUpdateItem || isAnimateLoading || !model.is_available}
-                                onDialogSelect={(state) => setIsDialogSelect(state)}
-                            />
-                        </Stack>
-                    )
-                }}
-            />
-        </>
+        <ListLayout
+            disable={isUpdateItem}
+            animate={isAnimateLoading}
+            models={devices}
+            updateStates={updateStates}
+            reduxKey={reduxKey}
+            itemList={(model) => {
+                return model.id !== state.id ? null : (
+                    <Stack
+                        direction={'column'}
+                        spacing={3}
+                        sx={{ width: 1 }}
+                    >
+                        <DeviceHeader
+                            model={model}
+                            isUpdate={isUpdateItem || isAnimateLoading}
+                            onUpdate={(state) => setIsUpdateItem(state)}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
+                            onRefresh={updateStatesSilent}
+                        />
+                        <DeviceGroupTools
+                            model={model}
+                            disabled={isUpdateItem || isAnimateLoading || !model.is_available}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
+                        />
+                    </Stack>
+                )
+            }}
+        />
     );
 }
 

@@ -41,7 +41,10 @@ export function MainDialog(props) {
         color,
         state,
         progress,
+        btnDisable,
         onClickBtn,
+        onClickBtnCancel,
+        children,
     } = props
 
     const Icon = icon;
@@ -100,19 +103,46 @@ export function MainDialog(props) {
                     </Stack>
                 </DialogContent>
             )}
+            {children && (
+                <DialogContent sx={{
+                    padding: 0,
+                    '& .MuiButtonBase-root': {
+                        borderRadius: 0,
+                    }
+                }}>
+                    {children}
+                </DialogContent>
+            )}
             {onClickBtn && (stateData == "default" && progress !== null && progress !== undefined && progress !== 0 && progress !== 100) && (
                 <DialogActions>
                     <Button
+                        disabled={btnDisable}
                         color={colorName}
                         onClick={onClickBtn}>
                         {t('common.t_dialog_btn_default')}
                     </Button>
                 </DialogActions>
             )}
-            {onClickBtn && (stateData != "default") && (
+            {onClickBtn && (stateData !== "default") && (
                 <DialogActions>
+                    {onClickBtnCancel && (
+                        <Button
+                            color={'inherit'}
+                            onClick={onClickBtnCancel}>
+                            {t('common.t_dialog_btn_default')}
+                        </Button>
+                    )}
+                    {stateData == "select" && (
+                        <Button
+                            disabled={btnDisable}
+                            color={colorName}
+                            onClick={onClickBtn}>
+                            {t('common.t_dialog_btn_select')}
+                        </Button>
+                    )}
                     {stateData == "error" && (
                         <Button
+                            disabled={btnDisable}
                             color={colorName}
                             onClick={onClickBtn}>
                             {t('common.t_dialog_btn_error')}
@@ -120,6 +150,7 @@ export function MainDialog(props) {
                     )}
                     {stateData == "success" && (
                         <Button
+                            disabled={btnDisable}
                             color={stateData}
                             onClick={onClickBtn}>
                             {t('common.t_dialog_btn_success')}
@@ -137,7 +168,10 @@ MainDialog.propTypes = {
     body: PropTypes.string,
     open: PropTypes.bool.isRequired,
     color: PropTypes.string,
-    state: PropTypes.oneOf(['default', 'success', 'error']).isRequired,
+    state: PropTypes.oneOf(['default', 'success', 'error', 'select']).isRequired,
     progress: PropTypes.number,
+    btnDisable: PropTypes.bool,
+    onClickBtnCancel: PropTypes.func,
     onClickBtn: PropTypes.func.isRequired,
+    children: PropTypes.element,
 };

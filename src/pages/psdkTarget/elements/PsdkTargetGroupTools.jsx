@@ -63,16 +63,16 @@ export function PsdkTargetGroupTools(props) {
             >
                 <AvatarButton
                     icon={PlaylistAdd}
-                    title={t('psdkTarget.t_btn_group_install_rpm_title')}
-                    text={t('psdkTarget.t_btn_group_install_rpm_text')}
+                    title={t('psdkTarget.t_btn_group_tools_rpm_title')}
+                    text={t('psdkTarget.t_btn_group_tools_rpm_text')}
                     onClick={async () => {
                         // @todo
                     }}
                 />
                 <AvatarButton
                     icon={PlaylistRemove}
-                    title={t('psdkTarget.t_btn_group_install_uninstall_title')}
-                    text={t('psdkTarget.t_btn_group_install_uninstall_text')}
+                    title={t('psdkTarget.t_btn_group_tools_uninstall_title')}
+                    text={t('psdkTarget.t_btn_group_tools_uninstall_text')}
                     onClick={async () => {
                         // @todo
                     }}

@@ -71,40 +71,40 @@ export function EmulatorGroupTools(props) {
             >
                 <AvatarButton
                     icon={Aod}
-                    title={t('emulator.t_btn_group_install_app_title')}
-                    text={t('emulator.t_btn_group_install_app_text')}
+                    title={t('emulator.t_btn_group_tools_app_title')}
+                    text={t('emulator.t_btn_group_tools_app_text')}
                     onClick={async () => {
                         AppUtils.openPage(navigate, 'appsInstall', { state: { id: model.id } });
                     }}
                 />
                 <AvatarButton
                     icon={SecurityUpdate}
-                    title={t('emulator.t_btn_group_install_rpm_title')}
-                    text={t('emulator.t_btn_group_install_rpm_text')}
+                    title={t('emulator.t_btn_group_tools_rpm_title')}
+                    text={t('emulator.t_btn_group_tools_rpm_text')}
                     onClick={async () => {
                         // @todo
                     }}
                 />
                 <AvatarButton
                     icon={AppBlocking}
-                    title={t('emulator.t_btn_group_install_uninstall_title')}
-                    text={t('emulator.t_btn_group_install_uninstall_text')}
+                    title={t('emulator.t_btn_group_tools_uninstall_title')}
+                    text={t('emulator.t_btn_group_tools_uninstall_text')}
                     onClick={async () => {
                         // @todo
                     }}
                 />
                 <AvatarButton
                     icon={ChargingStation}
-                    title={t('emulator.t_btn_group_install_run_app_title')}
-                    text={t('emulator.t_btn_group_install_run_app_text')}
+                    title={t('emulator.t_btn_group_tools_run_app_title')}
+                    text={t('emulator.t_btn_group_tools_run_app_text')}
                     onClick={async () => {
                         // @todo
                     }}
                 />
                 <AvatarButton
                     icon={UploadFile}
-                    title={t('emulator.t_btn_group_install_upload_title')}
-                    text={t('emulator.t_btn_group_install_upload_text')}
+                    title={t('emulator.t_btn_group_tools_upload_title')}
+                    text={t('emulator.t_btn_group_tools_upload_text')}
                     onClick={async () => {
                         // @todo
                     }}

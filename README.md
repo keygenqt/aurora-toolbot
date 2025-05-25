@@ -8,15 +8,6 @@ A [React](https://react.dev/) app that implements [Telegram Mini Apps](https://c
 
 ![preview](data/preview.png)
 
-### DEB
-
-```shell
-# Install
-sudo dpkg -i aurora-toolbot_0.0.1_amd64.deb
-# Remove
-sudo dpkg -r aurora-toolbot
-```
-
 ### License
 
 ```

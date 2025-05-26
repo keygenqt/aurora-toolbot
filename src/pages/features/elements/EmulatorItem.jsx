@@ -51,7 +51,7 @@ export function EmulatorItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // data
-    const color = theme.palette.secondary.main;
+    const color = theme.palette.primaryEmulator.main;
     const { emulators } = props;
     const isSync = useEffectStateBool(keysStateBool.emulatorsSync);
     // item
@@ -92,7 +92,7 @@ export function EmulatorItem(props) {
                     <Button
                         disabled={(!Array.isArray(emulators) || emulators.length == 0 || isSync)}
                         size={'small'}
-                        color={'secondary'}
+                        color={'primaryEmulator'}
                         endIcon={(emulators === undefined || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (

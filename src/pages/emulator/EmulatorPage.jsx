@@ -36,7 +36,9 @@ export function EmulatorPage(props) {
     const dispatch = useDispatch();
     // data
     const reduxKey = keysStateBool.emulatorsUpdate;
+    // states
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
+    const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
     // fun
@@ -53,6 +55,7 @@ export function EmulatorPage(props) {
     return (
         <ListLayout
             disable={isUpdateItem}
+            animate={isAnimateLoading}
             models={emulators}
             updateStates={updateStates}
             reduxKey={reduxKey}
@@ -61,17 +64,19 @@ export function EmulatorPage(props) {
                     <Stack
                         direction={'column'}
                         spacing={3}
-                        sx={{width: 1}}
+                        sx={{ width: 1 }}
                     >
                         <EmulatorHeader
                             model={model}
-                            isUpdate={isUpdateItem}
+                            isUpdate={isUpdateItem || isAnimateLoading}
                             onUpdate={(state) => setIsUpdateItem(state)}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                             onRefresh={updateStatesSilent}
                         />
                         <EmulatorGroupTools
                             model={model}
-                            disabled={isUpdateItem || !model.is_running}
+                            disabled={isUpdateItem || isAnimateLoading || !model.is_running}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                         />
                     </Stack>
                 )

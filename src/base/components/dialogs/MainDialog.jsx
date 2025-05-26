@@ -113,7 +113,7 @@ export function MainDialog(props) {
                     {children}
                 </DialogContent>
             )}
-            {onClickBtn && (stateData == "default" && progress !== null && progress !== undefined && progress !== 0 && progress !== 100) && (
+            {onClickBtn && (stateData == "default" && Boolean(progress)) && (
                 <DialogActions>
                     <Button
                         disabled={btnDisable}
@@ -138,6 +138,14 @@ export function MainDialog(props) {
                             color={colorName}
                             onClick={onClickBtn}>
                             {t('common.t_dialog_btn_select')}
+                        </Button>
+                    )}
+                    {stateData == "lock" && (
+                        <Button
+                            disabled={btnDisable}
+                            color={colorName}
+                            onClick={onClickBtn}>
+                            {t('common.t_dialog_btn_lock')}
                         </Button>
                     )}
                     {stateData == "error" && (
@@ -168,7 +176,7 @@ MainDialog.propTypes = {
     body: PropTypes.string,
     open: PropTypes.bool.isRequired,
     color: PropTypes.string,
-    state: PropTypes.oneOf(['default', 'success', 'error', 'select']).isRequired,
+    state: PropTypes.oneOf(['default', 'success', 'error', 'select', 'lock']).isRequired,
     progress: PropTypes.number,
     btnDisable: PropTypes.bool,
     onClickBtnCancel: PropTypes.func,

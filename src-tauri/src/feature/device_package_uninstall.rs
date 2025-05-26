@@ -22,7 +22,7 @@ pub fn device_package_uninstall() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "DevicePackageUninstall";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, ()) {
@@ -37,7 +37,7 @@ pub fn device_package_uninstall_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "DevicePackageUninstallById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (id,)) {
@@ -52,7 +52,7 @@ pub fn device_package_uninstall_package(package: String) -> Result<String, Error
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "DevicePackageUninstallPackage";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package,)) {
@@ -67,7 +67,7 @@ pub fn device_package_uninstall_package_by_id(package: String, id: String) -> Re
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "DevicePackageUninstallPackageById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package, id)) {

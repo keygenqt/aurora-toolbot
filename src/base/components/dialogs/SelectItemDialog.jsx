@@ -72,6 +72,7 @@ export function SelectItemDialog(props) {
             >
                 {data && data.map((e, index) => (
                     <ListItemButton
+                        key={`index-${index}`}
                         selected={selectedIndex === index}
                         onClick={() => setSelectedIndex(index)}
                     >

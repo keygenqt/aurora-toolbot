@@ -22,7 +22,7 @@ pub fn emulator_package_install_path(path: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageInstallPath";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (path,)) {
@@ -37,7 +37,7 @@ pub fn emulator_package_install_path_by_id(path: String, id: String) -> Result<S
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageInstallPathById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (path, id)) {
@@ -52,7 +52,7 @@ pub fn emulator_package_install_url(url: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageInstallUrl";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (url,)) {
@@ -67,7 +67,7 @@ pub fn emulator_package_install_url_by_id(url: String, id: String) -> Result<Str
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageInstallUrlById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (url, id)) {

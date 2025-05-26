@@ -22,7 +22,7 @@ pub fn emulator_package_uninstall() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorPackageUninstall";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, ()) {
@@ -37,7 +37,7 @@ pub fn emulator_package_uninstall_by_id(id: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorPackageUninstallById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (id,)) {
@@ -52,7 +52,7 @@ pub fn emulator_package_uninstall_package(package: String) -> Result<String, Err
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorPackageUninstallPackage";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package,)) {
@@ -67,7 +67,7 @@ pub fn emulator_package_uninstall_package_by_id(package: String, id: String) -> 
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
     // Request
     let method = "EmulatorPackageUninstallPackageById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (package, id)) {

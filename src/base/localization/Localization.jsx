@@ -39,10 +39,9 @@ i18n
                         t_btn_group_tools_run_app_text: 'Запустите в песочнице приложение на устройстве.',
                         t_btn_group_tools_upload_title: 'Загрузка файла',
                         t_btn_group_tools_upload_text: 'Загрузите файл на ваше устройство.',
-                        t_dialog_success_install: 'Установка успешно выполнена!',
-                        t_dialog_error_install: 'Установка завершилась ошибкой :(',
-                        t_dialog_success_upload: 'Загрузка успешно выполнена!',
-                        t_dialog_error_upload: 'Загрузка завершилась ошибкой :(',
+                        t_dialog_success_install: 'Установка успешно выполнена.',
+                        t_dialog_success_uninstall: 'Удаление успешно выполнено.',
+                        t_dialog_success_upload: 'Загрузка успешно выполнена.',
                     },
                     /// PAGE: devices
                     devices: {
@@ -67,6 +66,9 @@ i18n
                         t_btn_group_tools_run_app_text: 'Запустите в песочнице приложение на эмуляторе.',
                         t_btn_group_tools_upload_title: 'Загрузка файла',
                         t_btn_group_tools_upload_text: 'Загрузите файл на ваш эмулятор.',
+                        t_dialog_success_install: 'Установка успешно выполнена.',
+                        t_dialog_success_uninstall: 'Удаление успешно выполнено.',
+                        t_dialog_success_upload: 'Загрузка успешно выполнена.',
                     },
                     /// PAGE: emulators
                     emulators: {
@@ -256,11 +258,13 @@ i18n
                         t_dialog_body_connection: 'Выполняем подключение...',
                         t_dialog_body_error: 'Не удалось выполнить задачу.',
                         t_dialog_body_download_success: 'Данные успешно загружены в директорию ~/Downloads.',
+                        t_dialog_body_run_success: 'Приложение успешно запущено.',
                         t_dialog_body_install_success: 'Установка выполнена успешно.',
                         t_dialog_btn_default: 'Отмена',
                         t_dialog_btn_error: 'Закрыть',
                         t_dialog_btn_success: 'Ok',
                         t_dialog_btn_select: 'Выбрать',
+                        t_dialog_btn_lock: 'Остановить',
                         t_dialog_select_file: {
                             title: "Выбор файла",
                             body: "Выберите необходимый файл..."

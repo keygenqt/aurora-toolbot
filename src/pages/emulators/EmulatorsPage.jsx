@@ -62,7 +62,7 @@ export function EmulatorsPage(props) {
     const { t } = useTranslation();
     // data
     const reduxKey = keysStateBool.emulatorsUpdate;
-    const color = theme.palette.secondary.main;
+    const color = theme.palette.primaryEmulator.main;
     const [isUpdateItem, setIsUpdateItem] = React.useState([]);
     // redux
     const emulators = useSelector((state) => state.emulators.value);
@@ -241,7 +241,7 @@ export function EmulatorsPage(props) {
                         <Button
                             disabled={isUpdateItem.includes(key)}
                             size={'small'}
-                            color={'secondary'}
+                            color={'primaryEmulator'}
                             endIcon={isUpdateItem.includes(key) ? (
                                 <CircularProgress color="default" />
                             ) : (

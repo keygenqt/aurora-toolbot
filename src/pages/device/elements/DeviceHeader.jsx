@@ -51,7 +51,7 @@ export function DeviceHeader(props) {
         onAnimate,
         onRefresh,
     } = props;
-    const color = theme.palette.success.main;
+    const color = theme.palette.primaryDevice.main;
     const colorDisabled = theme.palette.inherit.main;
     // page
     return (
@@ -121,8 +121,7 @@ export function DeviceHeader(props) {
                                     <Box width={16} textAlign={'center'}>
                                         <FontAwesomeIcon icon="fa-solid fa-square-binary" />
                                     </Box>
-                                    {/* <Box sx={{ minHeight: 21 }} >Aurora OS v{model.version}</Box> */}
-                                    <Box sx={{ minHeight: 21 }} >Aurora OS v100.500.00</Box>
+                                    <Box sx={{ minHeight: 21 }} >Aurora OS v{model.version}</Box>
                                 </Stack>
                                 <Stack
                                     direction={'row'}
@@ -160,7 +159,7 @@ export function DeviceHeader(props) {
 
                     <ButtonGroup
                         variant={'outlined'}
-                        color={'success'}
+                        color={'primaryDevice'}
                         disabled={!model.is_available || isUpdate}
                     >
                         <Tooltip title={t('device.t_btn_terminal_user')} placement="top">
@@ -179,14 +178,14 @@ export function DeviceHeader(props) {
                         <Tooltip title={t('device.t_btn_screenshot')} placement="top">
                             <Button
                                 onClick={async () => {
-                                    onAnimate(true)
+                                    onAnimate(true);
                                     try {
                                         let result = await Methods.device_screenshot_by_id(model.id);
                                         await Methods.app_open_file(result.path);
                                     } catch (e) {
                                         await onRefresh();
                                     }
-                                    onAnimate(false)
+                                    onAnimate(false);
                                 }}
                             >
                                 <CameraEnhance color={'default'} />

@@ -22,8 +22,16 @@ export const palette = {
         main: '#75be9c',
         contrastText: '#fff',
     },
+    primaryDevice: {
+        main: '#718beb',
+        contrastText: '#fff',
+    },
+    primaryEmulator: {
+        main: '#7c90cd',
+        contrastText: '#fff',
+    },
     primarySdk: {
-        main: '#c19df2',
+        main: '#b880ed',
         contrastText: '#fff',
     },
     primaryPsdk: {
@@ -50,7 +58,7 @@ export const palette = {
     },
     inherit: {
         main: '#f7f7f7',
-        light: '#e7e7e7',
+        light: '#696969',
     },
     inheritBtn: {
         main: '#f7f7f7',

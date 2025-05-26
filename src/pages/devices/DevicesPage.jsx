@@ -59,7 +59,7 @@ export function DevicesPage(props) {
     const { t } = useTranslation();
     // data
     const reduxKey = keysStateBool.devicesUpdate;
-    const color = theme.palette.success.main;
+    const color = theme.palette.primaryDevice.main;
     const colorDisabled = theme.palette.inherit.main;
     // redux
     const devices = useSelector((state) => state.devices.value);
@@ -184,7 +184,7 @@ export function DevicesPage(props) {
                         <Button
                             disabled={!model.is_available}
                             size={'small'}
-                            color={'success'}
+                            color={'primaryDevice'}
                             endIcon={<KeyboardArrowRight color="default" />}
                             variant="contained"
                             sx={{ opacity: 0.8 }}

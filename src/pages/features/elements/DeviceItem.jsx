@@ -53,7 +53,7 @@ export function DeviceItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // data
-    const color = theme.palette.success.main;
+    const color = theme.palette.primaryDevice.main;
     const { devices } = props;
     const isSync = useEffectStateBool(keysStateBool.devicesSync);
     // item
@@ -104,7 +104,7 @@ export function DeviceItem(props) {
                     <Button
                         disabled={(!Array.isArray(devices) || devices.length == 0 || isSync)}
                         size={'small'}
-                        color={'success'}
+                        color={'primaryDevice'}
                         endIcon={(devices === undefined || isSync) ? (
                             <CircularProgress color="default" />
                         ) : (

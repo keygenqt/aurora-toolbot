@@ -38,6 +38,7 @@ import {
     SystemSecurityUpdateGood,
     FolderOpen,
     Terminal,
+    CameraEnhance,
 } from '@mui/icons-material';
 
 import { DataImages, CardGradient } from '../../../base';
@@ -52,9 +53,10 @@ export function EmulatorHeader(props) {
         model,
         isUpdate,
         onUpdate,
+        onAnimate,
         onRefresh,
     } = props;
-    const color = theme.palette.secondary.main;
+    const color = theme.palette.primaryEmulator.main;
     // page
     return (
         <CardGradient color={color}>
@@ -140,7 +142,7 @@ export function EmulatorHeader(props) {
                         </Typography>
                     </Stack>
 
-                    {isUpdate ? (
+                    {isUpdate && !model.is_running ? (
                         <Box sx={{ padding: 1 }}>
                             <CircularProgress size={27} />
                         </Box>
@@ -153,7 +155,9 @@ export function EmulatorHeader(props) {
                             {model.is_running && (
                                 <Tooltip title={t('emulator.t_btn_stop')} placement="top">
                                     <IconButton
+                                        disabled={isUpdate}
                                         size={'large'}
+                                        sx={{opacity: isUpdate ? 0.7 : 1}}
                                         onClick={async () => {
                                             onUpdate(true)
                                             try {
@@ -188,7 +192,7 @@ export function EmulatorHeader(props) {
 
                     <ButtonGroup
                         variant={'outlined'}
-                        color={'secondary'}
+                        color={'primaryEmulator'}
                         disabled={!model.is_running || isUpdate}
                     >
                         <Tooltip title={t('common.t_btn_open_dir')} placement="top">
@@ -230,6 +234,22 @@ export function EmulatorHeader(props) {
                                 <Terminal color={(!model.is_running || isUpdate) ? 'default' : 'error'} />
                             </Button>
                         </Tooltip>
+                        <Tooltip title={t('device.t_btn_screenshot')} placement="top">
+                            <Button
+                                onClick={async () => {
+                                    onAnimate(true);
+                                    try {
+                                        let result = await Methods.emulator_screenshot_by_id(model.id);
+                                        await Methods.app_open_file(result.path);
+                                    } catch (e) {
+                                        await onRefresh();
+                                    }
+                                    onAnimate(false);
+                                }}
+                            >
+                                <CameraEnhance color={'default'} />
+                            </Button>
+                        </Tooltip>
                     </ButtonGroup>
                 </Stack>
             </CardContent>
@@ -241,5 +261,6 @@ EmulatorHeader.propTypes = {
     model: PropTypes.object.isRequired,
     isUpdate: PropTypes.bool.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    onAnimate: PropTypes.func.isRequired,
     onRefresh: PropTypes.func.isRequired,
 };

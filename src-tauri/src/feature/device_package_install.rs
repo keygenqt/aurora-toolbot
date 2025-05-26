@@ -22,7 +22,7 @@ pub fn device_package_install_path(path: String) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageInstallPath";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (path,)) {
@@ -37,7 +37,7 @@ pub fn device_package_install_urls(urls: Vec<String>) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageInstallUrls";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (urls,)) {
@@ -52,7 +52,7 @@ pub fn device_package_install_path_by_id(path: String, id: String) -> Result<Str
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageInstallPathById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (path, id)) {

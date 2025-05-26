@@ -15,7 +15,6 @@
  */
 import * as React from 'react';
 import { useLocation } from "react-router";
-import { useTranslation } from "react-i18next";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setDevices } from '../../store/impl/devices';
@@ -31,8 +30,6 @@ import { DeviceHeader } from './elements/DeviceHeader';
 import { DeviceGroupTools } from './elements/DeviceGroupTools';
 
 export function DevicePage(props) {
-    // components
-    const { t } = useTranslation();
     // components
     let { state } = useLocation();
     const dispatch = useDispatch();

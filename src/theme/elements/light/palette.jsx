@@ -22,6 +22,14 @@ export const palette = {
         main: '#274c40',
         contrastText: '#fff',
     },
+    primaryDevice: {
+        main: '#1f306e',
+        contrastText: '#fff',
+    },
+    primaryEmulator: {
+        main: '#2f3853',
+        contrastText: '#fff',
+    },
     primarySdk: {
         main: '#4c0ea1',
         contrastText: '#fff',

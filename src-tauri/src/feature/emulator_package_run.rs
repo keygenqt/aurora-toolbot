@@ -22,7 +22,7 @@ pub fn emulator_package_run(is_listen: bool) -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageRun";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen,)) {
@@ -37,7 +37,7 @@ pub fn emulator_package_run_by_id(is_listen: bool, id: String) -> Result<String,
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageRunById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen, id)) {
@@ -52,7 +52,7 @@ pub fn emulator_package_run_package(is_listen: bool, package: String) -> Result<
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageRunPackage";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen, package)) {
@@ -67,7 +67,7 @@ pub fn emulator_package_run_package_by_id(is_listen: bool, package: String, id: 
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "EmulatorPackageRunPackageById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (is_listen, package, id))

@@ -54,6 +54,9 @@ i18n
                         t_btn_stop: 'Остановить эмулятор',
                         t_btn_terminal_user: 'SSH Терминал user',
                         t_btn_terminal_root: 'SSH Терминал root',
+                        t_btn_screenshot: 'Сделать скриншот',
+                        t_btn_record_run: 'Запись видео',
+                        t_btn_record_stop_mp4: 'Сохранить видео',
                         t_group_tools_title: 'Tools',
                         t_group_tools_text: 'Инструменты которые позволяют легко управлять данными и приложениями на вашем эмуляторе.',
                         t_btn_group_tools_app_title: 'Установка приложений',
@@ -69,6 +72,7 @@ i18n
                         t_dialog_success_install: 'Установка успешно выполнена.',
                         t_dialog_success_uninstall: 'Удаление успешно выполнено.',
                         t_dialog_success_upload: 'Загрузка успешно выполнена.',
+                        t_dialog_record_title: 'Сохранение видео',
                     },
                     /// PAGE: emulators
                     emulators: {

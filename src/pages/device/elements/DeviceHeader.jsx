@@ -181,7 +181,7 @@ export function DeviceHeader(props) {
                                     onAnimate(true);
                                     try {
                                         let result = await Methods.device_screenshot_by_id(model.id);
-                                        await Methods.app_open_file(result.path);
+                                        await Methods.app_open_dir(result.path);
                                     } catch (e) {
                                         await onRefresh();
                                     }

@@ -340,7 +340,7 @@ export function EmulatorGroupTools(props) {
                                     if (state.state == 'State') {
                                         setDialogBody(AppUtils.formatMessage(state.message));
                                     }
-                                })
+                                });
                                 if (unlisten) {
                                     try {
                                         await Methods.emulator_upload_path_by_id(path, model.id);

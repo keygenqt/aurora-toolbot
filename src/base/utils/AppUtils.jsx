@@ -154,11 +154,11 @@ export const AppUtils = {
         }
         return false;
     },
-    formatMessage: function(msg) {
+    formatMessage: function(msg, ext) {
         const message = String(msg).charAt(0).toUpperCase() + String(msg).slice(1);
         const latest = message[message.length-1];
         if (latest != '.' && latest != ')') {
-            return message + '...'
+            return message + (ext ? ext : '...')
         }
         return message
     },

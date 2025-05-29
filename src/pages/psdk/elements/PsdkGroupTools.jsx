@@ -71,6 +71,7 @@ export function PsdkGroupTools(props) {
                     text={t('psdk.t_btn_group_sign_text')}
                     onClick={async () => {
                         // @todo
+                        await Methods.psdk_project_format_by_id(path, model.id);
                     }}
                 />
                 <AvatarButton
@@ -78,8 +79,8 @@ export function PsdkGroupTools(props) {
                     title={t('psdk.t_btn_group_remove_title')}
                     text={t('psdk.t_btn_group_remove_text')}
                     onClick={async () => {
-                        // @todo dialog
-                        await Methods.psdk_uninstall();
+                        // @todo
+                        await Methods.psdk_uninstall_by_id(model.id);
                     }}
                 />
             </ButtonGroup>

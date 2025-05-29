@@ -72,6 +72,7 @@ import { sdk_info } from './feature/sdk_info';
 import { sdk_install } from './feature/sdk_install';
 import { sdk_project_format } from './feature/sdk_project_format';
 import { sdk_sync } from './feature/sdk_sync';
+import { sdk_terminal } from './feature/sdk_terminal';
 import { sdk_tools } from './feature/sdk_tools';
 import { sdk_uninstall } from './feature/sdk_uninstall';
 
@@ -135,6 +136,7 @@ export const MethodsDbus = {
     ...sdk_install,
     ...sdk_project_format,
     ...sdk_sync,
+    ...sdk_terminal,
     ...sdk_tools,
     ...sdk_uninstall,
     log: function (message) {

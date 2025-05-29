@@ -67,5 +67,6 @@ pub mod sdk_info;
 pub mod sdk_install;
 pub mod sdk_project_format;
 pub mod sdk_sync;
+pub mod sdk_terminal;
 pub mod sdk_tools;
 pub mod sdk_uninstall;

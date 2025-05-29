@@ -165,11 +165,13 @@ export function DeviceHeader(props) {
                         <Tooltip title={t('device.t_btn_terminal_user')} placement="top">
                             <Button
                                 onClick={async () => {
+                                    onAnimate(true);
                                     try {
                                         await Methods.device_terminal_by_id(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }
+                                    onAnimate(false);
                                 }}
                             >
                                 <Terminal color={'default'} />

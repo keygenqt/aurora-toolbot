@@ -55,6 +55,7 @@ export function EmulatorHeader(props) {
     let {
         model,
         isUpdate,
+        isAnimate,
         onUpdate,
         onAnimate,
         onRefresh,
@@ -160,7 +161,7 @@ export function EmulatorHeader(props) {
                             </Typography>
                         </Stack>
 
-                        {isUpdate && !model.is_running ? (
+                        {isUpdate && !isAnimate ? (
                             <Box sx={{ padding: 1 }}>
                                 <CircularProgress size={27} />
                             </Box>
@@ -177,13 +178,13 @@ export function EmulatorHeader(props) {
                                             size={'large'}
                                             sx={{ opacity: isUpdate ? 0.7 : 1 }}
                                             onClick={async () => {
-                                                onUpdate(true)
+                                                onUpdate(true);
                                                 try {
                                                     await Methods.emulator_close_by_id(model.id);
                                                     await new Promise(r => setTimeout(r, 1000));
                                                 } catch (e) { }
                                                 await onRefresh();
-                                                onUpdate(false)
+                                                onUpdate(false);
                                             }}
                                         >
                                             <Stop />
@@ -193,12 +194,14 @@ export function EmulatorHeader(props) {
                                 {!model.is_running && (
                                     <Tooltip title={t('emulator.t_btn_run')} placement="top">
                                         <IconButton
+                                            disabled={isUpdate}
                                             size={'large'}
+                                            sx={{ opacity: isUpdate ? 0.7 : 1 }}
                                             onClick={async () => {
-                                                onUpdate(true)
+                                                onUpdate(true);
                                                 try { await Methods.emulator_open_by_id(model.id) } catch (e) { }
                                                 await onRefresh();
-                                                onUpdate(false)
+                                                onUpdate(false);
                                             }}
                                         >
                                             <PlayArrow />
@@ -215,11 +218,13 @@ export function EmulatorHeader(props) {
                             <Tooltip title={t('common.t_btn_open_dir')} placement="top">
                                 <Button
                                     onClick={async () => {
+                                        onAnimate(true);
                                         try {
                                             await Methods.app_open_dir(model.dir);
                                         } catch (e) {
                                             await onRefresh();
                                         }
+                                        onAnimate(false);
                                     }}
                                 >
                                     <FolderOpen color={'default'} />
@@ -228,11 +233,13 @@ export function EmulatorHeader(props) {
                             <Tooltip title={t('emulator.t_btn_terminal_user')} placement="top">
                                 <Button
                                     onClick={async () => {
+                                        onAnimate(true);
                                         try {
                                             await Methods.emulator_terminal_by_id(false, model.id);
                                         } catch (e) {
                                             await onRefresh();
                                         }
+                                        onAnimate(false);
                                     }}
                                 >
                                     <Terminal color={'default'} />
@@ -241,11 +248,13 @@ export function EmulatorHeader(props) {
                             <Tooltip title={t('emulator.t_btn_terminal_root')} placement="top">
                                 <Button
                                     onClick={async () => {
+                                        onAnimate(true);
                                         try {
                                             await Methods.emulator_terminal_by_id(true, model.id);
                                         } catch (e) {
                                             await onRefresh();
                                         }
+                                        onAnimate(false);
                                     }}
                                 >
                                     <Terminal color={(!model.is_running || isUpdate) ? 'default' : 'error'} />
@@ -337,6 +346,7 @@ export function EmulatorHeader(props) {
 EmulatorHeader.propTypes = {
     model: PropTypes.object.isRequired,
     isUpdate: PropTypes.bool.isRequired,
+    isAnimate: PropTypes.bool.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onAnimate: PropTypes.func.isRequired,
     onRefresh: PropTypes.func.isRequired,

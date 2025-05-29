@@ -230,6 +230,7 @@ i18n
                         t_btn_group_format_text: 'Форматирование проекта ОС Аврора Qt/C++.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Аврора SDK.',
+                        t_dialog_format_start: 'Начинаем форматирование...'
                     },
                     /// PAGE: sdksAvailable
                     sdksAvailable: {

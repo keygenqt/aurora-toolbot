@@ -36,6 +36,7 @@ import {
     Handyman,
     PlayArrow,
     Stop,
+    Terminal,
 } from '@mui/icons-material';
 
 import { DataImages, CardGradient } from '../../../base';
@@ -49,7 +50,9 @@ export function SdkHeader(props) {
     let {
         model,
         isUpdate,
+        isAnimate,
         onUpdate,
+        onAnimate,
         onRefresh,
     } = props;
     const color = theme.palette.primarySdk.main;
@@ -78,7 +81,7 @@ export function SdkHeader(props) {
                         alt='Icon' />
 
                     <Typography variant="h6" >
-                        Аврора SDK v{model.version.split('-')[0]}
+                        Аврора SDK v{model.version}
                     </Typography>
 
                     <Stack
@@ -126,7 +129,7 @@ export function SdkHeader(props) {
                         </Typography>
                     </Stack>
 
-                    {isUpdate ? (
+                    {isUpdate && !isAnimate ? (
                         <Box sx={{ padding: 1 }}>
                             <CircularProgress size={27} />
                         </Box>
@@ -139,12 +142,14 @@ export function SdkHeader(props) {
                             {model.is_running && (
                                 <Tooltip title={t('sdk.t_btn_stop')} placement="top">
                                     <IconButton
+                                        disabled={isUpdate}
                                         size={'large'}
+                                        sx={{ opacity: isUpdate ? 0.7 : 1 }}
                                         onClick={async () => {
-                                            onUpdate(true)
+                                            onUpdate(true);
                                             try { await Methods.sdk_ide_close_by_id(model.id) } catch (e) { }
                                             await onRefresh();
-                                            onUpdate(false)
+                                            onUpdate(false);
                                         }}
                                     >
                                         <Stop />
@@ -154,12 +159,14 @@ export function SdkHeader(props) {
                             {!model.is_running && (
                                 <Tooltip title={t('sdk.t_btn_run')} placement="top">
                                     <IconButton
+                                        disabled={isUpdate}
                                         size={'large'}
+                                        sx={{ opacity: isUpdate ? 0.7 : 1 }}
                                         onClick={async () => {
-                                            onUpdate(true)
+                                            onUpdate(true);
                                             try { await Methods.sdk_ide_open_by_id(model.id) } catch (e) { }
                                             await onRefresh();
-                                            onUpdate(false)
+                                            onUpdate(false);
                                         }}
                                     >
                                         <PlayArrow />
@@ -170,17 +177,20 @@ export function SdkHeader(props) {
                     )}
 
                     <ButtonGroup
+                        disabled={isUpdate}
                         variant={'outlined'}
                         color={'primarySdk'}
                     >
                         <Tooltip title={t('common.t_btn_open_dir')} placement="top">
                             <Button
                                 onClick={async () => {
+                                    onAnimate(true);
                                     try {
                                         await Methods.app_open_dir(model.dir);
                                     } catch (e) {
                                         await onRefresh();
                                     }
+                                    onAnimate(false);
                                 }}
                             >
                                 <FolderOpen color={'default'} />
@@ -189,16 +199,35 @@ export function SdkHeader(props) {
                         <Tooltip title={t('sdk.t_btn_tools')} placement="top">
                             <Button
                                 onClick={async () => {
+                                    onAnimate(true);
                                     try {
                                         await Methods.sdk_tools_by_id(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }
+                                    onAnimate(false);
                                 }}
                             >
                                 <Handyman color={'default'} />
                             </Button>
                         </Tooltip>
+                        {model.build_type == 'MB2' && (
+                            <Tooltip title={t('emulator.t_btn_terminal_user')} placement="top">
+                                <Button
+                                    onClick={async () => {
+                                        onAnimate(true);
+                                        try {
+                                            await Methods.sdk_terminal_by_id(model.id);
+                                        } catch (e) {
+                                            await onRefresh();
+                                        }
+                                        onAnimate(false);
+                                    }}
+                                >
+                                    <Terminal color={'default'} />
+                                </Button>
+                            </Tooltip>
+                        )}
                     </ButtonGroup>
                 </Stack>
             </CardContent>
@@ -209,6 +238,8 @@ export function SdkHeader(props) {
 SdkHeader.propTypes = {
     model: PropTypes.object.isRequired,
     isUpdate: PropTypes.bool.isRequired,
+    isAnimate: PropTypes.bool.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    onAnimate: PropTypes.func.isRequired,
     onRefresh: PropTypes.func.isRequired,
 };

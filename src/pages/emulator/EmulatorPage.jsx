@@ -69,6 +69,7 @@ export function EmulatorPage(props) {
                         <EmulatorHeader
                             model={model}
                             isUpdate={isUpdateItem || isAnimateLoading}
+                            isAnimate={isAnimateLoading}
                             onUpdate={(state) => setIsUpdateItem(state)}
                             onAnimate={(state) => setIsAnimateLoading(state)}
                             onRefresh={updateStatesSilent}

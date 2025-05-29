@@ -281,7 +281,6 @@ export function EmulatorGroupTools(props) {
                         title={t('emulator.t_btn_group_tools_run_app_title')}
                         text={t('emulator.t_btn_group_tools_run_app_text')}
                         onClick={async () => {
-                            // Done
                             try {
                                 onAnimate(true);
                                 setDialogSelectItems((await Methods.emulator_package_run_by_id(false, model.id)).variants.map((e) => {
@@ -303,7 +302,6 @@ export function EmulatorGroupTools(props) {
                         text={t('emulator.t_btn_group_tools_uninstall_text')}
                         onClick={async () => {
                             try {
-                                // Done
                                 onAnimate(true);
                                 setDialogSelectItems((await Methods.emulator_package_uninstall_by_id(model.id)).variants.map((e) => {
                                     return {
@@ -323,7 +321,6 @@ export function EmulatorGroupTools(props) {
                         title={t('emulator.t_btn_group_tools_upload_title')}
                         text={t('emulator.t_btn_group_tools_upload_text')}
                         onClick={async () => {
-                            // Done
                             setIsDialogSelectFile(true);
                             const path = await open({
                                 multiple: false,

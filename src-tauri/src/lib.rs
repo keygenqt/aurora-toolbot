@@ -156,6 +156,8 @@ pub fn run() {
             feature::sdk_project_format::sdk_project_format,
             feature::sdk_project_format::sdk_project_format_by_id,
             feature::sdk_sync::sdk_sync,
+            feature::sdk_terminal::sdk_terminal,
+            feature::sdk_terminal::sdk_terminal_by_id,
             feature::sdk_tools::sdk_tools,
             feature::sdk_tools::sdk_tools_by_id,
             feature::sdk_uninstall::sdk_uninstall,

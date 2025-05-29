@@ -36,7 +36,9 @@ export function SdkPage(props) {
     const theme = useTheme();
     // data
     const reduxKey = keysStateBool.psdksUpdate;
+    // states
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
+    const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
     const sdkInstalled = useSelector((state) => state.sdkInstalled.value);
     // fun
@@ -53,6 +55,7 @@ export function SdkPage(props) {
     return (
         <ListLayout
             disable={isUpdateItem}
+            animate={isAnimateLoading}
             models={sdkInstalled}
             updateStates={updateStates}
             reduxKey={reduxKey}
@@ -65,12 +68,16 @@ export function SdkPage(props) {
                     >
                         <SdkHeader
                             model={model}
-                            isUpdate={isUpdateItem}
+                            isUpdate={isUpdateItem || isAnimateLoading}
+                            isAnimate={isAnimateLoading}
                             onUpdate={(state) => setIsUpdateItem(state)}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                             onRefresh={updateStatesSilent}
                         />
                         <SdkGroupTools
                             model={model}
+                            disabled={isUpdateItem || isAnimateLoading}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                         />
                     </Stack>
                 )

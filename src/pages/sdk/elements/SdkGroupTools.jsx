@@ -39,8 +39,6 @@ export function SdkGroupTools(props) {
     const theme = useTheme();
     // states
     const [isDialogSelectFile, setIsDialogSelectFile] = React.useState(false);
-    const [dialogSelectItems, setDialogSelectItems] = React.useState(undefined);
-
     const [isDialogFormat, setIsDialogFormat] = React.useState(false);
     const [dialogState, setDialogState] = React.useState('default');
     const [dialogBody, setDialogBody] = React.useState(undefined);
@@ -107,7 +105,7 @@ export function SdkGroupTools(props) {
                             setIsDialogSelectFile(false);
                             if (path) {
                                 setIsDialogFormat(true);
-                                setDialogBody(t('sdk.t_dialog_format_start'));
+                                setDialogBody(t('common.t_dialog_body_format_start'));
                                 try {
                                     let state = await Methods.sdk_project_format_by_id(path, model.id);
                                     setDialogState('success');

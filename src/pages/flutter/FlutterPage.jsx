@@ -35,7 +35,9 @@ export function FlutterPage(props) {
     const dispatch = useDispatch();
     // data
     const reduxKey = keysStateBool.fluttersUpdate;
+    // states
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
+    const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
     const flutterInstalled = useSelector((state) => state.flutterInstalled.value);
     // fun
@@ -52,6 +54,7 @@ export function FlutterPage(props) {
     return (
         <ListLayout
             disable={isUpdateItem}
+            animate={isAnimateLoading}
             models={flutterInstalled}
             updateStates={updateStates}
             reduxKey={reduxKey}
@@ -64,11 +67,16 @@ export function FlutterPage(props) {
                     >
                         <FlutterHeader
                             model={model}
-                            isUpdate={isUpdateItem}
+                            isUpdate={isUpdateItem || isAnimateLoading}
                             onUpdate={(state) => setIsUpdateItem(state)}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                             onRefresh={updateStatesSilent}
                         />
-                        <FlutterGroupTools model={model} />
+                        <FlutterGroupTools
+                            model={model}
+                            disabled={isUpdateItem || isAnimateLoading}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
+                        />
                     </Stack>
                 )
             }}

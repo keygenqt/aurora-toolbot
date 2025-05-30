@@ -230,7 +230,6 @@ i18n
                         t_btn_group_format_text: 'Форматирование проекта ОС Аврора Qt/C++.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Аврора SDK.',
-                        t_dialog_format_start: 'Начинаем форматирование...'
                     },
                     /// PAGE: sdksAvailable
                     sdksAvailable: {
@@ -265,6 +264,7 @@ i18n
                         t_dialog_body_download_success: 'Данные успешно загружены в директорию ~/Downloads.',
                         t_dialog_body_run_success: 'Приложение успешно запущено.',
                         t_dialog_body_install_success: 'Установка выполнена успешно.',
+                        t_dialog_body_format_start: 'Поиск файлов в директории для форматирования...',
                         t_dialog_btn_default: 'Отмена',
                         t_dialog_btn_error: 'Закрыть',
                         t_dialog_btn_success: 'Ok',

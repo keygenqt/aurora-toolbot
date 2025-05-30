@@ -16,6 +16,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
+import { open } from '@tauri-apps/plugin-dialog';
 
 import {
     useTheme,
@@ -30,7 +31,7 @@ import {
     Delete,
 } from '@mui/icons-material';
 
-import { AvatarButton } from '../../../base';
+import { AppUtils, AvatarButton, MainDialog, SelectFileDialog } from '../../../base';
 import { Methods } from '../../../modules';
 
 export function FlutterGroupTools(props) {
@@ -41,61 +42,107 @@ export function FlutterGroupTools(props) {
     let {
         model,
         disabled,
+        onAnimate,
     } = props;
     const color = theme.palette.secondary.main;
+    // states
+    const [isDialogSelectFile, setIsDialogSelectFile] = React.useState(false);
+    const [isDialogFormat, setIsDialogFormat] = React.useState(false);
+    const [dialogState, setDialogState] = React.useState('default');
+    const [dialogBody, setDialogBody] = React.useState(undefined);
     // page
     return (
-        <Stack
-            direction={'column'}
-            spacing={2}
-        >
+        <>
+            <SelectFileDialog
+                color={'primaryFlutter'}
+                open={isDialogSelectFile}
+            />
+            <MainDialog
+                icon={FormatIndentIncrease}
+                color={'primaryFlutter'}
+                title={t('sdk.t_btn_group_format_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogFormat}
+                onClickBtn={async () => {
+                    setIsDialogFormat(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                }}
+            />
             <Stack
                 direction={'column'}
-                spacing={0.5}
+                spacing={2}
             >
-                <Typography variant="subtitle2" sx={{ color: 'text.primary' }} >
-                    {t('flutter.t_group_tools_title')}
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {t('flutter.t_group_tools_text')}
-                </Typography>
-            </Stack>
-            <ButtonGroup
-                disabled={disabled}
-                orientation={'vertical'}
-                color={'primaryFlutter'}
-            >
-                <AvatarButton
-                    icon={FormatIndentIncrease}
-                    title={t('flutter.t_btn_group_format_title')}
-                    text={t('flutter.t_btn_group_format_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
-                    icon={ReceiptLong}
-                    title={t('flutter.t_btn_group_gen_report_title')}
-                    text={t('flutter.t_btn_group_gen_report_text')}
-                    onClick={async () => {
-                        // @todo
-                    }}
-                />
-                <AvatarButton
-                    icon={Delete}
-                    title={t('flutter.t_btn_group_remove_title')}
-                    text={t('flutter.t_btn_group_remove_text')}
-                    onClick={async () => {
-                        // @todo dialog
-                        // await Methods.flutter_uninstall();
-                    }}
-                />
-            </ButtonGroup>
-        </Stack >
+                <Stack
+                    direction={'column'}
+                    spacing={0.5}
+                >
+                    <Typography variant="subtitle2" sx={{ color: 'text.primary' }} >
+                        {t('flutter.t_group_tools_title')}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {t('flutter.t_group_tools_text')}
+                    </Typography>
+                </Stack>
+                <ButtonGroup
+                    disabled={disabled}
+                    orientation={'vertical'}
+                    color={'primaryFlutter'}
+                >
+                    <AvatarButton
+                        icon={FormatIndentIncrease}
+                        title={t('flutter.t_btn_group_format_title')}
+                        text={t('flutter.t_btn_group_format_text')}
+                        onClick={async () => {
+                            setIsDialogSelectFile(true);
+                            const path = await open({
+                                multiple: false,
+                                directory: true,
+                            });
+                            setIsDialogSelectFile(false);
+                            if (path) {
+                                setIsDialogFormat(true);
+                                setDialogBody(t('common.t_dialog_body_format_start'));
+                                try {
+                                    let state = await Methods.flutter_project_format_by_id(path, model.id);
+                                    setDialogState('success');
+                                    setDialogBody(AppUtils.formatMessage(state.message, '.'));
+                                } catch (e) {
+                                    setDialogState('error');
+                                    setDialogBody(t('common.t_dialog_body_error'));
+                                }
+                            }
+                        }}
+                    />
+                    <AvatarButton
+                        icon={ReceiptLong}
+                        title={t('flutter.t_btn_group_gen_report_title')}
+                        text={t('flutter.t_btn_group_gen_report_text')}
+                        onClick={async () => {
+                            // @todo
+                        }}
+                    />
+                    <AvatarButton
+                        icon={Delete}
+                        title={t('flutter.t_btn_group_remove_title')}
+                        text={t('flutter.t_btn_group_remove_text')}
+                        onClick={async () => {
+                            // @todo dialog
+                            // await Methods.flutter_uninstall();
+                        }}
+                    />
+                </ButtonGroup>
+            </Stack >
+        </>
     );
 }
 
 FlutterGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
+    onAnimate: PropTypes.func.isRequired,
 };

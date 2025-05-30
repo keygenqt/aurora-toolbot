@@ -46,6 +46,7 @@ export function FlutterHeader(props) {
         model,
         isUpdate,
         onUpdate,
+        onAnimate,
         onRefresh,
     } = props;
     const color = theme.palette.primaryFlutter.main;
@@ -120,11 +121,13 @@ export function FlutterHeader(props) {
                         <Tooltip title={t('common.t_btn_open_dir')} placement="top">
                             <Button
                                 onClick={async () => {
+                                    onAnimate(true);
                                     try {
                                         await Methods.app_open_dir(model.dir);
                                     } catch (e) {
                                         await onRefresh();
                                     }
+                                    onAnimate(false);
                                 }}
                             >
                                 <FolderOpen color={'default'} />
@@ -133,11 +136,13 @@ export function FlutterHeader(props) {
                         <Tooltip title={t('flutter.t_btn_terminal')} placement="top">
                             <Button
                                 onClick={async () => {
+                                    onAnimate(true);
                                     try {
                                         await Methods.flutter_terminal_by_id(model.id);
                                     } catch (e) {
                                         await onRefresh();
                                     }
+                                    onAnimate(false);
                                 }}
                             >
                                 <Terminal color={'default'} />
@@ -154,5 +159,6 @@ FlutterHeader.propTypes = {
     model: PropTypes.object.isRequired,
     isUpdate: PropTypes.bool.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    onAnimate: PropTypes.func.isRequired,
     onRefresh: PropTypes.func.isRequired,
 };

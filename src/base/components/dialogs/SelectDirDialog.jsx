@@ -15,10 +15,10 @@
  */
 import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
-import { InsertDriveFile } from '@mui/icons-material';
+import { FolderOpen } from '@mui/icons-material';
 import { MainDialog } from './MainDialog';
 
-export function SelectFileDialog(props) {
+export function SelectDirDialog(props) {
     const { t } = useTranslation();
     const {
         open,
@@ -26,16 +26,16 @@ export function SelectFileDialog(props) {
     } = props
     return (
         <MainDialog
-            icon={InsertDriveFile}
+            icon={FolderOpen}
             open={open}
             color={color}
-            title={t('common.t_dialog_select_file.title')}
-            body={t('common.t_dialog_select_file.body')}
+            title={t('common.t_dialog_select_dir.title')}
+            body={t('common.t_dialog_select_dir.body')}
         />
     );
 }
 
-SelectFileDialog.propTypes = {
+SelectDirDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     color: PropTypes.string,
 };

@@ -148,6 +148,7 @@ i18n
                         t_btn_group_gen_report_text: 'Генерация отчета по плагинам проекта Flutter.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Flutter SDK.',
+                        t_dialog_success_report: 'Отчет успешно создан.',
                     },
                     /// PAGE: fluttersAvailable
                     fluttersAvailable: {
@@ -273,6 +274,10 @@ i18n
                         t_dialog_select_file: {
                             title: "Выбор файла",
                             body: "Выберите необходимый файл..."
+                        },
+                        t_dialog_select_dir: {
+                            title: "Выбор директории",
+                            body: "Выберите директорию проекта..."
                         },
                     }
                 },

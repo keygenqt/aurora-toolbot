@@ -19,7 +19,6 @@ import { useTranslation } from "react-i18next";
 import { open } from '@tauri-apps/plugin-dialog';
 
 import {
-    useTheme,
     ButtonGroup,
     Stack,
     Typography,
@@ -30,15 +29,14 @@ import {
     Delete,
 } from '@mui/icons-material';
 
-import { AppUtils, AvatarButton, MainDialog, SelectFileDialog } from '../../../base';
+import { AppUtils, AvatarButton, MainDialog, SelectDirDialog } from '../../../base';
 import { Methods } from '../../../modules';
 
 export function SdkGroupTools(props) {
     // components
     const { t } = useTranslation();
-    const theme = useTheme();
     // states
-    const [isDialogSelectFile, setIsDialogSelectFile] = React.useState(false);
+    const [isDialogSelectDir, setIsDialogSelectDir] = React.useState(false);
     const [isDialogFormat, setIsDialogFormat] = React.useState(false);
     const [dialogState, setDialogState] = React.useState('default');
     const [dialogBody, setDialogBody] = React.useState(undefined);
@@ -48,13 +46,12 @@ export function SdkGroupTools(props) {
         disabled,
         onAnimate,
     } = props;
-    const color = theme.palette.secondary.main;
     // page
     return (
         <>
-            <SelectFileDialog
+            <SelectDirDialog
                 color={'primarySdk'}
-                open={isDialogSelectFile}
+                open={isDialogSelectDir}
             />
             <MainDialog
                 icon={FormatIndentIncrease}
@@ -97,12 +94,12 @@ export function SdkGroupTools(props) {
                         title={t('sdk.t_btn_group_format_title')}
                         text={t('sdk.t_btn_group_format_text')}
                         onClick={async () => {
-                            setIsDialogSelectFile(true);
+                            setIsDialogSelectDir(true);
                             const path = await open({
                                 multiple: false,
                                 directory: true,
                             });
-                            setIsDialogSelectFile(false);
+                            setIsDialogSelectDir(false);
                             if (path) {
                                 setIsDialogFormat(true);
                                 setDialogBody(t('common.t_dialog_body_format_start'));

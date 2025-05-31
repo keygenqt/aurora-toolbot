@@ -19,7 +19,6 @@ import { useTranslation } from "react-i18next";
 import { open } from '@tauri-apps/plugin-dialog';
 
 import {
-    useTheme,
     ButtonGroup,
     Stack,
     Typography,
@@ -31,28 +30,33 @@ import {
     Delete,
 } from '@mui/icons-material';
 
-import { AppUtils, AvatarButton, MainDialog, SelectFileDialog } from '../../../base';
+import { AppUtils, AvatarButton, MainDialog, SelectFileDialog, SelectDirDialog } from '../../../base';
 import { Methods } from '../../../modules';
 
 export function FlutterGroupTools(props) {
     // components
     const { t } = useTranslation();
-    const theme = useTheme();
     // data
     let {
         model,
         disabled,
         onAnimate,
     } = props;
-    const color = theme.palette.secondary.main;
     // states
+    const [isDialogSelectDir, setIsDialogSelectDir] = React.useState(false);
     const [isDialogSelectFile, setIsDialogSelectFile] = React.useState(false);
     const [isDialogFormat, setIsDialogFormat] = React.useState(false);
+    const [isDialogReport, setIsDialogReport] = React.useState(false);
+    const [dialogProgress, setDialogProgress] = React.useState(undefined);
     const [dialogState, setDialogState] = React.useState('default');
     const [dialogBody, setDialogBody] = React.useState(undefined);
     // page
     return (
         <>
+            <SelectDirDialog
+                color={'primaryFlutter'}
+                open={isDialogSelectDir}
+            />
             <SelectFileDialog
                 color={'primaryFlutter'}
                 open={isDialogSelectFile}
@@ -71,6 +75,29 @@ export function FlutterGroupTools(props) {
                     // Clear
                     setDialogBody(undefined);
                     setDialogState('default');
+                    setDialogProgress(undefined);
+                }}
+            />
+            <MainDialog
+                icon={ReceiptLong}
+                color={'primaryFlutter'}
+                title={t('flutter.t_btn_group_gen_report_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogReport}
+                progress={dialogProgress}
+                onClickBtn={async () => {
+                    setIsDialogReport(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
+                    // Cancel if progress
+                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
+                        await Methods.restart_dbus();
+                    }
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                    setDialogProgress(undefined);
                 }}
             />
             <Stack
@@ -98,12 +125,12 @@ export function FlutterGroupTools(props) {
                         title={t('flutter.t_btn_group_format_title')}
                         text={t('flutter.t_btn_group_format_text')}
                         onClick={async () => {
-                            setIsDialogSelectFile(true);
+                            setIsDialogSelectDir(true);
                             const path = await open({
                                 multiple: false,
                                 directory: true,
                             });
-                            setIsDialogSelectFile(false);
+                            setIsDialogSelectDir(false);
                             if (path) {
                                 setIsDialogFormat(true);
                                 setDialogBody(t('common.t_dialog_body_format_start'));
@@ -123,7 +150,41 @@ export function FlutterGroupTools(props) {
                         title={t('flutter.t_btn_group_gen_report_title')}
                         text={t('flutter.t_btn_group_gen_report_text')}
                         onClick={async () => {
-                            // @todo
+                            setIsDialogSelectFile(true);
+                            const path = await open({
+                                multiple: false,
+                                filters: [{
+                                    name: 'pubspec',
+                                    extensions: ['yaml']
+                                }]
+                            });
+                            setIsDialogSelectFile(false);
+                            if (path) {
+                                setDialogProgress(0);
+                                setIsDialogReport(true);
+                                setDialogBody(t('common.t_dialog_body_connection'));
+                                const unlisten = await Methods.dbus_state_listen((state) => {
+                                    if (state.state == 'Progress') {
+                                        setDialogProgress(parseInt(state.message));
+                                    }
+                                    if (state.state == 'State') {
+                                        setDialogBody(AppUtils.formatMessage(state.message));
+                                    }
+                                })
+                                if (unlisten) {
+                                    try {
+                                        const result = await Methods.flutter_project_report_path_by_id(path, model.id);
+                                        await unlisten();
+                                        await Methods.app_open_file(result.path);
+                                        setDialogState('success');
+                                        setDialogBody(t('flutter.t_dialog_success_report'));
+                                    } catch (e) {
+                                        await unlisten();
+                                        setDialogState('error');
+                                        setDialogBody(t('common.t_dialog_body_error'));
+                                    }
+                                }
+                            }
                         }}
                     />
                     <AvatarButton

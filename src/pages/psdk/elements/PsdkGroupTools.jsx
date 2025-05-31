@@ -16,9 +16,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
+import { open } from '@tauri-apps/plugin-dialog';
 
 import {
-    useTheme,
     ButtonGroup,
     Stack,
     Typography,
@@ -26,65 +26,109 @@ import {
 
 import {
     Task,
-    Lock,
     Delete,
 } from '@mui/icons-material';
 
-import { AvatarButton } from '../../../base';
+import { AvatarButton, MainDialog, SelectFileDialog } from '../../../base';
 import { Methods } from '../../../modules';
 
 export function PsdkGroupTools(props) {
     // components
     const { t } = useTranslation();
-    const theme = useTheme();
+    // states
+    const [isDialogSelectFile, setIsDialogSelectFile] = React.useState(false);
+    const [isDialogSign, setIsDialogSign] = React.useState(false);
+    const [dialogState, setDialogState] = React.useState('default');
+    const [dialogBody, setDialogBody] = React.useState(undefined);
     // data
     let {
         model,
         disabled,
     } = props;
-    const color = theme.palette.secondary.main;
     // page
     return (
-        <Stack
-            direction={'column'}
-            spacing={2}
-        >
+        <>
+            <SelectFileDialog
+                color={'primaryPsdk'}
+                open={isDialogSelectFile}
+            />
+            <MainDialog
+                icon={Task}
+                color={'primaryPsdk'}
+                title={t('psdk.t_btn_group_sign_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogSign}
+                onClickBtn={async () => {
+                    setIsDialogSign(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                }}
+            />
             <Stack
                 direction={'column'}
-                spacing={0.5}
+                spacing={2}
             >
-                <Typography variant="subtitle2" sx={{ color: 'text.primary' }} >
-                    {t('psdk.t_group_tools_title')}
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {t('psdk.t_group_tools_text')}
-                </Typography>
-            </Stack>
-            <ButtonGroup
-                disabled={disabled}
-                orientation={'vertical'}
-                color={'primaryPsdk'}
-            >
-                <AvatarButton
-                    icon={Task}
-                    title={t('psdk.t_btn_group_sign_title')}
-                    text={t('psdk.t_btn_group_sign_text')}
-                    onClick={async () => {
-                        // @todo
-                        await Methods.psdk_project_format_by_id(path, model.id);
-                    }}
-                />
-                <AvatarButton
-                    icon={Delete}
-                    title={t('psdk.t_btn_group_remove_title')}
-                    text={t('psdk.t_btn_group_remove_text')}
-                    onClick={async () => {
-                        // @todo
-                        await Methods.psdk_uninstall_by_id(model.id);
-                    }}
-                />
-            </ButtonGroup>
-        </Stack >
+                <Stack
+                    direction={'column'}
+                    spacing={0.5}
+                >
+                    <Typography variant="subtitle2" sx={{ color: 'text.primary' }} >
+                        {t('psdk.t_group_tools_title')}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {t('psdk.t_group_tools_text')}
+                    </Typography>
+                </Stack>
+                <ButtonGroup
+                    disabled={disabled}
+                    orientation={'vertical'}
+                    color={'primaryPsdk'}
+                >
+                    <AvatarButton
+                        icon={Task}
+                        title={t('psdk.t_btn_group_sign_title')}
+                        text={t('psdk.t_btn_group_sign_text')}
+                        onClick={async () => {
+                            setIsDialogSelectFile(true);
+                            const path = await open({
+                                multiple: false,
+                                filters: [{
+                                    name: 'Package RPM',
+                                    extensions: ['rpm']
+                                }]
+                            });
+                            setIsDialogSelectFile(false);
+                            if (path) {
+                                setIsDialogSign(true);
+                                setDialogBody(t('common.t_dialog_body_connection'));
+                                try {
+                                    await Methods.psdk_package_sign_by_id(path, model.id);
+                                    await new Promise(r => setTimeout(r, 500)); // animation delay
+                                    setDialogState('success');
+                                    setDialogBody(t('psdk.t_dialog_success_sign'));
+                                } catch (e) {
+                                    setDialogState('error');
+                                    setDialogBody(t('common.t_dialog_body_error'));
+                                }
+                            }
+                        }}
+                    />
+                    <AvatarButton
+                        icon={Delete}
+                        title={t('psdk.t_btn_group_remove_title')}
+                        text={t('psdk.t_btn_group_remove_text')}
+                        onClick={async () => {
+                            // @todo
+                            await Methods.psdk_uninstall_by_id(model.id);
+                        }}
+                    />
+                </ButtonGroup>
+            </Stack >
+        </>
     );
 }
 

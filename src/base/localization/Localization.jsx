@@ -198,6 +198,7 @@ i18n
                         t_btn_group_sign_text: 'Подписать RPM пакет публичным ключом.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Platform SDK.',
+                        t_dialog_success_sign: 'Пакет успешно подписан.'
                     },
                     /// PAGE: psdksAvailable
                     psdksAvailable: {

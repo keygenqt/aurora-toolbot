@@ -20,7 +20,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setData as setPsdkInstalled } from '../../store/impl/psdkInstalled';
 import { keysStateBool } from '../../store/impl/stateBool';
 
-import { useTheme, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { setEffectStateBool } from '../../base';
 import { ListLayout } from '../../layouts';
@@ -34,10 +34,11 @@ export function PsdkPage(props) {
     // components
     const { state } = useLocation();
     const dispatch = useDispatch();
-    const theme = useTheme();
     // data
     const reduxKey = keysStateBool.psdksUpdate;
+    // states
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
+    const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
     const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     // fun
@@ -54,6 +55,7 @@ export function PsdkPage(props) {
     return (
         <ListLayout
             disable={isUpdateItem}
+            animate={isAnimateLoading}
             models={psdkInstalled}
             updateStates={updateStates}
             reduxKey={reduxKey}
@@ -66,12 +68,20 @@ export function PsdkPage(props) {
                     >
                         <PsdkHeader
                             model={model}
-                            isUpdate={isUpdateItem}
+                            isUpdate={isUpdateItem || isAnimateLoading}
                             onUpdate={(state) => setIsUpdateItem(state)}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                             onRefresh={updateStatesSilent}
                         />
-                        <PsdkGroupTools model={model} />
-                        <PsdkGroupTargets model={model} />
+                        <PsdkGroupTools
+                            model={model}
+                            disabled={isUpdateItem || isAnimateLoading}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
+                        />
+                        <PsdkGroupTargets
+                            disabled={isUpdateItem || isAnimateLoading}
+                            model={model}
+                        />
                     </Stack>
                 )
             }}

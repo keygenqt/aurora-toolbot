@@ -11,7 +11,7 @@ A [React](https://react.dev/) app that implements [Telegram Mini Apps](https://c
 ### Run Debian
 
 1. Install Node.
-2. Install Tauri dependency:
+2. Install Tauri dependency
 
 ```shell
 sudo apt update

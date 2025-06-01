@@ -8,6 +8,30 @@ A [React](https://react.dev/) app that implements [Telegram Mini Apps](https://c
 
 ![preview](data/preview.png)
 
+### Run Debian
+
+1. Install node
+2. Install Tauri:
+
+```shell
+sudo apt update
+sudo apt install libwebkit2gtk-4.1-dev \
+  build-essential \
+  curl \
+  wget \
+  file \
+  libxdo-dev \
+  libssl-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev
+```
+
+3. Run dev
+
+```shell
+npm run tauri dev
+```
+
 ### License
 
 ```

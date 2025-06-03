@@ -15,6 +15,7 @@
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from "react-i18next";
 
 import {
     List,
@@ -25,6 +26,7 @@ import {
 import { MainDialog } from './MainDialog';
 
 export function SelectItemDialog(props) {
+    const { t } = useTranslation();
     const [selectedIndex, setSelectedIndex] = React.useState(undefined);
     const {
         icon,
@@ -33,7 +35,6 @@ export function SelectItemDialog(props) {
         open,
         data,
         onClickBtn,
-        onClickBtnCancel,
     } = props
     return (
         <MainDialog
@@ -42,6 +43,7 @@ export function SelectItemDialog(props) {
             color={color}
             title={title}
             state={'select'}
+            body={data && data.length !== 0 ? undefined : t('common.t_dialog_empty_data.body')}
             btnDisable={selectedIndex === undefined}
             onClickBtnCancel={() => {
                 // Clear

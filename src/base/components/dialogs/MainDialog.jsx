@@ -140,6 +140,14 @@ export function MainDialog(props) {
                             {t('common.t_dialog_btn_select')}
                         </Button>
                     )}
+                    {stateData == "text" && (
+                        <Button
+                            disabled={btnDisable}
+                            color={colorName}
+                            onClick={onClickBtn}>
+                            {t('common.t_dialog_btn_success')}
+                        </Button>
+                    )}
                     {stateData == "lock" && (
                         <Button
                             disabled={btnDisable}
@@ -176,7 +184,7 @@ MainDialog.propTypes = {
     body: PropTypes.string,
     open: PropTypes.bool.isRequired,
     color: PropTypes.string,
-    state: PropTypes.oneOf(['default', 'success', 'error', 'select', 'lock']).isRequired,
+    state: PropTypes.oneOf(['default', 'success', 'error', 'select', 'text', 'lock']).isRequired,
     progress: PropTypes.number,
     btnDisable: PropTypes.bool,
     onClickBtnCancel: PropTypes.func,

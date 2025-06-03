@@ -220,6 +220,8 @@ i18n
                         t_btn_group_tools_rpm_text: 'Установка пакета RPM в таргет.',
                         t_btn_group_tools_uninstall_title: 'Удаление пакета',
                         t_btn_group_tools_uninstall_text: 'Удаление пакета RPM из таргета.',
+                        t_dialog_success_install_start: 'Установка пакета...',
+                        t_dialog_success_install: 'Установка успешно выполнена.',
                     },
                     /// PAGE: sdk
                     sdk: {
@@ -272,6 +274,12 @@ i18n
                         t_dialog_btn_success: 'Ok',
                         t_dialog_btn_select: 'Выбрать',
                         t_dialog_btn_lock: 'Остановить',
+                        t_dialog_empty_data: {
+                            body: "Ничего не найдено..."
+                        },
+                        t_dialog_search_package: {
+                            title: "Поиск пакета",
+                        },
                         t_dialog_select_file: {
                             title: "Выбор файла",
                             body: "Выберите необходимый файл..."

@@ -312,7 +312,7 @@ export function EmulatorGroupTools(props) {
                                 setIsDialogSelectItemUninstall(true);
                                 setTimeout(() => onAnimate(false), 300);
                             } catch (e) {
-                                console.log(e)
+                                onAnimate(false);
                             }
                         }}
                     />

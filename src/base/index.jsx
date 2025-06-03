@@ -24,6 +24,7 @@ export * from './components/dialogs/MainDialog';
 export * from './components/dialogs/SelectDirDialog';
 export * from './components/dialogs/SelectFileDialog';
 export * from './components/dialogs/SelectItemDialog';
+export * from './components/dialogs/TextFieldDialog';
 // lottie
 export * from './components/lottie/LottieComingSoon';
 export * from './components/lottie/LottieEmpty';

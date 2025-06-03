@@ -76,11 +76,10 @@ export function PsdkPage(props) {
                         <PsdkGroupTools
                             model={model}
                             disabled={isUpdateItem || isAnimateLoading}
-                            onAnimate={(state) => setIsAnimateLoading(state)}
                         />
                         <PsdkGroupTargets
-                            disabled={isUpdateItem || isAnimateLoading}
                             model={model}
+                            disabled={isUpdateItem || isAnimateLoading}
                         />
                     </Stack>
                 )

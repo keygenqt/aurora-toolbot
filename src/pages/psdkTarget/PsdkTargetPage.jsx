@@ -36,7 +36,9 @@ export function PsdkTargetPage(props) {
     const theme = useTheme();
     // data
     const reduxKey = keysStateBool.psdksUpdate;
+    // states
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
+    const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
     const psdkInstalled = useSelector((state) => state.psdkInstalled.value);
     const model = psdkInstalled.filter((model) => model.id === state.id);
@@ -55,6 +57,7 @@ export function PsdkTargetPage(props) {
     return (
         <ListLayout
             disable={isUpdateItem}
+            animate={isAnimateLoading}
             models={targets}
             updateStates={updateStates}
             reduxKey={reduxKey}
@@ -68,13 +71,16 @@ export function PsdkTargetPage(props) {
                         <PsdkTargetHeader
                             model={model[0]}
                             target={target}
-                            isUpdate={isUpdateItem}
+                            isUpdate={isUpdateItem || isAnimateLoading}
                             onUpdate={(state) => setIsUpdateItem(state)}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                             onRefresh={updateStatesSilent}
                         />
                         <PsdkTargetGroupTools
                             model={model[0]}
                             target={target}
+                            disabled={isUpdateItem || isAnimateLoading}
+                            onAnimate={(state) => setIsAnimateLoading(state)}
                         />
                     </Stack>
                 )

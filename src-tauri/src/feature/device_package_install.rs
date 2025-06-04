@@ -67,7 +67,7 @@ pub fn device_package_install_urls_by_id(urls: Vec<String>, id: String) -> Resul
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_LONG);
     // Request
     let method = "DevicePackageInstallUrlsById";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, (urls, id)) {

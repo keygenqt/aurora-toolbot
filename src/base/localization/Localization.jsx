@@ -23,6 +23,11 @@ i18n
             ru: {
                 translation: {
                     /// PAGE: device
+                    demoApps: {
+                        t_dialog_install_title: 'Установка приложения',
+                        t_dialog_install_success: 'Установка успешно выполнена.',
+                    },
+                    /// PAGE: device
                     device: {
                         t_open_config: 'Конфигурационный файл',
                         t_btn_screenshot: 'Сделать скриншот',

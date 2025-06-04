@@ -234,7 +234,13 @@ export function DeviceGroupTools(props) {
                         title={t('device.t_btn_group_tools_app_title')}
                         text={t('device.t_btn_group_tools_app_text')}
                         onClick={async () => {
-                            AppUtils.openPage(navigate, 'appsInstall', { state: { id: model.id } });
+                            AppUtils.openPage(navigate, 'appsInstall', {
+                                state: {
+                                    id: model.id,
+                                    type: 'device',
+                                    color: 'primaryDevice',
+                                }
+                            });
                         }}
                     />
                     <AvatarButton

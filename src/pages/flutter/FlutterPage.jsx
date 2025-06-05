@@ -15,6 +15,7 @@
  */
 import * as React from 'react';
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setFlutterInstalled } from '../../store/impl/flutterInstalled';
@@ -33,9 +34,11 @@ export function FlutterPage(props) {
     // components
     const { state } = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     // data
     const reduxKey = keysStateBool.fluttersUpdate;
     // states
+    const [isRemove, setIsRemove] = React.useState(false);
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
     const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
@@ -55,7 +58,7 @@ export function FlutterPage(props) {
         <ListLayout
             disable={isUpdateItem}
             animate={isAnimateLoading}
-            models={flutterInstalled}
+            models={isRemove ? undefined : flutterInstalled}
             updateStates={updateStates}
             reduxKey={reduxKey}
             itemList={(model) => {
@@ -76,6 +79,12 @@ export function FlutterPage(props) {
                             model={model}
                             disabled={isUpdateItem || isAnimateLoading}
                             onAnimate={(state) => setIsAnimateLoading(state)}
+                            onRemove={async () => {
+                                setIsRemove(true);
+                                await updateStates();
+                                navigate(-1);
+                                setIsRemove(false);
+                            }}
                         />
                     </Stack>
                 )

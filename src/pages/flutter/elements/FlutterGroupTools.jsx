@@ -40,6 +40,7 @@ export function FlutterGroupTools(props) {
     let {
         model,
         disabled,
+        onRemove,
         onAnimate,
     } = props;
     // states
@@ -47,6 +48,7 @@ export function FlutterGroupTools(props) {
     const [isDialogSelectFile, setIsDialogSelectFile] = React.useState(false);
     const [isDialogFormat, setIsDialogFormat] = React.useState(false);
     const [isDialogReport, setIsDialogReport] = React.useState(false);
+    const [isDialogRemove, setIsDialogRemove] = React.useState(false);
     const [dialogProgress, setDialogProgress] = React.useState(undefined);
     const [dialogState, setDialogState] = React.useState('default');
     const [dialogBody, setDialogBody] = React.useState(undefined);
@@ -64,7 +66,7 @@ export function FlutterGroupTools(props) {
             <MainDialog
                 icon={FormatIndentIncrease}
                 color={'primaryFlutter'}
-                title={t('sdk.t_btn_group_format_title')}
+                title={t('flutter.t_btn_group_format_title')}
                 body={dialogBody}
                 state={dialogState}
                 open={isDialogFormat}
@@ -98,6 +100,25 @@ export function FlutterGroupTools(props) {
                     setDialogBody(undefined);
                     setDialogState('default');
                     setDialogProgress(undefined);
+                }}
+            />
+            <MainDialog
+                icon={Delete}
+                color={'primaryFlutter'}
+                title={t('flutter.t_dialog_remove_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogRemove}
+                onClickBtn={async () => {
+                    setIsDialogRemove(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                    setDialogProgress(undefined);
+                    // Refresh and back
+                    onRemove();
                 }}
             />
             <Stack
@@ -192,8 +213,25 @@ export function FlutterGroupTools(props) {
                         title={t('flutter.t_btn_group_remove_title')}
                         text={t('flutter.t_btn_group_remove_text')}
                         onClick={async () => {
-                            // @todo dialog
-                            // await Methods.flutter_uninstall();
+                            setIsDialogRemove(true);
+                            setDialogBody(t('common.t_dialog_body_connection'));
+                            const unlisten = await Methods.dbus_state_listen((state) => {
+                                if (state.state == 'State') {
+                                    setDialogBody(AppUtils.formatMessage(state.message));
+                                }
+                            })
+                            if (unlisten) {
+                                try {
+                                    await Methods.flutter_uninstall_by_id(model.id);
+                                    await unlisten();
+                                    setDialogState('success');
+                                    setDialogBody(t('flutter.t_dialog_success_remove'));
+                                } catch (e) {
+                                    await unlisten();
+                                    setDialogState('error');
+                                    setDialogBody(t('common.t_dialog_body_error'));
+                                }
+                            }
                         }}
                     />
                 </ButtonGroup>
@@ -205,5 +243,6 @@ export function FlutterGroupTools(props) {
 FlutterGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
+    onRemove: PropTypes.func.isRequired,
     onAnimate: PropTypes.func.isRequired,
 };

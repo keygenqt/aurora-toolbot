@@ -153,7 +153,9 @@ i18n
                         t_btn_group_gen_report_text: 'Генерация отчета по плагинам проекта Flutter.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Flutter SDK.',
+                        t_dialog_remove_title: 'Удаление Flutter SDK',
                         t_dialog_success_report: 'Отчет успешно создан.',
+                        t_dialog_success_remove: 'Flutter SDK утилизирован успешно. Согласен, пора двигать на KMP ;)',
                     },
                     /// PAGE: fluttersAvailable
                     fluttersAvailable: {

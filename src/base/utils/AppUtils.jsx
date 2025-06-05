@@ -155,7 +155,8 @@ export const AppUtils = {
         return false;
     },
     formatMessage: function(msg, ext) {
-        const message = String(msg).charAt(0).toUpperCase() + String(msg).slice(1);
+        const withOutPath = msg.replace(/:\s\/home.+/g, "");
+        const message = String(withOutPath).charAt(0).toUpperCase() + String(withOutPath).slice(1);
         const latest = message[message.length-1];
         if (latest != '.' && latest != ')') {
             return message + (ext ? ext : '...')

@@ -15,6 +15,7 @@
  */
 import * as React from 'react';
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setData as setPsdkInstalled } from '../../store/impl/psdkInstalled';
@@ -34,9 +35,11 @@ export function PsdkPage(props) {
     // components
     const { state } = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     // data
     const reduxKey = keysStateBool.psdksUpdate;
     // states
+    const [isRemove, setIsRemove] = React.useState(false);
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
     const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
@@ -56,7 +59,7 @@ export function PsdkPage(props) {
         <ListLayout
             disable={isUpdateItem}
             animate={isAnimateLoading}
-            models={psdkInstalled}
+            models={isRemove ? undefined : psdkInstalled}
             updateStates={updateStates}
             reduxKey={reduxKey}
             itemList={(model) => {
@@ -76,6 +79,12 @@ export function PsdkPage(props) {
                         <PsdkGroupTools
                             model={model}
                             disabled={isUpdateItem || isAnimateLoading}
+                            onRemove={async () => {
+                                setIsRemove(true);
+                                await updateStates();
+                                navigate(-1);
+                                setIsRemove(false);
+                            }}
                         />
                         <PsdkGroupTargets
                             model={model}

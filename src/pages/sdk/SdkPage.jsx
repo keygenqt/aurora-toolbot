@@ -15,12 +15,14 @@
  */
 import * as React from 'react';
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
+import { setData as setEmulators } from '../../store/impl/emulators';
 import { setData as setSdkInstalled } from '../../store/impl/sdkInstalled';
 import { keysStateBool } from '../../store/impl/stateBool';
 
-import { useTheme, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { setEffectStateBool } from '../../base';
 import { ListLayout } from '../../layouts';
@@ -33,10 +35,11 @@ export function SdkPage(props) {
     // components
     const { state } = useLocation();
     const dispatch = useDispatch();
-    const theme = useTheme();
+    const navigate = useNavigate();
     // data
     const reduxKey = keysStateBool.psdksUpdate;
     // states
+    const [isRemove, setIsRemove] = React.useState(false);
     const [isUpdateItem, setIsUpdateItem] = React.useState(false);
     const [isAnimateLoading, setIsAnimateLoading] = React.useState(false);
     // redux
@@ -44,6 +47,7 @@ export function SdkPage(props) {
     // fun
     const updateStatesSilent = async () => {
         dispatch(setSdkInstalled(await Methods.sdk_info()));
+        dispatch(setEmulators(await Methods.emulator_info()));
     };
     const updateStates = async () => {
         setEffectStateBool(dispatch, reduxKey, true);
@@ -56,7 +60,7 @@ export function SdkPage(props) {
         <ListLayout
             disable={isUpdateItem}
             animate={isAnimateLoading}
-            models={sdkInstalled}
+            models={isRemove ? undefined : sdkInstalled}
             updateStates={updateStates}
             reduxKey={reduxKey}
             itemList={(model) => {
@@ -77,7 +81,12 @@ export function SdkPage(props) {
                         <SdkGroupTools
                             model={model}
                             disabled={isUpdateItem || isAnimateLoading}
-                            onAnimate={(state) => setIsAnimateLoading(state)}
+                            onRemove={async () => {
+                                setIsRemove(true);
+                                await updateStates();
+                                navigate(-1);
+                                setIsRemove(false);
+                            }}
                         />
                     </Stack>
                 )

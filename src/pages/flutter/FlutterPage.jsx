@@ -78,7 +78,6 @@ export function FlutterPage(props) {
                         <FlutterGroupTools
                             model={model}
                             disabled={isUpdateItem || isAnimateLoading}
-                            onAnimate={(state) => setIsAnimateLoading(state)}
                             onRemove={async () => {
                                 setIsRemove(true);
                                 await updateStates();

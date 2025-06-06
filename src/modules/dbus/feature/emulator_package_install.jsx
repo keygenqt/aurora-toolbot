@@ -14,7 +14,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { AppUtils } from '../../../base';
 
-// @todo check
 export const emulator_package_install = {
     emulator_package_install_path: async function (path) {
         return AppUtils.checkResponse(await invoke("emulator_package_install_path", { path: path }));

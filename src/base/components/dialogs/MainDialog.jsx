@@ -50,7 +50,7 @@ export function MainDialog(props) {
     const Icon = icon;
     const stateData = state ? state : 'default'
     const colorName = color ? color : 'primary'
-    const colorForce = (stateData == "error" || stateData == "success") ? stateData : colorName
+    const colorForce = (stateData == "error" || stateData == "success") ? stateData : (stateData == 'ready' ? 'success' : colorName)
 
     return (
         <Dialog
@@ -85,7 +85,10 @@ export function MainDialog(props) {
                             {title}
                         </Typography>
                     </Stack>
-                    {(progress !== null && progress !== undefined) && (
+                    {(progress !== null && progress !== undefined && progress <= 0) && (
+                        <LinearProgress color={colorForce} />
+                    )}
+                    {(progress !== null && progress !== undefined && progress > 0) && (
                         <LinearProgress
                             color={colorForce}
                             variant={'determinate'}
@@ -113,7 +116,7 @@ export function MainDialog(props) {
                     {children}
                 </DialogContent>
             )}
-            {onClickBtn && (stateData == "default" && Boolean(progress)) && (
+            {onClickBtn && (stateData == "default" && Boolean(progress) && progress > 0) && (
                 <DialogActions>
                     <Button
                         disabled={btnDisable}
@@ -154,6 +157,14 @@ export function MainDialog(props) {
                             color={colorName}
                             onClick={onClickBtn}>
                             {t('common.t_dialog_btn_lock')}
+                        </Button>
+                    )}
+                    {stateData == "ready" && (
+                        <Button
+                            disabled={btnDisable}
+                            color={colorName}
+                            onClick={onClickBtn}>
+                            {t('common.t_dialog_btn_ready')}
                         </Button>
                     )}
                     {stateData == "error" && (

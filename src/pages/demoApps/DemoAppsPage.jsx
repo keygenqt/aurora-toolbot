@@ -86,7 +86,7 @@ export function DemoAppsPage(props) {
                     // Delay close
                     await new Promise(r => setTimeout(r, 200));
                     // Cancel if progress
-                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
+                    if (Boolean(dialogProgress) && dialogProgress !== 100 && dialogProgress > 0) {
                         await Methods.restart_dbus();
                     }
                     // Clear
@@ -134,14 +134,19 @@ export function DemoAppsPage(props) {
                                             variant="contained"
                                             sx={{ opacity: 0.9 }}
                                             onClick={async () => {
-                                                setDialogProgress(0);
+                                                setDialogProgress(-1);
                                                 setIsDialogInstall(true);
                                                 setDialogBody(t('common.t_dialog_body_connection'));
                                                 let level = 1;
                                                 const unlisten = await Methods.dbus_state_listen((state) => {
                                                     if (state.state == 'Progress') {
                                                         let progress = parseInt(state.message);
-                                                        setDialogProgress((progress / 2) + (level == 1 ? 0 : 50));
+                                                        let percent = (progress / 2) + (level == 1 ? 0 : 50);
+                                                        if (percent >= 100) {
+                                                            setDialogProgress(-1);
+                                                        } else {
+                                                            setDialogProgress(percent);
+                                                        }
                                                         if (progress === 100) {
                                                             level = 2;
                                                         }
@@ -161,8 +166,10 @@ export function DemoAppsPage(props) {
                                                         await new Promise(r => setTimeout(r, 500)); // animation delay
                                                         setDialogState('success');
                                                         setDialogBody(t('demoApps.t_dialog_install_success'));
+                                                        setDialogProgress(100);
                                                     } catch (e) {
                                                         await unlisten();
+                                                        setDialogProgress(undefined);
                                                         setDialogState('error');
                                                         setDialogBody(t('common.t_dialog_body_error'));
                                                     }

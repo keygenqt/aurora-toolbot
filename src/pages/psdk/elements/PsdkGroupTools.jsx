@@ -38,12 +38,14 @@ export function PsdkGroupTools(props) {
     // states
     const [isDialogSelectFile, setIsDialogSelectFile] = React.useState(false);
     const [isDialogSign, setIsDialogSign] = React.useState(false);
+    const [isDialogRemove, setIsDialogRemove] = React.useState(false);
     const [dialogState, setDialogState] = React.useState('default');
     const [dialogBody, setDialogBody] = React.useState(undefined);
     // data
     let {
         model,
         disabled,
+        onRemove,
     } = props;
     // page
     return (
@@ -66,6 +68,24 @@ export function PsdkGroupTools(props) {
                     // Clear
                     setDialogBody(undefined);
                     setDialogState('default');
+                }}
+            />
+            <MainDialog
+                icon={Delete}
+                color={'primaryPsdk'}
+                title={t('psdk.t_dialog_remove_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogRemove}
+                onClickBtn={async () => {
+                    setIsDialogRemove(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                    // Refresh and back
+                    onRemove();
                 }}
             />
             <Stack
@@ -122,8 +142,16 @@ export function PsdkGroupTools(props) {
                         title={t('psdk.t_btn_group_remove_title')}
                         text={t('psdk.t_btn_group_remove_text')}
                         onClick={async () => {
-                            // @todo
-                            await Methods.psdk_uninstall_by_id(model.id);
+                            setIsDialogRemove(true);
+                            setDialogBody(t('psdk.t_dialog_remove_body'));
+                            try {
+                                await Methods.psdk_uninstall_by_id(model.id);
+                                setDialogState('success');
+                                setDialogBody(t('psdk.t_dialog_success_remove'));
+                            } catch (e) {
+                                setDialogState('error');
+                                setDialogBody(t('common.t_dialog_body_error'));
+                            }
                         }}
                     />
                 </ButtonGroup>
@@ -135,4 +163,5 @@ export function PsdkGroupTools(props) {
 PsdkGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
+    onRemove: PropTypes.func.isRequired,
 };

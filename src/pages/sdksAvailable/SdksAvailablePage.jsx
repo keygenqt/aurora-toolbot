@@ -80,7 +80,7 @@ export function SdksAvailablePage(props) {
         let isInstall = false
         for (const modelAvailable of sdkAvailable) {
             if (AppUtils.isInstall(sdkInstalled, modelAvailable, (i, a) => {
-                return i.version.split('-')[0] == a.version_full && i.version.includes(a.build_type.toLowerCase());
+                return i.version == a.version_full && i.build_type == a.build_type;
             })) {
                 isInstall = true
                 break
@@ -104,11 +104,11 @@ export function SdksAvailablePage(props) {
                     // Delay close
                     await new Promise(r => setTimeout(r, 200));
                     // Cancel if progress
-                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
+                    if (Boolean(dialogProgress) && dialogProgress !== 100 && dialogProgress > 0) {
                         await Methods.restart_dbus();
                     }
                     // Update state
-                    if (Boolean(dialogProgress) && dialogProgress === 100) {
+                    if (Boolean(dialogProgress) && dialogProgress === 100 && dialogProgress > 0) {
                         await updateStates();
                     }
                     // Clear
@@ -128,12 +128,12 @@ export function SdksAvailablePage(props) {
                 onClickBtn={async () => {
                     // Hide dialog
                     setIsDialogDownload(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
                     // Cancel if progress
-                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
+                    if (Boolean(dialogProgress) && dialogProgress !== 100 && dialogProgress > 0) {
                         await Methods.restart_dbus();
                     }
-                    // Delay before clear
-                    await new Promise(r => setTimeout(r, 200));
                     // Clear
                     setDialogBody(undefined);
                     setDialogState('default');
@@ -146,7 +146,7 @@ export function SdksAvailablePage(props) {
                 reduxKey={reduxKey}
                 itemList={(model) => {
                     const isInstall = AppUtils.isInstall(sdkInstalled, model, (i, a) => {
-                        return i.version.split('-')[0] == a.version_full && i.version.includes(a.build_type.toLowerCase());
+                        return i.version == a.version_full && i.build_type == a.build_type;
                     });
                     let color = isInstall ? theme.palette.primary.main : theme.palette.primarySdk.main;
                     return (
@@ -184,7 +184,7 @@ export function SdksAvailablePage(props) {
                                     <Tooltip title={t('common.t_install')} placement="left-start">
                                         <IconButton
                                             onClick={async () => {
-                                                setDialogProgress(0);
+                                                setDialogProgress(-1);
                                                 setIsDialogInstall(true);
                                                 setDialogBody(t('common.t_dialog_body_connection'));
                                                 const unlisten = await Methods.dbus_state_listen((state) => {
@@ -193,7 +193,7 @@ export function SdksAvailablePage(props) {
                                                         return;
                                                     }
                                                     if (state.state == 'Info') {
-                                                        setDialogProgress(100);
+                                                        setDialogProgress(-1);
                                                         return;
                                                     }
                                                     setDialogBody(AppUtils.formatMessage(state.message));
@@ -204,20 +204,23 @@ export function SdksAvailablePage(props) {
                                                         await unlisten();
                                                         if (result.state == "Warning") {
                                                             setDialogState('error');
-                                                            setDialogProgress(undefined);
                                                             setDialogBody(AppUtils.formatMessage(result.message));
+                                                            setDialogProgress(undefined);
                                                         } else {
                                                             setDialogState('success');
                                                             setDialogBody(t('common.t_dialog_body_install_success'));
+                                                            setDialogProgress(100);
                                                         }
                                                     } catch (e) {
                                                         await unlisten();
                                                         setDialogState('error');
                                                         setDialogBody(t('common.t_dialog_body_error'));
+                                                        setDialogProgress(undefined);
                                                     }
                                                 } else {
                                                     setDialogState('error');
                                                     setDialogBody(t('common.t_dialog_body_error'));
+                                                    setDialogProgress(undefined);
                                                 }
                                             }}
                                         >
@@ -228,7 +231,7 @@ export function SdksAvailablePage(props) {
                                 <Tooltip title={t('common.t_download')} placement="left-start">
                                     <IconButton
                                         onClick={async () => {
-                                            setDialogProgress(0);
+                                            setDialogProgress(-1);
                                             setIsDialogDownload(true);
                                             setDialogBody(t('common.t_dialog_body_connection'));
                                             const unlisten = await Methods.dbus_state_listen((state) => {
@@ -237,7 +240,7 @@ export function SdksAvailablePage(props) {
                                                     return;
                                                 }
                                                 if (state.state == 'Info') {
-                                                    setDialogProgress(100);
+                                                    setDialogProgress(-1);
                                                     return;
                                                 }
                                                 setDialogBody(AppUtils.formatMessage(state.message));
@@ -246,17 +249,19 @@ export function SdksAvailablePage(props) {
                                                 try {
                                                     await Methods.sdk_download_by_id(model.id);
                                                     await unlisten();
-                                                    setDialogProgress(100);
                                                     setDialogState('success');
                                                     setDialogBody(t('common.t_dialog_body_download_success'));
+                                                    setDialogProgress(100);
                                                 } catch (e) {
                                                     await unlisten();
                                                     setDialogState('error');
                                                     setDialogBody(t('common.t_dialog_body_error'));
+                                                    setDialogProgress(undefined);
                                                 }
                                             } else {
                                                 setDialogState('error');
                                                 setDialogBody(t('common.t_dialog_body_error'));
+                                                setDialogProgress(undefined);
                                             }
                                         }}
                                     >

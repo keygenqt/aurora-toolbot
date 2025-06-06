@@ -280,7 +280,7 @@ export function EmulatorHeader(props) {
                                 <Tooltip title={t('emulator.t_btn_record_stop_mp4')} placement="top">
                                     <Button
                                         onClick={async () => {
-                                            setDialogProgress(0);
+                                            setDialogProgress(-1);
                                             setIsDialogRecordStop(true);
                                             setDialogBody(t('common.t_dialog_body_connection'));
                                             const unlisten = await Methods.dbus_state_listen((state) => {

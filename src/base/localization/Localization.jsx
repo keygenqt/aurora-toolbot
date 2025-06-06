@@ -205,7 +205,10 @@ i18n
                         t_btn_group_sign_text: 'Подписать RPM пакет публичным ключом.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Platform SDK.',
-                        t_dialog_success_sign: 'Пакет успешно подписан.'
+                        t_dialog_success_sign: 'Пакет успешно подписан.',
+                        t_dialog_remove_title: 'Удаление Platform SDK',
+                        t_dialog_remove_body: 'Удаление Platform SDK требует повышенных привилегий. Для удаления открыт терминал.',
+                        t_dialog_success_remove: 'Ошибок не обнаружено.',
                     },
                     /// PAGE: psdksAvailable
                     psdksAvailable: {
@@ -241,6 +244,9 @@ i18n
                         t_btn_group_format_text: 'Форматирование проекта ОС Аврора Qt/C++.',
                         t_btn_group_remove_title: 'Удалить',
                         t_btn_group_remove_text: 'Удалить установленную версию Аврора SDK.',
+                        t_dialog_remove_title: 'Удаление Аврора SDK',
+                        t_dialog_remove_body: 'Для удаления Аврора SDK открыт Maintenance Tool.',
+                        t_dialog_success_remove: 'Ошибок не обнаружено.',
                     },
                     /// PAGE: sdksAvailable
                     sdksAvailable: {

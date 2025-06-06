@@ -117,7 +117,7 @@ export function EmulatorGroupTools(props) {
                     // Delay close
                     await new Promise(r => setTimeout(r, 200));
                     // Cancel if progress
-                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
+                    if (Boolean(dialogProgress) && dialogProgress !== 100 && dialogProgress > 0) {
                         await Methods.restart_dbus();
                     }
                     // Clear
@@ -197,7 +197,7 @@ export function EmulatorGroupTools(props) {
                     // Delay close
                     await new Promise(r => setTimeout(r, 200));
                     // Cancel if progress
-                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
+                    if (Boolean(dialogProgress) && dialogProgress !== 100 && dialogProgress > 0) {
                         await Methods.restart_dbus();
                     }
                     // Clear
@@ -255,7 +255,7 @@ export function EmulatorGroupTools(props) {
                             });
                             setIsDialogSelectFile(false);
                             if (path) {
-                                setDialogProgress(0);
+                                setDialogProgress(-1);
                                 setIsDialogInstall(true);
                                 setDialogBody(t('common.t_dialog_body_connection'));
                                 const unlisten = await Methods.dbus_state_listen((state) => {
@@ -263,6 +263,7 @@ export function EmulatorGroupTools(props) {
                                         setDialogProgress(parseInt(state.message));
                                     }
                                     if (state.state == 'State') {
+                                        setDialogProgress(-1);
                                         setDialogBody(AppUtils.formatMessage(state.message));
                                     }
                                 })
@@ -273,10 +274,12 @@ export function EmulatorGroupTools(props) {
                                         await new Promise(r => setTimeout(r, 500)); // animation delay
                                         setDialogState('success');
                                         setDialogBody(t('emulator.t_dialog_success_install'));
+                                        setDialogProgress(100);
                                     } catch (e) {
                                         await unlisten();
                                         setDialogState('error');
                                         setDialogBody(t('common.t_dialog_body_error'));
+                                        setDialogProgress(undefined);
                                     }
                                 }
                             }
@@ -333,7 +336,7 @@ export function EmulatorGroupTools(props) {
                             });
                             setIsDialogSelectFile(false);
                             if (path) {
-                                setDialogProgress(0);
+                                setDialogProgress(-1);
                                 setIsDialogUpload(true);
                                 setDialogBody(t('common.t_dialog_body_connection'));
                                 const unlisten = await Methods.dbus_state_listen((state) => {
@@ -341,6 +344,7 @@ export function EmulatorGroupTools(props) {
                                         setDialogProgress(parseInt(state.message));
                                     }
                                     if (state.state == 'State') {
+                                        setDialogProgress(-1);
                                         setDialogBody(AppUtils.formatMessage(state.message));
                                     }
                                 });
@@ -351,10 +355,12 @@ export function EmulatorGroupTools(props) {
                                         await new Promise(r => setTimeout(r, 500)); // animation delay
                                         setDialogState('success');
                                         setDialogBody(t('emulator.t_dialog_success_upload'));
+                                        setDialogProgress(100);
                                     } catch (e) {
                                         await unlisten();
                                         setDialogState('error');
                                         setDialogBody(t('common.t_dialog_body_error'));
+                                        setDialogProgress(undefined);
                                     }
                                 }
                             }

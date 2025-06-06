@@ -38,13 +38,14 @@ export function SdkGroupTools(props) {
     // states
     const [isDialogSelectDir, setIsDialogSelectDir] = React.useState(false);
     const [isDialogFormat, setIsDialogFormat] = React.useState(false);
+    const [isDialogRemove, setIsDialogRemove] = React.useState(false);
     const [dialogState, setDialogState] = React.useState('default');
     const [dialogBody, setDialogBody] = React.useState(undefined);
     // data
     let {
         model,
         disabled,
-        onAnimate,
+        onRemove,
     } = props;
     // page
     return (
@@ -67,6 +68,26 @@ export function SdkGroupTools(props) {
                     // Clear
                     setDialogBody(undefined);
                     setDialogState('default');
+                }}
+            />
+            <MainDialog
+                icon={Delete}
+                color={'primarySdk'}
+                title={t('sdk.t_dialog_remove_title')}
+                body={dialogBody}
+                state={dialogState}
+                open={isDialogRemove}
+                onClickBtn={async () => {
+                    setIsDialogRemove(false);
+                    // Delay close
+                    await new Promise(r => setTimeout(r, 200));
+                    // Clear
+                    setDialogBody(undefined);
+                    setDialogState('default');
+                    // Refresh and back
+                    if (dialogState != 'error') {
+                        onRemove();
+                    }
                 }}
             />
             <Stack
@@ -119,8 +140,31 @@ export function SdkGroupTools(props) {
                         title={t('sdk.t_btn_group_remove_title')}
                         text={t('sdk.t_btn_group_remove_text')}
                         onClick={async () => {
-                            // @todo dialog
-                            await Methods.sdk_uninstall_by_id(model.id);
+                            setIsDialogRemove(true);
+                            setDialogBody(t('common.t_dialog_body_connection'));
+                            const unlisten = await Methods.dbus_state_listen((state) => {
+                                if (state.state == 'State') {
+                                    setDialogBody(AppUtils.formatMessage(state.message));
+                                }
+                            })
+                            if (unlisten) {
+                                setDialogBody(t('sdk.t_dialog_remove_body'));
+                                try {
+                                    const result = await Methods.sdk_uninstall_by_id(model.id);
+                                    await unlisten();
+                                    if (result.state == "Warning") {
+                                        setDialogState('error');
+                                        setDialogBody(AppUtils.formatMessage(result.message));
+                                    } else {
+                                        setDialogState('success');
+                                        setDialogBody(t('sdk.t_dialog_success_remove'));
+                                    }
+                                } catch (e) {
+                                    await unlisten();
+                                    setDialogState('error');
+                                    setDialogBody(t('common.t_dialog_body_error'));
+                                }
+                            }
                         }}
                     />
                 </ButtonGroup>
@@ -132,5 +176,5 @@ export function SdkGroupTools(props) {
 SdkGroupTools.propTypes = {
     model: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired,
-    onAnimate: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
 };

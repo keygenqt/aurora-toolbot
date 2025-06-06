@@ -101,12 +101,12 @@ export function PsdksAvailablePage(props) {
                 onClickBtn={async () => {
                     // Hide dialog
                     setIsDialogDownload(false);
-                    // Cancel if progress
-                    if (Boolean(dialogProgress) && dialogProgress !== 100) {
-                        await Methods.restart_dbus();
-                    }
                     // Delay before clear
                     await new Promise(r => setTimeout(r, 200));
+                    // Cancel if progress
+                    if (Boolean(dialogProgress) && dialogProgress !== 100 && dialogProgress > 0) {
+                        await Methods.restart_dbus();
+                    }
                     // Clear
                     setDialogBody(undefined);
                     setDialogState('default');
@@ -166,16 +166,18 @@ export function PsdksAvailablePage(props) {
                                     <Tooltip title={t('common.t_install')} placement="left-start">
                                         <IconButton
                                             onClick={async () => {
+                                                setDialogProgress(-1);
                                                 setIsDialogInstall(true);
                                                 setDialogBody(t('psdksAvailable.t_dialog_install_body'));
                                                 try {
                                                     await Methods.psdk_install_by_id(model.id);
-                                                    setDialogProgress(100);
                                                     setDialogState('success');
                                                     setDialogBody(t('psdksAvailable.t_dialog_install_body_success'));
+                                                    setDialogProgress(100);
                                                 } catch (e) {
                                                     setDialogState('error');
                                                     setDialogBody(t('common.t_dialog_body_error'));
+                                                    setDialogProgress(undefined);
                                                 }
                                             }}
                                         >
@@ -186,7 +188,7 @@ export function PsdksAvailablePage(props) {
                                 <Tooltip title={t('common.t_download')} placement="left-start">
                                     <IconButton
                                         onClick={async () => {
-                                            setDialogProgress(0);
+                                            setDialogProgress(-1);
                                             setIsDialogDownload(true);
                                             setDialogBody(t('common.t_dialog_body_connection'));
                                             const unlisten = await Methods.dbus_state_listen((state) => {
@@ -195,7 +197,7 @@ export function PsdksAvailablePage(props) {
                                                     return;
                                                 }
                                                 if (state.state == 'Info') {
-                                                    setDialogProgress(100);
+                                                    setDialogProgress(-1);
                                                     return;
                                                 }
                                                 setDialogBody(AppUtils.formatMessage(state.message));
@@ -204,17 +206,19 @@ export function PsdksAvailablePage(props) {
                                                 try {
                                                     await Methods.psdk_download_by_id(model.id);
                                                     await unlisten();
-                                                    setDialogProgress(100);
                                                     setDialogState('success');
                                                     setDialogBody(t('common.t_dialog_body_download_success'));
+                                                    setDialogProgress(100);
                                                 } catch (e) {
                                                     await unlisten();
                                                     setDialogState('error');
                                                     setDialogBody(t('common.t_dialog_body_error'));
+                                                    setDialogProgress(undefined);
                                                 }
                                             } else {
                                                 setDialogState('error');
                                                 setDialogBody(t('common.t_dialog_body_error'));
+                                                setDialogProgress(undefined);
                                             }
                                         }}
                                     >

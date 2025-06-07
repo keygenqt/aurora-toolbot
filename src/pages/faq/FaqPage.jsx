@@ -18,7 +18,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 import {
-    useTheme,
     Stack,
     TextField,
     FormGroup,
@@ -41,7 +40,6 @@ export function FaqPage(props) {
     // components
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const theme = useTheme();
     // data
     const keySearchHistory = "keySearchHistory"
     const [searchText, setSearchText] = React.useState('');

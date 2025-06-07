@@ -39,6 +39,7 @@ export * from './components/states/StateLoading';
 export * from './components/other/AvatarButton';
 export * from './components/other/CardGradient';
 export * from './components/other/IconButtonLoading';
+export * from './components/other/TelegramMd';
 // data
 export * from './data/DataImages';
 export * from './data/DataLottie';

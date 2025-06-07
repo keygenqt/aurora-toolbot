@@ -52,6 +52,7 @@ export const palette = {
     },
     info: {
         main: '#0295c2',
+        light: '#0295c27d',
     },
     success: {
         main: '#23a076',

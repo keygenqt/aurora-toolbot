@@ -23,7 +23,6 @@ import {
     Stack,
     CardMedia,
     IconButton,
-    Box,
 } from '@mui/material';
 
 import { Star, Link } from '@mui/icons-material';
@@ -31,6 +30,7 @@ import { Star, Link } from '@mui/icons-material';
 import {
     useEffectSingleTimeout,
     AppUtils,
+    TelegramMd,
     CardGradient,
 } from '../../base';
 
@@ -69,14 +69,19 @@ export function FaqsPage(props) {
                             alt={model.title}
                         />
                     )}
-                    <CardContent>
+                    <CardContent
+                        sx={{
+                            paddingBottom: '16px !important',
+                        }}
+                    >
                         <Stack
                             direction={'column'}
-                            spacing={2}
+                            spacing={1.5}
                         >
                             <Stack
                                 direction={'row'}
-                                spacing={2}
+                                spacing={1}
+                                alignItems={'center'}
                             >
                                 <IconButton
                                     color="inherit"
@@ -114,22 +119,9 @@ export function FaqsPage(props) {
                                     ))}
                                 </Stack>
                             </Stack>
-
-                            {/* @todo - html telegram parser */}
-                            <Box
-                                sx={{
-                                    borderRadius: 2,
-                                    paddingY: 2,
-                                    paddingX: 1,
-                                    backgroundColor: 'background.default',
-                                    overflow: 'hidden'
-                                }}
-                            >
-                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                    <span dangerouslySetInnerHTML={{ __html: model.text.replaceAll("\n", "<br/>").split("5.")[0] }} />
-                                </Typography>
-                            </Box>
-
+                            <TelegramMd>
+                                {model.text}
+                            </TelegramMd>
                         </Stack>
                     </CardContent>
                 </CardGradient>

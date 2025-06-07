@@ -31,7 +31,13 @@
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.1",
     "react-redux": "^9.2.0",
-    "react-router": "^7.3.0"
+    "react-router": "^7.3.0",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-emoji": "^5.0.1",
+    "rehype-external-links": "^3.0.0",
+    "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

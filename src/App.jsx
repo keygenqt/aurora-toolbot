@@ -25,10 +25,10 @@ import { useEffectTheme, useEffectFocus } from './base'
 import { BaseLayout } from './layouts'
 
 function App() {
-    const darkMode = useEffectTheme();
+    const themeMode = useEffectTheme();
     const isFocus = useEffectFocus();
     return (
-        <ThemeProvider theme={darkMode === 'dark' ? ThemeDark : ThemeLight}>
+        <ThemeProvider theme={themeMode === 'dark' ? ThemeDark : ThemeLight}>
             <Box
                 className={'MainBox ' + (isFocus ? 'WindowFocus' : 'WindowUnfocus')}
                 height={1}

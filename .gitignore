@@ -25,3 +25,9 @@ dist-ssr
 
 # Docker
 .env
+
+# Flatpak
+aurora-toolbot.flatpak
+.flatpak-builder
+flatpak-build
+repo

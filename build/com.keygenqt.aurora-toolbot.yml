@@ -1,0 +1,30 @@
+id: com.keygenqt.aurora-toolbot
+
+runtime: org.gnome.Platform
+runtime-version: '47'
+sdk: org.gnome.Sdk
+
+command: aurora-toolbot
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --share=ipc
+  - --env=WEBKIT_DISABLE_DMABUF_RENDERER=1
+  - --talk-name=com.keygenqt.aurora_bot.toolbot
+
+modules:
+  - name: binary
+    buildsystem: simple
+    sources:
+      - type: file
+        path: /home/keygenqt/Documents/Home/Projects/aurora-toolbot/src-tauri/target/release/bundle/deb/aurora-toolbot_0.0.1_amd64.deb
+        only-arches: [x86_64]
+    build-commands:
+      - ar -x *.deb
+      - tar -xf data.tar.gz
+      - install -Dm755 usr/bin/aurora-toolbot /app/bin/aurora-toolbot
+      - install -Dm644 usr/share/applications/aurora-toolbot.desktop /app/share/applications/com.keygenqt.aurora-toolbot.desktop
+      - install -Dm644 usr/share/icons/hicolor/32x32/apps/aurora-toolbot.png /app/share/icons/hicolor/32x32/apps/com.keygenqt.aurora-toolbot.png
+      - install -Dm644 usr/share/icons/hicolor/128x128/apps/aurora-toolbot.png /app/share/icons/hicolor/128x128/apps/com.keygenqt.aurora-toolbot.png
+      - install -Dm644 usr/share/icons/hicolor/256x256@2/apps/aurora-toolbot.png /app/share/icons/hicolor/256x256@2/apps/com.keygenqt.aurora-toolbot.png

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Aurora Toolbot
+Comment=Simple, easy, fast way to interact with Aurora OS.
+Categories=Development;
+Icon=com.keygenqt.aurora-toolbot
+Type=Application
+Terminal=false
+Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aurora-toolbot

@@ -1,6 +1,6 @@
 {
     "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-    "productName": "Aurora Toolbot",
+    "productName": "aurora-toolbot",
     "mainBinaryName": "aurora-toolbot",
     "version": "0.0.1",
     "identifier": "com.keygenqt.aurora-toolbot",
@@ -28,12 +28,24 @@
     },
     "bundle": {
         "active": true,
-        "targets": "all",
+        "category": "DeveloperTool",
+        "targets": [
+            "deb"
+        ],
+        "licenseFile": "LICENSE",
         "icon": [
             "icons/32x32.png",
             "icons/128x128.png",
             "icons/128x128@2x.png",
             "icons/icon.ico"
-        ]
+        ],
+        "linux": {
+            "deb": {
+                "desktopTemplate": "../build/com.keygenqt.aurora-toolbot.desktop",
+                "depends": [
+                    "libwebkit2gtk-4.1-0"
+                ]
+            }
+        }
     }
 }

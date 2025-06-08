@@ -67,6 +67,9 @@ export function FaqsPage(props) {
                             component={'img'}
                             image={model.image}
                             alt={model.title}
+                            sx={{
+                                maxHeight: 250
+                            }}
                         />
                     )}
                     <CardContent

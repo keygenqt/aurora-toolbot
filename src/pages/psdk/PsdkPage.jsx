@@ -33,7 +33,7 @@ import { PsdkHeader } from './elements/PsdkHeader';
 
 export function PsdkPage(props) {
     // components
-    const { state } = useLocation();
+    const { state, pathname } = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // data
@@ -82,7 +82,11 @@ export function PsdkPage(props) {
                             onRemove={async () => {
                                 setIsRemove(true);
                                 await updateStates();
-                                navigate(-1);
+                                if (pathname.includes('psdks')) {
+                                    navigate(-2);
+                                } else {
+                                    navigate(-1);
+                                }
                                 setIsRemove(false);
                             }}
                         />

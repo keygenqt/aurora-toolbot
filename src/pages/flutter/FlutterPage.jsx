@@ -32,7 +32,7 @@ import { FlutterHeader } from './elements/FlutterHeader';
 
 export function FlutterPage(props) {
     // components
-    const { state } = useLocation();
+    const { state, pathname } = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // data
@@ -81,7 +81,11 @@ export function FlutterPage(props) {
                             onRemove={async () => {
                                 setIsRemove(true);
                                 await updateStates();
-                                navigate(-1);
+                                if (pathname.includes('flutters')) {
+                                    navigate(-2);
+                                } else {
+                                    navigate(-1);
+                                }
                                 setIsRemove(false);
                             }}
                         />

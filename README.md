@@ -22,8 +22,9 @@ A [React](https://react.dev/) app that implements [Telegram Mini Apps](https://c
 ### Install
 
 1. Install [Aurora Bot](https://github.com/keygenqt/aurora-bot).
-1. Download flatpak file from [releases](https://github.com/keygenqt/aurora-toolbot/releases).
-2. Install: `flatpak install --user aurora-toolbot_0.0.1_amd64.flatpak`
+2. Install VirtualBox: `sudo apt install virtualbox`
+3. Download flatpak file from [releases](https://github.com/keygenqt/aurora-toolbot/releases).
+4. Install: `flatpak install --user aurora-toolbot_0.0.1_amd64.flatpak`
 
 ### License
 

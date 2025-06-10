@@ -27,7 +27,7 @@ dist-ssr
 .env
 
 # Flatpak
-aurora-toolbot.flatpak
+*.flatpak
 .flatpak-builder
 flatpak-build
 repo

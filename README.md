@@ -2,35 +2,28 @@
 
 > Subscribe and like ⭐
 
-> The application is under development.
-
 A [React](https://react.dev/) app that implements [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and native apps using [Tauri](https://v2.tauri.app/) - GUI for [Aurora Bot](https://github.com/keygenqt/aurora-bot). An application that provides easy management of the Aurora OS ecosystem.
+
+> The application is under development.
 
 ![preview](data/preview.png)
 
-### Run Debian
+### Features
 
-1. Install Node.
-2. Install Tauri dependency
+- `Emulator` - Manage your Aurora OS emulators.
+- `Device` - Manage your Aurora OS devices.
+- `Aurora SDK` - Install and manage Aurora SDK on your PC.
+- `Platform SDK` - Install and manage Platform SDK on your PC
+- `Flutter SDK` - Install and manage Flutter SDK on your PC
+- `Faq` - Get answers to your questions.
 
-```shell
-sudo apt update
-sudo apt install libwebkit2gtk-4.1-dev \
-  build-essential \
-  curl \
-  wget \
-  file \
-  libxdo-dev \
-  libssl-dev \
-  libayatana-appindicator3-dev \
-  librsvg2-dev
-```
+[More...](https://aurora-bot.keygenqt.com/book/aurora-toolbot/about.html)
 
-3. Run dev
+### Install
 
-```shell
-npm run tauri dev
-```
+1. Install [Aurora Bot](https://github.com/keygenqt/aurora-bot).
+1. Download flatpak file from [releases](https://github.com/keygenqt/aurora-toolbot/releases).
+2. Install: `flatpak install --user aurora-toolbot_0.0.1_amd64.flatpak`
 
 ### License
 

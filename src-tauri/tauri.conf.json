@@ -41,10 +41,7 @@
         ],
         "linux": {
             "deb": {
-                "desktopTemplate": "../build/com.keygenqt.aurora-toolbot.desktop",
-                "depends": [
-                    "libwebkit2gtk-4.1-0"
-                ]
+                "desktopTemplate": "../build/com.keygenqt.aurora-toolbot.desktop"
             }
         }
     }

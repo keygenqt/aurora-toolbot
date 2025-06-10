@@ -10,21 +10,23 @@ flatpak_manifest='build/com.keygenqt.aurora-toolbot.yml'
 # Set root dir
 cd "$(dirname "$(realpath "$0")")"/../ || exit
 
-# Build deb
+# Build deb/appimage
 npm run tauri build
 
 # Update manifest
-deb_path=$(find $PWD/src-tauri/target/release/bundle/deb -name *.deb | head -n 1)
+deb_path=$(find $PWD/src-tauri/target/release/bundle -name *.deb | head -n 1)
+file_name=$(basename -- "$deb_path" | sed s/deb/flatpak/g)
+
 line=$(awk "/path:/{ print NR; exit }" $flatpak_manifest)
 sed -i "${line}s|.*|        path: $deb_path|g" $flatpak_manifest
 
+# Dependency
+# flatpak install flathub org.gnome.Platform//48 org.gnome.Sdk//48
+
 # Build flatpak
-flatpak install flathub org.gnome.Platform//47 org.gnome.Sdk//47
-flatpak build-bundle repo aurora-toolbot.flatpak $id --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
-flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install flatpak-build $flatpak_manifest
+flatpak build-bundle repo $file_name $id --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 
-# Run
-flatpak run $id
-
-# Remove
-flatpak -y remove $id
+# Install/Run/Remove
+# flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install flatpak-build $flatpak_manifest
+# flatpak run $id
+# flatpak -y remove $id

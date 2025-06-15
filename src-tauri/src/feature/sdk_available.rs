@@ -22,7 +22,7 @@ pub fn sdk_available() -> Result<String, Error> {
     // Open session connect
     let conn = get_session()?;
     // Get proxy with timeout
-    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_MIDDLE);
+    let proxy = get_proxy_bot(&conn, constants::TIMEOUT_SHORT_LONG);
     // Request
     let method = "SdkAvailable";
     let (result,): (String,) = match proxy.method_call(constants::DBUS_BOT_INTERFACE, method, ()) {

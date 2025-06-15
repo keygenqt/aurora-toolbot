@@ -96,7 +96,7 @@ export function FlutterItem(props) {
                         }}
                     />
 
-                    {Array.isArray(flutterAvailable) && flutterAvailable.length && !(flutterInstalled === undefined || isSync) ? (
+                    {Array.isArray(flutterAvailable) && !(flutterInstalled === undefined || isSync) ? (
                         <Tooltip title={t('common.t_available')} placement="left-start">
                             <IconButton
                                 onClick={() => {

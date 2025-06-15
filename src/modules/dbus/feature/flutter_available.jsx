@@ -16,19 +16,23 @@ import { AppUtils } from '../../../base';
 
 export const flutter_available = {
     flutter_available: async function () {
-        let data = AppUtils.checkResponse(await invoke("flutter_available", {}));
-        if (data.variants) {
-            return AppUtils.asyncJoin(data.variants.map((e) => async () => {
-                return {
-                    id: e['incoming']['id'],
-                    ...(await flutter_available.flutter_available_by_id(e['incoming']['id']))
-                };
-            }));
-        }
-        if (data['key'] === 'StateMessage') {
+        try {
+            let data = AppUtils.checkResponse(await invoke("flutter_available", {}));
+            if (data.variants) {
+                return AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                    return {
+                        id: e['incoming']['id'],
+                        ...(await flutter_available.flutter_available_by_id(e['incoming']['id']))
+                    };
+                }));
+            }
+            if (data['key'] === 'StateMessage') {
+                return [];
+            }
+            return [data];
+        } catch (e) {
             return [];
         }
-        return [data];
     },
     flutter_available_by_id: async function (id) {
         return AppUtils.checkResponse(await invoke("flutter_available_by_id", { id: id }));

@@ -16,19 +16,23 @@ import { AppUtils } from '../../../base';
 
 export const psdk_available = {
     psdk_available: async function () {
-        let data = AppUtils.checkResponse(await invoke("psdk_available", {}));
-        if (data.variants) {
-            return AppUtils.asyncJoin(data.variants.map((e) => async () => {
-                return {
-                    id: e['incoming']['id'],
-                    ...(await psdk_available.psdk_available_by_id(e['incoming']['id']))
-                };
-            }));
-        }
-        if (data['key'] === 'StateMessage') {
+        try {
+            let data = AppUtils.checkResponse(await invoke("psdk_available", {}));
+            if (data.variants) {
+                return AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                    return {
+                        id: e['incoming']['id'],
+                        ...(await psdk_available.psdk_available_by_id(e['incoming']['id']))
+                    };
+                }));
+            }
+            if (data['key'] === 'StateMessage') {
+                return [];
+            }
+            return [data];
+        } catch (e) {
             return [];
         }
-        return [data];
     },
     psdk_available_by_id: async function (id) {
         return AppUtils.checkResponse(await invoke("psdk_available_by_id", { id: id }));

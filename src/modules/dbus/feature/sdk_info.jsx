@@ -16,16 +16,20 @@ import { AppUtils } from '../../../base';
 
 export const sdk_info = {
     sdk_info: async function () {
-        let data = AppUtils.checkResponse(await invoke("sdk_info", {}));
-        if (data.variants) {
-            return AppUtils.asyncJoin(data.variants.map((e) => async () => {
-                return await sdk_info.sdk_info_by_id(e['incoming']['id']);
-            }));
-        }
-        if (data['key'] === 'StateMessage') {
+        try {
+            let data = AppUtils.checkResponse(await invoke("sdk_info", {}));
+            if (data.variants) {
+                return AppUtils.asyncJoin(data.variants.map((e) => async () => {
+                    return await sdk_info.sdk_info_by_id(e['incoming']['id']);
+                }));
+            }
+            if (data['key'] === 'StateMessage') {
+                return [];
+            }
+            return [data];
+        } catch (e) {
             return [];
         }
-        return [data];
     },
     sdk_info_by_id: async function (id) {
         return AppUtils.checkResponse(await invoke("sdk_info_by_id", { id: id }));

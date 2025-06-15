@@ -26,8 +26,9 @@ dist-ssr
 # Docker
 .env
 
-# Flatpak
+# Build
 *.flatpak
 .flatpak-builder
 flatpak-build
 repo
+website

@@ -104,7 +104,7 @@ export function SdkItem(props) {
                         }}
                     />
 
-                    {Array.isArray(sdkAvailable) && sdkAvailable.length && !(sdkInstalled === undefined || isSync) ? (
+                    {Array.isArray(sdkAvailable) && !(sdkInstalled === undefined || isSync) ? (
                         <Tooltip title={t('common.t_available')} placement="left-start">
                             <IconButton
                                 onClick={() => {

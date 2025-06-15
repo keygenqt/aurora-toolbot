@@ -18,5 +18,6 @@ pub const DBUS_BOT_INTERFACE: &str = "com.keygenqt.aurora_bot";
 
 /// Timeouts query
 pub const TIMEOUT_SHORT: u64 = 5000 /* 5s */;
+pub const TIMEOUT_SHORT_LONG: u64 = 60000 /* 1m */;
 pub const TIMEOUT_MIDDLE: u64 = 1800000 /* 30m */;
 pub const TIMEOUT_LONG: u64 = 86400000 /* 1d */;

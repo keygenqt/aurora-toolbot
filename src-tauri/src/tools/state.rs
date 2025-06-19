@@ -49,7 +49,7 @@ impl arg::ReadAll for DbusStateListen {
 }
 
 impl dbus::message::SignalArgs for DbusStateListen {
-    const NAME: &'static str = "listen";
+    const NAME: &'static str = "Listen";
     const INTERFACE: &'static str = DBUS_BOT_INTERFACE;
 }
 

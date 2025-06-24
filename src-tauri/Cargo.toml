@@ -1,6 +1,6 @@
 [package]
 name = "toolbot"
-version = "0.0.1"
+version = "0.0.2"
 description = "Module js for native application Toolbot."
 authors = ["keygenqt@gmail.com"]
 edition = "2024"

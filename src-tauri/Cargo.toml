@@ -9,17 +9,21 @@ edition = "2024"
 name = "toolbot"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
+# [profile.release.package.wry]
+# debug = true
+# debug-assertions = true
+
 [dependencies]
-tauri = { version = "2", features = [] }
-tauri-plugin-opener = "2"
-tauri-plugin-log = "2"
+tauri = { version = "2.6.1", features = [] }
+tauri-plugin-log = "2.6.0"
+tauri-plugin-dialog = "2.3.0"
+tauri-plugin-opener = "2.4.0"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 dbus = "0.9.7"
 darkmode = "0.1.0"
 anyhow = "1.0.97"
-tauri-plugin-dialog = "2"
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build = { version = "2.3.0", features = [] }

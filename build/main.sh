@@ -11,7 +11,7 @@ flatpak_manifest='build/com.keygenqt.aurora-toolbot.yml'
 cd "$(dirname "$(realpath "$0")")"/../ || exit
 
 # Build deb/appimage
-# npm run tauri build
+npm run tauri build
 
 # Update manifest
 deb_path=$(find $PWD/src-tauri/target/release/bundle -name *.deb | head -n 1)
@@ -38,5 +38,7 @@ flatpak run $id
 flatpak -y remove $id
 
 # Clear
+rm -rf dist
 rm -rf repo
 rm -rf build-dir
+rm -rf .flatpak-builder

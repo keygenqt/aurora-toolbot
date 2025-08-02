@@ -108,7 +108,8 @@ export function PsdkGroupTools(props) {
                     orientation={'vertical'}
                     color={'primaryPsdk'}
                 >
-                    <AvatarButton
+                    /** Not work in flatpak - psdk can't mount files  */
+                    {/* <AvatarButton
                         icon={Task}
                         title={t('psdk.t_btn_group_sign_title')}
                         text={t('psdk.t_btn_group_sign_text')}
@@ -136,7 +137,7 @@ export function PsdkGroupTools(props) {
                                 }
                             }
                         }}
-                    />
+                    /> */}
                     <AvatarButton
                         icon={Delete}
                         title={t('psdk.t_btn_group_remove_title')}

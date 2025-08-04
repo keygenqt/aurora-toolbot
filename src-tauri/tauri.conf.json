@@ -2,7 +2,7 @@
     "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
     "productName": "aurora-toolbot",
     "mainBinaryName": "aurora-toolbot",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "identifier": "com.keygenqt.aurora-toolbot",
     "build": {
         "frontendDist": "../dist",

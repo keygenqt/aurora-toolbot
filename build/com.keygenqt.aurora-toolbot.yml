@@ -19,7 +19,7 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        path: /home/keygenqt/Documents/Home/Projects/aurora-toolbot/src-tauri/target/release/bundle/deb/aurora-toolbot_0.0.3_amd64.deb
+        path: /home/keygenqt/Documents/Home/Projects/aurora-toolbot/src-tauri/target/release/bundle/deb/aurora-toolbot_0.0.4_amd64.deb
         only-arches: [x86_64]
     build-commands:
       - ar -x *.deb

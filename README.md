@@ -20,7 +20,7 @@ The application works using Flatpak, in an isolated environment, referring to th
 
 1. Install [Aurora Bot](https://github.com/keygenqt/aurora-bot).
 3. Download flatpak file from [releases](https://github.com/keygenqt/aurora-toolbot/releases).
-4. Install: `flatpak install --user aurora-toolbot_0.0.3_amd64.flatpak`
+4. Install: `flatpak install --user aurora-toolbot_0.0.4_amd64.flatpak`
 
 ### License
 

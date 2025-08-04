@@ -4374,7 +4374,7 @@ dependencies = [
 
 [[package]]
 name = "toolbot"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "anyhow",
  "darkmode",

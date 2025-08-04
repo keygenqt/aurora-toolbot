@@ -5,6 +5,8 @@
 Aurora Toolbot is an application with a graphical interface that implements all the functionality of the main application [Aurora Bot](https://github.com/keygenqt/aurora-bot).
 The application works using Flatpak, in an isolated environment, referring to the Aurora Bot application through the D-Bus service, which directly performs the main work.
 
+![preview](data/preview.png)
+
 ### Features
 
 - Interaction with devices.

@@ -2,22 +2,17 @@
 
 > Subscribe and like ⭐
 
-A [React](https://react.dev/) app that implements [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and native apps using [Tauri](https://v2.tauri.app/) - GUI for [Aurora Bot](https://github.com/keygenqt/aurora-bot). An application that provides easy management of the Aurora OS ecosystem.
-
-> The application is under development.
-
-![preview](data/preview.png)
+Aurora Toolbot is an application with a graphical interface that implements all the functionality of the main application [Aurora Bot](https://github.com/keygenqt/aurora-bot).
+The application works using Flatpak, in an isolated environment, referring to the Aurora Bot application through the D-Bus service, which directly performs the main work.
 
 ### Features
 
-- `Emulator` - Manage your Aurora OS emulators.
-- `Device` - Manage your Aurora OS devices.
-- `Aurora SDK` - Install and manage Aurora SDK on your PC.
-- `Platform SDK` - Install and manage Platform SDK on your PC
-- `Flutter SDK` - Install and manage Flutter SDK on your PC
-- `Faq` - Get answers to your questions.
-
-[More...](https://aurora-bot.keygenqt.com/book/aurora-toolbot/about.html)
+- Interaction with devices.
+- Interaction with emulators.
+- Working with [Aurora SDK](https://developer.auroraos.ru/doc/sdk).
+- Working with [Platform SDK](https://developer.auroraos.ru/doc/sdk/psdk).
+- Working with [Flutter SDK](https://developer.auroraos.ru/doc/extended/flutter).
+- Answers to questions.
 
 ### Install
 
